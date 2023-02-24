@@ -54,6 +54,7 @@ public class FStateMachine : MonoBehaviour {
             return; }
         States.Add(state);
         state.StateMachine = this;
+        state.CreateTransitions();
     }
 
     public void ChangeState(BasicState state, Action trigger = null) {
@@ -75,8 +76,10 @@ public class FStateMachine : MonoBehaviour {
      * @param SimpleState Estado inicla o (null, primer estado de la máquina) */
     public void StartMachine() {
         if (Security >= fsmSecurity.Hard) {
-            Debug.LogWarning("StateMachine cant' start with empy InnitialState.");
-            return;
+            if (InnitialState == null) {
+                Debug.LogWarning("StateMachine cant' start with empy InnitialState.");
+                return;
+            }
         }
         CurrentState = InnitialState;
         CurrentState.OnEnter();

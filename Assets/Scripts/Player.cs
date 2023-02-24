@@ -17,6 +17,7 @@ public class Player : Actor {
         PlayerController.Jump = GetComponent<PlayerJump>();
 
         StateMachine.LoadStates(GetComponents<BasicState>());
+
         StateMachine.InnitialState = PlayerController.Iddle;
     }
 

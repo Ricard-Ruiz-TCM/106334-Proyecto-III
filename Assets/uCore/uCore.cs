@@ -10,12 +10,12 @@ public class uCore : MonoBehaviour {
             if (m_ActionManager != null)
                 return m_ActionManager;
 
-            m_ActionManager = UnityEngine.GameObject.FindObjectOfType<ActionManager>();
+            m_ActionManager = GameObject.FindObjectOfType<ActionManager>();
             if (m_ActionManager != null)
                 return m_ActionManager;
 
             // MUST NEED del PlayerInput para funcionar de forma correcta
-            m_ActionManager = new UnityEngine.GameObject("[=== InputActions").AddComponent<ActionManager>();
+            m_ActionManager = new GameObject("[=== InputActions").AddComponent<ActionManager>();
             PlayerInput l_playerInput = m_ActionManager.GetComponent<PlayerInput>();
             l_playerInput.actions = Resources.Load<InputActionAsset>("Settings/InputActions");
             l_playerInput.currentActionMap = l_playerInput.actions.actionMaps[0];
@@ -35,11 +35,11 @@ public class uCore : MonoBehaviour {
             if (m_AudioManager != null)
                 return m_AudioManager;
 
-            m_AudioManager = UnityEngine.GameObject.FindObjectOfType<AudioManager>();
+            m_AudioManager = GameObject.FindObjectOfType<AudioManager>();
             if (m_AudioManager != null)
                 return m_AudioManager;
 
-            m_AudioManager = new UnityEngine.GameObject("[=== Audio").AddComponent<AudioManager>();
+            m_AudioManager = new GameObject("[=== Audio").AddComponent<AudioManager>();
             m_AudioManager.transform.SetParent(uCore.GameManager.transform);
 
             return m_AudioManager;
@@ -54,11 +54,11 @@ public class uCore : MonoBehaviour {
             if (m_Scenedirector != null)
                 return m_Scenedirector;
 
-            m_Scenedirector = UnityEngine.GameObject.FindObjectOfType<SceneDirector>();
+            m_Scenedirector = GameObject.FindObjectOfType<SceneDirector>();
             if (m_Scenedirector != null)
                 return m_Scenedirector;
 
-            m_Scenedirector = new UnityEngine.GameObject("[=== Director").AddComponent<SceneDirector>();
+            m_Scenedirector = new GameObject("[=== Director").AddComponent<SceneDirector>();
             m_Scenedirector.transform.SetParent(uCore.GameManager.transform);
 
             return m_Scenedirector;
@@ -73,11 +73,11 @@ public class uCore : MonoBehaviour {
             if (m_ParticleInstancer != null)
                 return m_ParticleInstancer;
 
-            m_ParticleInstancer = UnityEngine.GameObject.FindObjectOfType<ParticleInstancer>();
+            m_ParticleInstancer = GameObject.FindObjectOfType<ParticleInstancer>();
             if (m_ParticleInstancer != null)
                 return m_ParticleInstancer;
 
-            m_ParticleInstancer = new UnityEngine.GameObject("[=== Particles").AddComponent<ParticleInstancer>();
+            m_ParticleInstancer = new GameObject("[=== Particles").AddComponent<ParticleInstancer>();
             m_ActionManager.transform.SetParent(uCore.GameManager.transform);
 
             return m_ParticleInstancer;
@@ -92,7 +92,7 @@ public class uCore : MonoBehaviour {
             if (m_Fader != null)
                 return m_Fader;
 
-            m_Fader = UnityEngine.GameObject.FindObjectOfType<FadeFX>();
+            m_Fader = GameObject.FindObjectOfType<FadeFX>();
 
             return m_Fader;
         }
@@ -106,11 +106,11 @@ public class uCore : MonoBehaviour {
             if (m_GameManager != null)
                 return m_GameManager;
 
-            m_GameManager = UnityEngine.GameObject.FindObjectOfType<GameManager>();
+            m_GameManager = GameObject.FindObjectOfType<GameManager>();
             if (m_GameManager != null)
                 return m_GameManager;
 
-            m_GameManager = new UnityEngine.GameObject("[=== uCore").AddComponent<uCore>().gameObject.AddComponent<GameManager>();
+            m_GameManager = new GameObject("[=== uCore").AddComponent<uCore>().gameObject.AddComponent<GameManager>();
 
             return m_GameManager;
         }
@@ -119,12 +119,12 @@ public class uCore : MonoBehaviour {
 
     // Destruye posibles GameObjects de tipo "GameManager" en la escena si ya existe uno en "DontDestroyOnLoad"
     private void InstanceDestroyer() {
-        GameManager[] instances = UnityEngine.GameObject.FindObjectsOfType<GameManager>();
+        GameManager[] instances = GameObject.FindObjectsOfType<GameManager>();
         int count = instances.Length;
 
         if (count >= 1) {
             for (var i = 1; i < instances.Length; i++)
-                UnityEngine.GameObject.Destroy(instances[i].gameObject);
+                GameObject.Destroy(instances[i].gameObject);
             m_GameManager = instances[0];
         }
     }

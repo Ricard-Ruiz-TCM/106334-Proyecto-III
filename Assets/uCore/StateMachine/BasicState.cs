@@ -41,7 +41,8 @@ public abstract class BasicState : MonoBehaviour, IState {
     /** Transition control */
     public void AddTransition(StateTransition transition, BasicState next) {
         if (Transitions == null) Transitions = new List<StateTransition>();
-        Transitions.Add(transition.Destiny(next));
+        transition.Destiny(next);
+        Transitions.Add(transition);
     }
 
 }

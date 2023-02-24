@@ -16,9 +16,8 @@ public class StateTransition {
         _trigger = trigger;
     }
 
-    public StateTransition Destiny(BasicState destinty) {
+    public void Destiny(BasicState destinty) {
         _destiny = destinty;
-        return this;
     }
 
     public bool CheckTransition() { return _condition(); }

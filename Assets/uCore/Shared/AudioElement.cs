@@ -4,10 +4,6 @@ using System.Collections;
 [RequireComponent(typeof(AudioSource))]
 public class AudioElement : MonoBehaviour {
 
-    private void Awake() {
-        Source.playOnAwake = true;
-    }
-
     public AudioSource Source { get { return GetComponent<AudioSource>(); } }
 
     public void Play() {

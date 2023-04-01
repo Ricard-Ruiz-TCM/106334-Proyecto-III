@@ -16,25 +16,13 @@ public class Player : Actor {
         PlayerController.Move = GetComponent<PlayerMove>();
         PlayerController.Jump = GetComponent<PlayerJump>();
 
-        StateMachine.LoadStates(GetComponents<BasicState>());
+        StateMachine.LoadStates();
 
         StateMachine.InnitialState = PlayerController.Iddle;
     }
 
-    public override void OnAwake() {
-
-    }
-
-    public override void OnStart() {
-
-    }
-
-    public override void OnUpdate() {
-
-    }
-
-    public override void OnFixedUpdate() {
-
+    protected new void Awake() {
+        base.Awake();
     }
 
 }

@@ -9,14 +9,6 @@ using UnityEngine;
  * @version: v4.0 (02/2023)
  */
 
-public enum fsmSecurity {
-    None, Soft, Hard
-}
-
-public enum status {
-    Active, Inactive
-}
-
 public class FStateMachine : MonoBehaviour {
 
     /** State Core */
@@ -35,6 +27,10 @@ public class FStateMachine : MonoBehaviour {
     private List<BasicState> States;
 
     // Load States 
+    public void LoadStates() {
+        LoadStates(GetComponents<BasicState>());
+    }
+
     public void LoadStates(params BasicState[] state) {
         foreach (BasicState s in state) {
             if (Security >= fsmSecurity.Hard) {
@@ -77,7 +73,7 @@ public class FStateMachine : MonoBehaviour {
     public void StartMachine() {
         if (Security >= fsmSecurity.Hard) {
             if (InnitialState == null) {
-                Debug.LogWarning("StateMachine cant' start with empy InnitialState.");
+                Debug.LogWarning("StateMachine cant' start with empty InnitialState.");
                 return;
             }
         }

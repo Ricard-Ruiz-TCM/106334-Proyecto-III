@@ -18,6 +18,20 @@ public class AudioElement : MonoBehaviour {
         StartCoroutine(C_FadeOut(time));
     }
 
+    public void FadeIn(float time) {
+        Play(); Source.volume = 0.0f;
+        StartCoroutine(C_FadeIn(time));
+    }
+
+    private IEnumerator C_FadeIn(float time) {
+        yield return new WaitForSeconds(time);
+        if (Source.volume <= 0.9f) {
+            Source.volume += 0.1f * Time.deltaTime;
+            StartCoroutine(C_FadeIn(time));
+        }
+        yield return null;
+    }
+
     private IEnumerator C_FadeOut(float time) {
         yield return new WaitForSeconds(time);
         if (Source.volume >= 0.01f) {

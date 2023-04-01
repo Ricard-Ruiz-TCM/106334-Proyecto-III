@@ -18,29 +18,17 @@ public abstract class Actor : MonoBehaviour {
     protected FStateMachine StateMachine;
     protected abstract void ConstructMachine();
 
-    public abstract void OnStart();
-    public abstract void OnAwake();
-    public abstract void OnUpdate();
-    public abstract void OnFixedUpdate();
-
-    private void Awake() {
+    protected void Awake() {
         StateMachine = GetComponent<FStateMachine>();
         ConstructMachine();
-        OnAwake();
     }
 
-    private void Start() {
+    protected void Start() {
         StateMachine.StartMachine();
-        OnStart();
     }
 
-    private void Update() {
+    protected void Update() {
         StateMachine.UpdateMachine();
-        OnUpdate();
-    }
-
-    private void FixedUpdate() {
-        OnFixedUpdate();
     }
 
 }

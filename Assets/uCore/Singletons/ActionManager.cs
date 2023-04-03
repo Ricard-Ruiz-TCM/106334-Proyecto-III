@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -16,12 +17,12 @@ public class ActionManager : MonoBehaviour {
 
     // Componente New Input System
     [SerializeField]
-    private PlayerInput m_Input;
+    private PlayerInput _input;
 
     // Control del Scheme actual
     [SerializeField]
-    private INPUT_SCHEME m_CurrentScheme;
-    public INPUT_SCHEME Scheme() { return m_CurrentScheme; }
+    private INPUT_SCHEME _currentScheme;
+    public INPUT_SCHEME Scheme() { return _currentScheme; }
     public bool GamePad() { return (Scheme().Equals(INPUT_SCHEME.I_GAMEPAD)); }
     public bool Keyboard() { return (Scheme().Equals(INPUT_SCHEME.I_KEYBOARD)); }
 
@@ -37,22 +38,12 @@ public class ActionManager : MonoBehaviour {
     private bool m_Punch;
     private Vector2 m_Destination;
     private bool m_LClick;
-    private bool m_Enter;
-    private bool m_Escape;
-
-    // Debug
-    private bool m_KeyE;
-    private bool m_KeyF;
-    private bool m_KeyO;
 
     // Métodos Check??
     public bool MoveRight() { return m_MoveRight; }
     public bool MoveLeft() { return m_MoveLeft; }
     public bool MoveForward() { return m_MoveForward; }
     public bool MoveBackward() { return M_MoveBackward; }
-    public bool KeyE() { return m_KeyE; }
-    public bool KeyF() { return m_KeyF; }
-    public bool KeyO() { return m_KeyO; }
     public bool Jump() { return m_Jump; }
     public bool Dash() { return m_Dash; }
     public bool Run() { return m_Run; }
@@ -60,13 +51,15 @@ public class ActionManager : MonoBehaviour {
     public bool Punch() { return m_Punch; }
     public Vector2 Destination() { return m_Destination; }
     public bool LClick() { return m_LClick; }
-    public bool Enter() { return m_Enter; }
-    public bool Escape() { return m_Escape; }
+
+    // InputActions for all Unity KeyCodes
+    private Dictionary<KeyCode, InputAction> _keyActions;
 
     // Unity Awake
     void Awake() {
-        m_Input = GetComponent<PlayerInput>();
-        m_CurrentScheme = INPUT_SCHEME.I_KEYBOARD;
+        _input = GetComponent<PlayerInput>();
+        _currentScheme = INPUT_SCHEME.I_KEYBOARD;
+        _keyActions = new Dictionary<KeyCode, InputAction>();
     }
 
     // Unity Start
@@ -79,8 +72,8 @@ public class ActionManager : MonoBehaviour {
     // | - Send Mesagges - PlayerInput Component ------------------------------------------------------------------------------------------- |
     // V ----------------------------------------------------------------------------------------------------------------------------------- V
     void OnControlsChanged() {
-        if (m_Input.currentControlScheme.Equals("Gamepad")) m_CurrentScheme = INPUT_SCHEME.I_GAMEPAD;
-        if (m_Input.currentControlScheme.Equals("Keyboard&Mouse")) m_CurrentScheme = INPUT_SCHEME.I_KEYBOARD;
+        if (_input.currentControlScheme.Equals("Gamepad")) _currentScheme = INPUT_SCHEME.I_GAMEPAD;
+        if (_input.currentControlScheme.Equals("Keyboard&Mouse")) _currentScheme = INPUT_SCHEME.I_KEYBOARD;
         OnChangeInput?.Invoke(Scheme());
     }
 
@@ -98,20 +91,6 @@ public class ActionManager : MonoBehaviour {
 
     void OnMoveBackward(InputValue value) {
         M_MoveBackward = value.isPressed;
-    }
-
-    void OnKeyE(InputValue value) {
-        m_KeyE = value.isPressed;
-    }
-
-    void OnKeyF(InputValue value) {
-        m_KeyF = value.isPressed;
-    }
-
-    IEnumerator OnKeyO(InputValue value) {
-        m_KeyO = value.isPressed;
-        yield return new WaitForEndOfFrame();
-        m_KeyO = false;
     }
 
     IEnumerator OnJump(InputValue value) {
@@ -151,17 +130,33 @@ public class ActionManager : MonoBehaviour {
         m_LClick = false;
     }
 
-    IEnumerator OnEnter(InputValue value) {
-        m_Enter = value.isPressed;
-        yield return new WaitForEndOfFrame();
-        m_Enter = false;
+    // A ----------------------------------------------------------------------------------------------------------------------------------- A
+
+    // * ----------------------------------------------------------------------------------------------------------------------------------- *
+    // | - KeyCodes InputActions ----------------------------------------------------------------------------------------------------------- |
+    // V ----------------------------------------------------------------------------------------------------------------------------------- V
+
+    public void AddNewKey(KeyCode key) {
+        if (!_keyActions.ContainsKey(key)) {
+            InputAction action = new InputAction("key" + key.ToString(), InputActionType.Button, binding: "<Keyboard>/" + key.ToString().ToLower());
+            _keyActions.Add(key, action);
+            action.Enable();
+        }
     }
 
-    IEnumerator OnEscape(InputValue value) {
-        m_Escape = value.isPressed;
-        yield return new WaitForEndOfFrame();
-        m_Escape = false;
+    public bool GetKey(KeyCode key) {
+        AddNewKey(key);
+        return _keyActions[key].IsPressed();
     }
+    public bool GetKeyDown(KeyCode key) {
+        AddNewKey(key);
+        return _keyActions[key].WasPressedThisFrame();
+    }
+    public bool GetKeyUp(KeyCode key) {
+        AddNewKey(key);
+        return _keyActions[key].WasReleasedThisFrame();
+    }
+
     // A ----------------------------------------------------------------------------------------------------------------------------------- A
 
 }

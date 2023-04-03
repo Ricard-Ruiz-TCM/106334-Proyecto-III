@@ -2,24 +2,6 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour {
 
-    [SerializeField, Header("Entity Container Ref#.:")]
-    private Transform m_EntityContainer;
-
-    public Transform EntityContainer() {
-        if (m_EntityContainer == null)
-            m_EntityContainer = UnityEngine.GameObject.FindObjectOfType<EntityContainer>().transform;
-
-        return m_EntityContainer;
-    }
-
-    public Transform AudioContainer() {
-        return EntityContainer();
-    }
-
-    public Transform ParticleContainer() {
-        return EntityContainer();
-    }
-
     // Cursor
     [SerializeField, Header("Cursor:")]
     private bool m_CursorLocked = false;

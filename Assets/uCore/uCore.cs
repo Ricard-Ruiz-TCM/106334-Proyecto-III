@@ -3,6 +3,8 @@ using UnityEngine.InputSystem;
 
 public class uCore : MonoBehaviour {
 
+    private static string _preFix = "[=== ";
+
     // ----------------------------------------- //
     private static ActionManager m_ActionManager = null;
     public static ActionManager Action {
@@ -15,7 +17,7 @@ public class uCore : MonoBehaviour {
                 return m_ActionManager;
 
             // MUST NEED del PlayerInput para funcionar de forma correcta
-            m_ActionManager = new GameObject("[=== InputActions").AddComponent<ActionManager>();
+            m_ActionManager = new GameObject("InputActions").AddComponent<ActionManager>();
             PlayerInput l_playerInput = m_ActionManager.GetComponent<PlayerInput>();
             l_playerInput.actions = Resources.Load<InputActionAsset>("Settings/InputActions");
             l_playerInput.currentActionMap = l_playerInput.actions.actionMaps[0];
@@ -39,7 +41,7 @@ public class uCore : MonoBehaviour {
             if (m_AudioManager != null)
                 return m_AudioManager;
 
-            m_AudioManager = new GameObject("[=== Audio").AddComponent<AudioManager>();
+            m_AudioManager = new GameObject(_preFix + "Audio").AddComponent<AudioManager>();
             m_AudioManager.transform.SetParent(uCore.GameManager.transform);
 
             return m_AudioManager;
@@ -58,7 +60,7 @@ public class uCore : MonoBehaviour {
             if (m_Scenedirector != null)
                 return m_Scenedirector;
 
-            m_Scenedirector = new GameObject("[=== Director").AddComponent<SceneDirector>();
+            m_Scenedirector = new GameObject(_preFix + "Director").AddComponent<SceneDirector>();
             m_Scenedirector.transform.SetParent(uCore.GameManager.transform);
 
             return m_Scenedirector;
@@ -77,7 +79,7 @@ public class uCore : MonoBehaviour {
             if (m_ParticleInstancer != null)
                 return m_ParticleInstancer;
 
-            m_ParticleInstancer = new GameObject("[=== Particles").AddComponent<ParticleInstancer>();
+            m_ParticleInstancer = new GameObject(_preFix + "Particles").AddComponent<ParticleInstancer>();
             m_ActionManager.transform.SetParent(uCore.GameManager.transform);
 
             return m_ParticleInstancer;
@@ -110,7 +112,7 @@ public class uCore : MonoBehaviour {
             if (m_GameManager != null)
                 return m_GameManager;
 
-            m_GameManager = new GameObject("[=== uCore").AddComponent<uCore>().gameObject.AddComponent<GameManager>();
+            m_GameManager = new GameObject(_preFix + "uCore").AddComponent<uCore>().gameObject.AddComponent<GameManager>();
 
             return m_GameManager;
         }

@@ -24,7 +24,7 @@ public class ParticleInstancer : MonoBehaviour {
     // In: string name -> Nombre ID del clip
     // In: Vector3 postiion -> Posición del audio en el mundo, 3D NENE, UBICATE
     public ParticleElement PlayParticlesOnce(string name, Vector3 position) {
-        ParticleElement p = PlayParticlesOnce(name, uCore.GameManager.ParticleContainer());
+        ParticleElement p = PlayParticlesOnce(name, null);
         p.transform.position = position;
         return p;
     }

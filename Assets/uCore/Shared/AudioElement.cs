@@ -71,12 +71,20 @@ public class AudioElement : MonoBehaviour {
         return this;
     }
 
-    public void destroyoAtEnd() {
-        gameObject.AddComponent<Destroyable>().destroyIn(Source.clip.length - Source.time);
+    public AudioElement destroyoAtEnd() {
+        this.gameObject.AddComponent<Destroyable>().destroyIn(Source.clip.length - Source.time);
+        return this;
     }
 
-    public void destroyOnTime(float time) {
-        gameObject.AddComponent<Destroyable>().destroyIn(time);
+    public AudioElement destroyOnTime(float time) {
+        this.gameObject.AddComponent<Destroyable>().destroyIn(time);
+        return this;
+    }
+
+    public AudioElement persistent() {
+        Destroyable ds = this.gameObject.GetComponent<Destroyable>();
+        if (ds != null) { GameObject.Destroy(ds); }
+        return this;
     }
 
     public AudioElement noLoop() {
@@ -127,6 +135,16 @@ public class AudioElement : MonoBehaviour {
 
     public AudioElement randomVolume(float min, float max) {
         return withVolumeEq(Random.Range(min, max));
+    }
+
+    public AudioElement setParent(Transform parent) {
+        this.transform.SetParent(parent);
+        return this;
+    }
+
+    public AudioElement setPosition(Vector3 position) {
+        this.transform.position = position;
+        return this;
     }
 
 

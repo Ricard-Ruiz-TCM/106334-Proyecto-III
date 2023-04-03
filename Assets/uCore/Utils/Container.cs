@@ -38,13 +38,23 @@ public class Container<T> : Object where T : Object {
     public T Load(string name) {
         return Get(name);
     }
+    /** Método TryGet
+     * Si existe un elemento, lo saca por OUT
+     * @param T elemento encontrado
+     * @return bool True -> Existe | False -> No Existe
+     */
+    public bool TryGet(string name, out T value) {
+        if (Exists(name)) value = Get(name); else value = null;
+        return (value != null);
+    }
     /**
      * Método Add
      * Carga un objeto ya creado por código al contenedor
      * @param string name Nombre ID para el diccionario
      * @param T t Elemento ya creado
+     * @return T el elemento creado
      */
-    public void Add(string name, T t) {
+    public T Add(string name, T t) {
         int i = FindSpot();
         if (i == -1) {
             i = Elements.Count;
@@ -53,6 +63,7 @@ public class Container<T> : Object where T : Object {
             Elements[i] = t;
         }
         Diccionary.Add(name, i);
+        return Elements[Diccionary[name]];
     }
     /** Método Remove
      * @param string name Elemento a eliminar */

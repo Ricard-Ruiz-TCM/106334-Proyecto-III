@@ -20,6 +20,9 @@ public class Player : Actor {
         StateMachine.LoadStates();
 
         StateMachine.InnitialState = PlayerController.Iddle;
+
+        CreateTransitions(PlayerController.Iddle, PlayerController.Jump,
+            () => { return false; });
     }
 
     protected new void Awake() {

@@ -8,8 +8,9 @@ using UnityEngine;
  * Carga elementos como prefabs, scriptableObjects, etcs.
  *
  * @author: Nosink Ð (Ricard Ruiz)
- * @version: v2.0 (12/2022)
+ * @version: v2.1 (04/2023)
  * */
+[System.Serializable]
 public class Container<T> : Object where T : Object {
 
     public string Path { get; private set; }
@@ -18,7 +19,7 @@ public class Container<T> : Object where T : Object {
 
     /** Constructor
      * @param string path Ubicación */
-    public Container(string path = "") {
+    public Container(string path = "NONE") {
         Path = path;
         Elements = new List<T>();
         Diccionary = new Dictionary<string, int>();
@@ -86,6 +87,7 @@ public class Container<T> : Object where T : Object {
     /** Método Load
      * @param string name Elemento a cargar*/
     private void ILoad(string name) {
+        if (Path == "NONE") return;
         int i = FindSpot();
         if (i == -1) {
             i = Elements.Count;

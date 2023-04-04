@@ -1,23 +1,25 @@
 using UnityEngine;
 using UnityEngine.Audio;
 
-
 public class AudioManager : MonoBehaviour {
 
-    public enum AudioType {
-        SFX_3D, SFX_2D, SoundTrack
-    }
-
     // Mixer
+    [SerializeField, Header("Mixer:")]
     private AudioMixer _mixer;
+    [SerializeField]
     private AudioMixerGroup _sfx;
+    [SerializeField]
     private AudioMixerGroup _soundtrak;
     public AudioMixer Mixer() { return _mixer; }
 
     // Audio Settings Path
-    private string _SFXPath = "SFX/";
+    [SerializeField, Header("Folder Paths:")]
     private string _AudioPath = "Audio/";
-    private string _SoundTrackPath = "Music/";
+    [SerializeField]
+    private string _SFXPath = "SFX/";
+    [SerializeField]
+    private string _SoundtrackPath = "Music/";
+    [SerializeField]
     private string _MixerPath = "Settings/AudioMixer";
 
     // Diccionario de AudioClip
@@ -29,37 +31,61 @@ public class AudioManager : MonoBehaviour {
         _playing = new Container<AudioElement>();
         _audios = new Container<AudioClip>(_AudioPath);
         _mixer = Resources.Load<AudioMixer>(_MixerPath);
+        _sfx = _mixer.FindMatchingGroups("SFX")[0];
+        _soundtrak = _mixer.FindMatchingGroups("Soundtrack")[0];
     }
 
-    public AudioElement PlaySFX(string file, AudioType type = AudioType.SFX_2D) {
+    // * ------------ *
+    // | - Play SFX - |
+    // V ------------ V
+    public AudioElement PlaySFX(string file, audioType type = audioType.SFX_2D) {
         return PlaySFX(file, null, type);
     }
-    public AudioElement PlaySFX(string file, Vector3 position, AudioType type = AudioType.SFX_3D) {
+    public AudioElement PlaySFX(string file, Vector3 position, audioType type = audioType.SFX_3D) {
         return PlaySFX(file, type).setPosition(position);
     }
-    public AudioElement PlaySFX(string file, Transform parent, AudioType type = AudioType.SFX_3D) {
+    public AudioElement PlaySFX(string file, Transform parent, audioType type = audioType.SFX_3D) {
         return IPlay(type, _audios.Get(_SFXPath + file), _sfx).setParent(parent).destroyoAtEnd();
     }
+    // A ------------ A
 
-    public AudioElement PlaySoundTrack(string file) {
-        if (!_playing.Exists(file)) {
-            return _playing.Add(file, IPlay(AudioType.SoundTrack, _audios.Get(_SoundTrackPath + file), _soundtrak));
+    // * ------------------ *
+    // | - Play Sountrack - |
+    // V ------------------ V
+    public void StopSoundtrack(string file) {
+        if (IsPlayingSoundtarck(file)) {
+            _playing.Get(file).Stop();
         }
-        return _playing.Get(file);
     }
+    public void StopAllSoundtracks() {
+        foreach (AudioElement st in _playing.Elements) { st.Stop(); }
+    }
+    public bool IsPlayingSoundtarck(string file) {
+        if (!_playing.Exists(file)) {
+            return false;
+        }
+        return _playing.Get(file).Source.isPlaying;
+    }
+    public AudioElement PlaySoundtrack(string file) {
+        if (IsPlayingSoundtarck(file)) {
+            return _playing.Get(file).Reset();
+        }
+        return _playing.Add(file, IPlay(audioType.SoundTrack, _audios.Get(_SoundtrackPath + file), _soundtrak));
+    }
+    // A ------------------ A
 
-    private AudioElement IPlay(AudioType type, AudioClip clip, AudioMixerGroup mixer) {
+    private AudioElement IPlay(audioType type, AudioClip clip, AudioMixerGroup mixer) {
         AudioElement audio = new GameObject(clip.name).AddComponent<AudioElement>();
         audio.Source.clip = clip;
         audio.Source.outputAudioMixerGroup = mixer;
         switch (type) {
-            case AudioType.SFX_3D:
+            case audioType.SFX_3D:
                 audio.with3D().rollOfType(AudioRolloffMode.Custom);
                 break;
-            case AudioType.SFX_2D:
+            case audioType.SFX_2D:
                 audio.with2D();
                 break;
-            case AudioType.SoundTrack:
+            case audioType.SoundTrack:
                 audio.with2D();
                 break;
             default: break;

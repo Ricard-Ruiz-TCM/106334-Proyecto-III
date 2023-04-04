@@ -4,7 +4,7 @@ public class PlayerMove : AnimatedState {
 
     public override void CreateTransitions() {
         StateTransition toIddle = new StateTransition(
-            () => { return !uCore.Action.MoveForward(); },
+            () => { return false; },
             () => { Debug.Log("TO IDDLE FROM MOVE TRIGGER"); }
         ); AddTransition(toIddle, PlayerController.Iddle);
     }

@@ -1,69 +1,80 @@
-using UnityEngine;
 using System.Collections;
+using UnityEngine;
 
 [RequireComponent(typeof(AudioSource))]
-public class AudioElement : MonoBehaviour {
+public class AudioElement : BasicElement<AudioElement> {
 
     public AudioSource Source { get { return GetComponent<AudioSource>(); } }
 
-    public void Play() {
+    public AudioElement Reset() {
+        Stop(); Play(Source.volume);
+        return this;
+    }
+
+    public AudioElement Play(float volume = -1f) {
+        Source.volume = (volume == -1f ? Source.volume : volume);
         Source.Play();
+        return this;
     }
 
-    public void Stop() {
+    public AudioElement Stop() {
         Source.Pause();
+        return this;
     }
 
-    public void FadeOut(float time) {
-        StartCoroutine(C_FadeOut(time));
-    }
-
-    public void FadeIn(float time) {
-        Play(); Source.volume = 0.0f;
-        StartCoroutine(C_FadeIn(time));
-    }
-
-    private IEnumerator C_FadeIn(float time) {
-        yield return new WaitForSeconds(time);
-        if (Source.volume <= 0.9f) {
-            Source.volume += 0.1f * Time.deltaTime;
-            StartCoroutine(C_FadeIn(time));
+    public AudioElement FadeOut(float time, float delay = 0f, float min = 0f) {
+        if (Source.isPlaying) {
+            StartCoroutine(C_FadeAudio(time, delay, Source.volume, min));
         }
-        yield return null;
+        return this;
     }
 
-    private IEnumerator C_FadeOut(float time) {
-        yield return new WaitForSeconds(time);
-        if (Source.volume >= 0.01f) {
-            Source.volume -= 0.1f * Time.deltaTime;
-            StartCoroutine(C_FadeOut(time));
+    public AudioElement FadeIn(float time, float delay = 0f, float max = 1f) {
+        if (!Source.isPlaying) {
+            Play(0f);
         }
-        Stop();
-        yield return null;
+        StartCoroutine(C_FadeAudio(time, delay, Source.volume, max));
+        return this;
     }
 
-    public void PlayDelayed(float delay) {
+    private IEnumerator C_FadeAudio(float time, float delay, float start, float end) {
+        yield return new WaitForSeconds(delay);
+        float startTime = Time.time;
+        while (Time.time < startTime + time) {
+            Source.volume = Mathf.Lerp(start, end, (Time.time - startTime) / time);
+            yield return null;
+        }
+        Source.volume = end;
+    }
+
+    public AudioElement PlayDelayed(float delay) {
         Source.PlayDelayed(delay);
+        return this;
     }
 
-    public void PlayScheduled(double time) {
+    public AudioElement PlayScheduled(double time) {
         Source.PlayScheduled(time);
+        return this;
     }
 
-    public void Mute() {
+    public AudioElement Mute() {
         Source.mute = true;
+        return this;
     }
 
-    public void UnMute() {
+    public AudioElement UnMute() {
         Source.mute = false;
+        return this;
     }
 
-    public void EnableByPassEffects() {
+    public AudioElement EnableByPassEffects() {
         Source.bypassEffects = true;
+        return this;
     }
 
-    public void DisableByPassEffects() {
+    public AudioElement DisableByPassEffects() {
         Source.bypassEffects = false;
+        return this;
     }
 
     public AudioElement looped() {
@@ -72,18 +83,7 @@ public class AudioElement : MonoBehaviour {
     }
 
     public AudioElement destroyoAtEnd() {
-        this.gameObject.AddComponent<Destroyable>().destroyIn(Source.clip.length - Source.time);
-        return this;
-    }
-
-    public AudioElement destroyOnTime(float time) {
-        this.gameObject.AddComponent<Destroyable>().destroyIn(time);
-        return this;
-    }
-
-    public AudioElement persistent() {
-        Destroyable ds = this.gameObject.GetComponent<Destroyable>();
-        if (ds != null) { GameObject.Destroy(ds); }
+        destroyOnTime(Source.clip.length - Source.time);
         return this;
     }
 
@@ -107,23 +107,23 @@ public class AudioElement : MonoBehaviour {
         return this;
     }
 
-    public AudioElement with3D(float value = 1.0f) {
+    public AudioElement with3D(float value = 1f) {
         Source.spatialBlend = value;
         return this;
     }
 
-    public AudioElement with2D(float value = 0.0f) {
+    public AudioElement with2D(float value = 0f) {
         with3D(value);
         return this;
     }
 
-    public AudioElement onMinMaxDistance(float min = 0.0f, float max = 12.0f) {
+    public AudioElement onMinMaxDistance(float min = 0f, float max = 12f) {
         Source.maxDistance = max;
         Source.minDistance = min;
         return this;
     }
 
-    public AudioElement rollOfType(AudioRolloffMode type, float min = 0.0f, float max = 12.0f) {
+    public AudioElement rollOfType(AudioRolloffMode type, float min = 0f, float max = 12f) {
         Source.rolloffMode = type;
         onMinMaxDistance(min, max);
         return this;
@@ -135,16 +135,6 @@ public class AudioElement : MonoBehaviour {
 
     public AudioElement randomVolume(float min, float max) {
         return withVolumeEq(Random.Range(min, max));
-    }
-
-    public AudioElement setParent(Transform parent) {
-        this.transform.SetParent(parent);
-        return this;
-    }
-
-    public AudioElement setPosition(Vector3 position) {
-        this.transform.position = position;
-        return this;
     }
 
 

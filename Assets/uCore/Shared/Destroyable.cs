@@ -19,7 +19,7 @@ public class Destroyable : MonoBehaviour {
     // Método para Coroutine
     private IEnumerator DestroyOnTime() {
         yield return new WaitForSeconds(_destroyTime);
-        UnityEngine.GameObject.Destroy(this.gameObject);
+        GameObject.Destroy(this.gameObject);
     }
 
 

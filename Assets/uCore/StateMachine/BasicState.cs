@@ -34,9 +34,9 @@ public abstract class BasicState : MonoBehaviour, IState {
     public abstract void OnExit();
 
     /** Time Control */
-    public void ActiveTime() { TimeActive += Time.deltaTime; } 
+    public void ActiveTime() { TimeActive += Time.deltaTime; }
     public void InactiveTime() { TimeInactive += Time.deltaTime; }
-    public void ResetTime() { TimeActive = 0.0f; TimeInactive = 0.0f; }
+    public void ResetTime() { TimeActive = 0f; TimeInactive = 0f; }
 
     /** Transition control */
     public void AddTransition(StateTransition transition, BasicState next) {

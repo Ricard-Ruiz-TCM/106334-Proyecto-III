@@ -4,12 +4,12 @@ public class PlayerIddle : AnimatedState {
 
     public override void CreateTransitions() {
         StateTransition toMove = new StateTransition(
-            () => { return uCore.Action.MoveForward(); },
+            () => { return false; },
             () => { Debug.Log("Move Trigger"); }
         ); AddTransition(toMove, PlayerController.Move);
 
         StateTransition toJump = new StateTransition(
-            () => { return uCore.Action.Jump(); },
+            () => { return false; },
             () => { Debug.Log("Jump Trigger"); }
         ); AddTransition(toJump, PlayerController.Jump);
     }

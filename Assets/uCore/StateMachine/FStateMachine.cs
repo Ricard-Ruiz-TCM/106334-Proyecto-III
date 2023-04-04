@@ -45,9 +45,11 @@ public class FStateMachine : MonoBehaviour {
 
     private void ILoadStates(BasicState state) {
         if (States == null) {
-            States = new List<BasicState>(); }
+            States = new List<BasicState>();
+        }
         if (States.Contains(state)) {
-            return; }
+            return;
+        }
         States.Add(state);
         state.StateMachine = this;
         state.CreateTransitions();
@@ -83,7 +85,8 @@ public class FStateMachine : MonoBehaviour {
 
     public void UpdateMachine() {
         if (Status.Equals(status.Inactive)) {
-            return; }
+            return;
+        }
         foreach (StateTransition t in CurrentState.Transitions) {
             if (t.CheckTransition()) {
                 ChangeState(t.Next(), t.OnTrigger);

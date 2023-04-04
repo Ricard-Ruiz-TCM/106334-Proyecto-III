@@ -4,7 +4,7 @@ public class PlayerJump : AnimatedState {
 
     public override void CreateTransitions() {
         StateTransition toIddle = new StateTransition(
-            () => { return !uCore.Action.Jump(); },
+            () => { return false; },
             () => { Debug.Log("TO IDDLE FROM JUMP TRIGGER"); }
         ); AddTransition(toIddle, PlayerController.Iddle);
     }

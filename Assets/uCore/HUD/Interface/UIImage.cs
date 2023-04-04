@@ -12,14 +12,14 @@ public class UIImage : MonoBehaviour {
     // Método para llenar la barra, o full o valores X
     // In: value -> Nuevo valor
     // In: maxValue -> Valor máximo posible de value
-    public void Fill(float value = 1.0f, float maxValue = 1.0f) {
+    public void Fill(float value = 1f, float maxValue = 1f) {
         m_value = value / maxValue;
         m_Image.fillAmount = m_value;
     }
 
     // Método para vaciar la barra
     public void Clear() {
-        Fill(0.0f);
+        Fill(0f);
     }
 
 }

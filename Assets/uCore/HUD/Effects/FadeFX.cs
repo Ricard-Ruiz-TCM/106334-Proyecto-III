@@ -14,7 +14,7 @@ public class FadeFX : MonoBehaviour {
     // CallBack para el end del fade
     private Action m_CallBack;
 
-    private float m_Max = 1.0f;
+    private float m_Max = 1f;
 
     // Imagen
     private Image m_Fade;
@@ -43,7 +43,7 @@ public class FadeFX : MonoBehaviour {
         m_Fade.color = m_Color;
 
         // Desactivamos el fadeo si hemos lelgado al límite
-        if ((m_Color.a >= m_Max) || (m_Color.a <= 0.0f)) {
+        if ((m_Color.a >= m_Max) || (m_Color.a <= 0f)) {
             m_Fading = false;
             if (m_CallBackAction) {
                 m_CallBack();
@@ -62,8 +62,8 @@ public class FadeFX : MonoBehaviour {
     // Método para configurar un FadeIn
     // In: Action callback = null -> Método que se ejecutara una vez se acabe el FadeIn
     public void FadeIn(Action callback = null) {
-        m_Max = 1.0f;
-        m_Color.a = 0.0f;
+        m_Max = 1f;
+        m_Color.a = 0f;
         if (m_Fade == null)
             m_Fading = GetComponent<Image>();
         m_Fade.color = m_Color;
@@ -75,8 +75,8 @@ public class FadeFX : MonoBehaviour {
     // Método para configurar un FadeOut
     // In: Action callback = null -> Método que se ejecutara una vez se acabe el FadeOut
     public void FadeOut(Action callback = null) {
-        m_Max = 1.0f;
-        m_Color.a = 1.0f;
+        m_Max = 1f;
+        m_Color.a = 1f;
         if (m_Fade == null)
             m_Fading = GetComponent<Image>();
         m_Fade.color = m_Color;

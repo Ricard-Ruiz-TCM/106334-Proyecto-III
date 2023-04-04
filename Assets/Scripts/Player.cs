@@ -34,19 +34,14 @@ public class Player : Actor {
         base.Update();
 
         if (uCore.Action.GetKeyDown(KeyCode.A)) {
-            uCore.Audio.PlaySFX("coin");
-        }
-        if (uCore.Action.GetKeyDown(KeyCode.B)) {
-            uCore.Audio.PlaySFX("coin").persistent();
+            uCore.Audio.PlaySoundtrack("pop").FadeIn(3f).persistent();
         }
         if (uCore.Action.GetKeyDown(KeyCode.C)) {
-            uCore.Audio.PlaySFX("boom", new Vector3(4.0f, 0.0f, 2.0f)).persistent().looped().onMinMaxDistance(3.0f, 52.0f);
+            uCore.Audio.PlaySFX("coin", transform);
         }
-        if (uCore.Action.GetKeyDown(KeyCode.D)) {
-            uCore.Audio.PlaySFX("boom", GameObject.Find("Cube").transform);
-        }
-        if (uCore.Action.GetKeyDown(KeyCode.E)) {
-            uCore.Audio.PlaySoundTrack("pop");
+
+        if (uCore.Action.GetKeyDown(KeyCode.B)) {
+            uCore.Audio.PlaySoundtrack("pop").FadeOut(2f);
         }
 
     }

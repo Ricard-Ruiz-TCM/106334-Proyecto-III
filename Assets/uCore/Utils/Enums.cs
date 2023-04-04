@@ -10,3 +10,6 @@ public enum audioType { SFX_3D, SFX_2D, SoundTrack }
 
 // Enum que determina el timpo de Input D: (algo más "homemade")
 public enum inputScheme { Keyboard, GamePad }
+
+// Enum para indicar los idiomas que tiene le juego en temas de Localización
+public enum language { EN, ES }

@@ -7,83 +7,102 @@ public class uCore : MonoBehaviour {
     private static string _suFix = " <-- @2@ ?";
 
     // ----------------------------------------- //
-    private static ActionManager m_ActionManager = null;
+    private static ActionManager _actionManager = null;
     public static ActionManager Action {
         get {
-            if (m_ActionManager != null)
-                return m_ActionManager;
+            if (_actionManager != null)
+                return _actionManager;
 
-            m_ActionManager = GameObject.FindObjectOfType<ActionManager>();
-            if (m_ActionManager != null)
-                return m_ActionManager;
+            _actionManager = GameObject.FindObjectOfType<ActionManager>();
+            if (_actionManager != null)
+                return _actionManager;
 
             // MUST NEED del PlayerInput para funcionar de forma correcta
-            m_ActionManager = new GameObject(_preFix + "InputActions" + _suFix).AddComponent<ActionManager>();
-            PlayerInput l_playerInput = m_ActionManager.GetComponent<PlayerInput>();
+            _actionManager = new GameObject(_preFix + "InputActions" + _suFix).AddComponent<ActionManager>();
+            PlayerInput l_playerInput = _actionManager.GetComponent<PlayerInput>();
             l_playerInput.actions = Resources.Load<InputActionAsset>("Settings/InputActions");
             l_playerInput.currentActionMap = l_playerInput.actions.actionMaps[0];
             // \ MUST NEED \
 
-            m_ActionManager.transform.SetParent(uCore.GameManager.transform);
+            _actionManager.transform.SetParent(uCore.GameManager.transform);
 
-            return m_ActionManager;
+            return _actionManager;
         }
     }
     // ----------------------------------------- //
 
     // ----------------------------------------- //
-    private static AudioManager m_AudioManager = null;
+    private static AudioManager _audioManager = null;
     public static AudioManager Audio {
         get {
-            if (m_AudioManager != null)
-                return m_AudioManager;
+            if (_audioManager != null)
+                return _audioManager;
 
-            m_AudioManager = GameObject.FindObjectOfType<AudioManager>();
-            if (m_AudioManager != null)
-                return m_AudioManager;
+            _audioManager = GameObject.FindObjectOfType<AudioManager>();
+            if (_audioManager != null)
+                return _audioManager;
 
-            m_AudioManager = new GameObject(_preFix + "Audio" + _suFix).AddComponent<AudioManager>();
-            m_AudioManager.transform.SetParent(uCore.GameManager.transform);
+            _audioManager = new GameObject(_preFix + "Audio" + _suFix).AddComponent<AudioManager>();
+            _audioManager.transform.SetParent(uCore.GameManager.transform);
 
-            return m_AudioManager;
+            return _audioManager;
         }
     }
     // ----------------------------------------- //
 
     // ----------------------------------------- //
-    private static SceneDirector m_Scenedirector = null;
+    private static SceneDirector _sceneDirector = null;
     public static SceneDirector Director {
         get {
-            if (m_Scenedirector != null)
-                return m_Scenedirector;
+            if (_sceneDirector != null)
+                return _sceneDirector;
 
-            m_Scenedirector = GameObject.FindObjectOfType<SceneDirector>();
-            if (m_Scenedirector != null)
-                return m_Scenedirector;
+            _sceneDirector = GameObject.FindObjectOfType<SceneDirector>();
+            if (_sceneDirector != null)
+                return _sceneDirector;
 
-            m_Scenedirector = new GameObject(_preFix + "Director" + _suFix).AddComponent<SceneDirector>();
-            m_Scenedirector.transform.SetParent(uCore.GameManager.transform);
+            _sceneDirector = new GameObject(_preFix + "Director" + _suFix).AddComponent<SceneDirector>();
+            _sceneDirector.transform.SetParent(uCore.GameManager.transform);
 
-            return m_Scenedirector;
+            return _sceneDirector;
         }
     }
     // ----------------------------------------- //
 
     // ----------------------------------------- //
-    private static ParticleInstancer m_ParticleInstancer = null;
+    private static ParticleInstancer _particleInstancer = null;
     public static ParticleInstancer Particles {
         get {
-            if (m_ParticleInstancer != null)
-                return m_ParticleInstancer;
+            if (_particleInstancer != null)
+                return _particleInstancer;
 
-            m_ParticleInstancer = GameObject.FindObjectOfType<ParticleInstancer>();
-            if (m_ParticleInstancer != null)
-                return m_ParticleInstancer;
+            _particleInstancer = GameObject.FindObjectOfType<ParticleInstancer>();
+            if (_particleInstancer != null)
+                return _particleInstancer;
 
-            m_ParticleInstancer = new GameObject(_preFix + "Particles").AddComponent<ParticleInstancer>();
-            m_ActionManager.transform.SetParent(uCore.GameManager.transform);
+            _particleInstancer = new GameObject(_preFix + "Particles").AddComponent<ParticleInstancer>();
+            _actionManager.transform.SetParent(uCore.GameManager.transform);
 
-            return m_ParticleInstancer;
+            return _particleInstancer;
+        }
+    }
+    // ----------------------------------------- //
+
+    // ----------------------------------------- //
+    private static LocalizationManager _localizationManager = null;
+    public static LocalizationManager Localization {
+        get {
+            if (_localizationManager != null)
+                return _localizationManager;
+
+            _localizationManager = GameObject.FindObjectOfType<LocalizationManager>();
+            if (_localizationManager != null)
+                return _localizationManager;
+
+            _localizationManager = new GameObject(_preFix + "Localization").AddComponent<LocalizationManager>();
+            _localizationManager.transform.SetParent(uCore.GameManager.transform);
+
+            return _localizationManager;
         }
     }
     // ----------------------------------------- //
@@ -103,19 +122,19 @@ public class uCore : MonoBehaviour {
     // ----------------------------------------- //
 
     // ----------------------------------------- //
-    private static GameManager m_GameManager = null;
+    private static GameManager _gameManager = null;
     public static GameManager GameManager {
         get {
-            if (m_GameManager != null)
-                return m_GameManager;
+            if (_gameManager != null)
+                return _gameManager;
 
-            m_GameManager = GameObject.FindObjectOfType<GameManager>();
-            if (m_GameManager != null)
-                return m_GameManager;
+            _gameManager = GameObject.FindObjectOfType<GameManager>();
+            if (_gameManager != null)
+                return _gameManager;
 
-            m_GameManager = new GameObject(_preFix + "uCore").AddComponent<uCore>().gameObject.AddComponent<GameManager>();
+            _gameManager = new GameObject(_preFix + "uCore").AddComponent<uCore>().gameObject.AddComponent<GameManager>();
 
-            return m_GameManager;
+            return _gameManager;
         }
     }
     // ----------------------------------------- //
@@ -128,7 +147,7 @@ public class uCore : MonoBehaviour {
         if (count >= 1) {
             for (var i = 1; i < instances.Length; i++)
                 GameObject.Destroy(instances[i].gameObject);
-            m_GameManager = instances[0];
+            _gameManager = instances[0];
         }
     }
 

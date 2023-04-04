@@ -9,15 +9,7 @@ public class UIText : MonoBehaviour {
     private string _textKey = "";
 
     // Text
-    private TextMeshProUGUI _text {
-        get {
-            if (_text == null) 
-                _text = GetComponent<TextMeshProUGUI>();
-
-            return _text;
-        }
-        set { _text = value; }
-    }
+    private TextMeshProUGUI _text;
 
     // Unity OnEnable
     private void OnEnable() {
@@ -31,6 +23,7 @@ public class UIText : MonoBehaviour {
 
     // Unity Awake
     void Awake() {
+        _text = GetComponent<TextMeshProUGUI>();
         _textKey = _text.text;
     }
 

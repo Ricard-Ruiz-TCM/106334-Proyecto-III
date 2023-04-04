@@ -6,11 +6,13 @@ using UnityEngine;
 public class LocalizationManager : MonoBehaviour {
 
     // Estructura del json, montado dentro de una lista de items
+    [Serializable]
     private class LocalizationData {
         public LocalizationItem[] items;
     }
 
     // Estrucura del pairKeysValue del json de Localization
+    [Serializable]
     private class LocalizationItem {
         public string key;
         public string value;

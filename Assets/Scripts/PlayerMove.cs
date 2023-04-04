@@ -6,7 +6,7 @@ public class PlayerMove : AnimatedState {
         StateTransition toIddle = new StateTransition(
             () => { return false; },
             () => { Debug.Log("TO IDDLE FROM MOVE TRIGGER"); }
-        ); AddTransition(toIddle, PlayerController.Iddle);
+        ); AddTransition(toIddle, PlayerStates.Iddle);
     }
 
     public override void OnEnter() { Debug.Log("Move OnEnter"); }

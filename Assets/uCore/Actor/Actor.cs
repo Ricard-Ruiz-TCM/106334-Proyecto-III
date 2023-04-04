@@ -35,5 +35,9 @@ public abstract class Actor : MonoBehaviour {
         from.AddTransition(new StateTransition(condition, trigger), to);
     }
 
+    protected void AddTransition(BasicState from, StateTransition transition, BasicState to) {
+        from.AddTransition(transition, to);
+    }
+
 }
 

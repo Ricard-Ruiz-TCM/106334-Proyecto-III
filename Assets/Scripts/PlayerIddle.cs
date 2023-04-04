@@ -6,12 +6,12 @@ public class PlayerIddle : AnimatedState {
         StateTransition toMove = new StateTransition(
             () => { return false; },
             () => { Debug.Log("Move Trigger"); }
-        ); AddTransition(toMove, PlayerController.Move);
+        ); AddTransition(toMove, PlayerStates.Move);
 
         StateTransition toJump = new StateTransition(
             () => { return false; },
             () => { Debug.Log("Jump Trigger"); }
-        ); AddTransition(toJump, PlayerController.Jump);
+        ); AddTransition(toJump, PlayerStates.Jump);
     }
 
     public override void OnEnter() { Debug.Log("Iddle OnEnter"); }

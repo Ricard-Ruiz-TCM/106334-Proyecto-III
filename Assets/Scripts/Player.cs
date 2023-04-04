@@ -1,7 +1,6 @@
 using UnityEngine;
 
-public struct PlayerController {
-    public static Player Actor;
+public struct PlayerStates {
     public static PlayerIddle Iddle;
     public static PlayerMove Move;
     public static PlayerJump Jump;
@@ -11,18 +10,23 @@ public class Player : Actor {
 
     protected override void ConstructMachine() {
 
-        PlayerController.Actor = this;
-
-        PlayerController.Iddle = GetComponent<PlayerIddle>();
-        PlayerController.Move = GetComponent<PlayerMove>();
-        PlayerController.Jump = GetComponent<PlayerJump>();
+        PlayerStates.Iddle = GetComponent<PlayerIddle>();
+        PlayerStates.Move = GetComponent<PlayerMove>();
+        PlayerStates.Jump = GetComponent<PlayerJump>();
 
         StateMachine.LoadStates();
 
-        StateMachine.InnitialState = PlayerController.Iddle;
+        StateMachine.InnitialState = PlayerStates.Iddle;
 
-        CreateTransitions(PlayerController.Iddle, PlayerController.Jump,
+        CreateTransitions(PlayerStates.Iddle, PlayerStates.Jump,
             () => { return false; });
+
+        StateTransition transition = new StateTransition(
+            () => { return false; },
+            () => { });
+
+        AddTransition(PlayerStates.Move, transition, PlayerStates.Iddle);
+
     }
 
     protected new void Awake() {

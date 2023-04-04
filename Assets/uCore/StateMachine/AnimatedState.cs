@@ -4,13 +4,13 @@ using UnityEngine;
 public abstract class AnimatedState : BasicState {
 
     // Animator
-    private Animator animator;
+    private Animator _animator;
     public Animator Animator {
         get {
-            if (animator == null) {
-                animator = GetComponent<Animator>();
+            if (_animator == null) {
+                _animator = GetComponent<Animator>();
             }
-            return animator;
+            return _animator;
         }
     }
 

@@ -3,8 +3,8 @@ using UnityEngine.InputSystem;
 
 public class uCore : MonoBehaviour {
 
-    private static string _preFix = "** -> ? ?? ";
-    private static string _suFix = " <-- @2@ ?";
+    private static string _preFix = "-->  ";
+    private static string _suFix = " -|";
 
     // ----------------------------------------- //
     private static ActionManager _actionManager = null;
@@ -99,7 +99,7 @@ public class uCore : MonoBehaviour {
             if (_localizationManager != null)
                 return _localizationManager;
 
-            _localizationManager = new GameObject(_preFix + "Localization").AddComponent<LocalizationManager>();
+            _localizationManager = new GameObject(_preFix + "Localization" + _suFix).AddComponent<LocalizationManager>();
             _localizationManager.transform.SetParent(uCore.GameManager.transform);
 
             return _localizationManager;
@@ -132,7 +132,7 @@ public class uCore : MonoBehaviour {
             if (_gameManager != null)
                 return _gameManager;
 
-            _gameManager = new GameObject(_preFix + "uCore").AddComponent<uCore>().gameObject.AddComponent<GameManager>();
+            _gameManager = new GameObject(_preFix + "uCore" + _suFix).AddComponent<uCore>().gameObject.AddComponent<GameManager>();
 
             return _gameManager;
         }

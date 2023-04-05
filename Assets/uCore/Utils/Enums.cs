@@ -1,6 +1,6 @@
 ﻿
 // Enum con las escenas del juego IMPORTANTE "Match" de nombre
-public enum gameScenes { None, Intro, Menu, Game, GameOver, LoadingScene }
+public enum gameScenes { Intro, Menu, Game, GameOver, LoadingScene }
 
 // Enum "básico" para determinar el estado de algo
 public enum status { Active, Inactive }
@@ -12,7 +12,7 @@ public enum fsmSecurity { None, Soft, Hard }
 public enum audioType { SFX_3D, SFX_2D, SoundTrack }
 
 // Enum que determina el timpo de Input D: (algo más "homemade")
-public enum inputScheme { Keyboard, GamePad }
+public enum inputScheme { Keyboard, Mouse, GamePad }
 
 // Enum para indicar los idiomas que tiene le juego en temas de Localización
 public enum language { EN, ES }

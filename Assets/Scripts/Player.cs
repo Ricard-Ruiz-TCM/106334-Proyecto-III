@@ -16,8 +16,6 @@ public class Player : Actor {
 
         StateMachine.LoadStates();
 
-        StateMachine.InnitialState = PlayerStates.Iddle;
-
         CreateTransitions(PlayerStates.Iddle, PlayerStates.Jump,
             () => { return false; });
 
@@ -27,6 +25,7 @@ public class Player : Actor {
 
         AddTransition(PlayerStates.Move, transition, PlayerStates.Iddle);
 
+        StateMachine.InnitialState = PlayerStates.Iddle;
     }
 
     protected new void Awake() {

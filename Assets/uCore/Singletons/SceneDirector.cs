@@ -21,10 +21,8 @@ public class SceneDirector : MonoBehaviour {
         yield return null;
         _asyncOp = SceneManager.LoadSceneAsync(scene.ToString());
         _asyncOp.allowSceneActivation = allow;
-        if (_asyncOp.allowSceneActivation) {
-            while (!_asyncOp.isDone) { yield return null; }
-        } else {
-            while (_asyncOp.progress < 0.9f) { yield return null; } 
+        while (!_asyncOp.isDone && _asyncOp.progress < 0.9f) { 
+            yield return null;
         }
         OnSceneLoaded?.Invoke();
     }
@@ -35,7 +33,7 @@ public class SceneDirector : MonoBehaviour {
 
     private IEnumerator C_AllowScene() {
         while (_asyncOp == null) { yield return null; }
-        if (_asyncOp != null) _asyncOp.allowSceneActivation = true;
+        _asyncOp.allowSceneActivation = true;
     }
 
     public bool LoadingDone() {

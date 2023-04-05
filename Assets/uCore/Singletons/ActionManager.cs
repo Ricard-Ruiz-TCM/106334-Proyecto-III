@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Utilities;
 
 [RequireComponent(typeof(PlayerInput))]
 public class ActionManager : MonoBehaviour {
@@ -22,6 +23,16 @@ public class ActionManager : MonoBehaviour {
     // InputActions for all Unity KeyCodes
     private Dictionary<KeyCode, InputAction> _keyActions;
 
+    // Determine if the input system is ready to use
+    private bool _ready = false;
+    public bool Ready() { return _ready; }
+
+    // Unity OnEnable
+    void OnEnable() {
+        // Observer de onAnyButtonPress
+        InputSystem.onAnyButtonPress.CallOnce(OnAnyButtonPress);
+    }
+
     // Unity Awake
     void Awake() {
         _input = GetComponent<PlayerInput>();
@@ -38,6 +49,13 @@ public class ActionManager : MonoBehaviour {
         OnChangeInput?.Invoke(Scheme());
     }
     // A ----------------------------------------- A
+
+    void OnAnyButtonPress(InputControl inputControl) {
+        if (!Enum.TryParse(inputControl.device.description.deviceClass, out _currentScheme)) {
+            Debug.LogWarning("ActionManager -> Device nos supported: " + inputControl.device.description.deviceClass);
+        } else { _ready = true; }
+        OnChangeInput?.Invoke(Scheme());
+    }
 
     // * ------------------------- *
     // | - KeyCodes InputActions - |
@@ -61,6 +79,9 @@ public class ActionManager : MonoBehaviour {
     public bool GetKeyUp(KeyCode key) {
         AddNewKey(key);
         return _keyActions[key].WasReleasedThisFrame();
+    }
+    private void OnAnyButtonPress(InputAction.CallbackContext context) {
+        Debug.Log("Input captured: " + context.control.device.displayName);
     }
     // A ------------------------- A
 

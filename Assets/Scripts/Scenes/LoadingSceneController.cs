@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Utilities;
 
 public class LoadingSceneController : MonoBehaviour {
 
@@ -22,9 +24,7 @@ public class LoadingSceneController : MonoBehaviour {
     // Unity Update
     void Update() {
         if (_waitForInput) {
-            if (uCore.Action.GetKeyDown(KeyCode.Space)) {
-                uCore.Director.AllowScene();
-            }
+            if (uCore.Action.Ready()) uCore.Director.AllowScene();
         }
     }
 
@@ -33,7 +33,5 @@ public class LoadingSceneController : MonoBehaviour {
         _loadingPanel.SetActive(false);
         _waitForInput = true;
     }
-
-
 
 }

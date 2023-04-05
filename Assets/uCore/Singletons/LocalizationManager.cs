@@ -25,7 +25,7 @@ public class LocalizationManager : MonoBehaviour {
     private language _language = language.EN;
 
     [SerializeField, Header("Localization file Path:")]
-    private string _LocalizationPath = "/Localization/";
+    private string _LocalizationPath = "/Resources/Localization/";
     [Header("Localization file format:")]
     private string _format = ".json";
 
@@ -38,12 +38,14 @@ public class LocalizationManager : MonoBehaviour {
     }
 
     public void ChangeLocalization(language len) {
-        LoadLocalizationFile(Application.streamingAssetsPath + _LocalizationPath + _language.ToString() + _format);
+        _language = len;
+        LoadLocalizationFile(Application.dataPath + _LocalizationPath + _language.ToString() + _format);
         OnChangeLocalization?.Invoke();
     }
 
     private void LoadLocalizationFile(string path) {
         if (File.Exists(path)) {
+            _texts.Clear();
             string json = File.ReadAllText(path);
             LocalizationData loadedData = JsonUtility.FromJson<LocalizationData>(json);
             for (int i = 0; i < loadedData.items.Length; i++) {
@@ -54,7 +56,7 @@ public class LocalizationManager : MonoBehaviour {
 
     public string GetText(string key) {
         if (!_texts.ContainsKey(key))
-            return "NO_KEY_FOUND";
+            return "X " + key + " X";
 
         return _texts[key];
     }

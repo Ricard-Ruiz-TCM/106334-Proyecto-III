@@ -16,8 +16,4 @@ public class MenuController : MonoBehaviour {
         Application.Quit(0);
     }
 
-    public void BTN_Album() {
-
-    }
-
 }

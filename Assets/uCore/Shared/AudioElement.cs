@@ -82,7 +82,7 @@ public class AudioElement : BasicElement<AudioElement> {
         return this;
     }
 
-    public AudioElement destroyoAtEnd() {
+    public override AudioElement destroyoAtEnd() {
         destroyOnTime(Source.clip.length - Source.time);
         return this;
     }

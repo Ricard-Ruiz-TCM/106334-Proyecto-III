@@ -24,8 +24,8 @@ public class ActionManager : MonoBehaviour {
     private Dictionary<KeyCode, InputAction> _keyActions;
 
     // Determine if the input system is ready to use
-    private bool _ready = false;
-    public bool Ready() { return _ready; }
+    private bool _isConfigured = false;
+    public bool Configured() { return _isConfigured; }
 
     // Unity OnEnable
     void OnEnable() {
@@ -53,7 +53,7 @@ public class ActionManager : MonoBehaviour {
     void OnAnyButtonPress(InputControl inputControl) {
         if (!Enum.TryParse(inputControl.device.description.deviceClass, out _currentScheme)) {
             Debug.LogWarning("ActionManager -> Device nos supported: " + inputControl.device.description.deviceClass);
-        } else { _ready = true; }
+        } else { _isConfigured = true; }
         OnChangeInput?.Invoke(Scheme());
     }
 
@@ -79,9 +79,6 @@ public class ActionManager : MonoBehaviour {
     public bool GetKeyUp(KeyCode key) {
         AddNewKey(key);
         return _keyActions[key].WasReleasedThisFrame();
-    }
-    private void OnAnyButtonPress(InputAction.CallbackContext context) {
-        Debug.Log("Input captured: " + context.control.device.displayName);
     }
     // A ------------------------- A
 

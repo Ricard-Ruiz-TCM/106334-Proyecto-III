@@ -108,15 +108,20 @@ public class uCore : MonoBehaviour {
     // ----------------------------------------- //
 
     // ----------------------------------------- //
-    private static FadeFX m_Fader = null;
-    public static FadeFX FadeFX {
+    private static EffectsManager _effects = null;
+    public static EffectsManager Effects {
         get {
-            if (m_Fader != null)
-                return m_Fader;
+            if (_effects != null)
+                return _effects;
 
-            m_Fader = GameObject.FindObjectOfType<FadeFX>();
+            _effects = GameObject.FindObjectOfType<EffectsManager>();
+            if (_effects != null)
+                return _effects;
 
-            return m_Fader;
+            _effects = new GameObject(_preFix + "Effects" + _suFix).AddComponent<EffectsManager>();
+            _effects.transform.SetParent(uCore.GameManager.transform);
+
+            return _effects;
         }
     }
     // ----------------------------------------- //

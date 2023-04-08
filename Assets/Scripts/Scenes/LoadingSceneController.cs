@@ -1,6 +1,4 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.Utilities;
 
 public class LoadingSceneController : MonoBehaviour {
 
@@ -9,29 +7,35 @@ public class LoadingSceneController : MonoBehaviour {
     [SerializeField]
     private GameObject _loadingPanel;
 
-    private bool _waitForInput = false;
+    private bool _sceneLoaded = false;
 
     // Unity OnEnable
     void OnEnable() {
-        SceneDirector.OnSceneLoaded += WaitInput;
+        SceneDirector.OnSceneLoaded += OnSceneLoaded;
     }
 
     // Unity OnDisable
     void OnDisable() {
-        SceneDirector.OnSceneLoaded -= WaitInput;
+        SceneDirector.OnSceneLoaded -= OnSceneLoaded;
     }
 
     // Unity Update
     void Update() {
-        if (_waitForInput) {
-            if (uCore.Action.Ready()) uCore.Director.AllowScene();
+        if (_sceneLoaded) {
+            if (uCore.Action.Configured()) {
+                uCore.Director.AllowScene();
+            }
         }
     }
 
-    private void WaitInput() {
-        _inputPanel.SetActive(true);
-        _loadingPanel.SetActive(false);
-        _waitForInput = true;
+    // OnSceneLoaded Callback observer
+    private void OnSceneLoaded() {
+        // Innitial input configured
+        if (!uCore.Action.Configured()) {
+            _inputPanel.SetActive(true);
+            _loadingPanel.SetActive(false);
+        }
+        _sceneLoaded = true;
     }
 
 }

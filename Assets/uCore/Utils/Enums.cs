@@ -16,3 +16,6 @@ public enum inputScheme { Keyboard, Mouse, GamePad }
 
 // Enum para indicar los idiomas que tiene le juego en temas de Localización
 public enum language { EN, ES }
+
+// Enum para los diferentes efectos disponibles
+public enum effects { fadeIn, fadeOut, cameraShake }

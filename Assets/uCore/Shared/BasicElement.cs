@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class BasicElement<T> : MonoBehaviour where T : MonoBehaviour {
+public abstract class BasicElement<T> : MonoBehaviour where T : MonoBehaviour {
 
     public T destroyOnTime(float time) {
         this.gameObject.AddComponent<Destroyable>().destroyIn(time);
@@ -23,4 +23,6 @@ public class BasicElement<T> : MonoBehaviour where T : MonoBehaviour {
         return this as T;
     }
 
+    public abstract T destroyoAtEnd();
+    
 }

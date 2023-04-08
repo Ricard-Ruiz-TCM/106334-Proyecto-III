@@ -9,7 +9,7 @@ public class ParticleElement : BasicElement<ParticleElement> {
         return this;
     }
 
-    public ParticleElement destroyoAtEnd() {
+    public override ParticleElement destroyoAtEnd() {
         destroyOnTime(System.main.duration);
         return this;
     }

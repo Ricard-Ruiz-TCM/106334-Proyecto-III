@@ -3,10 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /** class StateMachine
- * -----------------
+ * --------------------
+ * 
+ * Maquina de estaados finita y completa
+ * Los estados funcionan con el sistema de componentes, la máquina añade diferentes niveles de seguridad
+ * Los estados son independientes ycontrolan las transiciones
+ * La maquina hace los "Update"
+ * 
+ * @see StateTransition
+ * @see BasicState
+ * @see status
+ * @see fsmSecurity
  * 
  * @author: Nosink Ð (Ricard Ruiz)
  * @version: v4.0 (02/2023)
+ * 
  */
 
 public class FStateMachine : MonoBehaviour {
@@ -23,14 +34,16 @@ public class FStateMachine : MonoBehaviour {
     private BasicState CurrentState;
 
     /** All BasicStates */
-    [SerializeField, Header("All Machine States:")]
+    [SerializeField, Header("All States:")]
     private List<BasicState> States;
 
-    // Load States 
+    /** Método LoadStates
+     * Carga los estados que tiene de componentes
+     * CArga los estados que pasamos por parametros
+     * @param params BAsicStates[] state Listado de estados agregados por comas */
     public void LoadStates() {
         LoadStates(GetComponents<BasicState>());
     }
-
     public void LoadStates(params BasicState[] state) {
         foreach (BasicState s in state) {
             if (Security >= fsmSecurity.Hard) {
@@ -43,6 +56,9 @@ public class FStateMachine : MonoBehaviour {
         }
     }
 
+    /** Método ILoadStates
+     * Método interno que carga los estados en la maquina
+     * @param BasicState state Estado para cargar */
     private void ILoadStates(BasicState state) {
         if (States == null) {
             States = new List<BasicState>();
@@ -55,6 +71,11 @@ public class FStateMachine : MonoBehaviour {
         state.CreateTransitions();
     }
 
+    /** Método ChangeState
+     * Cmabia de estados entre el current y el state
+     * Tiene en cuenta la seguridad de la máquina para agregar o no el estado
+     * @param BasicState state Estado destino
+     * @param Action trigger Callback del trigger del StateTransition */
     public void ChangeState(BasicState state, Action trigger = null) {
         if (!States.Contains(state)) {
             if (Security >= fsmSecurity.Soft) {
@@ -70,6 +91,7 @@ public class FStateMachine : MonoBehaviour {
         CurrentState = state;
         CurrentState.OnEnter();
     }
+
     /** Método StartMachine 
      * @param SimpleState Estado inicla o (null, primer estado de la máquina) */
     public void StartMachine() {
@@ -83,6 +105,9 @@ public class FStateMachine : MonoBehaviour {
         CurrentState.OnEnter();
     }
 
+    /** Método UpdateMachine 
+     * Actualiza la maquina, hacinedo el OnState de los estados
+     * Comprueba las transiciones y ejecuta todo el tinglao */
     public void UpdateMachine() {
         if (Status.Equals(status.Inactive)) {
             return;
@@ -90,7 +115,7 @@ public class FStateMachine : MonoBehaviour {
         foreach (StateTransition t in CurrentState.Transitions) {
             if (t.CheckTransition()) {
                 ChangeState(t.Next(), t.OnTrigger);
-                break;
+                return;
             }
         }
         if (CurrentState.Status.Equals(status.Active)) {

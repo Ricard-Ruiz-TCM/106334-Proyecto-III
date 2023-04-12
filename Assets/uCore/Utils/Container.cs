@@ -8,8 +8,10 @@ using UnityEngine;
  * Carga elementos como prefabs, scriptableObjects, etcs.
  *
  * @author: Nosink Ð (Ricard Ruiz)
- * @version: v2.1 (04/2023)
- * */
+ * @version: v2.2 (04/2023)
+ * 
+ */
+
 [System.Serializable]
 public class Container<T> : Object where T : Object {
 
@@ -64,6 +66,7 @@ public class Container<T> : Object where T : Object {
         Diccionary.Add(name, i);
         return Elements[Diccionary[name]];
     }
+
     /** Método Remove
      * @param string name Elemento a eliminar */
     public void Remove(string name) {
@@ -71,6 +74,7 @@ public class Container<T> : Object where T : Object {
         Elements[Diccionary[name]] = null;
         Diccionary.Remove(name);
     }
+
     /** Método Clear */
     public void Clear() {
         Elements.Clear();
@@ -82,6 +86,7 @@ public class Container<T> : Object where T : Object {
     public bool Exists(string name) {
         return Diccionary.ContainsKey(name);
     }
+
     /** Método Load
      * @param string name Elemento a cargar */
     private void ILoad(string name) {
@@ -95,6 +100,7 @@ public class Container<T> : Object where T : Object {
         }
         Diccionary.Add(name, i);
     }
+
     /** Método FindSpot
      * @return int i Valor con un elemento Null o -1 */
     private int FindSpot() {

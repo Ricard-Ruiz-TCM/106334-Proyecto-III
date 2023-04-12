@@ -45,10 +45,10 @@ public abstract class Actor : MonoBehaviour {
     /** Método CreateTransitions
      * Crea una transición y la añade al sistema de estado/transisión de la FSM
      * @param BasicState from Estado origen
-     * @param StateTransition.TConditionDel condition Delegado para controlar la condición de cambio de estado
-     * @param StateTransition.TTriggerDel trigger Delegado para controlar el "in between", se ejecuta entre el OnExit y el OnEnter del cambiod estado
+     * @param StateTransition.TCD condition Delegado para controlar la condición de cambio de estado
+     * @param StateTransition.TTD trigger Delegado para controlar el "in between", se ejecuta entre el OnExit y el OnEnter del cambiod estado
      * @param BasicState to Estado destino */
-    protected void CreateTransition(BasicState from, BasicState to, StateTransition.TConditionDel condition, StateTransition.TTriggerDel trigger = null) {
+    protected void CreateTransition(BasicState from, BasicState to, StateTransition.TCD condition, StateTransition.TTD trigger = null) {
         from.AddTransition(new StateTransition(condition, trigger), to);
     }
 

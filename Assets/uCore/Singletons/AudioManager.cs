@@ -45,7 +45,7 @@ public class AudioManager : MonoBehaviour {
         return PlaySFX(file, type).setPosition(position);
     }
     public AudioElement PlaySFX(string file, Transform parent, audioType type = audioType.SFX_3D) {
-        return IPlay(type, _audios.Get(_SFXPath + file), _sfx).setParent(parent).destroyoAtEnd();
+        return IPlay(type, _audios.Get(_SFXPath + file), _sfx).setParent(parent).destroyAtEnd();
     }
     // A ------------ A
 

@@ -17,7 +17,7 @@ public class Player : Actor {
 
         StateMachine.LoadStates();
 
-        CreateTransitions(PlayerStates.Iddle, PlayerStates.Jump,
+        CreateTransition(PlayerStates.Iddle, PlayerStates.Jump,
             () => { return false; });
 
         StateTransition transition = new StateTransition(

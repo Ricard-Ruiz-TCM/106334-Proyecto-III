@@ -24,7 +24,7 @@ public class ParticleInstancer : MonoBehaviour {
         return PlayParticles(file).setPosition(position);
     }
     public ParticleElement PlayParticles(string file, Transform parent) {
-        return IParticles(file).setParent(parent).destroyoAtEnd();
+        return IParticles(file).setParent(parent).destroyAtEnd();
     }
     // A ------------------ A
 

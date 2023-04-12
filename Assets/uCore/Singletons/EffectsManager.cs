@@ -54,7 +54,7 @@ public class EffectsManager : MonoBehaviour {
         return iFade(Color.white, Color.black, duration, callback).Set(effects.fadeIn);
     }
     public EffectElement FadeOut(float duration, Action callback = null) {
-        return iFade(Color.black, Color.white, duration, callback).Set(effects.fadeOut, duration).destroyoAtEnd();
+        return iFade(Color.black, Color.white, duration, callback).Set(effects.fadeOut, duration).destroyAtEnd();
     }
     private EffectElement iFade(Color from, Color to, float duration, Action callback) {
         // Instantiate
@@ -82,7 +82,7 @@ public class EffectsManager : MonoBehaviour {
         return iCanvasFade(0f, 1f, duration, callback).Set(effects.fadeIn);
     }
     public EffectElement CanvasFadeOut(float duration, Action callback = null) {
-        return iCanvasFade(1f, 0f, duration, callback).Set(effects.fadeOut, duration).destroyoAtEnd();
+        return iCanvasFade(1f, 0f, duration, callback).Set(effects.fadeOut, duration).destroyAtEnd();
     }
     private EffectElement iCanvasFade(float from, float to, float duration, Action callback) {
         // Instantiate
@@ -117,7 +117,7 @@ public class EffectsManager : MonoBehaviour {
     // V ------------------ V
     // Shake
     public EffectElement CameraShake(float duration, float magnitude) {
-        return iCameraShake(duration, magnitude).Set(effects.cameraShake, duration).destroyoAtEnd();
+        return iCameraShake(duration, magnitude).Set(effects.cameraShake, duration).destroyAtEnd();
     }
     private EffectElement iCameraShake(float duration, float magnitude, Action callback = null, GameObject camera = null) {
         // Innitialize

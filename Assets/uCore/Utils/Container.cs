@@ -28,8 +28,7 @@ public class Container<T> : Object where T : Object {
     /** Método Get & Load
      * Busca y/o Carga un elementos nuevo
      * @param string name Ubicación/Nombre del archivo
-     * @return T Elemento almacenado
-     */
+     * @return T Elemento almacenado */
     public T Get(string name) {
         if (!Exists(name)) {
             ILoad(name);
@@ -39,22 +38,21 @@ public class Container<T> : Object where T : Object {
     public T Load(string name) {
         return Get(name);
     }
+
     /** Método TryGet
      * Si existe un elemento, lo saca por OUT
      * @param T elemento encontrado
-     * @return bool True -> Existe | False -> No Existe
-     */
+     * @return bool True -> Existe | False -> No Existe */
     public bool TryGet(string name, out T value) {
         if (Exists(name)) value = Get(name); else value = null;
         return (value != null);
     }
-    /**
-     * Método Add
+
+    /** Método Add
      * Carga un objeto ya creado por código al contenedor
      * @param string name Nombre ID para el diccionario
      * @param T t Elemento ya creado
-     * @return T el elemento creado
-     */
+     * @return T el elemento creado */
     public T Add(string name, T t) {
         int i = FindSpot();
         if (i == -1) {
@@ -85,7 +83,7 @@ public class Container<T> : Object where T : Object {
         return Diccionary.ContainsKey(name);
     }
     /** Método Load
-     * @param string name Elemento a cargar*/
+     * @param string name Elemento a cargar */
     private void ILoad(string name) {
         if (Path == "NONE") return;
         int i = FindSpot();

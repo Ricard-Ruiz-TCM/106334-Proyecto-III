@@ -22,7 +22,7 @@ public class LoadingSceneController : MonoBehaviour {
     // Unity Update
     void Update() {
         if (_sceneLoaded) {
-            if (uCore.Action.Configured()) {
+            if (uCore.Action.isInputConfigured()) {
                 uCore.Director.AllowScene();
             }
         }
@@ -31,7 +31,7 @@ public class LoadingSceneController : MonoBehaviour {
     // OnSceneLoaded Callback observer
     private void OnSceneLoaded() {
         // Innitial input configured
-        if (!uCore.Action.Configured()) {
+        if (!uCore.Action.isInputConfigured()) {
             _inputPanel.SetActive(true);
             _loadingPanel.SetActive(false);
         }

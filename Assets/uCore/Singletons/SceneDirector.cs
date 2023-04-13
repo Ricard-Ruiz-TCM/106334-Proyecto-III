@@ -23,7 +23,6 @@ public class SceneDirector : MonoBehaviour {
      * @param bool allow Indicador si esta escena carga automaticamente al estar cargada o espera aviso */
     public void LoadSceneAsync(gameScenes scene, bool allow = true) {
         StartCoroutine(C_LoadSceneAsync(scene, allow));
-        LoadScene(gameScenes.LoadingScene);
     }
 
     /** Método C_LoadSceneAsync
@@ -54,11 +53,11 @@ public class SceneDirector : MonoBehaviour {
         _asyncOp.allowSceneActivation = true;
     }
 
-    /** Método LoadingDone
+    /** Método isSceneLoaded
      * Comprueba si ha cargado la escena totalmetne
      * @return bool true -> ha cargado false -> no ha cargado */
-    public bool LoadingDone() {
-        return (_asyncOp != null ? _asyncOp.isDone : false);
+    public bool isSceneLoaded() {
+        return (_asyncOp != null ? (_asyncOp.isDone || _asyncOp.progress >= 0.9f) : false);
     }
 
     /** Método LoadingPorgress

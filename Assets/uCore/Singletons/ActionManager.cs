@@ -30,7 +30,7 @@ public class ActionManager : MonoBehaviour {
 
     // Determine if the input system is ready to use
     private bool _isConfigured = false;
-    public bool Configured() {
+    public bool isInputConfigured() {
         return _isConfigured;
     }
 
@@ -56,8 +56,6 @@ public class ActionManager : MonoBehaviour {
             _currentScheme = inputScheme.Keyboard;
         OnChangeInput?.Invoke(Scheme());
     }
-
-    /** IMPLEMENT WITH PLAYER INPUT ACTIONS CONFIGURED ON EDITOR */
 
     // A ----------------------------------------- A
 

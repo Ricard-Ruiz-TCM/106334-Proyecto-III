@@ -15,7 +15,11 @@ using UnityEngine;
 public class ParticleElement : BasicElement<ParticleElement> {
 
     /** ParticleSystem */
-    public ParticleSystem System { get { return GetComponent<ParticleSystem>(); } }
+    public ParticleSystem System {
+        get {
+            return GetComponent<ParticleSystem>();
+        }
+    }
 
     /** Método Play
      * Reproduce el sistema de particulas completo

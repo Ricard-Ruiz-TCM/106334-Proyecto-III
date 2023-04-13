@@ -12,9 +12,15 @@
 public interface IState {
 
     /** Core */
-    public string Name { get; set; }
-    public status Status { get; set; }
-    public FStateMachine StateMachine { get; set; }
+    public string Name {
+        get; set;
+    }
+    public status Status {
+        get; set;
+    }
+    public FStateMachine StateMachine {
+        get; set;
+    }
 
     /** OnEnter */
     public void OnEnter();

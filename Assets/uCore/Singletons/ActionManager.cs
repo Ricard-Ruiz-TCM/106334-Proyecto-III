@@ -10,26 +10,32 @@ public class ActionManager : MonoBehaviour {
     // Observer para saber caundo se cambia de Scheme a.k.a enchufo/uso el mando eje
     public static event Action<inputScheme> OnChangeInput;
 
-    // Componente New Input System
     [SerializeField, Header("Player Input:")]
     private PlayerInput _input;
 
     [SerializeField, Header("Current Scheme:")]
     private inputScheme _currentScheme;
-    public inputScheme Scheme() { return _currentScheme; }
-    public bool GamePad() { return (Scheme().Equals(inputScheme.GamePad)); }
-    public bool Keyboard() { return (Scheme().Equals(inputScheme.Keyboard)); }
+    public inputScheme Scheme() {
+        return _currentScheme;
+    }
+    public bool GamePad() {
+        return (Scheme().Equals(inputScheme.GamePad));
+    }
+    public bool Keyboard() {
+        return (Scheme().Equals(inputScheme.Keyboard));
+    }
 
     // InputActions for all Unity KeyCodes
     private Dictionary<KeyCode, InputAction> _keyActions;
 
     // Determine if the input system is ready to use
     private bool _isConfigured = false;
-    public bool Configured() { return _isConfigured; }
+    public bool Configured() {
+        return _isConfigured;
+    }
 
     // Unity OnEnable
     void OnEnable() {
-        // Observer de onAnyButtonPress
         InputSystem.onAnyButtonPress.CallOnce(OnAnyButtonPress);
     }
 
@@ -44,16 +50,26 @@ public class ActionManager : MonoBehaviour {
     // | - Send Mesagges - PlayerInput Component - |
     // V ----------------------------------------- V
     void OnControlsChanged() {
-        if (_input.currentControlScheme.Equals("Gamepad")) _currentScheme = inputScheme.GamePad;
-        if (_input.currentControlScheme.Equals("Keyboard&Mouse")) _currentScheme = inputScheme.Keyboard;
+        if (_input.currentControlScheme.Equals("Gamepad"))
+            _currentScheme = inputScheme.GamePad;
+        if (_input.currentControlScheme.Equals("Keyboard&Mouse"))
+            _currentScheme = inputScheme.Keyboard;
         OnChangeInput?.Invoke(Scheme());
     }
+
+    /** IMPLEMENT WITH PLAYER INPUT ACTIONS CONFIGURED ON EDITOR */
+
     // A ----------------------------------------- A
 
+    /** Método OnAnyButtonPress
+     * Se encarga de configurar el input, setenado el esquema
+     * Hace el call de InputSystem.onAnyButtonPress */
     void OnAnyButtonPress(InputControl inputControl) {
         if (!Enum.TryParse(inputControl.device.description.deviceClass, out _currentScheme)) {
             Debug.LogWarning("ActionManager -> Device nos supported: " + inputControl.device.description.deviceClass);
-        } else { _isConfigured = true; }
+        } else {
+            _isConfigured = true;
+        }
         OnChangeInput?.Invoke(Scheme());
     }
 

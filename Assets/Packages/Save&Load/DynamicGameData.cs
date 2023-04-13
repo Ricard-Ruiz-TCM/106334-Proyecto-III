@@ -1,23 +1,17 @@
 ﻿
 using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
-using UnityEngine.SceneManagement;
-using System.Globalization;
 using System.Reflection;
+using UnityEngine;
 
-public class DynamicGameData
-{
+public class DynamicGameData {
     private Dictionary<string, FieldInfo> fields = new Dictionary<string, FieldInfo>();
 
     private bool initialised = false;
-    private void Initialize()
-    {
+    private void Initialize() {
 
         // Reflection-based discovery of public fields
         FieldInfo[] allFields = this.GetType().GetFields();
-        foreach (FieldInfo field in allFields)
-        {
+        foreach (FieldInfo field in allFields) {
             string name = field.Name.ToUpper();
             fields.Add(name, field);
 
@@ -25,9 +19,9 @@ public class DynamicGameData
 
         initialised = true;
     }
-    public T Get<T>(string name)
-    {
-        if (!initialised) Initialize();
+    public T Get<T>(string name) {
+        if (!initialised)
+            Initialize();
         object value = null;
 
         name = name.ToUpper();
@@ -39,9 +33,9 @@ public class DynamicGameData
         return (T)value;
     }
 
-    public void Put(string name, object value)
-    {
-        if (!initialised) Initialize();
+    public void Put(string name, object value) {
+        if (!initialised)
+            Initialize();
         name = name.ToUpper();
         if (fields.ContainsKey(name)) // name refers to a field 
             fields[name].SetValue(this, value);

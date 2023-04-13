@@ -1,18 +1,14 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.UI;
 
 public class EffectsManager : MonoBehaviour {
 
-    // Effects Settings Path
     [SerializeField, Header("Folder Paths:")]
     private string _EffectsPath = "Effects/";
-
-    // Diccionario de Prefabs
-    private Container<GameObject> _effects;
 
     [SerializeField, Header("Layer:")]
     private string _layerName = "VolumeFX";
@@ -21,6 +17,9 @@ public class EffectsManager : MonoBehaviour {
 
     [SerializeField, Header("Canvas Sorting:")]
     private int _sortingOrder = 99;
+
+    // Diccionario de Prefabs
+    private Container<GameObject> _effects;
 
     // Unity Awake
     void Awake() {
@@ -41,10 +40,15 @@ public class EffectsManager : MonoBehaviour {
         return IEffect(file).setParent(parent);
     }
     // A ---------------- A
+
+    /** Método IEffect
+     * Método encargado de la instanciación del efecto si se crea mediante el uso de prefabs
+     * @param string file Dirección del prefab
+     * @return EffectElement el objeto creado
+     */
     private EffectElement IEffect(string file) {
         return GameObject.Instantiate(_effects.Get(file).gameObject).AddComponent<EffectElement>();
     }
-    // A ---------------- A
 
     // * ---------------- *
     // | - Fade Effects - |
@@ -123,11 +127,12 @@ public class EffectsManager : MonoBehaviour {
         // Innitialize
         EffectElement ee = new GameObject("Shake").AddComponent<EffectElement>();
         ee.transform.SetParent(Camera.main.gameObject.transform);
-        if (camera) ee.Camera = camera;
-        
+        if (camera)
+            ee.Camera = camera;
+
         // Config
         StartCoroutine(C_Shake(ee.Camera, duration, magnitude));
-        
+
         return ee;
     }
     private IEnumerator C_Shake(GameObject camera, float duration, float magnitude) {
@@ -142,6 +147,5 @@ public class EffectsManager : MonoBehaviour {
         } while (elapsed < duration);
         camera.transform.localPosition = originalPosition;
     }
-
     // A ------------------ A
 }

@@ -2,7 +2,6 @@
 
 public class ParticleInstancer : MonoBehaviour {
 
-    // Particles Settings Path
     [SerializeField, Header("Folder Paths:")]
     private string _ParticlesPrefabsPath = "Particles/";
 
@@ -28,8 +27,13 @@ public class ParticleInstancer : MonoBehaviour {
     }
     // A ------------------ A
 
+    /** Método IParticles
+     * Instancia el prefab de las particulas ya creado
+     * @param string file Dirección del prefab 
+     * @return ParticleElement el objecto creado */
     private ParticleElement IParticles(string file) {
-        return GameObject.Instantiate(_prefabs.Get(file).gameObject).AddComponent<ParticleElement>(); ;
+        return GameObject.Instantiate(_prefabs.Get(file).gameObject).AddComponent<ParticleElement>();
+        ;
     }
 
 }

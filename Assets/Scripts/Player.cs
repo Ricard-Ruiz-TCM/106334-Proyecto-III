@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Rendering.Universal;
 
 public struct PlayerStates {
     public static PlayerIddle Iddle;
@@ -44,7 +43,7 @@ public class Player : Actor {
             uCore.Audio.PlaySoundtrack("pop").FadeIn(3f).persistent();
         }
         if (uCore.Action.GetKeyDown(KeyCode.C)) {
-            uCore.Effects.CanvasFadeOut(5f, () => { uCore.Effects.CameraShake(20f, 0.2f); });   
+            uCore.Effects.CanvasFadeOut(5f, () => { uCore.Effects.CameraShake(20f, 0.2f); });
         }
 
         if (uCore.Action.GetKeyDown(KeyCode.B)) {

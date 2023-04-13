@@ -6,11 +6,18 @@ public class PlayerJump : AnimatedState {
         StateTransition toIddle = new StateTransition(
             () => { return false; },
             () => { Debug.Log("TO IDDLE FROM JUMP TRIGGER"); }
-        ); AddTransition(toIddle, PlayerStates.Iddle);
+        );
+        AddTransition(toIddle, PlayerStates.Iddle);
     }
 
-    public override void OnEnter() { Debug.Log("Jump OnEnter"); }
-    public override void OnState() { Debug.Log("Jump OnUpdate"); }
-    public override void OnExit() { Debug.Log("Jump OnExit"); }
+    public override void OnEnter() {
+        Debug.Log("Jump OnEnter");
+    }
+    public override void OnState() {
+        Debug.Log("Jump OnUpdate");
+    }
+    public override void OnExit() {
+        Debug.Log("Jump OnExit");
+    }
 
 }

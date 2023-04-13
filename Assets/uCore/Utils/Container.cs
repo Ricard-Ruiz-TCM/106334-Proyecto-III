@@ -15,9 +15,15 @@ using UnityEngine;
 [System.Serializable]
 public class Container<T> : Object where T : Object {
 
-    public string Path { get; private set; }
-    public List<T> Elements { get; private set; }
-    public Dictionary<string, int> Diccionary { get; private set; }
+    public string Path {
+        get; private set;
+    }
+    public List<T> Elements {
+        get; private set;
+    }
+    public Dictionary<string, int> Diccionary {
+        get; private set;
+    }
 
     /** Constructor
      * @param string path Ubicación */
@@ -46,7 +52,10 @@ public class Container<T> : Object where T : Object {
      * @param T elemento encontrado
      * @return bool True -> Existe | False -> No Existe */
     public bool TryGet(string name, out T value) {
-        if (Exists(name)) value = Get(name); else value = null;
+        if (Exists(name))
+            value = Get(name);
+        else
+            value = null;
         return (value != null);
     }
 
@@ -70,7 +79,8 @@ public class Container<T> : Object where T : Object {
     /** Método Remove
      * @param string name Elemento a eliminar */
     public void Remove(string name) {
-        if (!Exists(name)) return;
+        if (!Exists(name))
+            return;
         Elements[Diccionary[name]] = null;
         Diccionary.Remove(name);
     }
@@ -90,7 +100,8 @@ public class Container<T> : Object where T : Object {
     /** Método Load
      * @param string name Elemento a cargar */
     private void ILoad(string name) {
-        if (Path == "NONE") return;
+        if (Path == "NONE")
+            return;
         int i = FindSpot();
         if (i == -1) {
             i = Elements.Count;
@@ -106,8 +117,10 @@ public class Container<T> : Object where T : Object {
     private int FindSpot() {
         int i = -1;
         for (int a = 0; a < Elements.Count; a++) {
-            if (i != -1) break;
-            if (Elements[a] == null) i = a;
+            if (i != -1)
+                break;
+            if (Elements[a] == null)
+                i = a;
         }
         return i;
     }

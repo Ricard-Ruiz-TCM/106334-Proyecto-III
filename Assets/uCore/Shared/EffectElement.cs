@@ -22,7 +22,9 @@ public class EffectElement : BasicElement<EffectElement> {
 
     /** VolumeProfile */
     public VolumeProfile EffectProfile {
-        get { return GetComponent<Volume>().profile; }
+        get {
+            return GetComponent<Volume>().profile;
+        }
     }
 
     /** Duración */
@@ -38,13 +40,17 @@ public class EffectElement : BasicElement<EffectElement> {
 
             return _camera;
         }
-        set { _camera = value; }
+        set {
+            _camera = value;
+        }
     }
 
     /** Método Type
      * Get de _type
      * @return effects Tipo de efecto */
-    public effects Type() { return _type; }
+    public effects Type() {
+        return _type;
+    }
 
     /** Método Set
      * Estabecle el tipo de efecto y la duración

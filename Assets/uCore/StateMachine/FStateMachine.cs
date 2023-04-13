@@ -87,7 +87,8 @@ public class FStateMachine : MonoBehaviour {
             }
         }
         CurrentState.OnExit();
-        if (trigger != null) trigger();
+        if (trigger != null)
+            trigger();
         CurrentState = state;
         CurrentState.OnEnter();
     }

@@ -1,12 +1,7 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using System.Globalization;
-using System.Reflection;
 
-public static class GameDataManager 
-{
+public static class GameDataManager {
 
 
     private static GameData gameData;
@@ -15,11 +10,10 @@ public static class GameDataManager
 
     private static FileDataHandler dataHandler;
 
-    
-    
-   
-    static GameDataManager()
-    {
+
+
+
+    static GameDataManager() {
 
         DataConfig config = (DataConfig)Resources.Load("DataConfig");
         gameDataHolders = new List<ISaveData>();
@@ -30,70 +24,60 @@ public static class GameDataManager
 
 
     }
-    public static void NewGame()
-    {
+    public static void NewGame() {
         gameData = new GameData();
     }
-    
-    private static void LoadGame()
-    {
+
+    private static void LoadGame() {
         /** Load any data saved in the Data Handler */
-        
+
         gameData = dataHandler.Load();
 
 
-        if (gameData == null)
-        {
+        if (gameData == null) {
             Debug.LogError("No game data was found. A new game is created");
             NewGame();
         }
 
         /** We send the data to load to any script who need it */
 
-        
+
     }
 
 
-    private static void SaveGame()
-    {
-       
+    private static void SaveGame() {
 
-        if (gameData == null)
-        {
+
+        if (gameData == null) {
             Debug.LogError("No game data was found. Can't save the game");
             return;
         }
 
-        foreach (ISaveData dataHolder in gameDataHolders)
-        {
+        foreach (ISaveData dataHolder in gameDataHolders) {
             dataHolder.SaveData();
         }
-       
+
         /** We save the data into the data handler */
 
-        dataHandler.Save(gameData); 
+        dataHandler.Save(gameData);
     }
 
-   
-    public static T Load<T>(string name)
-    {
+
+    public static T Load<T>(string name) {
         Debug.Log(gameData);
         return gameData.Get<T>(name);
     }
-    public static void Save(string name, object value)
-    {
+    public static void Save(string name, object value) {
         gameData.Put(name, value);
     }
 
-   
 
-    public static void Add(ISaveData dataHolder)
-    {
+
+    public static void Add(ISaveData dataHolder) {
         gameDataHolders.Add(dataHolder);
     }
 
-    public static void Remove(ISaveData dataHolder)
-    {
+    public static void Remove(ISaveData dataHolder) {
         gameDataHolders.Remove(dataHolder);
     }
 

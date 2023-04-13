@@ -1,4 +1,3 @@
-﻿public class ObjectToSave
-{
+﻿public class ObjectToSave {
 
 }

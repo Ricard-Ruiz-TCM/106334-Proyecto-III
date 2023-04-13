@@ -27,7 +27,9 @@ public abstract class BasicElement<T> : MonoBehaviour where T : MonoBehaviour {
      * @return T tipo del objeto BasicElement<T> */
     public T persistent() {
         Destroyable ds = this.gameObject.GetComponent<Destroyable>();
-        if (ds != null) { GameObject.Destroy(ds); }
+        if (ds != null) {
+            GameObject.Destroy(ds);
+        }
         return this as T;
     }
 

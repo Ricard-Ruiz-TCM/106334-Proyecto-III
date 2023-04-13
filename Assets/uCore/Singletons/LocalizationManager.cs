@@ -11,7 +11,7 @@ public class LocalizationManager : MonoBehaviour {
         public LocalizationItem[] items = new LocalizationItem[0];
     }
 
-    // Estrucura del pairKeysValue del json de Localization
+    // Estrucura del LocalizationItem del json de Localization
     [Serializable]
     private class LocalizationItem {
         public string key = "";
@@ -37,12 +37,18 @@ public class LocalizationManager : MonoBehaviour {
         ChangeLocalization(_language);
     }
 
+    /** Método ChangeLocalization
+     * Cambia el idioma del proyecto y invoca los callbacks
+     * @paam language len Nuevo idioma */
     public void ChangeLocalization(language len) {
         _language = len;
         LoadLocalizationFile(Application.dataPath + _LocalizationPath + _language.ToString() + _format);
         OnChangeLocalization?.Invoke();
     }
 
+    /** Método LoadLocalizationFile
+     * Carga el fichero de idioma al diccionario
+     * @param string path Dirección del fichero */
     private void LoadLocalizationFile(string path) {
         if (File.Exists(path)) {
             _texts.Clear();
@@ -54,6 +60,10 @@ public class LocalizationManager : MonoBehaviour {
         }
     }
 
+    /** Método GetText
+     * Recupera una key de texto
+     * @param string key Key ID del texto dentro del json
+     * @return string Texto del idioma especifico */
     public string GetText(string key) {
         if (!_texts.ContainsKey(key))
             return "X " + key + " X";

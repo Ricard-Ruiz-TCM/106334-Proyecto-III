@@ -20,13 +20,18 @@ using UnityEngine;
 public class AudioElement : BasicElement<AudioElement> {
 
     /** AudioSource */
-    public AudioSource Source { get { return GetComponent<AudioSource>(); } }
+    public AudioSource Source {
+        get {
+            return GetComponent<AudioSource>();
+        }
+    }
 
     /** Método Reset
      * Reinicia el audio
      * @return AudioElement Se devuevle a si mismo */
     public AudioElement Reset() {
-        Stop(); Play(Source.volume);
+        Stop();
+        Play(Source.volume);
         return this;
     }
 

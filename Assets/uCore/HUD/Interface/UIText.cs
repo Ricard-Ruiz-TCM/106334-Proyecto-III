@@ -45,14 +45,28 @@ public class UIText : MonoBehaviour {
     }
 
     // Métodos para actualizar el valor del dependiendo del tipo de parametro
-    public void UpdateText(int str) { SetText(str); }
-    public void UpdateText(float str) { SetText(str); }
-    public void UpdateText(double str) { SetText(str); }
-    public void UpdateText(bool str) { SetText(str); }
-    public void UpdateText(string str) { SetText(str); }
-    public void UpdateText(short str) { SetText(str); }
+    public void UpdateText(int str) {
+        SetText(str);
+    }
+    public void UpdateText(float str) {
+        SetText(str);
+    }
+    public void UpdateText(double str) {
+        SetText(str);
+    }
+    public void UpdateText(bool str) {
+        SetText(str);
+    }
+    public void UpdateText(string str) {
+        SetText(str);
+    }
+    public void UpdateText(short str) {
+        SetText(str);
+    }
     // Método concreto para setear el texto según Localization
-    public void UpdateText() { SetText(uCore.Localization.GetText(_textKey)); }
+    public void UpdateText() {
+        SetText(uCore.Localization.GetText(_textKey));
+    }
 
     /** Método SetText
      * Establece el valor del texto

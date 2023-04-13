@@ -3,16 +3,16 @@ using UnityEngine.Audio;
 
 public class AudioManager : MonoBehaviour {
 
-    // Mixer
     [SerializeField, Header("Mixer:")]
     private AudioMixer _mixer;
     [SerializeField]
     private AudioMixerGroup _sfx;
     [SerializeField]
     private AudioMixerGroup _soundtrak;
-    public AudioMixer Mixer() { return _mixer; }
+    public AudioMixer Mixer() {
+        return _mixer;
+    }
 
-    // Audio Settings Path
     [SerializeField, Header("Folder Paths:")]
     private string _AudioPath = "Audio/";
     [SerializeField]
@@ -22,7 +22,7 @@ public class AudioManager : MonoBehaviour {
     [SerializeField]
     private string _MixerPath = "Settings/AudioMixer";
 
-    // Diccionario de AudioClip
+    // Diccionario de AudioClip & AudioElements
     private Container<AudioClip> _audios;
     private Container<AudioElement> _playing;
 
@@ -52,13 +52,15 @@ public class AudioManager : MonoBehaviour {
     // * ------------------ *
     // | - Play Sountrack - |
     // V ------------------ V
+    public void StopAllSoundtracks() {
+        foreach (AudioElement st in _playing.Elements) {
+            st.Stop();
+        }
+    }
     public void StopSoundtrack(string file) {
         if (IsPlayingSoundtarck(file)) {
             _playing.Get(file).Stop();
         }
-    }
-    public void StopAllSoundtracks() {
-        foreach (AudioElement st in _playing.Elements) { st.Stop(); }
     }
     public bool IsPlayingSoundtarck(string file) {
         if (!_playing.Exists(file)) {
@@ -74,6 +76,14 @@ public class AudioManager : MonoBehaviour {
     }
     // A ------------------ A
 
+    /** Método IPlay
+     * Crea, configura y reproduce un audio concreto, añadiendo todo lo necesario
+     * para su funcionamiento
+     * @param audioType type Tipo de audio
+     * @param AudioClip cilp Clip de audio a reproducir
+     * @param AudioMixerGroup mixer Grupo del mixer donde se reproducida y controlara volumen y efectos
+     * @return AudioElement el objeto creado
+     */
     private AudioElement IPlay(audioType type, AudioClip clip, AudioMixerGroup mixer) {
         AudioElement audio = new GameObject(clip.name).AddComponent<AudioElement>();
         audio.Source.clip = clip;
@@ -88,7 +98,8 @@ public class AudioManager : MonoBehaviour {
             case audioType.SoundTrack:
                 audio.with2D();
                 break;
-            default: break;
+            default:
+                break;
         }
         audio.Play();
         return audio;

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class MenuController : MonoBehaviour {
+public class MenuCanvas : MonoBehaviour {
 
     public void BTN_Play() {
         uCore.Director.LoadSceneAsync(gameScenes.StageSelector);

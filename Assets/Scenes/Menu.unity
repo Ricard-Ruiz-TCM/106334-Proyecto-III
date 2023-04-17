@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.1273174, g: 0.13414761, b: 0.12107885, a: 1}
+  m_IndirectSpecularColor: {r: 0.12731749, g: 0.13414757, b: 0.1210787, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -370,7 +370,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 941689058}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: MenuController, Assembly-CSharp
         m_MethodName: BTN_Settings
         m_Mode: 1
@@ -432,6 +432,7 @@ GameObject:
   - component: {fileID: 397742273}
   - component: {fileID: 397742272}
   - component: {fileID: 397742271}
+  - component: {fileID: 397742275}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -521,6 +522,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &397742275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 397742270}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0dc37127de6538b448dedf9766145a26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &833992270
 GameObject:
   m_ObjectHideFlags: 0
@@ -680,7 +693,7 @@ GameObject:
   - component: {fileID: 941689057}
   - component: {fileID: 941689058}
   m_Layer: 0
-  m_Name: MenuController
+  m_Name: MenuScene
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -710,7 +723,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 941689056}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0dc37127de6538b448dedf9766145a26, type: 3}
+  m_Script: {fileID: 11500000, guid: 19e174ccc46a9654894c9f0f25d45724, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1032156097
@@ -903,7 +916,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 941689058}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: MenuController, Assembly-CSharp
         m_MethodName: BTN_Settings
         m_Mode: 1
@@ -1209,7 +1222,7 @@ GameObject:
   m_IsActive: 1
 --- !u!114 &1457894384
 MonoBehaviour:
-  m_ObjectHideFlags: 10
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -1254,7 +1267,7 @@ GameObject:
   m_IsActive: 1
 --- !u!114 &1640990276
 MonoBehaviour:
-  m_ObjectHideFlags: 10
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -1518,7 +1531,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 941689058}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: MenuController, Assembly-CSharp
         m_MethodName: BTN_Play
         m_Mode: 1

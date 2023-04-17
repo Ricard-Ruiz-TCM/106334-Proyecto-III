@@ -1,11 +1,9 @@
 using UnityEngine;
 
-public class LoadingSceneController : MonoBehaviour {
+public class IntroScene : MonoBehaviour {
 
     [SerializeField]
     private GameObject _inputPanel;
-    [SerializeField]
-    private GameObject _loadingPanel;
 
     private bool _sceneLoaded = false;
 
@@ -33,7 +31,6 @@ public class LoadingSceneController : MonoBehaviour {
         // Innitial input configured
         if (!uCore.Action.isInputConfigured()) {
             _inputPanel.SetActive(true);
-            _loadingPanel.SetActive(false);
         }
         _sceneLoaded = true;
     }

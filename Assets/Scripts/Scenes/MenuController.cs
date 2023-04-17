@@ -3,7 +3,7 @@ using UnityEngine;
 public class MenuController : MonoBehaviour {
 
     public void BTN_Play() {
-        uCore.Director.LoadSceneAsync(gameScenes.Game);
+        uCore.Director.LoadSceneAsync(gameScenes.StageSelector);
     }
 
     public void BTN_Settings() {

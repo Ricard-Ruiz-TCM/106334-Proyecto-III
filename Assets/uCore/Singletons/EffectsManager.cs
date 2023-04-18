@@ -50,6 +50,7 @@ public class EffectsManager : MonoBehaviour {
         return GameObject.Instantiate(_effects.Get(file).gameObject).AddComponent<EffectElement>();
     }
 
+    /* PP Effects WIP
     // * ---------------- *
     // | - Fade Effects - |
     // V ---------------- V
@@ -115,7 +116,9 @@ public class EffectsManager : MonoBehaviour {
         callback?.Invoke();
     }
     // A ---------------- A
+    */
 
+    /* Camera Effects WIP
     // * ------------------ *
     // | - Camera Effects - |
     // V ------------------ V
@@ -147,5 +150,5 @@ public class EffectsManager : MonoBehaviour {
         } while (elapsed < duration);
         camera.transform.localPosition = originalPosition;
     }
-    // A ------------------ A
+    // A ------------------ A*/
 }

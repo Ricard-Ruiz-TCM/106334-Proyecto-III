@@ -20,18 +20,18 @@ public class EffectElement : BasicElement<EffectElement> {
     /** Effecto */
     private effects _type;
 
-    /** VolumeProfile */
+    /** VolumeProfile WIP
     public VolumeProfile EffectProfile {
         get {
             return GetComponent<Volume>().profile;
         }
-    }
+    } */
 
     /** Duración */
     public float Duration => _duration;
     private float _duration = float.PositiveInfinity;
 
-    /** Camara */
+    /** Camara WIP
     private GameObject _camera = null;
     public GameObject Camera {
         get {
@@ -43,7 +43,7 @@ public class EffectElement : BasicElement<EffectElement> {
         set {
             _camera = value;
         }
-    }
+    } */
 
     /** Método Type
      * Get de _type
@@ -62,15 +62,15 @@ public class EffectElement : BasicElement<EffectElement> {
         return this;
     }
 
-    /* Método Get<T>
+    /** Método Get<T> WIP
      * Get de los componentes para efectos de post procesador
      * @param T where VolumeComponenet Componente del VolumeProfile
-     * @return T Tipo en request */
+     * @return T Tipo en request 
     public T Get<T>() where T : VolumeComponent {
         T fx = null;
         EffectProfile.TryGet<T>(out fx);
         return fx;
-    }
+    }*/
 
     /** Método destoryAtEnd
      * Override del método DestoryAtEnd

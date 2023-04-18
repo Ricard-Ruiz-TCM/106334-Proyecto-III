@@ -1,29 +1,24 @@
-﻿using System;
-using System.Collections;
-using UnityEngine;
-using UnityEngine.Rendering;
-using UnityEngine.Rendering.Universal;
-using UnityEngine.UI;
+﻿using UnityEngine;
 
 public class EffectsManager : MonoBehaviour {
 
     [SerializeField, Header("Folder Paths:")]
     private string _EffectsPath = "Effects/";
 
-    [SerializeField, Header("Layer:")]
+    /** [SerializeField, Header("Layer:")] WIP
     private string _layerName = "VolumeFX";
     [SerializeField]
-    private LayerMask _layer;
+    private LayerMask _layer; */
 
-    [SerializeField, Header("Canvas Sorting:")]
-    private int _sortingOrder = 99;
+    /** [SerializeField, Header("Canvas Sorting:")] WIP
+    private int _sortingOrder = 99;*/
 
     // Diccionario de Prefabs
     private Container<GameObject> _effects;
 
     // Unity Awake
     void Awake() {
-        _layer = LayerMask.GetMask(_layerName);
+        //_layer = LayerMask.GetMask(_layerName);
         _effects = new Container<GameObject>(_EffectsPath);
     }
 

@@ -68,6 +68,27 @@ public class UIText : MonoBehaviour {
         SetText(uCore.Localization.GetText(_textKey));
     }
 
+    /** Método SetKey
+     * Establece la key dle texto y acutaliza
+     * @param string key Key del json*/
+    public void SetKey(string key) {
+        _textKey = key; UpdateText();
+    }
+
+    /** Método GetText
+     * Devuelve el texto que tiene el TMPro
+     * @return string Texto */
+    public string GetText() {
+        return _text.text;
+    }
+
+    /** Método AddText(string text)
+     * Añade texto al texto ya existente
+     * @param string text Texto para añadir */
+    public void AddText(string text) {
+        _text.text += text;
+    }
+
     /** Método SetText
      * Establece el valor del texto
      * @param IConvertible str Objeto que puede convertirse y llamar al método "ToString()" */

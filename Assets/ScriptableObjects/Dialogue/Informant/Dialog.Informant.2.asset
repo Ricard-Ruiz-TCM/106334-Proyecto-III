@@ -12,10 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b04de7246f0ff23449fa32f1baea4e7b, type: 3}
   m_Name: Dialog.Informant.2
   m_EditorClassIdentifier: 
-  _textKey: 
+  _textKeyName: 
+  _textKeyMessage: 
   _next: {fileID: 0}
+  Options: 1
   _options:
-  - _textKey: DIALOG.INFORMANT.2.OPTION.1
+  - _textKey: DEBUG.DIALOG2.OPTION1
     _next: {fileID: 11400000, guid: 557520f01f27bb346aeda92ce1afa55c, type: 2}
-  - _textKey: DIALOG.INFORMANT.2.OPTION.2
+  - _textKey: DEBUG.DIALOG2.OPTION2
     _next: {fileID: 11400000, guid: 0ba2db74af3388544970354290e714b7, type: 2}
+  EndNode: 0

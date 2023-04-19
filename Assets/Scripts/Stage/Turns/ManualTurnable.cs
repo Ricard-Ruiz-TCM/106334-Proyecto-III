@@ -4,17 +4,17 @@ using UnityEngine;
 public abstract class ManualTurnable : MonoBehaviour, ITurnable {
 
     // ITurnable
-    public bool hasMoved { get; set; }
-    public bool hasActed { get; set; }
+    public progress moving { get; set; }
+    public progress acting { get; set; }
     public bool hasTurnEnded { get; set; }
 
-    protected void AddToManager() {
+    protected void SubscribeManager() {
         FindObjectOfType<TurnManager>().Add(this);
     }
 
     public void BeginTurn() {
-        hasMoved = false;
-        hasMoved = false;
+        moving = progress.ready;
+        moving = progress.ready;
         hasTurnEnded = false;
     }
 
@@ -22,10 +22,16 @@ public abstract class ManualTurnable : MonoBehaviour, ITurnable {
         hasTurnEnded = true;
     }
 
-    public abstract bool CanAct();
+    // Acting
     public abstract void Act();
+    public abstract bool CanAct();
+    protected void StartAct() { acting = progress.doing; }
+    protected void EndAction() { acting = progress.done; }
 
-    public abstract bool CanMove(); 
+    // Movement
     public abstract void Move();
+    public abstract bool CanMove(); 
+    protected void StartMove() { moving = progress.doing; }
+    protected void EndMovement() { moving = progress.done; }
 
 }

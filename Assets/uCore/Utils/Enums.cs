@@ -36,5 +36,5 @@ public enum effects {
 
 // Enum para indicar el progresso de algo
 public enum progress {
-    waiting, doing, done
+    ready, doing, done
 }

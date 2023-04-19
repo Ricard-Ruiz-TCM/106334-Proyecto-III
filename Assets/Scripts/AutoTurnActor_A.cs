@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -6,20 +7,22 @@ public class AutoTurnActor_A : AutomaticTurnable {
 
     // Unity Start
     void Start() {
-        AddToManager();
+        SubscribeManager();
     }
 
-    public override IEnumerator C_Act() {
+    public override void Act() {
+        StartAct();
+
         Debug.Log("ACTING A");
-        yield return new WaitForSeconds(3f);
-        EndAction();
+
+        Invoke("EndAction", 3f);
     }
 
-    public override IEnumerator C_Move() {
+    public override void Move() {
+        StartMove();
+
         Debug.Log("MOVING A");
-        yield return new WaitForSeconds(3f);
-        EndMovement();
+
+        Invoke("EndMovement", 3f);
     }
-
-
 }

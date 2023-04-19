@@ -51,7 +51,7 @@ public class TurnManager : MonoBehaviour {
             turneable.Act();
         }
 
-        if ((turneable.hasMoved) && (turneable.hasActed)) {
+        if ((turneable.moving.Equals(progress.done)) && (turneable.acting.Equals(progress.done))) {
             turneable.EndTurn();
         }
 

@@ -6,12 +6,13 @@ public class ManualTurnActor : ManualTurnable {
 
 
     private void Start() {
-        AddToManager();
+        SubscribeManager();
     }
 
     public override void Act() {
+        StartAct();
         Debug.Log("Action MANUAL");
-        hasActed = true;
+        Invoke("EndAction", 3f);
     }
 
     public override bool CanAct() {
@@ -19,8 +20,9 @@ public class ManualTurnActor : ManualTurnable {
     }
 
     public override void Move() {
+        StartMove();
         Debug.Log("Move MANUAL");
-        hasMoved = true;
+        Invoke("EndMovement", 3f);
     }
 
     public override bool CanMove() {

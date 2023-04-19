@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using UnityEngine;
 
 
@@ -11,7 +9,7 @@ public class AutoTurnActor_A : AutomaticTurnable {
     }
 
     public override void Act() {
-        StartAct();
+        base.Act();
 
         Debug.Log("ACTING A");
 
@@ -19,7 +17,7 @@ public class AutoTurnActor_A : AutomaticTurnable {
     }
 
     public override void Move() {
-        StartMove();
+        base.Move();
 
         Debug.Log("MOVING A");
 

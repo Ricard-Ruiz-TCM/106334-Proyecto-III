@@ -4,14 +4,15 @@ using UnityEngine;
 
 public class ManualTurnActor : ManualTurnable {
 
-
     private void Start() {
         SubscribeManager();
     }
 
     public override void Act() {
-        StartAct();
+        base.Act();
+
         Debug.Log("Action MANUAL");
+
         Invoke("EndAction", 3f);
     }
 
@@ -20,8 +21,10 @@ public class ManualTurnActor : ManualTurnable {
     }
 
     public override void Move() {
-        StartMove();
+        base.Move();
+
         Debug.Log("Move MANUAL");
+
         Invoke("EndMovement", 3f);
     }
 

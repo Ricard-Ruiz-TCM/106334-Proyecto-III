@@ -61,7 +61,8 @@ public class TurnManager : MonoBehaviour {
         _waiting = true;
         yield return new WaitForSeconds(_turnDelay);
         _turnIndex++;
-        if (_turnIndex >= _turnables.Count) _turnIndex = 0;
+        if (_turnIndex >= _turnables.Count)
+            _turnIndex = 0;
         _waiting = false;
     }
 

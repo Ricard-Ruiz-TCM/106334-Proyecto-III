@@ -11,5 +11,8 @@ public class DialogueNode : ScriptableObject {
     public bool Options = false;
     public List<DialogueOption> _options;
 
+    public bool Trigger = false;
+    public DialogueTrigger _trigger;
+
     public bool EndNode = false;
 }

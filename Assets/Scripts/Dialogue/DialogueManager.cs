@@ -60,6 +60,11 @@ public class DialogueManager : MonoBehaviour {
             return;
         }
 
+        // Trigger Node
+        if (_current.Trigger) {
+            _current._trigger.Trigger();
+        }
+
         // Node with Options
         if (_current.Options) {
             SetAlpha(_speakerImage, 0.5f);

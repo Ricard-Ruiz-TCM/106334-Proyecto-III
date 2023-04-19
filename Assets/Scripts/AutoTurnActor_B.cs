@@ -8,14 +8,20 @@ public class AutoTurnActor_B : MonoBehaviour, ITurnable {
 
     public bool hasActed { get; set; }
 
-    public bool hasEnded { get; set; }
+    public bool hasTurnEnded { get; set; }
+
+    public progress moving { get; set; }
+
+    public progress acting { get; set; }
 
     // Unity Awake
     void Awake() {
         isAutomatic = true;
         hasMoved = false;
         hasMoved = false;
-        hasEnded = false;
+        hasTurnEnded = false;
+        moving = progress.waiting;
+        acting = progress.waiting;
     }
 
     void Start() {

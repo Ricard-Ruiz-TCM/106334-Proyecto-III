@@ -33,3 +33,8 @@ public enum language {
 public enum effects {
     fadeIn, fadeOut, cameraShake
 }
+
+// Enum para indicar el progresso de algo
+public enum progress {
+    waiting, doing, done
+}

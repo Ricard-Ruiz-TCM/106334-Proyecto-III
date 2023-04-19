@@ -21,10 +21,30 @@ public class TurnManager : MonoBehaviour {
 
     // Unity Update
     private void Update() {
-        // Turno completado
-        if (_turnables[_turnIndex].hasEnded) {
+        ITurnable turneable = _turnables[_turnIndex];
+
+        // Turno finalizado
+        if (turneable.hasTurnEnded) {
             NextTurn();
+            return;
         }
+
+        // Si el turno no es automatico, esperamos a que termine de forma manual
+        if (!turneable.isAutomatic)
+            return;
+
+        if (turneable.CanMove()) {
+            turneable.Move();
+        }
+
+        if (turneable.CanAct()) {
+            turneable.Act();
+        }
+
+        if ((turneable.hasMoved) && (turneable.hasActed)) {
+            turneable.EndTurn();
+        }
+
     }
 
     public void NextTurn() {

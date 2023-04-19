@@ -1,7 +1,7 @@
 ﻿
 // Enum con las escenas del juego IMPORTANTE "Match" de nombre
 public enum gameScenes {
-    Intro, Menu, StageSelector, Stage
+    Intro, Menu, StageSelector, Event, Stage, Credits
 }
 
 // Enum "básico" para determinar el estado de algo

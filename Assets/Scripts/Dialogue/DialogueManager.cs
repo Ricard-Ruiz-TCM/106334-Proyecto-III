@@ -54,22 +54,22 @@ public class DialogueManager : MonoBehaviour {
         _optionsUI.SetActive(false);
 
         // Last Dialogue Node
-        if (_current.EndNode) {
+        if (_current == null) {
             gameObject.SetActive(false);
             onEndDialogue?.Invoke();
             return;
         }
 
-        // Trigger Node
-        if (_current.Trigger) {
-            _current._trigger.Trigger();
+        // Trigger dialogue node with extras
+        if (_current is DialogueTrigger) {
+            ((DialogueTrigger)_current).Trigger();
         }
 
         // Node with Options
-        if (_current.Options) {
+        if (_current.Options.Count != 0) {
             SetAlpha(_speakerImage, 0.5f);
             _optionsUI.SetActive(true);
-            foreach (DialogueOption op in _current._options) {
+            foreach (DialogueOption op in _current.Options) {
                 GameObject option = GameObject.Instantiate(_optionPrefab, _optionsUI.transform);
                 option.GetComponentInChildren<UIText>().SetKey(op._textKey);
                 option.GetComponent<Button>().onClick.AddListener(() => {
@@ -84,8 +84,8 @@ public class DialogueManager : MonoBehaviour {
         _speakerUI.SetActive(true);
         SetAlpha(_speakerImage, 1f);
         SetAlpha(_playerImage, 0.5f);
-        _speakerNameText.SetKey(_current._textKeyName);
-        StartCoroutine(C_DisplayText(uCore.Localization.GetText(_current._textKeyMessage)));
+        _speakerNameText.SetKey(_current.NameKey);
+        StartCoroutine(C_DisplayText(uCore.Localization.GetText(_current.MessageKey)));
     }
 
     // Coroutine para mostrar el texto timeado por _speed
@@ -117,10 +117,10 @@ public class DialogueManager : MonoBehaviour {
     public void EVENT_OnClickDialogue() {
         if (_displayingText) {
             StopAllCoroutines();
-            _speakerMessageText.SetKey(_current._textKeyMessage);
+            _speakerMessageText.SetKey(_current.MessageKey);
             _displayingText = false;
         } else {
-            NextDialogue(_current._next);
+            NextDialogue(_current.Next);
         }
     }
 

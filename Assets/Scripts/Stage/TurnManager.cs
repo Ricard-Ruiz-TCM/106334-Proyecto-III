@@ -4,36 +4,36 @@ using UnityEngine;
 
 public class TurnManager : MonoBehaviour {
 
-    private int _turn = 0;
-    private List<ITurnElement> _turnList;
+    [SerializeField]
+    private int _turnIndex = 0;
+    [SerializeField]
+    private List<ITurnable> _turnables;
 
-    private ITurnElement Element() { return _turnList[_turn]; }
-
-    public void Add(ITurnElement element) {
+    public void Add(ITurnable element) {
         if (!Contains(element))
-            _turnList.Add(element);
+            _turnables.Add(element);
     }
 
-    public void Remove(ITurnElement element) {
+    public void Remove(ITurnable element) {
         if (Contains(element))
-            _turnList.Remove(element);
+            _turnables.Remove(element);
     }
 
     // Unity Update
     private void Update() {
         // Turno completado
-        if (Element().TurnCompleted) {
+        if (_turnables[_turnIndex].hasEnded) {
             NextTurn();
         }
     }
 
     public void NextTurn() {
-        _turn++;
-        if (_turn > _turnList.Count) _turn = 0;
+        _turnIndex++;
+        if (_turnIndex > _turnables.Count) _turnIndex = 0;
     }
 
-    private bool Contains(ITurnElement element) {
-        return _turnList.Contains(element);
+    private bool Contains(ITurnable element) {
+        return _turnables.Contains(element);
     }
 
 }

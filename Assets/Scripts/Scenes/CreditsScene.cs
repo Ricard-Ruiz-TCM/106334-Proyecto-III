@@ -1,18 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class CreditsScene : MonoBehaviour
-{
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+public class CreditsScene : MonoBehaviour {
+
+    public void BTN_Back() {
+        uCore.Director.LoadSceneAsync(gameScenes.Menu);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

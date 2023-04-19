@@ -1,18 +1,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "new Node", menuName = "Dialog", order = 0)]
+[CreateAssetMenu(fileName = "new Node", menuName = "Dialogue/DialogueNode", order = 0)]
 public class DialogueNode : ScriptableObject {
 
-    public string _textKeyName;
-    public string _textKeyMessage;
-    public DialogueNode _next;
+    [Header("Speaker:")]
+    public string NameKey;
+    public string MessageKey;
+    [Header("Next Node:")]
+    public DialogueNode Next;
 
-    public bool Options = false;
-    public List<DialogueOption> _options;
+    [Header("Player Options")]
+    public List<DialogueOption> Options;
 
-    public bool Trigger = false;
-    public DialogueTrigger _trigger;
-
-    public bool EndNode = false;
 }

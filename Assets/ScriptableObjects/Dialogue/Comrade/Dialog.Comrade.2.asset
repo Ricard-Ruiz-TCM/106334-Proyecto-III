@@ -10,11 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b04de7246f0ff23449fa32f1baea4e7b, type: 3}
-  m_Name: Dialog.Informant.1
+  m_Name: Dialog.Comrade.2
   m_EditorClassIdentifier: 
-  _textKeyName: DEBUG.INFORMANT
-  _textKeyMessage: DEBUG.DIALOG1
-  _next: {fileID: 11400000, guid: 041e6e2bfdc70f149934f83d809005dd, type: 2}
-  Options: 0
-  _options: []
+  _textKeyName: 
+  _textKeyMessage: 
+  _next: {fileID: 0}
+  Options: 1
+  _options:
+  - _textKey: DEBUG.DIALOG2.OPTION1
+    _next: {fileID: 11400000, guid: 557520f01f27bb346aeda92ce1afa55c, type: 2}
+  - _textKey: DEBUG.DIALOG2.OPTION2
+    _next: {fileID: 11400000, guid: 0ba2db74af3388544970354290e714b7, type: 2}
   EndNode: 0

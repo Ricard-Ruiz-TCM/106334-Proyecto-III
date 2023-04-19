@@ -1,24 +1,24 @@
 using UnityEngine;
 
-public class InformantScene : MonoBehaviour {
+public class EventScene : MonoBehaviour {
 
     [SerializeField, Header("Dialogues:")]
     private GameObject _dialogue;
     private DialogueManager _dialogueManager;
 
-    [SerializeField, Header("Informant Panel:")]
-    private GameObject _informant;
+    [SerializeField, Header("Comrade Panel:")]
+    private GameObject _comrade;
     [SerializeField]
     private GameObject _complete;
 
     // Unity OnEnable
     private void OnEnable() {
-        DialogueManager.onEndDialogue += DisplayInformant;
+        DialogueManager.onEndDialogue += DisplayComrade;
     }
 
     // Unity OnDisable
     private void OnDisable() {
-        DialogueManager.onEndDialogue -= DisplayInformant;
+        DialogueManager.onEndDialogue -= DisplayComrade;
     }
 
     // Unity Awake
@@ -30,14 +30,14 @@ public class InformantScene : MonoBehaviour {
     // Unity Start
     void Start() {
         _dialogue.SetActive(true);
-        _informant.SetActive(false);
+        _comrade.SetActive(false);
         _complete.SetActive(false);
         _dialogueManager.StartDialogue(test);
     }
 
-    // Desactiva el dialogo y activa el panel del informante
-    private void DisplayInformant() {
-        _informant.SetActive(true);
+    // Desactiva el dialogo y activa el panel del comrade
+    private void DisplayComrade() {
+        _comrade.SetActive(true);
         _dialogue.SetActive(false);
     }
 

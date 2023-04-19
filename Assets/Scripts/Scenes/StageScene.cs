@@ -1,18 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class StageScene : MonoBehaviour
-{
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+public class StageScene : MonoBehaviour {
+
+    public void BTN_Menu() {
+        uCore.Director.LoadSceneAsync(gameScenes.Menu);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public void BTN_StageSelector() {
+        uCore.Director.LoadSceneAsync(gameScenes.StageSelector);
     }
+
 }

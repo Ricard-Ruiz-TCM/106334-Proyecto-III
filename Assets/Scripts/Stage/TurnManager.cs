@@ -9,6 +9,15 @@ public class TurnManager : MonoBehaviour {
     [SerializeField]
     private List<ITurnable> _turnables;
 
+    [SerializeField]
+    private float _turnDelay = 2f;
+
+    private bool _waiting = false;
+
+    private void Awake() {
+        _turnables = new List<ITurnable>();
+    }
+
     public void Add(ITurnable element) {
         if (!Contains(element))
             _turnables.Add(element);
@@ -23,15 +32,16 @@ public class TurnManager : MonoBehaviour {
     private void Update() {
         ITurnable turneable = _turnables[_turnIndex];
 
+        // Estamos esperando que el turno cambie
+        if (_waiting)
+            return;
+
         // Turno finalizado
         if (turneable.hasTurnEnded) {
-            NextTurn();
+            StartCoroutine(NextTurn());
+            turneable.BeginTurn();
             return;
         }
-
-        // Si el turno no es automatico, esperamos a que termine de forma manual
-        if (!turneable.isAutomatic)
-            return;
 
         if (turneable.CanMove()) {
             turneable.Move();
@@ -47,9 +57,12 @@ public class TurnManager : MonoBehaviour {
 
     }
 
-    public void NextTurn() {
+    public IEnumerator NextTurn() {
+        _waiting = true;
+        yield return new WaitForSeconds(_turnDelay);
         _turnIndex++;
-        if (_turnIndex > _turnables.Count) _turnIndex = 0;
+        if (_turnIndex >= _turnables.Count) _turnIndex = 0;
+        _waiting = false;
     }
 
     private bool Contains(ITurnable element) {

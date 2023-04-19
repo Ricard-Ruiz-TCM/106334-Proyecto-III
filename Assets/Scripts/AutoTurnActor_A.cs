@@ -1,51 +1,25 @@
+using System.Collections;
 using UnityEngine;
 
-public class AutoTurnActor_A : MonoBehaviour, ITurnable {
 
-    public bool isAutomatic { get; set; }
+public class AutoTurnActor_A : AutomaticTurnable {
 
-    public bool hasMoved { get; set; }
-
-    public bool hasActed { get; set; }
-
-    public bool hasTurnEnded { get; set; }
-
-    public progress moving { get; set; }
-
-    public progress acting { get; set; }
-
-    // Unity Awake
-    void Awake() {
-        isAutomatic = true;
-        hasMoved = false;
-        hasMoved = false;
-        hasTurnEnded = false;
-        moving = progress.waiting;
-        acting = progress.waiting;
-    }
-
+    // Unity Start
     void Start() {
-        FindObjectOfType<TurnManager>().Add(this);
+        AddToManager();
     }
 
-    public void Act() {
-        Debug.Log("ACTOR A TURN ACT");
+    public override IEnumerator C_Act() {
+        Debug.Log("ACTING A");
+        yield return new WaitForSeconds(3f);
+        EndAction();
     }
 
-    public bool CanAct() {
-        return (!hasActed /*&& acting.w*/);
+    public override IEnumerator C_Move() {
+        Debug.Log("MOVING A");
+        yield return new WaitForSeconds(3f);
+        EndMovement();
     }
 
-    public bool CanMove() {
-        return true;
-    }
-
-    public void EndTurn() {
-        Debug.Log("ACTOR A END TURN");
-    }
-
-    public void Move() {
-        Debug.Log("ACTOR A TURN MOVE");
-    }
 
 }

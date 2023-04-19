@@ -2,51 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ManualTurnActor : MonoBehaviour, ITurnable
-{
-    public bool isAutomatic { get; set; }
+public class ManualTurnActor : ManualTurnable {
 
-    public bool hasMoved { get; set; }
 
-    public bool hasActed { get; set; }
-
-    public bool hasTurnEnded { get; set; }
-
-    public progress moving { get; set; }
-
-    public progress acting { get; set; }
-
-    // Unity Awake
-    void Awake() {
-        isAutomatic = false;
-        hasMoved = false;
-        hasMoved = false;
-        hasTurnEnded = false;
-        moving = progress.waiting;
-        acting = progress.waiting;
+    private void Start() {
+        AddToManager();
     }
 
-    void Start() {
-        FindObjectOfType<TurnManager>().Add(this);
+    public override void Act() {
+        Debug.Log("Action MANUAL");
+        hasActed = true;
     }
 
-    public void Act() {
-        Debug.Log("ACTOR MANUAL TURN ACT");
+    public override bool CanAct() {
+        return uCore.Action.GetKeyDown(KeyCode.Space);
     }
 
-    public bool CanAct() {
-        return true;
+    public override void Move() {
+        Debug.Log("Move MANUAL");
+        hasMoved = true;
     }
 
-    public bool CanMove() {
-        return true;
+    public override bool CanMove() {
+        return uCore.Action.GetKeyDown(KeyCode.A);
     }
 
-    public void EndTurn() {
-        Debug.Log("ACTOR MANUAL END TURN");
-    }
-
-    public void Move() {
-        Debug.Log("ACTOR MANUAL TURN MOVE");
-    }
 }

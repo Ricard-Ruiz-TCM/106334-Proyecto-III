@@ -12,7 +12,7 @@ public class InstanciateGrid : MonoBehaviour
     public float gridPrefabLenght = 10.5f;
     public Vector3 instanceGridPos = new Vector3(0, 0, 0);
     private Vector3 gridWorldSize;
-
+    public LayerMask terrainLayer;
 
     [SerializeField] Node[,] grid;
     Inspector2dArray array;
@@ -39,7 +39,7 @@ public class InstanciateGrid : MonoBehaviour
     void Update()
     {
         Debug.Log(NodeFromWorldToPoint(player.transform.position).worldPos);
-        NodeFromWorldToPoint(player.transform.position).gridObj.GetComponent<Renderer>().material = unwalkableMat;
+        NodeFromWorldToPoint(player.transform.position).gridObj.GetComponent<MeshRenderer>().material = unwalkableMat;
     }
     private void Instanciate()
     {
@@ -48,15 +48,23 @@ public class InstanciateGrid : MonoBehaviour
         {
             for (int j = 0; j < columns; j++)
             {
-                GameObject obj = GameObject.Instantiate(gridPrefab, new Vector3(instanceGridPos.x + scale * i * gridPrefabLenght, 1, instanceGridPos.z + scale * j * gridPrefabLenght), Quaternion.identity);
+                GameObject obj = GameObject.Instantiate(gridPrefab, new Vector3(instanceGridPos.x + scale * i * gridPrefabLenght, 100, instanceGridPos.z + scale * j * gridPrefabLenght), Quaternion.identity);
+                RaycastHit raycastHit;
+
+                if(Physics.Raycast(obj.transform.position,new Vector3(0,-1,0),out raycastHit, Mathf.Infinity, terrainLayer))
+                {
+                    obj.transform.position = new Vector3(raycastHit.point.x, raycastHit.point.y + 0.1f, raycastHit.point.z);
+                    obj.transform.rotation = Quaternion.FromToRotation(transform.up, raycastHit.normal);
+                }
+
                 if (!array.columns[j].rows[i])
                 {
                     walkable = false;
-                    obj.GetComponent<Renderer>().material = walkableMat;
+                    obj.GetComponent<MeshRenderer>().material = walkableMat;
                 }
                 else
                 {
-                    obj.GetComponent<Renderer>().material = unwalkableMat;
+                    obj.GetComponent<MeshRenderer>().material = unwalkableMat;
                     walkable = true;
                 }
                 grid[i, j] = new Node(walkable, obj.transform.position,obj);    

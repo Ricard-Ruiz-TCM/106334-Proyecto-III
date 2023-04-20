@@ -1314,6 +1314,9 @@ MonoBehaviour:
     type: 3}
   gridPrefabLenght: 10
   instanceGridPos: {x: 0, y: 0, z: 0}
+  terrainLayer:
+    serializedVersion: 2
+    m_Bits: 64
   walkableMat: {fileID: 2100000, guid: 79af19eb75942bd4390b918da3d54f81, type: 2}
   unwalkableMat: {fileID: 2100000, guid: 7ad5a90c04658fc489f138ca5f6d040f, type: 2}
   player: {fileID: 7450575248917712705}
@@ -1634,7 +1637,7 @@ GameObject:
   - component: {fileID: 2020894990}
   - component: {fileID: 2020894989}
   - component: {fileID: 2020894988}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}

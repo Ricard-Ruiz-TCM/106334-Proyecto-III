@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class AutoTurnActor_A : AutomaticTurnable {
 
+
     // Unity Start
     void Start() {
         SubscribeManager();

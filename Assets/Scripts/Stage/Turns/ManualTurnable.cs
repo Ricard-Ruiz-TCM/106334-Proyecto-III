@@ -18,7 +18,7 @@ public abstract class ManualTurnable : MonoBehaviour, ITurnable {
 
     public void BeginTurn() {
         moving = progress.ready;
-        moving = progress.ready;
+        acting = progress.ready;
         hasTurnEnded = false;
     }
 

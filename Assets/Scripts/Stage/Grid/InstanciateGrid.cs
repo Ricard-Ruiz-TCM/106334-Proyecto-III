@@ -11,6 +11,7 @@ public class InstanciateGrid : MonoBehaviour
     public GameObject gridPrefab;
     public float gridPrefabLenght = 10.5f;
     public Vector3 instanceGridPos = new Vector3(0, 0, 0);
+    private Vector3 gridWorldSize;
 
 
     [SerializeField] Node[,] grid;
@@ -19,6 +20,13 @@ public class InstanciateGrid : MonoBehaviour
 
     public Material walkableMat;
     public Material unwalkableMat;
+
+    public GameObject player;
+    private void Awake()
+    {
+        gridWorldSize = new Vector3(rows * gridPrefabLenght, 0, columns * gridPrefabLenght);
+        Debug.Log(gridWorldSize);
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -30,7 +38,8 @@ public class InstanciateGrid : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        Debug.Log(NodeFromWorldToPoint(player.transform.position).worldPos);
+        NodeFromWorldToPoint(player.transform.position).gridObj.GetComponent<Renderer>().material = unwalkableMat;
     }
     private void Instanciate()
     {
@@ -50,7 +59,7 @@ public class InstanciateGrid : MonoBehaviour
                     obj.GetComponent<Renderer>().material = unwalkableMat;
                     walkable = true;
                 }
-                grid[i, j] = new Node(walkable, obj.transform.position);    
+                grid[i, j] = new Node(walkable, obj.transform.position,obj);    
 
 
                 //if (Physics.Raycast(new Vector3(instanceGridPos.x + scale * i * gridPrefabLenght, 1, instanceGridPos.z + scale * j * gridPrefabLenght),new Vector3(0,1,0), 10, rayLayerMask))
@@ -65,5 +74,16 @@ public class InstanciateGrid : MonoBehaviour
             }
                 
         }
+        
     }
+
+    public Node NodeFromWorldToPoint(Vector3 worldPos)
+    {
+        Vector3 relativePoint = grid[0,0].gridObj.transform.InverseTransformPoint(worldPos);
+        int x = Mathf.RoundToInt(relativePoint.x / 10);
+        int z = Mathf.RoundToInt(relativePoint.z / 10);
+
+        return grid[(int)x, (int)z];
+    }
+
 }

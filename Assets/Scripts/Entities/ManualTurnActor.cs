@@ -5,6 +5,12 @@ public class ManualTurnActor : ManualTurnable {
     [SerializeField]
     private Inventory _inventory;
 
+    private void Update() {
+        if (uCore.Action.GetKeyDown(KeyCode.I)) {
+            FindObjectOfType<InventoryUI>().UpdateInventory(_inventory);
+        }
+    }
+
     void Start() {
         SubscribeManager();
     }
@@ -12,9 +18,9 @@ public class ManualTurnActor : ManualTurnable {
     public override void Act() {
         base.Act();
 
-        _inventory.AddItem(Items.Book1);
-        _inventory.AddItem(Items.Book1);
-        _inventory.RemoveItem(Items.WeaponGladius);
+        _inventory.AddItem(items.Gladius);
+        _inventory.AddItem(items.Book0);
+        _inventory.AddItem(items.Leather);
 
         Invoke("EndAction", 3f);
     }
@@ -26,14 +32,11 @@ public class ManualTurnActor : ManualTurnable {
     public override void Move() {
         base.Move();
 
-        _inventory.AddItem(Items.WeaponGladius);
-        _inventory.UseItem(Items.Book1);
-        _inventory.UseItem(Items.Book1);
-        _inventory.UseItem(Items.Book1);
-        _inventory.RemoveItem(Items.Book1);
-        _inventory.RemoveItem(Items.Book1);
-        _inventory.RemoveItem(Items.Book1);
-        _inventory.RemoveItem(Items.Book1);
+        _inventory.AddItem(items.Leather);
+        _inventory.AddItem(items.Leather);
+        _inventory.AddItem(items.Leather);
+        _inventory.AddItem(items.Leather);
+        _inventory.AddItem(items.Leather);
 
         Invoke("EndMovement", 3f);
     }

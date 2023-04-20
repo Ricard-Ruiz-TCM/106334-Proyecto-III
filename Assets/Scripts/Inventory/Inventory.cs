@@ -5,49 +5,57 @@ using UnityEngine;
 [Serializable]
 public class Inventory {
 
+    public Action onUpdateInventory;
+
     [SerializeField]
     private List<InventoryItem> _items;
+    public List<InventoryItem> AllItems() { return _items; }
 
-    public Inventory(params Item[] items) {
+    public Inventory(params items[] itemsList) {
         _items = new List<InventoryItem>();
 
-        foreach (Item item in items) {
-            _items.Add(new InventoryItem() { item = item });
+        foreach (items item in itemsList) {
+            _items.Add(new InventoryItem() { item = uCore.GameManager.GetItem(item) });
         }
     }
 
-    public void AddItem(Item item) {
-        int pos = Find(item);
+    public void AddItem(items item, int am = 1) {
+        Item it = uCore.GameManager.GetItem(item);
+        int pos = Find(it);
         if (pos != -1) {
-            _items[pos].amount++;
+            _items[pos].amount += am;
         } else {
-            _items.Add(new InventoryItem() { item = item });
+            _items.Add(new InventoryItem() { item = it , amount = am });
         }
+        onUpdateInventory?.Invoke();
     }
 
-    public void RemoveItem(Item item) {
-        int pos = Find(item);
+    public void RemoveItem(items item) {
+        int pos = Find(uCore.GameManager.GetItem(item));
         if (pos != -1) {
             if (_items[pos].amount > 1) {
                 _items[pos].amount--;
             } else {
                 _items.RemoveAt(pos);
             }
+            onUpdateInventory?.Invoke();
         }
     }
 
-    public void UseItem(Item item) {
-        int pos = Find(item);
+    public void UseItem(items item) {
+        Item it = uCore.GameManager.GetItem(item);
+        int pos = Find(it);
         if (pos != -1) {
-            if (item is UsableItem) {
-                ((UsableItem)item).Use();
+            if (it is UsableItem) {
+                ((UsableItem)it).Use();
                 RemoveItem(item);
+                onUpdateInventory?.Invoke();
             }
         }
     }
 
-    public bool Contains(Item item) {
-        return (Find(item) != -1);
+    public bool Contains(items item) {
+        return (Find(uCore.GameManager.GetItem(item)) != -1);
     }
 
     private int Find(Item item) {

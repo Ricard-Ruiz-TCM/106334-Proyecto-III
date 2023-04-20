@@ -24,11 +24,13 @@ public class Node
         }
     }
 
-    public Node(bool _walkable, Vector3 _worldPos,GameObject obj)
+    public Node(bool _walkable, Vector3 _worldPos,GameObject obj, int x,int y)
     {
         walkable = _walkable;
         worldPos = _worldPos;
         gridObj = obj;
+        gridX = x;
+        gridY = y;
     }
 
 }

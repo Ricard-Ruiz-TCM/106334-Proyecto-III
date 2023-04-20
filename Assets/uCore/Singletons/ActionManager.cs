@@ -56,6 +56,11 @@ public class ActionManager : MonoBehaviour {
             _currentScheme = inputScheme.Keyboard;
         OnChangeInput?.Invoke(Scheme());
     }
+    public bool onClick;
+    void OnClick(InputValue value)
+    {
+
+    }
 
     // A ----------------------------------------- A
 

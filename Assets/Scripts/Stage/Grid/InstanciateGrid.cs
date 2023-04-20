@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
+
 public class InstanciateGrid : MonoBehaviour
 {
     public int rows = 10;
@@ -20,6 +20,7 @@ public class InstanciateGrid : MonoBehaviour
 
     public Material walkableMat;
     public Material unwalkableMat;
+    public Material pathMat;
 
     public GameObject player;
     private void Awake()
@@ -33,13 +34,29 @@ public class InstanciateGrid : MonoBehaviour
     {
         array = GetComponent<Inspector2dArray>();
         Instanciate();
+        StartCoroutine(resetMat());
+    }
+    IEnumerator resetMat()
+    {
+        yield return new WaitForSeconds(3f);
+        for (int i = 0; i < rows; i++)
+        {
+            for (int j = 0; j < columns; j++)
+            {
+                if (grid[i, j].walkable)
+                {
+                    grid[i, j].gridObj.GetComponent<MeshRenderer>().material = walkableMat;
+                }
+
+            }
+        }
+        StartCoroutine(resetMat());
     }
 
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(NodeFromWorldToPoint(player.transform.position).worldPos);
-        NodeFromWorldToPoint(player.transform.position).gridObj.GetComponent<MeshRenderer>().material = unwalkableMat;
+        NodeFromWorldToPoint(player.transform.position).gridObj.GetComponent<MeshRenderer>().material = pathMat;
     }
     private void Instanciate()
     {
@@ -59,15 +76,15 @@ public class InstanciateGrid : MonoBehaviour
 
                 if (!array.columns[j].rows[i])
                 {
-                    walkable = false;
+                    walkable = true;
                     obj.GetComponent<MeshRenderer>().material = walkableMat;
                 }
                 else
                 {
                     obj.GetComponent<MeshRenderer>().material = unwalkableMat;
-                    walkable = true;
+                    walkable = false;
                 }
-                grid[i, j] = new Node(walkable, obj.transform.position,obj);    
+                grid[i, j] = new Node(walkable, obj.transform.position,obj,i,j);    
 
 
                 //if (Physics.Raycast(new Vector3(instanceGridPos.x + scale * i * gridPrefabLenght, 1, instanceGridPos.z + scale * j * gridPrefabLenght),new Vector3(0,1,0), 10, rayLayerMask))
@@ -93,5 +110,58 @@ public class InstanciateGrid : MonoBehaviour
 
         return grid[(int)x, (int)z];
     }
+    public List<Node> GetNeighbours(Node node)
+    {
+        List<Node> neighbours = new List<Node>();
 
+        int checkX = node.gridX + 1;
+        int checkY = node.gridY;
+
+        if (checkX >= 0 && checkX < rows - 1 && checkY >= 0 && checkY < columns - 1)
+        {
+            Debug.Log(checkX + "," + checkY);
+            neighbours.Add(grid[checkX, checkY]);
+        }
+
+
+        checkX = node.gridX - 1;
+        checkY = node.gridY;
+
+        if (checkX >= 0 && checkX < rows - 1 && checkY >= 0 && checkY < columns - 1)
+        {
+            Debug.Log(checkX + "," + checkY);
+            neighbours.Add(grid[checkX, checkY]);
+        }
+
+        checkX = node.gridX;
+        checkY = node.gridY + 1;
+
+        if (checkX >= 0 && checkX < rows - 1 && checkY >= 0 && checkY < columns - 1)
+        {
+            Debug.Log(checkX + "," + checkY);
+            neighbours.Add(grid[checkX, checkY]);
+        }
+        checkX = node.gridX ;
+        checkY = node.gridY - 1;
+
+        if (checkX >= 0 && checkX < rows - 1 && checkY >= 0 && checkY < columns - 1)
+        {
+            Debug.Log(checkX + "," + checkY);
+            neighbours.Add(grid[checkX, checkY]);
+        }
+
+
+
+        return neighbours;
+    }
+    public void SetWalkablePath(List<Node> path)
+    {
+        foreach (Node n in grid)
+        {
+            if (path.Contains(n))
+            {
+                n.gridObj.GetComponent<MeshRenderer>().material = pathMat;
+            }
+        }
+    }
 }

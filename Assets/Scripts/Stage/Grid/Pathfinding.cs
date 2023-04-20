@@ -4,8 +4,8 @@ using System.Collections.Generic;
 
 public class Pathfinding : MonoBehaviour
 {
-
-    public Transform seeker, target;
+    [HideInInspector]
+    public Vector3 target;
     InstanciateGrid grid;
 
     void Awake()
@@ -15,7 +15,7 @@ public class Pathfinding : MonoBehaviour
 
     void Update()
     {
-        FindPath(seeker.position, target.position);
+        FindPath(grid.player.transform.position, target);
     }
 
     void FindPath(Vector3 startPos, Vector3 targetPos)
@@ -81,17 +81,19 @@ public class Pathfinding : MonoBehaviour
         }
         path.Reverse();
 
-        grid.path = path;
+        grid.SetWalkablePath(path);
 
     }
 
     int GetDistance(Node nodeA, Node nodeB)
     {
-        int dstX = Mathf.Abs(nodeA.gridX - nodeB.gridX);
-        int dstY = Mathf.Abs(nodeA.gridY - nodeB.gridY);
+        //int dstX = Mathf.Abs(nodeA.gridX - nodeB.gridX);
+        //int dstY = Mathf.Abs(nodeA.gridY - nodeB.gridY);
 
-        if (dstX > dstY)
-            return 14 * dstY + 10 * (dstX - dstY);
-        return 14 * dstX + 10 * (dstY - dstX);
+        //if (dstX > dstY)
+        //    return 14 * dstY + 10 * (dstX - dstY);
+        //return 14 * dstX + 10 * (dstY - dstX);
+
+        return Mathf.Abs(nodeA.gridX - nodeB.gridX) + Mathf.Abs(nodeA.gridY - nodeB.gridY);
     }
 }

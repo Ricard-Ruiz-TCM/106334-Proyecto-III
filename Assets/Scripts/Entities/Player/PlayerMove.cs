@@ -35,6 +35,6 @@ public class PlayerMove : AnimatedState {
 
     public override void OnExit() {
         
-    }
+    } 
 
 }

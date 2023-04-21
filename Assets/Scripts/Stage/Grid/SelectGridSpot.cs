@@ -8,6 +8,7 @@ public class SelectGridSpot : MonoBehaviour
     RaycastHit raycastHit;
     [SerializeField] Camera camera;
     [SerializeField] Pathfinding pathfinding;
+    [SerializeField] Transform player;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,7 +24,7 @@ public class SelectGridSpot : MonoBehaviour
             if (raycastHit.transform.CompareTag("grid") && uCore.Action.GetKeyDown(KeyCode.Space))
             {
                 Debug.Log("gridSelected");
-                pathfinding.target = raycastHit.point;
+                pathfinding.FindPath(player.transform.position,raycastHit.point);
             }
         }
     }

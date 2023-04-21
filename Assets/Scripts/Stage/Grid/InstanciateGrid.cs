@@ -26,7 +26,6 @@ public class InstanciateGrid : MonoBehaviour
     private void Awake()
     {
         gridWorldSize = new Vector3(rows * gridPrefabLenght, 0, columns * gridPrefabLenght);
-        Debug.Log(gridWorldSize);
     }
 
     // Start is called before the first frame update
@@ -119,7 +118,6 @@ public class InstanciateGrid : MonoBehaviour
 
         if (checkX >= 0 && checkX < rows - 1 && checkY >= 0 && checkY < columns - 1)
         {
-            Debug.Log(checkX + "," + checkY);
             neighbours.Add(grid[checkX, checkY]);
         }
 
@@ -129,7 +127,6 @@ public class InstanciateGrid : MonoBehaviour
 
         if (checkX >= 0 && checkX < rows - 1 && checkY >= 0 && checkY < columns - 1)
         {
-            Debug.Log(checkX + "," + checkY);
             neighbours.Add(grid[checkX, checkY]);
         }
 
@@ -138,7 +135,6 @@ public class InstanciateGrid : MonoBehaviour
 
         if (checkX >= 0 && checkX < rows - 1 && checkY >= 0 && checkY < columns - 1)
         {
-            Debug.Log(checkX + "," + checkY);
             neighbours.Add(grid[checkX, checkY]);
         }
         checkX = node.gridX ;
@@ -146,7 +142,6 @@ public class InstanciateGrid : MonoBehaviour
 
         if (checkX >= 0 && checkX < rows - 1 && checkY >= 0 && checkY < columns - 1)
         {
-            Debug.Log(checkX + "," + checkY);
             neighbours.Add(grid[checkX, checkY]);
         }
 
@@ -163,5 +158,6 @@ public class InstanciateGrid : MonoBehaviour
                 n.gridObj.GetComponent<MeshRenderer>().material = pathMat;
             }
         }
+        player.GetComponent<MoveProva>().ResetPath(path);
     }
 }

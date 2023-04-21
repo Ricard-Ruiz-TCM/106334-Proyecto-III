@@ -4,8 +4,6 @@ using System.Collections.Generic;
 
 public class Pathfinding : MonoBehaviour
 {
-    [HideInInspector]
-    public Vector3 target;
     InstanciateGrid grid;
 
     void Awake()
@@ -15,10 +13,10 @@ public class Pathfinding : MonoBehaviour
 
     void Update()
     {
-        FindPath(grid.player.transform.position, target);
+        
     }
 
-    void FindPath(Vector3 startPos, Vector3 targetPos)
+    public void FindPath(Vector3 startPos, Vector3 targetPos)
     {
         Node startNode = grid.NodeFromWorldToPoint(startPos);
         Node targetNode = grid.NodeFromWorldToPoint(targetPos);

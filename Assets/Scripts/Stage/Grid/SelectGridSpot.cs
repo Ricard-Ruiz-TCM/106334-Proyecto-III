@@ -9,6 +9,7 @@ public class SelectGridSpot : MonoBehaviour
     [SerializeField] Camera camera;
     [SerializeField] Pathfinding pathfinding;
     [SerializeField] Transform player;
+    [SerializeField] InstanciateGrid grid;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,10 +22,14 @@ public class SelectGridSpot : MonoBehaviour
         Ray ray = camera.ScreenPointToRay(Input.mousePosition);
         if(!EventSystem.current.IsPointerOverGameObject()&&Physics.Raycast(ray,out raycastHit))
         {
-            if (raycastHit.transform.CompareTag("grid") && uCore.Action.GetKeyDown(KeyCode.Space))
+            if (raycastHit.transform.CompareTag("grid"))
             {
                 Debug.Log("gridSelected");
                 pathfinding.FindPath(player.transform.position,raycastHit.point);
+                if (uCore.Action.GetKeyDown(KeyCode.Space))
+                {
+                    grid.isClicked = true;
+                }
             }
         }
     }

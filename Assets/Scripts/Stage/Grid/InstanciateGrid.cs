@@ -23,6 +23,8 @@ public class InstanciateGrid : MonoBehaviour
     public Material pathMat;
 
     public GameObject player;
+
+    public bool isClicked = false;
     private void Awake()
     {
         gridWorldSize = new Vector3(rows * gridPrefabLenght, 0, columns * gridPrefabLenght);
@@ -33,24 +35,24 @@ public class InstanciateGrid : MonoBehaviour
     {
         array = GetComponent<Inspector2dArray>();
         Instanciate();
-        StartCoroutine(resetMat());
+        //StartCoroutine(resetMat());
     }
-    IEnumerator resetMat()
-    {
-        yield return new WaitForSeconds(3f);
-        for (int i = 0; i < rows; i++)
-        {
-            for (int j = 0; j < columns; j++)
-            {
-                if (grid[i, j].walkable)
-                {
-                    grid[i, j].gridObj.GetComponent<MeshRenderer>().material = walkableMat;
-                }
+    //IEnumerator resetMat()
+    //{
+    //    yield return new WaitForSeconds(3f);
+    //    for (int i = 0; i < rows; i++)
+    //    {
+    //        for (int j = 0; j < columns; j++)
+    //        {
+    //            if (grid[i, j].walkable)
+    //            {
+    //                grid[i, j].gridObj.GetComponent<MeshRenderer>().material = walkableMat;
+    //            }
 
-            }
-        }
-        StartCoroutine(resetMat());
-    }
+    //        }
+    //    }
+    //    StartCoroutine(resetMat());
+    //}
 
     // Update is called once per frame
     void Update()
@@ -109,6 +111,26 @@ public class InstanciateGrid : MonoBehaviour
 
         return grid[(int)x, (int)z];
     }
+    public void SetWalkablePath(List<Node> path)
+    {
+        foreach (Node n in grid)
+        {
+            if (path.Contains(n))
+            {
+                n.gridObj.GetComponent<MeshRenderer>().material = pathMat;
+            }
+            else if(n.walkable)
+            {
+                n.gridObj.GetComponent<MeshRenderer>().material = walkableMat;
+            }
+        }
+        if (isClicked)
+        {
+            player.GetComponent<MoveProva>().ResetPath(path);
+            isClicked = false;
+        }
+        
+    }
     public List<Node> GetNeighbours(Node node)
     {
         List<Node> neighbours = new List<Node>();
@@ -137,7 +159,7 @@ public class InstanciateGrid : MonoBehaviour
         {
             neighbours.Add(grid[checkX, checkY]);
         }
-        checkX = node.gridX ;
+        checkX = node.gridX;
         checkY = node.gridY - 1;
 
         if (checkX >= 0 && checkX < rows - 1 && checkY >= 0 && checkY < columns - 1)
@@ -148,16 +170,5 @@ public class InstanciateGrid : MonoBehaviour
 
 
         return neighbours;
-    }
-    public void SetWalkablePath(List<Node> path)
-    {
-        foreach (Node n in grid)
-        {
-            if (path.Contains(n))
-            {
-                n.gridObj.GetComponent<MeshRenderer>().material = pathMat;
-            }
-        }
-        player.GetComponent<MoveProva>().ResetPath(path);
     }
 }

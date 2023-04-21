@@ -5,7 +5,7 @@ using UnityEngine;
 [Serializable]
 public class Inventory {
 
-    public Action onUpdateInventory;
+    public Action<Inventory> onUpdateInventory;
 
     [SerializeField]
     private List<InventoryItem> _items;
@@ -27,7 +27,7 @@ public class Inventory {
         } else {
             _items.Add(new InventoryItem() { item = it , amount = am });
         }
-        onUpdateInventory?.Invoke();
+        onUpdateInventory?.Invoke(this);
     }
 
     public void RemoveItem(items item) {
@@ -38,7 +38,7 @@ public class Inventory {
             } else {
                 _items.RemoveAt(pos);
             }
-            onUpdateInventory?.Invoke();
+            onUpdateInventory?.Invoke(this);
         }
     }
 
@@ -49,7 +49,7 @@ public class Inventory {
             if (it is UsableItem) {
                 ((UsableItem)it).Use();
                 RemoveItem(item);
-                onUpdateInventory?.Invoke();
+                onUpdateInventory?.Invoke(this);
             }
         }
     }

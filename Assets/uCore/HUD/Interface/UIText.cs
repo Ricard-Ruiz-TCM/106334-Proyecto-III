@@ -65,7 +65,9 @@ public class UIText : MonoBehaviour {
     }
     // Método concreto para setear el texto según Localization
     public void UpdateText() {
-        SetText(uCore.Localization.GetText(_textKey));
+        if (uCore.Localization.Exists(_textKey)) {
+            SetText(uCore.Localization.GetText(_textKey));
+        }
     }
 
     /** Método SetKey

@@ -65,10 +65,17 @@ public class LocalizationManager : MonoBehaviour {
      * @param string key Key ID del texto dentro del json
      * @return string Texto del idioma especifico */
     public string GetText(string key) {
-        if (!_texts.ContainsKey(key))
-            return "X " + key + " X";
+        if (!Exists(key))
+            return "NO KEY";
 
         return _texts[key];
+    }
+
+    /** Método Exists
+     * Compruba si existe una key en el sistema
+     * @return bool true -> existe | false -> no existe */
+    public bool Exists(string key) {
+        return _texts.ContainsKey(key);
     }
 
 }

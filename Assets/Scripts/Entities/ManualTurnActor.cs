@@ -5,10 +5,8 @@ public class ManualTurnActor : ManualTurnable {
     [SerializeField]
     private Inventory _inventory;
 
-    private void Update() {
-        if (uCore.Action.GetKeyDown(KeyCode.I)) {
-            FindObjectOfType<InventoryUI>().UpdateInventory(_inventory);
-        }
+    private void Awake() {
+        _inventory.onUpdateInventory += FindObjectOfType<InventoryUI>().UpdateInventory;
     }
 
     void Start() {

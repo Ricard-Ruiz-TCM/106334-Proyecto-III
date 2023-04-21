@@ -1,7 +1,5 @@
-﻿using UnityEngine;
+﻿public abstract class UsableItem : Item {
 
-public abstract class UsableItem : Item {
-    
     public abstract void Use();
 
 }

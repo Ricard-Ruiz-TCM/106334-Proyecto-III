@@ -13,14 +13,18 @@ public class CameraController : MonoBehaviour {
 
     [SerializeField, Header("Position:")]
     private Vector2 _offset;
-    public void SetOffset(Vector2 offset) { _offset = offset; }
+    public void SetOffset(Vector2 offset) {
+        _offset = offset;
+    }
     [SerializeField]
     private Vector2 _limits;
-    public void SetLimits(Vector2 limits) { _limits = limits; }
+    public void SetLimits(Vector2 limits) {
+        _limits = limits;
+    }
 
     // Unity LateUpdate
     void LateUpdate() {
-       
+
     }
 
 }

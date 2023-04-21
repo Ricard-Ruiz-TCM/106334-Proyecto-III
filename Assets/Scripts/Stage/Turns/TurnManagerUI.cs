@@ -1,4 +1,4 @@
 ﻿using UnityEngine;
 
-    class TurnManagerUI  : MonoBehaviour{
-    }
+class TurnManagerUI : MonoBehaviour {
+}

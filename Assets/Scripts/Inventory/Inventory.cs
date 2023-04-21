@@ -9,7 +9,9 @@ public class Inventory {
 
     [SerializeField]
     private List<InventoryItem> _items;
-    public List<InventoryItem> AllItems() { return _items; }
+    public List<InventoryItem> AllItems() {
+        return _items;
+    }
 
     public Inventory(params items[] itemsList) {
         _items = new List<InventoryItem>();
@@ -25,7 +27,7 @@ public class Inventory {
         if (pos != -1) {
             _items[pos].amount += am;
         } else {
-            _items.Add(new InventoryItem() { item = it , amount = am });
+            _items.Add(new InventoryItem() { item = it, amount = am });
         }
         onUpdateInventory?.Invoke(this);
     }

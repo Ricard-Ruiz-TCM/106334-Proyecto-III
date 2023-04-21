@@ -1,6 +1,4 @@
-﻿using UnityEditor;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 
 public class InventoryUI : MonoBehaviour {
 
@@ -10,13 +8,13 @@ public class InventoryUI : MonoBehaviour {
     public void UpdateInventory(Inventory inventory) {
         ClearInventory();
 
-        foreach(InventoryItem iit in inventory.AllItems()) {
+        foreach (InventoryItem iit in inventory.AllItems()) {
             GameObject.Instantiate(_inventoryItemUI, transform).GetComponent<InventoryItemUI>().Set(iit, inventory);
         }
     }
 
     public void ClearInventory() {
-        foreach(Transform child in transform) {
+        foreach (Transform child in transform) {
             GameObject.Destroy(child.gameObject);
         }
     }

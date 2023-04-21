@@ -1,11 +1,8 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.EventSystems;
 
-public class GridMovement : MonoBehaviour
-{
+public class GridMovement : MonoBehaviour {
     private NavMeshAgent _agent;
 
     private Pathfinding _pathfinder;
@@ -18,45 +15,37 @@ public class GridMovement : MonoBehaviour
     int index = 0;
     public bool canMove = false;
 
-    private void Awake()
-    {
+    private void Awake() {
         _agent = GetComponent<NavMeshAgent>();
         _builder = GetComponent<GridBuilder>();
     }
 
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
         _pathfinder = GameObject.FindObjectOfType<Pathfinding>();
         _builder = GameObject.FindObjectOfType<GridBuilder>();
         pathMat = Resources.Load<Material>("Materials/PathMat");
     }
 
-    public void ResetPath(List<Node> path)
-    {
+    public void ResetPath(List<Node> path) {
         playerPath = path;
         index = 0;
         canMove = false;
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
         INput();
-        if(playerPath != null && canMove)
-        {
+        if (playerPath != null && canMove) {
             NextPathNode();
             _agent.SetDestination(_builder.GetGridPlane(playerPath[index]).position);
         }
 
     }
-    private void NextPathNode()
-    {
-        if(transform.position.x == (_builder.GetGridPlane(playerPath[index]).position).x && transform.position.z == (_builder.GetGridPlane(playerPath[index]).position).z)
-        {
+    private void NextPathNode() {
+        if (transform.position.x == (_builder.GetGridPlane(playerPath[index]).position).x && transform.position.z == (_builder.GetGridPlane(playerPath[index]).position).z) {
             index++;
-            if (index == playerPath.Count)
-            {
+            if (index == playerPath.Count) {
                 playerPath = null;
                 canMove = false;
             }
@@ -64,8 +53,7 @@ public class GridMovement : MonoBehaviour
     }
 
 
-    public void INput()
-    {
+    public void INput() {
         /*RaycastHit raycastHit;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
@@ -83,9 +71,8 @@ public class GridMovement : MonoBehaviour
                 }
             }
         }*/
-        if (uCore.Action.GetKeyDown(KeyCode.P))
-        {
-            playerPath = _pathfinder.FindPath(_builder.GetGridPlane(1, 1).node, _builder.GetGridPlane(6,6).node);
+        if (uCore.Action.GetKeyDown(KeyCode.P)) {
+            playerPath = _pathfinder.FindPath(_builder.GetGridPlane(1, 1).node, _builder.GetGridPlane(6, 6).node);
             canMove = true;
         }
     }

@@ -42,10 +42,12 @@ public enum progress {
 // Todos los items del juego
 public enum items {
     NONE,
-    // Weapons & Armors
-    Gladius, LeatherArmor,
+    // Weapons
+    Gladius, Hasta, Bow, Dolabra, Pugi,
+    // Armors
+    LeatherArmor,
     // Resoruces and Quests/Books
     Leather, Book0, Quest0,
 
     MAX
-} 
+}

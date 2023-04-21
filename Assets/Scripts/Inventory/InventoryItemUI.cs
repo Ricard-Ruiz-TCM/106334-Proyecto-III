@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class InventoryItemUI : MonoBehaviour {
@@ -17,7 +16,7 @@ public class InventoryItemUI : MonoBehaviour {
 
         // onClick
         if (_usable.interactable) {
-            _usable.onClick.AddListener(() => { 
+            _usable.onClick.AddListener(() => {
                 inventory.UseItem(item.item._item);
             });
         }

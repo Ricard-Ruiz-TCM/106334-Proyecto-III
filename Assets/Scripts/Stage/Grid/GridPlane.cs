@@ -1,7 +1,6 @@
 using UnityEngine;
 
-public class GridPlane : MonoBehaviour
-{
+public class GridPlane : MonoBehaviour {
 
     private MeshRenderer _meshRenderer;
 
@@ -10,22 +9,23 @@ public class GridPlane : MonoBehaviour
 
     public Node node;
 
-    public Vector3 position { get { return transform.position; } }
+    public Vector3 position {
+        get {
+            return transform.position;
+        }
+    }
 
-    private void Awake()
-    {
+    private void Awake() {
         grid = FindObjectOfType<Grid>();
         _meshRenderer = GetComponent<MeshRenderer>();
     }
 
-    public void Set(Grid gr, Node nd)
-    {
-        grid = gr; 
+    public void Set(Grid gr, Node nd) {
+        grid = gr;
         node = nd;
     }
 
-    public void SetMaterial(Material mat)
-    {
+    public void SetMaterial(Material mat) {
         _meshRenderer.material = mat;
     }
 

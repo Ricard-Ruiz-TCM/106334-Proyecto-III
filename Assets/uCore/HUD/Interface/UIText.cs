@@ -74,7 +74,8 @@ public class UIText : MonoBehaviour {
      * Establece la key dle texto y acutaliza
      * @param string key Key del json*/
     public void SetKey(string key) {
-        _textKey = key; UpdateText();
+        _textKey = key;
+        UpdateText();
     }
 
     /** Método GetText

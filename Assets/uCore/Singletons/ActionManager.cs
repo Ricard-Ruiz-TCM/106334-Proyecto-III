@@ -57,8 +57,7 @@ public class ActionManager : MonoBehaviour {
         OnChangeInput?.Invoke(Scheme());
     }
     public bool onClick;
-    void OnClick(InputValue value)
-    {
+    void OnClick(InputValue value) {
 
     }
 

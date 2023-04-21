@@ -1,7 +1,4 @@
-﻿using UnityEngine;
-using UnityEngine.Rendering;
-
-/** class EffectElement
+﻿/** class EffectElement
  * --------------------
  * 
  * Clase que controla los objeto de effectos

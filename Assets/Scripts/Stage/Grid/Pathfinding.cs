@@ -2,29 +2,23 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Grid))]
-public class Pathfinding : MonoBehaviour
-{
+public class Pathfinding : MonoBehaviour {
     Grid _grid;
 
-    void Awake()
-    {
+    void Awake() {
         _grid = GetComponent<Grid>();
     }
 
-    public List<Node> FindPath(Node startNode, Node targetNode)
-    {
+    public List<Node> FindPath(Node startNode, Node targetNode) {
 
         List<Node> openSet = new List<Node>();
         HashSet<Node> closedSet = new HashSet<Node>();
         openSet.Add(startNode);
 
-        while (openSet.Count > 0)
-        {
+        while (openSet.Count > 0) {
             Node node = openSet[0];
-            for (int i = 1; i < openSet.Count; i++)
-            {
-                if (openSet[i].fCost < node.fCost || openSet[i].fCost == node.fCost)
-                {
+            for (int i = 1; i < openSet.Count; i++) {
+                if (openSet[i].fCost < node.fCost || openSet[i].fCost == node.fCost) {
                     if (openSet[i].hCost < node.hCost)
                         node = openSet[i];
                 }
@@ -33,22 +27,18 @@ public class Pathfinding : MonoBehaviour
             openSet.Remove(node);
             closedSet.Add(node);
 
-            if (node == targetNode)
-            {
-               return RetracePath(startNode, targetNode);
+            if (node == targetNode) {
+                return RetracePath(startNode, targetNode);
 
             }
 
-            foreach (Node neighbour in _grid.GetNeighbours(node))
-            {
-                if (!neighbour.walkable || closedSet.Contains(neighbour))
-                {
+            foreach (Node neighbour in _grid.GetNeighbours(node)) {
+                if (!neighbour.walkable || closedSet.Contains(neighbour)) {
                     continue;
                 }
 
                 int newCostToNeighbour = node.gCost + GetDistance(node, neighbour);
-                if (newCostToNeighbour < neighbour.gCost || !openSet.Contains(neighbour))
-                {
+                if (newCostToNeighbour < neighbour.gCost || !openSet.Contains(neighbour)) {
                     neighbour.gCost = newCostToNeighbour;
                     neighbour.hCost = GetDistance(neighbour, targetNode);
                     neighbour.parent = node;
@@ -62,14 +52,12 @@ public class Pathfinding : MonoBehaviour
     }
 
 
-    List<Node> RetracePath(Node startNode, Node endNode)
-    {
+    List<Node> RetracePath(Node startNode, Node endNode) {
 
         List<Node> path = new List<Node>();
         Node currentNode = endNode;
 
-        while (currentNode != startNode)
-        {
+        while (currentNode != startNode) {
             path.Add(currentNode);
             currentNode = currentNode.parent;
         }
@@ -78,8 +66,7 @@ public class Pathfinding : MonoBehaviour
 
     }
 
-    int GetDistance(Node nodeA, Node nodeB)
-    {
+    int GetDistance(Node nodeA, Node nodeB) {
         //int dstX = Mathf.Abs(nodeA.gridX - nodeB.gridX);
         //int dstY = Mathf.Abs(nodeA.gridY - nodeB.gridY);
 

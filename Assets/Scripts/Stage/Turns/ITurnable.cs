@@ -1,8 +1,14 @@
 ﻿public interface ITurnable {
 
-    public progress moving { get; }
-    public progress acting { get; }
-    public bool hasTurnEnded { get; }
+    public progress moving {
+        get;
+    }
+    public progress acting {
+        get;
+    }
+    public bool hasTurnEnded {
+        get;
+    }
 
     public bool CanMove();
     public void Move();

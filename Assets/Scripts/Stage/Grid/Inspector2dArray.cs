@@ -1,11 +1,9 @@
 using UnityEngine;
 
-public class Inspector2dArray : MonoBehaviour
-{
+public class Inspector2dArray : MonoBehaviour {
     public static int X, Y;
     [System.Serializable]
-    public class Column
-    {
+    public class Column {
         public bool[] rows = new bool[Y];
     }
 

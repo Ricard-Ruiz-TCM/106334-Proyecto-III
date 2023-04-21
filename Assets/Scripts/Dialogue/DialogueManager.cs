@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class DialogueManager : MonoBehaviour {
 
-    public static event Action onEndDialogue; 
+    public static event Action onEndDialogue;
 
     [SerializeField, Header("Dialogue Node:")]
     private DialogueNode _current;

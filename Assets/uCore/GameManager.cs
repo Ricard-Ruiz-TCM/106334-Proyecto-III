@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour {
         Item[] allItems = Resources.LoadAll<Item>("ScriptableObjects/Items");
         foreach (Item it in allItems) {
             items itE;
-            if (Enum.TryParse(it.name, out itE)) { 
+            if (Enum.TryParse(it.name, out itE)) {
                 _items.Add(itE, it);
             } else {
                 Debug.LogWarning("Missmatch de nombre con el SO y el Enum en: " + it.name);

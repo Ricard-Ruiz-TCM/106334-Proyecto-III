@@ -1,25 +1,18 @@
-using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
+[RequireComponent(typeof(Grid))]
 public class Pathfinding : MonoBehaviour
 {
-    InstanciateGrid grid;
+    Grid _grid;
 
     void Awake()
     {
-        grid = GetComponent<InstanciateGrid>();
+        _grid = GetComponent<Grid>();
     }
 
-    void Update()
+    public List<Node> FindPath(Node startNode, Node targetNode)
     {
-        
-    }
-
-    public void FindPath(Vector3 startPos, Vector3 targetPos)
-    {
-        Node startNode = grid.NodeFromWorldToPoint(startPos);
-        Node targetNode = grid.NodeFromWorldToPoint(targetPos);
 
         List<Node> openSet = new List<Node>();
         HashSet<Node> closedSet = new HashSet<Node>();
@@ -42,11 +35,11 @@ public class Pathfinding : MonoBehaviour
 
             if (node == targetNode)
             {
-                RetracePath(startNode, targetNode);
-                return;
+               return RetracePath(startNode, targetNode);
+
             }
 
-            foreach (Node neighbour in grid.GetNeighbours(node))
+            foreach (Node neighbour in _grid.GetNeighbours(node))
             {
                 if (!neighbour.walkable || closedSet.Contains(neighbour))
                 {
@@ -65,11 +58,13 @@ public class Pathfinding : MonoBehaviour
                 }
             }
         }
+        return null;
     }
 
 
-    void RetracePath(Node startNode, Node endNode)
+    List<Node> RetracePath(Node startNode, Node endNode)
     {
+
         List<Node> path = new List<Node>();
         Node currentNode = endNode;
 
@@ -79,8 +74,7 @@ public class Pathfinding : MonoBehaviour
             currentNode = currentNode.parent;
         }
         path.Reverse();
-
-        grid.SetWalkablePath(path);
+        return path;
 
     }
 

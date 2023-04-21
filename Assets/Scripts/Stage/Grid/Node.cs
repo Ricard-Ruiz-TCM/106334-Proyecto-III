@@ -5,17 +5,14 @@ using UnityEngine;
 public class Node
 {
     public bool walkable;
-    public Vector3 worldPos;
-    public GameObject gridObj;
-
-    public int gCost;
-    public int hCost;
 
     public int gridX;
     public int gridY;
 
     public Node parent;
 
+    public int gCost;
+    public int hCost;
     public int fCost
     {
         get
@@ -24,11 +21,9 @@ public class Node
         }
     }
 
-    public Node(bool _walkable, Vector3 _worldPos,GameObject obj, int x,int y)
+    public Node(bool _walkable, int x,int y)
     {
         walkable = _walkable;
-        worldPos = _worldPos;
-        gridObj = obj;
         gridX = x;
         gridY = y;
     }

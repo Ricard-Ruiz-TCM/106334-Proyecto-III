@@ -1,79 +1,104 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Grid))]
+[RequireComponent(typeof(Grid2D))]
 public class Pathfinding : MonoBehaviour {
-    Grid _grid;
 
-    void Awake() {
-        _grid = GetComponent<Grid>();
+    public enum heuristic {
+        Manhattan, Diagonal, Euclidean
     }
 
-    public List<Node> FindPath(Node startNode, Node targetNode) {
+    // Grid
+    private Grid2D _grid;
 
-        List<Node> openSet = new List<Node>();
-        HashSet<Node> closedSet = new HashSet<Node>();
-        openSet.Add(startNode);
+    [SerializeField]
+    private heuristic _heuristic;
 
-        while (openSet.Count > 0) {
-            Node node = openSet[0];
-            for (int i = 1; i < openSet.Count; i++) {
-                if (openSet[i].fCost < node.fCost || openSet[i].fCost == node.fCost) {
-                    if (openSet[i].hCost < node.hCost)
-                        node = openSet[i];
+    // Unity Awake
+    void Awake() {
+        _grid = GetComponent<Grid2D>();
+    }
+
+    /** Método FindPath, busca la mejor ruta entre 2 nodos, devuelve la lista de origin -> target **/
+    public List<Node> FindPath(Node origin, Node target) {
+
+        // Listas
+        List<Node> openList = new List<Node>();
+        HashSet<Node> closedList = new HashSet<Node>();
+
+        openList.Add(origin);
+
+        while (openList.Count > 0) {
+            Node node = openList[0];
+
+            // Buscamos el nodo con coste en h más bajo
+            for (int i = 1; i < openList.Count; i++) {
+                if (openList[i].f < node.f || openList[i].f == node.f) {
+                    if (openList[i].h < node.h)
+                        node = openList[i];
                 }
             }
 
-            openSet.Remove(node);
-            closedSet.Add(node);
+            openList.Remove(node);
+            closedList.Add(node);
 
-            if (node == targetNode) {
-                return RetracePath(startNode, targetNode);
-
+            // Llegamos al destino
+            if (node == target) {
+                return ReversePath(origin, target);
             }
 
+            // Revisamos los vecinos al nodo en cuestión 
             foreach (Node neighbour in _grid.GetNeighbours(node)) {
-                if (!neighbour.walkable || closedSet.Contains(neighbour)) {
+                if (!neighbour.walkable || closedList.Contains(neighbour)) {
                     continue;
                 }
-
-                int newCostToNeighbour = node.gCost + GetDistance(node, neighbour);
-                if (newCostToNeighbour < neighbour.gCost || !openSet.Contains(neighbour)) {
-                    neighbour.gCost = newCostToNeighbour;
-                    neighbour.hCost = GetDistance(neighbour, targetNode);
+                // Calculamos nuevo coste al neighbour teniendo origen en cuenta
+                int newCostToNeighbour = node.g + Heuristic(node, neighbour);
+                if (newCostToNeighbour < neighbour.g || !openList.Contains(neighbour)) {
+                    neighbour.g = newCostToNeighbour;
+                    neighbour.h = Heuristic(neighbour, target);
                     neighbour.parent = node;
-
-                    if (!openSet.Contains(neighbour))
-                        openSet.Add(neighbour);
+                    // Añadimos el neigbour a la lista
+                    if (!openList.Contains(neighbour)) {
+                        openList.Add(neighbour);
+                    }
                 }
             }
         }
+
         return null;
     }
 
 
-    List<Node> RetracePath(Node startNode, Node endNode) {
-
+    /** Metodo para tornar el path al rever, utilizando el parent del Node */
+    private List<Node> ReversePath(Node origin, Node target) {
         List<Node> path = new List<Node>();
-        Node currentNode = endNode;
-
-        while (currentNode != startNode) {
+        Node currentNode = target;
+        while (currentNode != origin) {
             path.Add(currentNode);
             currentNode = currentNode.parent;
         }
         path.Reverse();
         return path;
-
     }
 
-    int GetDistance(Node nodeA, Node nodeB) {
-        //int dstX = Mathf.Abs(nodeA.gridX - nodeB.gridX);
-        //int dstY = Mathf.Abs(nodeA.gridY - nodeB.gridY);
 
-        //if (dstX > dstY)
-        //    return 14 * dstY + 10 * (dstX - dstY);
-        //return 14 * dstX + 10 * (dstY - dstX);
+    /** Método para calcualr la heuristica */
+    private int Heuristic(Node origin, Node target) {
+        switch (_heuristic) {
+            case heuristic.Manhattan:
+                return Mathf.Abs(origin.x - target.x) + Mathf.Abs(origin.y - target.y);
 
-        return Mathf.Abs(nodeA.gridX - nodeB.gridX) + Mathf.Abs(nodeA.gridY - nodeB.gridY);
+            case heuristic.Diagonal:
+                int x = Mathf.Abs(origin.x - target.x);
+                int y = Mathf.Abs(origin.y - target.y);
+                if (x > y)
+                    return 14 * y + 10 * (x - y);
+                return 14 * x + 10 * (y - x);
+
+            case heuristic.Euclidean:
+                return (int)Mathf.Sqrt((origin.x - target.x) * 2 + (origin.y - target.y) * 2);
+        }
+        return 0;
     }
 }

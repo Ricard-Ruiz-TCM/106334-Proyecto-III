@@ -1,23 +1,21 @@
+
 public class Node {
+
+    // Cords
+    public int x, y;
+    // Heuristic Costs
+    public int g, h;
+    public int f {
+        get { return g + h; }
+    }
+    
+    // ValidPosition
     public bool walkable;
-
-    public int gridX;
-    public int gridY;
-
     public Node parent;
 
-    public int gCost;
-    public int hCost;
-    public int fCost {
-        get {
-            return gCost + hCost;
-        }
-    }
-
-    public Node(bool _walkable, int x, int y) {
-        walkable = _walkable;
-        gridX = x;
-        gridY = y;
+    // Constructor
+    public Node(bool isWalkable, int xPos, int yPos) {
+        walkable = isWalkable; x = xPos; y = yPos;
     }
 
 }

@@ -13,7 +13,6 @@ public abstract class Actor : MonoBehaviour, ITurnable {
     [SerializeField, Header("Inventory:")]
     private Inventory _inventory;
 
-
     #region ITurnable 
     public progress moving {
         get; private set;

@@ -2,33 +2,31 @@ using UnityEngine;
 
 public class GridPlane : MonoBehaviour {
 
+    // MeshRenderer para cambiar el mat
     private MeshRenderer _meshRenderer;
 
-    [HideInInspector]
-    public Grid grid;
-
+    // Node & Grid
     public Node node;
+    public Grid2D grid2D;
 
+    // Fast position access
     public Vector3 position {
-        get {
-            return transform.position;
-        }
+        get { return transform.position; }
     }
 
-    private void Awake() {
-        grid = FindObjectOfType<Grid>();
+    // Unity Awake
+    void Awake() {
         _meshRenderer = GetComponent<MeshRenderer>();
     }
 
-    public void Set(Grid gr, Node nd) {
-        grid = gr;
-        node = nd;
+    /** Método set de Grid y Nodo */
+    public void SetGrid(Grid2D grid, Node node) {
+        grid2D = grid; this.node = node;
     }
 
+    /** Método para setear el material */
     public void SetMaterial(Material mat) {
         _meshRenderer.material = mat;
     }
-
-
 
 }

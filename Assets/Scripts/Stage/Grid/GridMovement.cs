@@ -1,21 +1,31 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class GridMovement : MonoBehaviour {
+
+    public Action onDestinationReached;
+
+    // NavMesh Agent
     private NavMeshAgent _agent;
 
+    // Pathfinder y Builder del escenario
     private Pathfinding _pathfinder;
     private GridBuilder _builder;
+    public GridBuilder Builder() {
+        return _builder;
+    }
 
-    public Material pathMat;
+    // Destination path
+    private int _idnex = -1;
+    public List<Node> Route;
 
+    [SerializeField, Header("Threshold:")]
+    private float pathEndThreshold;
 
-    List<Node> playerPath;
-    int index = 0;
-    public bool canMove = false;
-
-    private void Awake() {
+    // Unity Awake
+    void Awake() {
         _agent = GetComponent<NavMeshAgent>();
         _builder = GetComponent<GridBuilder>();
     }
@@ -24,56 +34,37 @@ public class GridMovement : MonoBehaviour {
     void Start() {
         _pathfinder = GameObject.FindObjectOfType<Pathfinding>();
         _builder = GameObject.FindObjectOfType<GridBuilder>();
-        pathMat = Resources.Load<Material>("Materials/PathMat");
     }
 
-    public void ResetPath(List<Node> path) {
-        playerPath = path;
-        index = 0;
-        canMove = false;
+    /** Establece el origen y el destino del movimiento */
+    public void SetDestination(Vector3 origin, GridPlane plane) {
+        _idnex = 0;
+        CalcRoute(origin, plane);
     }
 
-    // Update is called once per frame
+    public void CalcRoute(Vector3 origin, GridPlane plane) {
+        Route = _pathfinder.FindPath(_builder.GetGridPlane(origin).node, plane.node);
+    }
+
+    // Unity Update
     void Update() {
-        INput();
-        if (playerPath != null && canMove) {
+        if (Route == null || _idnex == -1)
+            return;
+
+        if (!_agent.hasPath || _agent.remainingDistance <= _agent.stoppingDistance + pathEndThreshold) {
             NextPathNode();
-            _agent.SetDestination(_builder.GetGridPlane(playerPath[index]).position);
         }
-
     }
+
+    /** Método para ir al siguiente nodo */
     private void NextPathNode() {
-        if (transform.position.x == (_builder.GetGridPlane(playerPath[index]).position).x && transform.position.z == (_builder.GetGridPlane(playerPath[index]).position).z) {
-            index++;
-            if (index == playerPath.Count) {
-                playerPath = null;
-                canMove = false;
-            }
+        _idnex++;
+        if (_idnex == Route.Count) {
+            Route = null;
+            onDestinationReached?.Invoke();
+        } else {
+            _agent.SetDestination(_builder.GetGridPlane(Route[_idnex]).position);
         }
     }
 
-
-    public void INput() {
-        /*RaycastHit raycastHit;
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-        if (!EventSystem.current.IsPointerOverGameObject() && Physics.Raycast(ray, out raycastHit))
-        {
-            if (raycastHit.transform.CompareTag("grid"))
-            {
-                Node dest = raycastHit.transform.GetComponent<GridPlane>().node;
-                ray = new Ray(transform.position, -this.transform.up);
-
-                if (Physics.Raycast(ray, out raycastHit)) 
-                {
-                    playerPath = _pathfinder.FindPath(raycastHit.transform.gameObject.GetComponent<GridPlane>().node, dest);
-                    canMove = uCore.Action.GetKeyDown(KeyCode.Space);
-                }
-            }
-        }*/
-        if (uCore.Action.GetKeyDown(KeyCode.P)) {
-            playerPath = _pathfinder.FindPath(_builder.GetGridPlane(1, 1).node, _builder.GetGridPlane(6, 6).node);
-            canMove = true;
-        }
-    }
 }

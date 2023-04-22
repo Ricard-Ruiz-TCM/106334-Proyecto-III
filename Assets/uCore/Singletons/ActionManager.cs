@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -56,9 +57,17 @@ public class ActionManager : MonoBehaviour {
             _currentScheme = inputScheme.Keyboard;
         OnChangeInput?.Invoke(Scheme());
     }
-    public bool onClick;
-    void OnClick(InputValue value) {
 
+    public Vector2 mousePosition;
+    void OnDestination(InputValue value) {
+        mousePosition = value.Get<Vector2>();
+    }
+
+    public bool mouseLeftButton;
+    IEnumerator OnClick(InputValue value) {
+        mouseLeftButton = value.isPressed;
+        yield return new WaitForEndOfFrame();
+        mouseLeftButton = false;
     }
 
     // A ----------------------------------------- A

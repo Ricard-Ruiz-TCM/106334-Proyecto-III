@@ -5,15 +5,15 @@ using System.Collections.Generic;
 public class Player : Actor {
 
     // Grid Movement
-    private GridMovement _movement;
+    protected GridMovement _movement;
 
     // UnityAwake
-    void Awake() {
+    protected void Awake() {
         _movement = GetComponent<GridMovement>();
     }
 
     // Unity Start
-    void Start() {
+    protected void Start() {
         SubscribeManager();
     }
 

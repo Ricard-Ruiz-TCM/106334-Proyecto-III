@@ -35,7 +35,8 @@ public class GridBuilder : MonoBehaviour {
                 // Posición donde será isntanciado
                 Vector3 position = new Vector3(x * _planeSize * _planePfb.transform.localScale.x, 50f, y * _planeSize * _planePfb.transform.localScale.y);
                 // Instant del prefab
-                GridPlane obj = GameObject.Instantiate(_planePfb, position, Quaternion.identity).GetComponent<GridPlane>();
+                GridPlane obj = GameObject.Instantiate(_planePfb, position, Quaternion.identity, transform).GetComponent<GridPlane>();
+                obj.gameObject.name = "M[" + x + "," + y + "]-" + "W:" + _grid.GetNode(x,y).walkable;
                 RaycastHit raycastHit;
                 if (Physics.Raycast(obj.transform.position, -Vector3.up, out raycastHit, Mathf.Infinity, _layer)) {
                     // RePosition del plane, justo encima del mapeado

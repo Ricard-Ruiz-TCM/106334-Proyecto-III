@@ -59,14 +59,14 @@ public class GridMovement : MonoBehaviour {
 
     /** Comprueba si hemos llegado al punto */
     public bool DestinationReached() {
-        return !_agent.hasPath && !_agent.pathPending && _agent.pathStatus == NavMeshPathStatus.PathComplete;
+        return transform.position.x == _agent.destination.x && transform.position.z == _agent.destination.z;
     }
 
     /** Método para ir al siguiente nodo */
     private void NextPoint() {
         if (_index < _destionationRoute.Count - 1) {
             _index++;
-            _agent.destination = (_builder.GetGridPlane(_destionationRoute[_index]).position);
+            _agent.SetDestination(_builder.GetGridPlane(_destionationRoute[_index]).position);
         } else {
             _canMove = false;
             onDestinationReached?.Invoke();

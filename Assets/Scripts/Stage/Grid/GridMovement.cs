@@ -17,12 +17,13 @@ public class GridMovement : MonoBehaviour {
         return _builder;
     }
 
-    // Destination path
-    private int _idnex = -1;
-    public List<Node> Route;
+    [SerializeField]
+    private bool _canMove;
 
-    [SerializeField, Header("Threshold:")]
-    private float pathEndThreshold;
+    // Destination path
+    private int _index;
+    public List<Node> VisualRoute;
+    private List<Node> _destionationRoute;
 
     // Unity Awake
     void Awake() {
@@ -38,32 +39,37 @@ public class GridMovement : MonoBehaviour {
 
     /** Establece el origen y el destino del movimiento */
     public void SetDestination(Vector3 origin, GridPlane plane) {
-        _idnex = 0;
-        CalcRoute(origin, plane);
+        _canMove = true; _index = -1;
+        _destionationRoute = _pathfinder.FindPath(_builder.GetGridPlane(origin).node, plane.node);
+        NextPoint();
     }
 
     public void CalcRoute(Vector3 origin, GridPlane plane) {
-        Route = _pathfinder.FindPath(_builder.GetGridPlane(origin).node, plane.node);
+        VisualRoute = _pathfinder.FindPath(_builder.GetGridPlane(origin).node, plane.node);
     }
 
     // Unity Update
     void Update() {
-        if (Route == null || _idnex == -1)
+        if (!_canMove)
             return;
 
-        if (!_agent.hasPath || _agent.remainingDistance <= _agent.stoppingDistance + pathEndThreshold) {
-            NextPathNode();
-        }
+        if (DestinationReached())
+            NextPoint();
+    }
+
+    /** Comprueba si hemos llegado al punto */
+    public bool DestinationReached() {
+        return !_agent.hasPath && !_agent.pathPending && _agent.pathStatus == NavMeshPathStatus.PathComplete;
     }
 
     /** Método para ir al siguiente nodo */
-    private void NextPathNode() {
-        _idnex++;
-        if (_idnex == Route.Count) {
-            Route = null;
-            onDestinationReached?.Invoke();
+    private void NextPoint() {
+        if (_index < _destionationRoute.Count - 1) {
+            _index++;
+            _agent.destination = (_builder.GetGridPlane(_destionationRoute[_index]).position);
         } else {
-            _agent.SetDestination(_builder.GetGridPlane(Route[_idnex]).position);
+            _canMove = false;
+            onDestinationReached?.Invoke();
         }
     }
 

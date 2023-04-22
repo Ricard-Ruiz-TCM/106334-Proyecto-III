@@ -22,7 +22,7 @@ public class Player : Actor {
         if (_movement.Builder().MosueOverGrid()) {
             if (_movement.Builder().GetMouseGridPlane().node.walkable) {
                 _movement.CalcRoute(transform.position, _movement.Builder().GetMouseGridPlane());
-                _movement.Builder().DisplayPath(_movement.Route);
+                _movement.Builder().DisplayPath(_movement.VisualRoute);
             }
         }
 

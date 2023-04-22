@@ -59,7 +59,7 @@ public class GridMovement : MonoBehaviour {
 
     /** Comprueba si hemos llegado al punto */
     public bool DestinationReached() {
-        return transform.position.x == _agent.destination.x && transform.position.z == _agent.destination.z;
+        return !_agent.hasPath && !_agent.pathPending && _agent.pathStatus == NavMeshPathStatus.PathComplete;
     }
 
     /** Método para ir al siguiente nodo */

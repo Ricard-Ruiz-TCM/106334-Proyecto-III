@@ -26,21 +26,26 @@ public class Player : Actor {
             }
         }
 
-        return (uCore.Action.GetKeyDown(KeyCode.Space));
+        return (uCore.Action.GetKeyDown(KeyCode.M));
     }
     public override void Move() {
         base.Move();
 
         _movement.SetDestination(transform.position, _movement.Builder().GetMouseGridPlane());
+
         _movement.onDestinationReached += EndMovement;
 
     }
 
     public override bool CanAct() {
-        return (uCore.Action.GetKeyDown(UnityEngine.KeyCode.Space));
+        return (uCore.Action.GetKeyDown(KeyCode.A));
     }
     public override void Act() {
         base.Act();
+
+        Debug.Log("PLAYER ACT");
+
+        EndAction();
 
     }
 

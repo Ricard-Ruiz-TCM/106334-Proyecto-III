@@ -1,8 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class TurnManager : MonoBehaviour {
+
+    // Callback cuando modificando la lista
+    public Action onModifyTurnList;
 
     [SerializeField]
     private int _turnIndex = 0;
@@ -21,11 +25,15 @@ public class TurnManager : MonoBehaviour {
     public void Add(ITurnable element) {
         if (!Contains(element))
             _turnables.Add(element);
+
+        onModifyTurnList?.Invoke();
     }
 
     public void Remove(ITurnable element) {
         if (Contains(element))
             _turnables.Remove(element);
+
+        onModifyTurnList?.Invoke();
     }
 
     // Unity Update
@@ -68,6 +76,18 @@ public class TurnManager : MonoBehaviour {
 
     private bool Contains(ITurnable element) {
         return _turnables.Contains(element);
+    }
+
+    /** Método que ordena la lista de turnos por orden */
+    public List<ITurnable> TurnablesSorted() {
+        List<ITurnable> sorted = new List<ITurnable>();
+
+        for (int i = _turnIndex; i < _turnables.Count + _turnIndex; i++) {
+            i = i % _turnables.Count - 1;
+            sorted.Add(_turnables[i]);
+        }
+
+        return sorted;
     }
 
 }

@@ -3,15 +3,15 @@
 public abstract class Actor : MonoBehaviour, ITurnable {
 
     [SerializeField, Header("Statistics:")]
-    private Statistics _statistics;
+    protected Statistics _statistics;
 
     [SerializeField, Header("Equipment:")]
-    private ArmorItem _armor;
+    protected ArmorItem _armor;
     [SerializeField]
-    private WeaponItem _weapon;
+    protected WeaponItem _weapon;
 
     [SerializeField, Header("Inventory:")]
-    private Inventory _inventory;
+    protected Inventory _inventory;
 
     #region ITurnable 
     public progress moving {

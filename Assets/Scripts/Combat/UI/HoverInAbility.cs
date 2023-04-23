@@ -2,22 +2,19 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class HoverInAbility : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler {
-    private GameObject hoverAbility;
-    [SerializeField] private int hoverSpace = 0;
+    private GameObject abilityExplanation;
 
     public void OnPointerEnter(PointerEventData eventData) {
-        var position = hoverAbility.GetComponent<RectTransform>().localPosition;
-        hoverAbility.GetComponent<RectTransform>().localPosition = new Vector3(position.x, position.y + hoverSpace, position.z);
+        abilityExplanation.SetActive(true);
     }
 
     public void OnPointerExit(PointerEventData eventData) {
-        var position = hoverAbility.GetComponent<RectTransform>().localPosition;
-        hoverAbility.GetComponent<RectTransform>().localPosition = new Vector3(position.x, position.y - hoverSpace, position.z);
+        abilityExplanation.SetActive(false);
     }
 
     // Start is called before the first frame update
     void Start() {
-        hoverAbility = gameObject;
+        abilityExplanation = gameObject.transform.GetChild(0).gameObject;
     }
 
     // Update is called once per frame

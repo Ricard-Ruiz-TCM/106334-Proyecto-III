@@ -31,7 +31,7 @@ public class Player : Actor {
     public override void Move() {
         base.Move();
 
-        _movement.SetDestination(transform.position, _movement.Builder().GetMouseGridPlane());
+        _movement.SetDestination(transform.position, _movement.Builder().GetMouseGridPlane(), _statistics.Movement);
 
         _movement.onDestinationReached += EndMovement;
 

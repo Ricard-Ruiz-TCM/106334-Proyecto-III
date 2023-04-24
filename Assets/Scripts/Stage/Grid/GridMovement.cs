@@ -38,9 +38,13 @@ public class GridMovement : MonoBehaviour {
     }
 
     /** Establece el origen y el destino del movimiento */
-    public void SetDestination(Vector3 origin, GridPlane plane) {
+    public void SetDestination(Vector3 origin, GridPlane plane, int amount) {
         _canMove = true; _index = -1;
-        _destionationRoute = _pathfinder.FindPath(_builder.GetGridPlane(origin).node, plane.node);
+        _destionationRoute = new List<Node>();
+        List<Node> tmp = _pathfinder.FindPath(_builder.GetGridPlane(origin).node, plane.node);
+        for (int i = 0; i < amount; i++) {
+            _destionationRoute.Add(tmp[i]);
+        }
         NextPoint();
     }
 

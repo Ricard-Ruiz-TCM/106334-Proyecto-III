@@ -21,14 +21,14 @@ class TurnManagerUI : MonoBehaviour {
     public void UpdateTurnList() {
         ClearList();
 
-        List<ITurnable> turnables = _turnManager.TurnablesSorted();
+       /* List<ITurnable> turnables = _turnManager.TurnablesSorted();
         // Instant the bigOne
         InstantiateUI(_bTurnableUI).SetTurnable(turnables[0]);
         for (int i = 1; i < turnables.Count; i++) {
             // Instant the smallOnes
             InstantiateUI(_sTurnableUI).SetTurnable(turnables[i]);
         }
-
+       */
     }
 
     private TurnableUI InstantiateUI(GameObject prefab) {

@@ -7,6 +7,8 @@ public class Player : Actor {
     // Grid Movement
     protected GridMovement _movement;
 
+    public int movementRange;
+
     // UnityAwake
     protected void Awake() {
         _movement = GetComponent<GridMovement>();
@@ -31,7 +33,7 @@ public class Player : Actor {
     public override void Move() {
         base.Move();
 
-        _movement.SetDestination(transform.position, _movement.Builder().GetMouseGridPlane());
+        _movement.SetDestination(transform.position, _movement.Builder().GetMouseGridPlane(), _statistics.Movement);
 
         _movement.onDestinationReached += EndMovement;
 

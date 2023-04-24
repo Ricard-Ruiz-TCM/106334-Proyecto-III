@@ -20,6 +20,7 @@ public class GridBuilder : MonoBehaviour {
     public Material _walkableMat;
     public Material _unwalkableMat;
     public Material _pathMath;
+    public Material _rangeMath;
 
     // Unity Awake
     void Awake() {
@@ -96,6 +97,4 @@ public class GridBuilder : MonoBehaviour {
             UpdateMaterial(nd.x, nd.y, _pathMath);
         }
     }
-
-
 }

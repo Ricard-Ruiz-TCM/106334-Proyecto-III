@@ -11,7 +11,6 @@ public class CameraController : MonoBehaviour
     [SerializeField] Vector3 finalRot;
     float elapsedTime;
     [SerializeField] float duration;
-
     [SerializeField] Vector3 startAnimPos;
     [SerializeField] Vector3 startAnimRot;
     [SerializeField] Vector3 startAnimFinalPos;
@@ -21,7 +20,7 @@ public class CameraController : MonoBehaviour
 
     // Target que vamos a "seguir"
     [SerializeField, Header("Target:")]
-    private Transform _target;
+    public Transform _target;
 
     [SerializeField, Header("Zoom:")]
     private float _maxZoom;
@@ -35,33 +34,68 @@ public class CameraController : MonoBehaviour
     }
     [SerializeField]
     private Vector2 _limits;
-    public void SetLimits(Vector2 limits) {
-        _limits = limits;
-    }
 
-    // Unity LateUpdate
-    void LateUpdate() 
-    {
-        if (uCore.Action.GetKeyDown(KeyCode.Z))
-        {
-            StartCoroutine(EndAnim());
-        }
-        if (uCore.Action.GetKeyDown(KeyCode.C))
-        {
-            _animator.SetBool("zoom", true);
-        }
-        if (uCore.Action.GetKeyDown(KeyCode.X))
-        {
-            _animator.SetBool("zoom", false);
-        }
-    }
+    [SerializeField] Transform cameraPos;
+    bool animating = false;
+    Vector3 targetPos;
+    Vector3 startPos;
+
+    [SerializeField] float cameraMoveMovementSpeed;
+    [SerializeField] float cameraMoveChangeTargetSpeed;
+    float cameraSpeed;
+
+
     private void Start()
     {
         StartCoroutine(StartAnim());
     }
 
+    // Unity LateUpdate
+    void LateUpdate() 
+    {
+        if (!animating)
+        {
+            if (uCore.Action.GetKeyDown(KeyCode.Z))
+            {
+                StartCoroutine(EndAnim());
+            }
+            if (uCore.Action.GetKeyDown(KeyCode.C))
+            {
+                _animator.SetBool("zoom", true);
+            }
+            if (uCore.Action.GetKeyDown(KeyCode.X))
+            {
+                _animator.SetBool("zoom", false);
+            }
+
+
+
+
+            if (_target.gameObject.GetComponent<GridMovement>()._canMove)
+            {
+                targetPos = _target.GetComponent<GridMovement>().GetLastNode();
+                startPos = cameraPos.localPosition;
+                cameraSpeed = cameraMoveMovementSpeed;
+            }
+            else
+            {
+                if (uCore.Action.GetKeyDown(KeyCode.U))
+                {
+                    Debug.Log("hos");
+                    targetPos = Vector3.zero;
+                    startPos = cameraPos.localPosition;
+                    cameraSpeed = cameraMoveChangeTargetSpeed;
+                }
+            }
+            Debug.Log(targetPos);
+            cameraPos.localPosition = Vector3.Lerp(startPos, targetPos, cameraMoveMovementSpeed * Time.deltaTime);
+        }
+
+    }
+
     IEnumerator StartAnim()
     {
+        animating = true;
         transform.position = startAnimPos;
         transform.rotation = Quaternion.Euler(startAnimRot);
         yield return new WaitForSeconds(0.5f);
@@ -77,10 +111,12 @@ public class CameraController : MonoBehaviour
         }
         transform.position = startAnimFinalPos;
         transform.rotation = Quaternion.Euler(startAnimFinalRot);
+        animating = false;
     }
 
     IEnumerator EndAnim()
     {
+        animating = true;
         Vector3 startEndPos = transform.position;
         Vector3 startEndRot = transform.eulerAngles;
         float timer = 0;
@@ -94,6 +130,7 @@ public class CameraController : MonoBehaviour
             yield return new WaitForFixedUpdate();
         }
         transform.position = finalPos;
+        animating = false;
         transform.rotation = Quaternion.Euler(finalRot);
     }
 

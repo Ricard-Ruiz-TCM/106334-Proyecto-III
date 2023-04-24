@@ -32,7 +32,7 @@ public class Enemy : Actor {
             plane = _movement.Builder().GetGridPlane(Random.Range(0, 7), Random.Range(0, 7));
         } while (!plane.node.walkable);
 
-        _movement.SetDestination(transform.position, plane,_statistics.Movement);
+        _movement.SetDestination(transform.position, plane, _statistics.Movement);
         _movement.onDestinationReached += EndMovement;
 
     }

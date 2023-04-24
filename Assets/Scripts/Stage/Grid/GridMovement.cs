@@ -17,7 +17,8 @@ public class GridMovement : MonoBehaviour {
         return _builder;
     }
 
-    public bool _canMove;
+    [SerializeField]
+    private bool _canMove;
 
     // Destination path
     private int _index;
@@ -39,27 +40,20 @@ public class GridMovement : MonoBehaviour {
     /** Establece el origen y el destino del movimiento */
     public void SetDestination(Vector3 origin, GridPlane plane, int amount) {
         _canMove = true; _index = -1;
-        //_destionationRoute = _pathfinder.FindPath(_builder.GetGridPlane(origin).node, plane.node);
         _destionationRoute = new List<Node>();
         List<Node> tmp = _pathfinder.FindPath(_builder.GetGridPlane(origin).node, plane.node);
-        for (int i = 0; i < amount; i++)
-        {
+        for (int i = 0; i < amount; i++) {
             _destionationRoute.Add(tmp[i]);
         }
         NextPoint();
     }
 
-    public void CalcRoute(Vector3 origin, GridPlane plane) 
-    {
-        Debug.Log("sex");
-            VisualRoute = _pathfinder.FindPath(_builder.GetGridPlane(origin).node, plane.node);
-            //_builder.PaintIsRange(_builder.GetGridPlane(origin).node, movementRange);
+    public void CalcRoute(Vector3 origin, GridPlane plane) {
+        VisualRoute = _pathfinder.FindPath(_builder.GetGridPlane(origin).node, plane.node);
     }
 
     // Unity Update
-    void Update() 
-    {
-        Debug.Log(_canMove);
+    void Update() {
         if (!_canMove)
             return;
 
@@ -81,11 +75,6 @@ public class GridMovement : MonoBehaviour {
             _canMove = false;
             onDestinationReached?.Invoke();
         }
-    }
-
-    public Vector2 GetLastNode()
-    {
-        return new Vector2(_destionationRoute[_destionationRoute.Count - 1].x, _destionationRoute[_destionationRoute.Count - 1].y);
     }
 
 }

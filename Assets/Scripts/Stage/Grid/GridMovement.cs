@@ -17,8 +17,7 @@ public class GridMovement : MonoBehaviour {
         return _builder;
     }
 
-    [SerializeField]
-    private bool _canMove;
+    public bool _canMove;
 
     // Destination path
     private int _index;
@@ -75,6 +74,10 @@ public class GridMovement : MonoBehaviour {
             _canMove = false;
             onDestinationReached?.Invoke();
         }
+    }
+    public Vector2 GetLastNode()
+    {
+        return new Vector2(_destionationRoute[_destionationRoute.Count - 1].x, _destionationRoute[_destionationRoute.Count - 1].y);
     }
 
 }

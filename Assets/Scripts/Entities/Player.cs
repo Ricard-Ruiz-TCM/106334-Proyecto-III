@@ -20,7 +20,7 @@ public class Player : Actor {
         FindObjectOfType<InventoryUI>().AsignInventory(_inventory);
         FindObjectOfType<InventoryUI>().UpdateInventory(_inventory);
 
-        _statistics.AddSkill()
+        //_statistics.AddSkill();
 
     }
 

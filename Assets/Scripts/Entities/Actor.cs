@@ -18,7 +18,7 @@ public abstract class Actor : MonoBehaviour, ITurnable {
     
 
     public void TakeDamage(int damage) {
-        dmg -= _armor.armor[lvl]
+        dmg -= _armor.armor[lvl];
         _statistics.TakeDamage(damage);
     }
 

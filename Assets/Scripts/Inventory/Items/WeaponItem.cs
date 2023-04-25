@@ -4,8 +4,8 @@
 public class WeaponItem : Item {
 
     [Header("Weapon Stats:")]
-    public float[] _damage;
-    public float _range;
+    public int[] _damage;
+    public int _range;
 
     public Skill _special;
 

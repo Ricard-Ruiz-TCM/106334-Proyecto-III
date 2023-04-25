@@ -77,4 +77,30 @@ public class GameManager : MonoBehaviour {
 
     #endregion
 
+    #region Skills
+
+    private Dictionary<skills, Skill> _skills;
+
+    public void LoadSkillData() {
+        _skills = new Dictionary<skills, Skill>();
+        Skill[] allSkills = Resources.LoadAll<Skill>("ScriptableObjects/Skills");
+        foreach (Skill sk in allSkills) {
+            skills skl;
+            if (Enum.TryParse(sk.name, out skl)) {
+                _skills.Add(skl, sk);
+            } else {
+                Debug.LogWarning("Missmatch de nombre con el SO y el Enum en: " + sk.name);
+            }
+        }
+    }
+
+    public Skill GetSkill(skills name) {
+        if (_skills == null) {
+            LoadSkillData();
+        }
+        return _skills[name];
+    }
+
+    #endregion
+
 }

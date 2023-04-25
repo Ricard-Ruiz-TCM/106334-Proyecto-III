@@ -1,13 +1,16 @@
 using UnityEngine;
 
-public class Perk : MonoBehaviour {
-    // Start is called before the first frame update
-    void Start() {
+public abstract class Perks : ScriptableObject {
 
-    }
+    public int _id;
 
-    // Update is called once per frame
-    void Update() {
+    public perkCategory _category;
+    public perkModification _modificationType;
 
-    }
+    public int _dependency;
+
+    [Header("Stats Modifiers:")]
+    public float _modifier;
+    public Skill _skill;
+
 }

@@ -53,8 +53,22 @@ public enum items {
     MAX
 }
 
+// Todas las skills que existen
+public enum skills {
+    arrowRain, attack, cleave, defense, doubleLunge, moralizingShout, satab, stun, vanish
+}
 
 // Tipo de  camino
 public enum roadEvent {
     noEvent, blacksmith, comrade
+}
+
+// Tipo de modificación que da una perk
+public enum perkModification {
+    damage, armor, health, skill
+}
+
+// Tipo de perk
+public enum perkCategory {
+    offensive, defensive
 }

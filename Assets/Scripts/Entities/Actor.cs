@@ -31,6 +31,22 @@ public abstract class Actor : MonoBehaviour, ITurnable {
     [SerializeField, Header("Skills avaliable:")]
     protected List<SkillItem> _skills;
 
+    protected virtual void BuildStats() {
+        foreach (Perk pk in _perks) {
+            switch (pk._modificationType) {
+                case perkModification.damage:
+                    break;
+                case perkModification.armor:
+                    break;
+                case perkModification.health:
+                    break;
+                case perkModification.skill:
+                    break;
+            }
+        }
+
+    }
+
     public int Damage() {
         int dmg = 0;
 

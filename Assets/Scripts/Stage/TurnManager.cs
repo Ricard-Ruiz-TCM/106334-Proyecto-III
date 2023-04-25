@@ -10,12 +10,12 @@ public class TurnManager : MonoBehaviour {
     public Action onModifyTurnList;
 
     [SerializeField]
-    private int _turnIndex = 0;
+    private int _index = 0;
     [SerializeField]
     private List<ITurnable> _turnables;
 
-    [SerializeField]
-    private float _turnDelay = 2f;
+    [SerializeField, Header("Timing:")]
+    private float _delay = 2f;
 
     private bool _waiting = false;
 
@@ -37,9 +37,13 @@ public class TurnManager : MonoBehaviour {
         onModifyTurnList?.Invoke();
     }
 
+    public Actor CurrentTurnActor() {
+        return _turnables[_index].actor;
+    }
+
     // Unity Update
     private void Update() {
-        ITurnable turneable = _turnables[_turnIndex];
+        ITurnable turneable = _turnables[_index];
 
         // Estamos esperando que el turno cambie
         if (_waiting)
@@ -69,10 +73,10 @@ public class TurnManager : MonoBehaviour {
 
     public IEnumerator NextTurn() {
         _waiting = true;
-        yield return new WaitForSeconds(_turnDelay);
-        _turnIndex++;
-        if (_turnIndex >= _turnables.Count)
-            _turnIndex = 0;
+        yield return new WaitForSeconds(_delay);
+        _index++;
+        if (_index >= _turnables.Count)
+            _index = 0;
         _waiting = false;
     }
 
@@ -84,7 +88,7 @@ public class TurnManager : MonoBehaviour {
     public List<ITurnable> TurnablesSorted() {
         List<ITurnable> sorted = new List<ITurnable>();
 
-        for (int i = _turnIndex; sorted.Count != _turnables.Count; i++) {
+        for (int i = _index; sorted.Count != _turnables.Count; i++) {
 
             i = i % _turnables.Count;
             sorted.Add(_turnables[i]);

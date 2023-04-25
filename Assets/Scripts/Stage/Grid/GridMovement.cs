@@ -41,7 +41,7 @@ public class GridMovement : MonoBehaviour {
         _canMove = true; _index = -1;
         _destionationRoute = new List<Node>();
         List<Node> tmp = _pathfinder.FindPath(_builder.GetGridPlane(origin).node, plane.node);
-        for (int i = 0; i < amount; i++) {
+        for (int i = 0; i < Mathf.Min(tmp.Count, amount); i++) {
             _destionationRoute.Add(tmp[i]);
         }
         NextPoint();

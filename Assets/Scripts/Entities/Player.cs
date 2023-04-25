@@ -37,9 +37,11 @@ public class Player : Actor {
     }
     public override void Move() {
         base.Move();
-
-        _gridMovement.SetDestination(transform.position, _gridMovement.Builder().GetMouseGridPlane(), _movement);
-        _gridMovement.onDestinationReached += EndMovement;
+        GridPlane gr = _gridMovement.Builder().GetMouseGridPlane();
+        if (gr.node.walkable) {
+            _gridMovement.SetDestination(transform.position, gr, _movement);
+            _gridMovement.onDestinationReached += EndMovement;
+        }
 
     }
 

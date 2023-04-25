@@ -63,6 +63,8 @@ public class DialogueManager : MonoBehaviour {
         // Trigger dialogue node with extras
         if (_current is DialogueTrigger) {
             ((DialogueTrigger)_current).Trigger();
+            NextDialogue(_current.Next);
+            return;
         }
 
         // Node with Options

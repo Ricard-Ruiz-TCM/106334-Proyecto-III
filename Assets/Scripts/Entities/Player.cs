@@ -53,7 +53,7 @@ public class Player : Actor
     {
         base.Act();
 
-        Debug.Log("PLAYER ACT");
+        _inventory.AddItem(items.Bow);
 
         EndAction();
 

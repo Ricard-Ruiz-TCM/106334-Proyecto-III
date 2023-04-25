@@ -42,12 +42,19 @@ public enum progress {
 // Todos los items del juego
 public enum items {
     NONE,
+
     // Weapons
     Gladius, Hasta, Bow, Dolabra, Pugi,
     // Armors
-    LeatherArmor,
+    Scutum, Segmentata, Hamata, Squamata,
     // Resoruces and Quests/Books
-    Leather, Book0, Quest0,
+    Gold, Leather, Thread, Metal, Wood,
 
     MAX
+}
+
+
+// Tipo de  camino
+public enum roadEvent {
+    noEvent, blacksmith, comrade
 }

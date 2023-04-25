@@ -18,6 +18,41 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour {
 
+    // Evento que nos ofrece el road entre stages
+    public roadEvent RoadEvent;
+
+    #region Dialogues
+
+    private DialogueNode _comradeNode;
+    public DialogueNode ComradeNode {
+        get {
+            if (_comradeNode == null)
+                _comradeNode = Resources.Load<DialogueNode>("ScriptableObjects/Dialogue/Comrade/[C, 0] Intro");
+
+            return _comradeNode;
+        }
+        set {
+            _comradeNode = value;
+        }
+    }
+
+    private DialogueNode _blacksmithNode;
+    public DialogueNode BlacksmithNode {
+        get {
+            if (_blacksmithNode == null)
+                _blacksmithNode = Resources.Load<DialogueNode>("ScriptableObjects/Dialogue/Blacksmith/[B, 0] Intro");
+
+            return _blacksmithNode;
+        }
+        set {
+            _blacksmithNode = value;
+        }
+    }
+
+    #endregion
+
+    #region Items
+
     private Dictionary<items, Item> _items;
 
     public void LoadItemData() {
@@ -39,5 +74,7 @@ public class GameManager : MonoBehaviour {
         }
         return _items[name];
     }
+
+    #endregion
 
 }

@@ -2,43 +2,69 @@ using UnityEngine;
 
 public class EventScene : MonoBehaviour {
 
-    [SerializeField, Header("Dialogues:")]
+    [SerializeField, Header("Dialogue:")]
     private GameObject _dialogue;
-    private DialogueManager _dialogueManager;
 
-    [SerializeField, Header("Comrade Panel:")]
+    [SerializeField, Header("Comrade:")]
     private GameObject _comrade;
     [SerializeField]
     private GameObject _complete;
 
+    [SerializeField, Header("Blacksmith:")]
+    private GameObject _blacksmith;
+
     // Unity OnEnable
     private void OnEnable() {
-        DialogueManager.onEndDialogue += DisplayComrade;
+        OpenPerkPanel.openPerkPanel += PerkPanel;
+        OpenShopPanel.openShopPanel += ShopPanel;
+        OpenUpgradePanel.openUpgradePanel += UpgradePanel;
+
+        EndRoadEvent.endRoadEvent += EndEvent;
     }
 
     // Unity OnDisable
     private void OnDisable() {
-        DialogueManager.onEndDialogue -= DisplayComrade;
+        OpenPerkPanel.openPerkPanel -= PerkPanel;
+        OpenShopPanel.openShopPanel -= ShopPanel;
+        OpenUpgradePanel.openUpgradePanel -= UpgradePanel;
+
+        EndRoadEvent.endRoadEvent -= EndEvent;
     }
 
-    // Unity Awake
-    void Awake() {
-        _dialogueManager = _dialogue.GetComponent<DialogueManager>();
-    }
-
-    public DialogueNode test;
     // Unity Start
     void Start() {
-        _dialogue.SetActive(true);
-        _comrade.SetActive(false);
-        _complete.SetActive(false);
-        _dialogueManager.StartDialogue(test);
+        switch (uCore.GameManager.RoadEvent) {
+            case roadEvent.blacksmith:
+                _dialogue.GetComponent<DialogueManager>().StartDialogue(uCore.GameManager.BlacksmithNode);
+                break;
+            case roadEvent.comrade:
+                _dialogue.GetComponent<DialogueManager>().StartDialogue(uCore.GameManager.ComradeNode);
+                break;
+            default: break;
+        }
     }
 
-    // Desactiva el dialogo y activa el panel del comrade
-    private void DisplayComrade() {
+    private void PerkPanel() {
+        HideDialogue();
         _comrade.SetActive(true);
+    }
+
+    private void ShopPanel() {
+        HideDialogue();
+        _blacksmith.SetActive(true);
+    }
+
+    private void UpgradePanel() {
+        HideDialogue();
+        _blacksmith.SetActive(true);
+    }
+
+    private void HideDialogue() {
         _dialogue.SetActive(false);
+    }
+
+    private void EndEvent() {
+        uCore.Director.LoadSceneAsync(gameScenes.Stage);
     }
 
     public void BTN_CompletePerks() {
@@ -50,7 +76,7 @@ public class EventScene : MonoBehaviour {
     }
 
     public void BTN_Sure() {
-        uCore.Director.LoadSceneAsync(gameScenes.Stage);
+        EndEvent();
     }
 
 }

@@ -14,11 +14,12 @@ public abstract class Actor : MonoBehaviour, ITurnable {
     [SerializeField, Header("Inventory:")]
     protected Inventory _inventory;
 
-    public List<SkillItem> Skills;
+    public List<Perks> _perks;
+
+    public List<SkillItem> _skills;
     
 
     public void TakeDamage(int damage) {
-        dmg -= _armor.armor[lvl];
         _statistics.TakeDamage(damage);
     }
 
@@ -33,29 +34,29 @@ public abstract class Actor : MonoBehaviour, ITurnable {
     public void AddSkill(Skill sk) {
         bool already = false;
 
-        foreach (SkillItem skI in Skills) {
+        foreach (SkillItem skI in _skills) {
             if (skI.skill.Equals(sk))
                 already = true;
         }
 
         if (!already)
-            Skills.Add(new SkillItem() { skill = sk, cooldown = sk._cooldown }); ;
+            _skills.Add(new SkillItem() { skill = sk, cooldown = sk._cooldown }); ;
     }
     public void RemoveSkill(skills skill) {
         if (HaveSkill(skill)) {
             int pos = -1;
-            for(int i = 0; i < Skills.Count; i++) {
-                if (Skills[i].skill.Equals(skill)) {
+            for(int i = 0; i < _skills.Count; i++) {
+                if (_skills[i].skill.Equals(skill)) {
                     pos = i;
                     break;
                 }
             }
             if (pos != -1)
-                Skills.RemoveAt(pos);
+                _skills.RemoveAt(pos);
         }
     }
     public void UseSkill(skills skill) {
-        foreach(SkillItem skI in Skills) {
+        foreach(SkillItem skI in _skills) {
             if (skI.skill.Equals(skill)) {
                 if (skI.cooldown <= 0) {
                     skI.skill.Special();
@@ -65,14 +66,14 @@ public abstract class Actor : MonoBehaviour, ITurnable {
         }
     }
     public void UpdateSkillCooldown() {
-        foreach (SkillItem skI in Skills) {
+        foreach (SkillItem skI in _skills) {
             if (skI.cooldown > 0) {
                 skI.cooldown--;
             }
         }
     }
     public bool HaveSkill(skills skill) {
-        foreach (SkillItem skI in Skills) {
+        foreach (SkillItem skI in _skills) {
             if (skI.skill.Equals(skill))
                 return true;
         }

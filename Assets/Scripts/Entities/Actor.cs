@@ -19,6 +19,8 @@ public abstract class Actor : MonoBehaviour, ITurnable {
     protected ArmorItem _armor;
     [SerializeField]
     protected WeaponItem _weapon;
+    [SerializeField]
+    protected ArmorItem _shield;
 
     [SerializeField, Header("Inventory:")]
     protected Inventory _inventory;

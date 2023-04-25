@@ -81,14 +81,12 @@ public class CameraController : MonoBehaviour
             {
                 if (uCore.Action.GetKeyDown(KeyCode.U))
                 {
-                    Debug.Log("hos");
                     targetPos = Vector3.zero;
                     startPos = cameraPos.localPosition;
                     cameraSpeed = cameraMoveChangeTargetSpeed;
                 }
             }
-            Debug.Log(targetPos);
-            cameraPos.localPosition = Vector3.Lerp(startPos, targetPos, cameraMoveMovementSpeed * Time.deltaTime);
+            cameraPos.localPosition = Vector3.Lerp(startPos, targetPos, cameraSpeed * Time.deltaTime);
         }
 
     }
@@ -132,6 +130,11 @@ public class CameraController : MonoBehaviour
         transform.position = finalPos;
         animating = false;
         transform.rotation = Quaternion.Euler(finalRot);
+    }
+    public void ChangeTarget(Transform newTarget)
+    {
+        _target = newTarget;
+        cameraSpeed = cameraMoveChangeTargetSpeed;
     }
 
     //IEnumerator Prova()

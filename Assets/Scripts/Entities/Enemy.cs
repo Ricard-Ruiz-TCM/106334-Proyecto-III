@@ -5,6 +5,7 @@ public class Enemy : Actor {
 
     // Grid Movement
     private GridMovement _movement;
+    [SerializeField] CameraController cameraController;
 
     // UnityAwake
     void Awake() {
@@ -19,11 +20,12 @@ public class Enemy : Actor {
     public override bool CanAct() { return acting.Equals(progress.ready) && !moving.Equals(progress.doing); }
     public override void Act() {
         base.Act();
+
         Debug.Log("ENEMY ACT");
         EndAction();
     }
 
-    public override bool CanMove() { return moving.Equals(progress.ready) && !acting.Equals(progress.doing); }
+    public override bool CanMove() { cameraController.ChangeTarget(transform); return moving.Equals(progress.ready) && !acting.Equals(progress.doing); }
     public override void Move() {
         base.Move();
 

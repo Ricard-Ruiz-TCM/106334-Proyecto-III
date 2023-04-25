@@ -712,11 +712,12 @@ MonoBehaviour:
     Health: 0
     Defense: 0
     IsAlive: 0
-    Movement: 0
+    Movement: 3
   _armor: {fileID: 0}
   _weapon: {fileID: 0}
   _inventory:
     _items: []
+  cameraController: {fileID: 1411654453}
 --- !u!1 &117717330
 GameObject:
   m_ObjectHideFlags: 0
@@ -4466,7 +4467,7 @@ MonoBehaviour:
       amount: 1
     - item: {fileID: 11400000, guid: 6cb6f74c5b07b044193f401952ff0f78, type: 2}
       amount: 1
-  movementRange: 3
+  cameraController: {fileID: 1411654453}
 --- !u!95 &1049018094
 Animator:
   serializedVersion: 5
@@ -5630,7 +5631,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1404224687}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 30.2, y: 0, z: 60}
+  m_LocalPosition: {x: 40.1, y: 0, z: 60}
   m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5668,11 +5669,12 @@ MonoBehaviour:
     Health: 0
     Defense: 0
     IsAlive: 0
-    Movement: 0
+    Movement: 3
   _armor: {fileID: 0}
   _weapon: {fileID: 0}
   _inventory:
     _items: []
+  cameraController: {fileID: 1411654453}
 --- !u!95 &1404224691
 Animator:
   serializedVersion: 5
@@ -8024,7 +8026,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1892520408}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 29.7, y: 0, z: 31}
+  m_LocalPosition: {x: 19.9, y: 0, z: 31}
   m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -8062,11 +8064,12 @@ MonoBehaviour:
     Health: 0
     Defense: 0
     IsAlive: 0
-    Movement: 0
+    Movement: 3
   _armor: {fileID: 0}
   _weapon: {fileID: 0}
   _inventory:
     _items: []
+  cameraController: {fileID: 1411654453}
 --- !u!95 &1892520412
 Animator:
   serializedVersion: 5
@@ -8758,12 +8761,12 @@ MonoBehaviour:
     Health: 0
     Defense: 0
     IsAlive: 0
-    Movement: 0
+    Movement: 3
   _armor: {fileID: 0}
   _weapon: {fileID: 0}
   _inventory:
     _items: []
-  movementRange: 0
+  cameraController: {fileID: 1411654453}
 --- !u!1 &2112277864
 GameObject:
   m_ObjectHideFlags: 0

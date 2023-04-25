@@ -8,6 +8,8 @@ public class Player : Actor
     // Grid Movement
     protected GridMovement _movement;
 
+    [SerializeField] CameraController cameraController;
+
     // UnityAwake
     protected void Awake()
     {
@@ -22,13 +24,13 @@ public class Player : Actor
 
     public override bool CanMove()
     {
-        Debug.Log("aa");
+        cameraController.ChangeTarget(transform);
         if (_movement.Builder().MosueOverGrid())
         {
             if (_movement.Builder().GetMouseGridPlane().node.walkable)
             {
                 _movement.CalcRoute(transform.position, _movement.Builder().GetMouseGridPlane());
-                _movement.Builder().DisplayPath(_movement.VisualRoute);
+                _movement.Builder().DisplayPath(_movement.VisualRoute, _statistics.Movement);
             }
         }
 

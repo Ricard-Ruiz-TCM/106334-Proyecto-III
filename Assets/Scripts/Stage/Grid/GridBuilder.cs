@@ -87,14 +87,23 @@ public class GridBuilder : MonoBehaviour {
     }
 
     /** Método para cambiar el path de colores */
-    public void DisplayPath(List<Node> path) {
+    public void DisplayPath(List<Node> path, int range) {
         for (int x = 0; x < _grid.Rows; x++) {
             for (int y = 0; y < _grid.Columns; y++) {
                 UpdateMaterial(x, y);
             }
         }
-        foreach (Node nd in path) {
-            UpdateMaterial(nd.x, nd.y, _pathMath);
+
+        //foreach (Node nd in path)
+        //{
+        //    UpdateMaterial(nd.x, nd.y, _pathMath);
+        //}
+        for (int i = 0; i < path.Count; i++)
+        {
+            if (i < range)
+            {
+                UpdateMaterial(path[i].x, path[i].y,_pathMath);
+            }
         }
     }
 }

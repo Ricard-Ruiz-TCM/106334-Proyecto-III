@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "new Stab", menuName = "Combat/Stab")]
+[CreateAssetMenu(fileName = "new Stab", menuName = "Combat/Skills/Stab")]
 public class Stab : Skill {
 
     public override void Special() {

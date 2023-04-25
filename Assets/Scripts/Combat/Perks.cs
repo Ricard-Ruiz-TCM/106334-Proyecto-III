@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public abstract class Perks : ScriptableObject {
 
@@ -9,8 +9,5 @@ public abstract class Perks : ScriptableObject {
 
     public int _dependency;
 
-    [Header("Stats Modifiers:")]
-    public float _modifier;
-    public Skill _skill;
 
 }

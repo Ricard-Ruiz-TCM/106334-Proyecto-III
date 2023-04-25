@@ -55,7 +55,7 @@ public enum items {
 
 // Todas las skills que existen
 public enum skills {
-    arrowRain, attack, cleave, defense, doubleLunge, moralizingShout, satab, stun, vanish
+    arrowRain, attack, cleave, defense, doubleLunge, moralizingShout, stab, stun, vanish
 }
 
 // Tipo de  camino

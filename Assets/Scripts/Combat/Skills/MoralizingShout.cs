@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "new MoralizingShout", menuName = "Combat/Moralizing Shout")]
+[CreateAssetMenu(fileName = "new MoralizingShout", menuName = "Combat/Skills/Moralizing Shout")]
 public class MoralizingShout : Skill {
 
     public override void Special() {

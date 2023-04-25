@@ -206,7 +206,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 797bf488c630d4c4da4076a24ec6a432, type: 2}
+  - {fileID: 2100000, guid: a1503898bbdd4504f8f0188fa962e25e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -617,7 +617,7 @@ GameObject:
   - component: {fileID: 116379415}
   - component: {fileID: 116379411}
   m_Layer: 0
-  m_Name: Enemy 0
+  m_Name: Enemy Red
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1528,7 +1528,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 797bf488c630d4c4da4076a24ec6a432, type: 2}
+  - {fileID: 2100000, guid: 698621012f4317746bf1b79896b709b6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3551,7 +3551,7 @@ GameObject:
   m_IsActive: 1
 --- !u!114 &882839398
 MonoBehaviour:
-  m_ObjectHideFlags: 10
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -5617,7 +5617,7 @@ GameObject:
   - component: {fileID: 1404224690}
   - component: {fileID: 1404224689}
   m_Layer: 0
-  m_Name: Enemy 1
+  m_Name: Enemy Black
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6424,8 +6424,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f416a4f425b64a24988670d131cb9a43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _bTurnableUI: {fileID: 0}
-  _sTurnableUI: {fileID: 0}
+  _bTurnableUI: {fileID: 2558741176412654327, guid: 36689a4d269424146b3f3e189683c3f1,
+    type: 3}
+  _sTurnableUI: {fileID: 7948239071326385807, guid: 7199296e25b568b499bdd6f974bfebf2,
+    type: 3}
 --- !u!114 &1536662982
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8012,7 +8014,7 @@ GameObject:
   - component: {fileID: 1892520411}
   - component: {fileID: 1892520410}
   m_Layer: 0
-  m_Name: Enemy 2
+  m_Name: Enemy Orange
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8666,7 +8668,7 @@ GameObject:
   - component: {fileID: 2108259130}
   - component: {fileID: 2108259126}
   m_Layer: 0
-  m_Name: Ally 0
+  m_Name: Ally Green
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

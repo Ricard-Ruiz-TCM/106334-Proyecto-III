@@ -14,6 +14,9 @@ public abstract class Actor : MonoBehaviour, ITurnable {
     protected Inventory _inventory;
 
     #region ITurnable 
+    public Actor actor {
+        get { return this; } private set { }
+    }
     public progress moving {
         get; private set;
     }

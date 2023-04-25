@@ -7,11 +7,9 @@ class TurnableUI : MonoBehaviour {
     private Image _icon;
     [SerializeField]
     private UIText _text;
-    [SerializeField]
-    private Slider _slider;
 
     public void SetTurnable(ITurnable turnable) {
-        
+        _text.UpdateText(turnable.actor.gameObject.name);
     }
 
 }

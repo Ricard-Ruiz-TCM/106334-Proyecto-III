@@ -6,6 +6,7 @@ using UnityEngine;
 public class TurnManager : MonoBehaviour {
 
     // Callback cuando modificando la lista
+    public Action onEndTurn;
     public Action onModifyTurnList;
 
     [SerializeField]
@@ -61,6 +62,7 @@ public class TurnManager : MonoBehaviour {
 
         if ((turneable.moving.Equals(progress.done)) && (turneable.acting.Equals(progress.done))) {
             turneable.EndTurn();
+            onEndTurn?.Invoke();
         }
 
     }
@@ -82,8 +84,9 @@ public class TurnManager : MonoBehaviour {
     public List<ITurnable> TurnablesSorted() {
         List<ITurnable> sorted = new List<ITurnable>();
 
-        for (int i = _turnIndex; i < _turnables.Count + _turnIndex; i++) {
-            i = i % _turnables.Count - 1;
+        for (int i = _turnIndex; sorted.Count != _turnables.Count; i++) {
+
+            i = i % _turnables.Count;
             sorted.Add(_turnables[i]);
         }
 

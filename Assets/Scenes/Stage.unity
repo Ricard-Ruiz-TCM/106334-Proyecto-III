@@ -708,17 +708,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5124189b9d78b474db806d7f098bcae3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _statistics:
-    Health: 0
-    Defense: 0
-    IsAlive: 0
-    Movement: 3
-  _armor:
-    armor: {fileID: 0}
-    level: 0
-  _weapon:
-    weapon: {fileID: 0}
-    level: 0
+  _health: 0
+  _defense: 0
+  _isAlive: 0
+  _movement: 0
+  _armor: {fileID: 0}
+  _weapon: {fileID: 0}
   _inventory:
     _items: []
   _perks: []
@@ -4502,7 +4497,7 @@ GameObject:
   m_IsActive: 1
 --- !u!114 &1035843191
 MonoBehaviour:
-  m_ObjectHideFlags: 2
+  m_ObjectHideFlags: 10
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -4690,25 +4685,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1120c2b4637bae4794306c163e2b3d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _statistics:
-    Health: 0
-    Defense: 0
-    IsAlive: 0
-    Movement: 3
-  _armor:
-    armor: {fileID: 0}
-    level: 0
-  _weapon:
-    weapon: {fileID: 0}
-    level: 0
+  _health: 0
+  _defense: 0
+  _isAlive: 0
+  _movement: 0
+  _armor: {fileID: 0}
+  _weapon: {fileID: 0}
   _inventory:
     _items:
     - item: {fileID: 11400000, guid: bfda2a922f0458a4cbbe47f54c892337, type: 2}
       amount: 1
     - item: {fileID: 11400000, guid: 6cb6f74c5b07b044193f401952ff0f78, type: 2}
       amount: 1
-  _perks: []
-  _skills: []
+  _perks:
+  - {fileID: 0}
+  _skills:
+  - skill: {fileID: 0}
+    cooldown: 0
   cameraController: {fileID: 1411654453}
 --- !u!95 &1049018094
 Animator:
@@ -5957,17 +5950,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5124189b9d78b474db806d7f098bcae3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _statistics:
-    Health: 0
-    Defense: 0
-    IsAlive: 0
-    Movement: 3
-  _armor:
-    armor: {fileID: 0}
-    level: 0
-  _weapon:
-    weapon: {fileID: 0}
-    level: 0
+  _health: 0
+  _defense: 0
+  _isAlive: 0
+  _movement: 0
+  _armor: {fileID: 0}
+  _weapon: {fileID: 0}
   _inventory:
     _items: []
   _perks: []
@@ -8719,17 +8707,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5124189b9d78b474db806d7f098bcae3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _statistics:
-    Health: 0
-    Defense: 0
-    IsAlive: 0
-    Movement: 3
-  _armor:
-    armor: {fileID: 0}
-    level: 0
-  _weapon:
-    weapon: {fileID: 0}
-    level: 0
+  _health: 0
+  _defense: 0
+  _isAlive: 0
+  _movement: 0
+  _armor: {fileID: 0}
+  _weapon: {fileID: 0}
   _inventory:
     _items: []
   _perks: []
@@ -9557,17 +9540,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0bd288112d6481f4382732907779616f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _statistics:
-    Health: 0
-    Defense: 0
-    IsAlive: 0
-    Movement: 3
-  _armor:
-    armor: {fileID: 0}
-    level: 0
-  _weapon:
-    weapon: {fileID: 0}
-    level: 0
+  _health: 0
+  _defense: 0
+  _isAlive: 0
+  _movement: 0
+  _armor: {fileID: 0}
+  _weapon: {fileID: 0}
   _inventory:
     _items: []
   _perks: []

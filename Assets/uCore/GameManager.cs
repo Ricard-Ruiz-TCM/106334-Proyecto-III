@@ -103,4 +103,30 @@ public class GameManager : MonoBehaviour {
 
     #endregion
 
+    #region Perks
+
+    private Dictionary<perks, Perk> _perks;
+
+    public void LoadPerkData() {
+        _perks = new Dictionary<perks, Perk>();
+        Perk[] allPerks = Resources.LoadAll<Perk>("ScriptableObjects/Perks");
+        foreach (Perk perk in allPerks) {
+            perks skl;
+            if (Enum.TryParse(perk.name, out skl)) {
+                _perks.Add(skl, perk);
+            } else {
+                Debug.LogWarning("Missmatch de nombre con el SO y el Enum en: " + perk.name);
+            }
+        }
+    }
+
+    public Perk GetSkill(perks name) {
+        if (_perks == null) {
+            LoadPerkData();
+        }
+        return _perks[name];
+    }
+
+    #endregion
+
 }

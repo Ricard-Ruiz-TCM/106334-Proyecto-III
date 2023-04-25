@@ -4,12 +4,12 @@
 public class Enemy : Actor {
 
     // Grid Movement
-    private GridMovement _movement;
+    private GridMovement _gridMovement;
     [SerializeField] CameraController cameraController;
 
     // UnityAwake
     void Awake() {
-        _movement = GetComponent<GridMovement>();
+        _gridMovement = GetComponent<GridMovement>();
     }
 
     // Unity Start
@@ -31,11 +31,11 @@ public class Enemy : Actor {
 
         GridPlane plane;
         do {
-            plane = _movement.Builder().GetGridPlane(Random.Range(0, 7), Random.Range(0, 7));
+            plane = _gridMovement.Builder().GetGridPlane(Random.Range(0, 7), Random.Range(0, 7));
         } while (!plane.node.walkable);
 
-        _movement.SetDestination(transform.position, plane, _statistics.Movement);
-        _movement.onDestinationReached += EndMovement;
+        _gridMovement.SetDestination(transform.position, plane, _movement);
+        _gridMovement.onDestinationReached += EndMovement;
 
     }
 

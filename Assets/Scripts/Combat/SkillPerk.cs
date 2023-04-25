@@ -1,4 +1,4 @@
-﻿public abstract class SkillPerk : Perks {
+﻿public abstract class SkillPerk : Perk {
 
     public Skill _skill;
 

@@ -1,5 +1,6 @@
 ﻿public interface ITurnable {
 
+    // Turnable Actor
     public Actor actor { get; }
 
     public progress moving {

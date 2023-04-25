@@ -4,13 +4,13 @@ using UnityEngine;
 public class Player : Actor {
 
     // Grid Movement
-    protected GridMovement _movement;
+    protected GridMovement _gridMovement;
 
     [SerializeField] CameraController cameraController;
 
     // UnityAwake
     protected void Awake() {
-        _movement = GetComponent<GridMovement>();
+        _gridMovement = GetComponent<GridMovement>();
     }
 
     // Unity Start
@@ -26,10 +26,10 @@ public class Player : Actor {
 
     public override bool CanMove() {
         cameraController.ChangeTarget(transform);
-        if (_movement.Builder().MosueOverGrid()) {
-            if (_movement.Builder().GetMouseGridPlane().node.walkable) {
-                _movement.CalcRoute(transform.position, _movement.Builder().GetMouseGridPlane());
-                _movement.Builder().DisplayPath(_movement.VisualRoute, _statistics.Movement);
+        if (_gridMovement.Builder().MosueOverGrid()) {
+            if (_gridMovement.Builder().GetMouseGridPlane().node.walkable) {
+                _gridMovement.CalcRoute(transform.position, _gridMovement.Builder().GetMouseGridPlane());
+                _gridMovement.Builder().DisplayPath(_gridMovement.VisualRoute, _movement);
             }
         }
 
@@ -38,8 +38,8 @@ public class Player : Actor {
     public override void Move() {
         base.Move();
 
-        _movement.SetDestination(transform.position, _movement.Builder().GetMouseGridPlane(), _statistics.Movement);
-        _movement.onDestinationReached += EndMovement;
+        _gridMovement.SetDestination(transform.position, _gridMovement.Builder().GetMouseGridPlane(), _movement);
+        _gridMovement.onDestinationReached += EndMovement;
 
     }
 

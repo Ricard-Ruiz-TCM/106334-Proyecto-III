@@ -58,6 +58,11 @@ public enum skills {
     arrowRain, attack, cleave, defense, doubleLunge, moralizingShout, stab, stun, vanish
 }
 
+// Todas las perks que existen
+public enum perks {
+    perkSkillStun, perkWeaponDamage
+}
+
 // Tipo de  camino
 public enum roadEvent {
     noEvent, blacksmith, comrade

@@ -1,5 +1,5 @@
 
-public abstract class ModPerk : Perks {
+public abstract class ModPerk : Perk {
 
     public float _modifier;
 

@@ -3,44 +3,86 @@ using System.Collections.Generic;
 
 public abstract class Actor : MonoBehaviour, ITurnable {
 
-    [SerializeField, Header("Statistics:")]
-    protected Statistics _statistics;
+    [SerializeField, Header("Core:")]
+    protected int _health;
+    [SerializeField]
+    protected int _defense;
+    [SerializeField]
+    protected bool _isAlive;
+    public bool IsAlive() { return _isAlive; }
+
+    [SerializeField, Header("Movement:")]
+    protected int _movement;
+    public int Movement() { return _movement; }
 
     [SerializeField, Header("Equipment:")]
-    protected ArmorUpgradeItem _armor;
+    protected ArmorItem _armor;
     [SerializeField]
-    protected WeaponUpgradeItem _weapon;
+    protected WeaponItem _weapon;
 
     [SerializeField, Header("Inventory:")]
     protected Inventory _inventory;
 
-    public List<Perks> _perks;
+    [SerializeField, Header("Acive Perks:")]
+    protected List<Perk> _perks;
 
-    public List<SkillItem> _skills;
-    
+    [SerializeField, Header("Skills avaliable:")]
+    protected List<SkillItem> _skills;
 
-    public void TakeDamage(int damage) {
-        _statistics.TakeDamage(damage);
-    }
+    public int Damage() {
+        int dmg = 0;
 
-    public float Damage() {
-        float dmg = 0;
+        // Get Values
+        dmg += _weapon._damage[0];
 
-        dmg += _weapon.Damage();
+        // Apply Modifiers
+        
 
         return dmg;
     }
+    public void TakeDamage(int damage) {
+        int defense = 0, health = 0;
 
-    public void AddSkill(Skill sk) {
+        // Get Values
+        defense = _armor._defense[0];
+        health = _health;
+
+        // Apply Modifiers
+        health = Mathf.Max(0, health -= Mathf.Max(0, (damage - defense)));
+
+        // Cal Result
+        _health = health;
+        if (_health == 0) {
+            _isAlive = false;
+        }
+    }
+
+    public void AddPerk(perks perk) {
+
+    }
+    public void RemovePerk(perks perk) {
+
+    }
+    public bool HavePerk(perks perk) {
+        foreach(Perk pks in _perks) {
+            if (pks._perk.Equals(perk))
+                return true;
+        }
+        return false;
+    }
+
+    public void AddSkill(skills skill) {
         bool already = false;
 
-        foreach (SkillItem skI in _skills) {
-            if (skI.skill.Equals(sk))
+        foreach (SkillItem skillItem in _skills) {
+            if (skillItem.skill._skill.Equals(skill))
                 already = true;
         }
 
-        if (!already)
+        if (!already) {
+            Skill sk = uCore.GameManager.GetSkill(skill);
             _skills.Add(new SkillItem() { skill = sk, cooldown = sk._cooldown }); ;
+        }
     }
     public void RemoveSkill(skills skill) {
         if (HaveSkill(skill)) {
@@ -51,30 +93,31 @@ public abstract class Actor : MonoBehaviour, ITurnable {
                     break;
                 }
             }
-            if (pos != -1)
+            if (pos != -1) {
                 _skills.RemoveAt(pos);
+            }
         }
     }
     public void UseSkill(skills skill) {
-        foreach(SkillItem skI in _skills) {
-            if (skI.skill.Equals(skill)) {
-                if (skI.cooldown <= 0) {
-                    skI.skill.Special();
-                    skI.cooldown = skI.skill._cooldown;
+        foreach(SkillItem skillItem in _skills) {
+            if (skillItem.skill._skill.Equals(skill)) {
+                if (skillItem.cooldown <= 0) {
+                    skillItem.skill.Special();
+                    skillItem.cooldown = skillItem.skill._cooldown;
                 }
             }
         }
     }
     public void UpdateSkillCooldown() {
-        foreach (SkillItem skI in _skills) {
-            if (skI.cooldown > 0) {
-                skI.cooldown--;
+        foreach (SkillItem skillItem in _skills) {
+            if (skillItem.cooldown > 0) {
+                skillItem.cooldown--;
             }
         }
     }
     public bool HaveSkill(skills skill) {
-        foreach (SkillItem skI in _skills) {
-            if (skI.skill.Equals(skill))
+        foreach (SkillItem skillItem in _skills) {
+            if (skillItem.skill._skill.Equals(skill))
                 return true;
         }
         return false;

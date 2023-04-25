@@ -5,6 +5,7 @@ using UnityEngine;
 [Serializable]
 public class Inventory {
 
+    // Callback 
     public Action<Inventory> onUpdateInventory;
 
     [SerializeField]

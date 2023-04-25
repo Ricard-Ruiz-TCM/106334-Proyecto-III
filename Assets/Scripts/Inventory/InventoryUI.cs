@@ -5,6 +5,11 @@ public class InventoryUI : MonoBehaviour {
     [SerializeField, Header("Prefab")]
     private GameObject _inventoryItemUI;
 
+
+    public void AsignInventory(Inventory inv) {
+        inv.onUpdateInventory += UpdateInventory;
+    }
+
     public void UpdateInventory(Inventory inventory) {
         ClearInventory();
 

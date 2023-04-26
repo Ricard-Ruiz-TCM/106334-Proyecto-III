@@ -52,7 +52,9 @@ public class CombatUI : MonoBehaviour {
             _txtDefense.UpdateText(_currentActor.Defense());
             ClearSkills();
             foreach (SkillItem skI in _currentActor.Skills()) {
-                GameObject.Instantiate(_skillButtonUI, _panelSkills).GetComponent<SkillButtonUI>().Set(skI.skill);
+                GameObject btn = GameObject.Instantiate(_skillButtonUI, _panelSkills);
+                btn.GetComponent<SkillButtonUI>().Set(skI);
+                btn.GetComponent<Button>().interactable = (skI.cooldown <= 0);
             }
         } else {
             foreach (Transform child in _panelSkills) {

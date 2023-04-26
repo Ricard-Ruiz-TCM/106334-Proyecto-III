@@ -211,6 +211,7 @@ public abstract class Actor : MonoBehaviour, ITurnable {
     }
     public void EndTurn() {
         hasTurnEnded = true;
+        UpdateSkillCooldown();
     }
 
     /** Método de control de Acción */

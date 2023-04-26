@@ -4,8 +4,10 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Button))]
 public class SkillButtonUI : MonoBehaviour {
 
-    [SerializeField]
     private Skill _skill;
+
+    [SerializeField]
+    private UIText _cooldownTxt;
 
     private Button _btn;
 
@@ -13,9 +15,10 @@ public class SkillButtonUI : MonoBehaviour {
         _btn = GetComponent<Button>();
     }
 
-    public void Set(Skill skill) {
-        _skill = skill;
+    public void Set(SkillItem skill) {
+        _skill = skill.skill;
         _btn.image.sprite = _skill._icon;
+        _cooldownTxt.UpdateText(skill.cooldown);
         _btn.onClick.AddListener(() => _skill.Special());
     }
 

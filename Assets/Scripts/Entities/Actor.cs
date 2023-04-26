@@ -39,6 +39,9 @@ public abstract class Actor : MonoBehaviour, ITurnable {
     [SerializeField, Header("Skills avaliable:")]
     protected List<SkillItem> _skills;
 
+    [SerializeField, Header("CanMove:")]
+    public bool canMove = true;
+
     protected virtual void Awake() {
         _gridMovement = GetComponent<GridMovement>();
         _gridMovement.onStepReached += () => { _movementsDone++; };

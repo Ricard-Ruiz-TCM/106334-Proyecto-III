@@ -3,7 +3,7 @@ using UnityEngine;
 [RequireComponent(typeof(GridMovement))]
 public class Player : Actor {
 
-
+    bool moveController = true;
     // Unity Awake
     protected override void Awake() {
         base.Awake();
@@ -24,15 +24,23 @@ public class Player : Actor {
         if (hasTurnEnded)
             return false;
 
-        if (_gridMovement.Builder().MosueOverGrid()) {
+        if (_gridMovement.Builder().MosueOverGrid() && canMove) 
+        {
+            moveController = true;
             if (_gridMovement.Builder().GetMouseGridPlane().node.walkable) {
                 _gridMovement.CalcRoute(transform.position, _gridMovement.Builder().GetMouseGridPlane(), Movement());
                 _gridMovement.Builder().DisplayValidPath(_gridMovement.VisualRouteValid, Movement());
                 _gridMovement.Builder().DisplayInValidPath(_gridMovement.VisualRouteInvaild);
+                
             }
         }
+        //else if (!canMove && moveController)
+        //{
+        //    moveController = false;
+        //    _gridMovement.Builder().ClearGrid();
+        //}
+        return (uCore.Action.GetKeyDown(KeyCode.M) && canMove);
 
-        return (uCore.Action.GetKeyDown(KeyCode.M));
     }
     public override void Move() {
         base.Move();

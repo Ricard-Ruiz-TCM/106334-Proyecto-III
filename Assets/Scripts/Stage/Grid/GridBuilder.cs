@@ -95,6 +95,22 @@ public class GridBuilder : MonoBehaviour {
             }
         }
     }
+    public Node DisplayLastNodePath(List<Node> path, int range)
+    {
+        ClearGrid();
+
+        if(path.Count < range)
+        {
+            UpdateMaterial(path[path.Count-1].x, path[path.Count-1].y, _pathMath);
+            return path[path.Count - 1];
+        }
+        else
+        {
+            UpdateMaterial(path[range -1].x, path[range -1].y, _pathMath);
+            return path[range - 1];
+        }
+
+    }
 
     public void DisplayInValidPath(List<Node> path) {
         for (int i = 0; i < path.Count; i++) {

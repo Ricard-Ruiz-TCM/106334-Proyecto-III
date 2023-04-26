@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 
 [RequireComponent(typeof(GridMovement))]
-public class Enemy : Actor {
+public class Enemy : Actor 
+{
 
 
     // Unity Awake
@@ -23,7 +24,7 @@ public class Enemy : Actor {
         EndAction();
     }
 
-    public override bool CanMove() { return uCore.Action.GetKeyDown(KeyCode.P) && moving.Equals(progress.ready) && !acting.Equals(progress.doing); }
+    public override bool CanMove() { return uCore.Action.GetKeyDown(KeyCode.P) && moving.Equals(progress.ready) && !acting.Equals(progress.doing) && canMove; }
     public override void Move() {
         base.Move();
 

@@ -842,7 +842,6 @@ MonoBehaviour:
     cooldown: 0
   - skill: {fileID: 11400000, guid: 234758a2c003b0242a05312c2c0838a8, type: 2}
     cooldown: 1
-  cameraController: {fileID: 1411654453}
 --- !u!1 &117717330
 GameObject:
   m_ObjectHideFlags: 0
@@ -5356,7 +5355,6 @@ MonoBehaviour:
     cooldown: 0
   - skill: {fileID: 11400000, guid: 234758a2c003b0242a05312c2c0838a8, type: 2}
     cooldown: 1
-  cameraController: {fileID: 1411654453}
 --- !u!195 &1049018095
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -6597,7 +6595,6 @@ MonoBehaviour:
     cooldown: 0
   - skill: {fileID: 11400000, guid: 234758a2c003b0242a05312c2c0838a8, type: 2}
     cooldown: 1
-  cameraController: {fileID: 1411654453}
 --- !u!195 &1404224692
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -6812,14 +6809,16 @@ MonoBehaviour:
   startAnimFinalPos: {x: -8.9, y: 70.9, z: -8.8}
   startAnimFinalRot: {x: 55.263, y: 45, z: 0}
   _speed: 1
-  _target: {fileID: 1049018091}
+  _target: {fileID: 116379410}
   _maxZoom: 0
   _minZoom: 0
   _offset: {x: 0, y: 0}
   _limits: {x: 0, y: 0}
   cameraPos: {fileID: 919811796}
-  cameraMoveMovementSpeed: 0.5
+  cameraMoveMovementSpeed: 0.8
   cameraMoveChangeTargetSpeed: 5
+  grid: {fileID: 1633866938}
+  turnManager: {fileID: 1827001006}
 --- !u!1 &1421095584
 GameObject:
   m_ObjectHideFlags: 0
@@ -9356,7 +9355,6 @@ MonoBehaviour:
     cooldown: 0
   - skill: {fileID: 11400000, guid: 234758a2c003b0242a05312c2c0838a8, type: 2}
     cooldown: 1
-  cameraController: {fileID: 1411654453}
 --- !u!195 &1892520413
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -10304,7 +10302,6 @@ MonoBehaviour:
     cooldown: 0
   - skill: {fileID: 11400000, guid: 234758a2c003b0242a05312c2c0838a8, type: 2}
     cooldown: 1
-  cameraController: {fileID: 1411654453}
 --- !u!1 &2112277864
 GameObject:
   m_ObjectHideFlags: 0

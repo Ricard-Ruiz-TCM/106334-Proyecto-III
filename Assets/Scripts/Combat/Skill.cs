@@ -12,10 +12,12 @@ public abstract class Skill : ScriptableObject {
     public skills _skill;
     public int _cooldown;
 
-    [Header("Stats Modifiers:")]
-    public float _damageMod;
-    public float _defenseMod;
+    public int _range;
 
-    public abstract void Special();
+    [Header("Stats Modifiers:")]
+    public int _damageMod;
+    public int _defenseMod;
+
+    public abstract void Special(Actor from);
 
 }

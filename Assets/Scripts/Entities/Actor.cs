@@ -5,9 +5,13 @@ public abstract class Actor : MonoBehaviour, ITurnable {
 
     // Grid Movement
     protected GridMovement _gridMovement;
+    public GridMovement GridM() {
+        return _gridMovement;
+    }
 
     [SerializeField, Header("Core:")]
     protected int _health;
+    protected int _tempDef;
     [SerializeField]
     protected bool _isAlive;
     public bool IsAlive() { return _isAlive; }
@@ -73,6 +77,10 @@ public abstract class Actor : MonoBehaviour, ITurnable {
         return _health;
     }
 
+    public void AddTempDef(int def) {
+        _tempDef = def;
+    }
+
     public int Defense() {
         int defense = 0;
 
@@ -88,6 +96,8 @@ public abstract class Actor : MonoBehaviour, ITurnable {
                 }
             }
         }
+
+        defense += _tempDef;
 
         return defense;
     }
@@ -155,8 +165,9 @@ public abstract class Actor : MonoBehaviour, ITurnable {
         foreach(SkillItem skillItem in _skills) {
             if (skillItem.skill._skill.Equals(skill)) {
                 if (skillItem.cooldown <= 0) {
-                    skillItem.skill.Special();
+                    skillItem.skill.Special(this);
                     skillItem.cooldown = skillItem.skill._cooldown;
+                    EndAction();
                 }
             }
         }
@@ -207,6 +218,7 @@ public abstract class Actor : MonoBehaviour, ITurnable {
         moving = progress.ready;
         acting = progress.ready;
         _movementsDone = 0;
+        _tempDef = 0;
         hasTurnEnded = false;
     }
     public void EndTurn() {

@@ -3,7 +3,12 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "new DoubleLunge", menuName = "Combat/Skills/Double Lunge")]
 public class DoubleLunge : Skill {
 
-    public override void Special() {
+    public override void Special(Actor from) {
+
+       /** Actor to = _combat.TryGetActor(-..);
+
+        to.TakeDamage(from.Damage());*/
+
         Debug.Log("DoubleLunge special attack");
     }
 

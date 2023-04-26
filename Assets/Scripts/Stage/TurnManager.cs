@@ -52,7 +52,6 @@ public class TurnManager : MonoBehaviour {
         // Turno finalizado
         if (turneable.hasTurnEnded) {
             StartCoroutine(NextTurn());
-            turneable.BeginTurn();
             return;
         }
 
@@ -82,6 +81,7 @@ public class TurnManager : MonoBehaviour {
             _index = 0;
         _waiting = false;
         onEndTurn?.Invoke();
+        _turnables[_index].BeginTurn();
     }
 
     private bool Contains(ITurnable element) {

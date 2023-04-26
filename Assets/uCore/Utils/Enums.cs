@@ -85,3 +85,8 @@ public enum perkModification {
 public enum perkCategory {
     offensive, defensive
 }
+
+// Tipo de combate del enemigo
+public enum enemyCombatStyle {
+    ranged, melee
+}

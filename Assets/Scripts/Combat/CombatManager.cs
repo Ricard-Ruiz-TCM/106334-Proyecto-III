@@ -248,6 +248,9 @@ public class CombatManager : MonoBehaviour
                 
             }
         }
+
+        from.EndAction();
+
     }
     public void ProvaArco(Actor actor, int range)
     {
@@ -311,6 +314,9 @@ public class CombatManager : MonoBehaviour
                 }
 
 
+            }
+            if (uCore.Action.GetKeyDown(KeyCode.Escape)) {
+                canEnd = true;
             }
             yield return null;
         }

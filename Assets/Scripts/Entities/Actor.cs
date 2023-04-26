@@ -61,6 +61,9 @@ public abstract class Actor : MonoBehaviour, ITurnable {
         if (_weapon != null) {
             AddSkill(_weapon._skill._skill);
         }
+        if (_shield != null) {
+            //AddSkill(_shield._defense)
+        }
         foreach (Perk pk in _perks) {
             if (pk is SkillPerk)
                 AddSkill(((SkillPerk)pk)._skill._skill);
@@ -185,7 +188,6 @@ public abstract class Actor : MonoBehaviour, ITurnable {
                 if (skillItem.cooldown <= 0) {
                     skillItem.skill.Special(this);
                     skillItem.cooldown = skillItem.skill._cooldown;
-                    EndAction();
                 }
             }
         }
@@ -264,7 +266,7 @@ public abstract class Actor : MonoBehaviour, ITurnable {
     protected void StartAct() {
         acting = progress.doing;
     }
-    protected void EndAction() {
+    public void EndAction() {
         acting = progress.done;
     }
 

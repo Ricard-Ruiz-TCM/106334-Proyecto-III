@@ -1,18 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class SkillButtonUI : MonoBehaviour
-{
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+[RequireComponent(typeof(Button))]
+public class SkillButtonUI : MonoBehaviour {
+
+    [SerializeField]
+    private Skill _skill;
+
+    private Button _btn;
+
+    private void Awake() {
+        _btn = GetComponent<Button>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public void Set(Skill skill) {
+        _skill = skill;
+        _btn.image.sprite = _skill._icon;
+        _btn.onClick.AddListener(() => _skill.Special());
     }
+
 }

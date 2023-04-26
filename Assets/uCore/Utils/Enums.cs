@@ -44,7 +44,7 @@ public enum items {
     NONE,
 
     // Weapons
-    Gladius, Hasta, Bow, Dolabra, Pugi,
+    Gladius, Hasta, Bow,
     // Armors
     Scutum, Segmentata, Hamata, Squamata,
     // Resoruces and Quests/Books
@@ -55,12 +55,20 @@ public enum items {
 
 // Todas las skills que existen
 public enum skills {
-    arrowRain, attack, cleave, defense, doubleLunge, moralizingShout, stab, stun, vanish
+    NONE,
+
+    ArrowRain, Attack, Cleave, Defense, DoubleLunge, MoralizingShout, Vanish,
+
+    MAX
 }
 
 // Todas las perks que existen
 public enum perks {
-    perkSkillStun, perkWeaponDamage
+    NONE, 
+
+    PerkSkillVanish, PerkWeaponDamage,
+
+    MAX
 }
 
 // Tipo de  camino

@@ -35,10 +35,10 @@ public class EventScene : MonoBehaviour {
     void Start() {
         switch (uCore.GameManager.RoadEvent) {
             case roadEvent.blacksmith:
-                _dialogue.GetComponent<DialogueManager>().StartDialogue(uCore.GameManager.BlacksmithNode);
+                GameObject.FindAnyObjectByType<DialogueManager>().StartDialogue(uCore.GameManager.BlacksmithNode);
                 break;
             case roadEvent.comrade:
-                _dialogue.GetComponent<DialogueManager>().StartDialogue(uCore.GameManager.ComradeNode);
+                GameObject.FindAnyObjectByType<DialogueManager>().StartDialogue(uCore.GameManager.ComradeNode);
                 break;
             default: break;
         }

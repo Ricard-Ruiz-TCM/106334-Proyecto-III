@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4593170086789612016}
   - component: {fileID: 4593170086789612017}
   - component: {fileID: 4593170086789612018}
+  - component: {fileID: 2100887571532204324}
   m_Layer: 5
   m_Name: SkillButtonUI
   m_TagString: Untagged
@@ -121,3 +122,17 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &2100887571532204324
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4593170086789612020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: baea9478fc83dfd4d8adeefd06b1aa00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _skill: {fileID: 0}
+  _btnSkill: {fileID: 4593170086789612018}

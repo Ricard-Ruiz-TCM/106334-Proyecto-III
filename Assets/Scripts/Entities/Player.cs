@@ -3,7 +3,6 @@ using UnityEngine;
 [RequireComponent(typeof(GridMovement))]
 public class Player : Actor {
 
-    [SerializeField] CameraController cameraController;
 
     // Unity Awake
     protected override void Awake() {
@@ -25,7 +24,6 @@ public class Player : Actor {
         if (hasTurnEnded)
             return false;
 
-        cameraController.ChangeTarget(transform);
         if (_gridMovement.Builder().MosueOverGrid()) {
             if (_gridMovement.Builder().GetMouseGridPlane().node.walkable) {
                 _gridMovement.CalcRoute(transform.position, _gridMovement.Builder().GetMouseGridPlane(), Movement());

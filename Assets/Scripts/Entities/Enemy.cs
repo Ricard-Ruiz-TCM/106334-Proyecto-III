@@ -3,7 +3,6 @@
 [RequireComponent(typeof(GridMovement))]
 public class Enemy : Actor {
 
-    [SerializeField] CameraController cameraController;
 
     // Unity Awake
     protected override void Awake() {
@@ -24,7 +23,7 @@ public class Enemy : Actor {
         EndAction();
     }
 
-    public override bool CanMove() { cameraController.ChangeTarget(transform); return moving.Equals(progress.ready) && !acting.Equals(progress.doing); }
+    public override bool CanMove() { return moving.Equals(progress.ready) && !acting.Equals(progress.doing); }
     public override void Move() {
         base.Move();
 

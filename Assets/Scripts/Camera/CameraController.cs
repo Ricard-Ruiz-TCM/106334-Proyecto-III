@@ -38,23 +38,45 @@ public class CameraController : MonoBehaviour
     [SerializeField] Transform cameraPos;
     bool animating = false;
     Vector3 targetPos;
-    Vector3 startPos;
 
     [SerializeField] float cameraMoveMovementSpeed;
     [SerializeField] float cameraMoveChangeTargetSpeed;
     float cameraSpeed;
 
+    [SerializeField] Grid2D grid;
+
+    float xAnterior, yAnterior;
+
+    [SerializeField] TurnManager turnManager;
+
+    bool changeTarget = false;
 
     private void Start()
     {
         StartCoroutine(StartAnim());
+        xAnterior = 111111;
+        xAnterior = 111111;
+        turnManager.onEndTurn += () => { changeTarget = true; };
     }
+
 
     // Unity LateUpdate
     void LateUpdate() 
     {
+        if (changeTarget)
+        {
+            Debug.Log("asda");
+            _target = turnManager.CurrentTurnActor().transform;
+            changeTarget = false;
+            targetPos = new Vector3(Mathf.RoundToInt(_target.position.x / 10) - grid.Rows / 2.5f, Mathf.RoundToInt(_target.position.z / 10) - grid.Columns / 2.5f);
+            targetPos *= 3;
+            cameraSpeed = cameraMoveChangeTargetSpeed;
+        }
+
         if (!animating)
         {
+            
+            
             if (uCore.Action.GetKeyDown(KeyCode.Z))
             {
                 StartCoroutine(EndAnim());
@@ -73,20 +95,26 @@ public class CameraController : MonoBehaviour
 
             if (_target.gameObject.GetComponent<GridMovement>()._canMove)
             {
-                targetPos = _target.GetComponent<GridMovement>().GetLastNode();
-                startPos = cameraPos.localPosition;
-                cameraSpeed = cameraMoveMovementSpeed;
+                if(xAnterior != _target.GetComponent<GridMovement>().GetLastNode().x || yAnterior != _target.GetComponent<GridMovement>().GetLastNode().y)
+                {
+                    xAnterior = _target.GetComponent<GridMovement>().GetLastNode().x;
+                    yAnterior = _target.GetComponent<GridMovement>().GetLastNode().y;
+                    targetPos = new Vector3(_target.GetComponent<GridMovement>().GetLastNode().x - grid.Rows / 2.5f, _target.GetComponent<GridMovement>().GetLastNode().y - grid.Columns / 2.5f);
+                    targetPos *= 3;
+                    cameraSpeed = cameraMoveMovementSpeed;
+                }
+
             }
             else
             {
                 if (uCore.Action.GetKeyDown(KeyCode.U))
                 {
                     targetPos = Vector3.zero;
-                    startPos = cameraPos.localPosition;
                     cameraSpeed = cameraMoveChangeTargetSpeed;
                 }
             }
-            cameraPos.localPosition = Vector3.Lerp(startPos, targetPos, cameraSpeed * Time.deltaTime);
+            cameraPos.localPosition = Vector3.Lerp(cameraPos.localPosition, targetPos, cameraSpeed * Time.deltaTime);
+            //cameraPos.localPosition = targetPos;
         }
 
     }
@@ -131,10 +159,9 @@ public class CameraController : MonoBehaviour
         animating = false;
         transform.rotation = Quaternion.Euler(finalRot);
     }
-    public void ChangeTarget(Transform newTarget)
+    public void ChangeTarget()
     {
-        _target = newTarget;
-        cameraSpeed = cameraMoveChangeTargetSpeed;
+        
     }
 
     //IEnumerator Prova()

@@ -1,9 +1,8 @@
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
 
 [RequireComponent(typeof(Grid2D))]
 public class GridBuilder : MonoBehaviour {
-
 
     private Grid2D _grid;
     private GridPlane[,] _planeMap;
@@ -12,7 +11,7 @@ public class GridBuilder : MonoBehaviour {
     private GameObject _planePfb;
     // gpl = GridPanelSize => Lo que mide el mesh del panel, pues scale 1 => 10
     public float _planeSize = 10f;
-    
+
     [SerializeField, Header("Terrain Layer:")]
     private LayerMask _layer;
 
@@ -20,6 +19,7 @@ public class GridBuilder : MonoBehaviour {
     public Material _walkableMat;
     public Material _unwalkableMat;
     public Material _pathMath;
+    public Material _badPathMat;
     public Material _rangeMath;
 
     // Unity Awake
@@ -37,7 +37,7 @@ public class GridBuilder : MonoBehaviour {
                 Vector3 position = new Vector3(x * _planeSize * _planePfb.transform.localScale.x, 50f, y * _planeSize * _planePfb.transform.localScale.y);
                 // Instant del prefab
                 GridPlane obj = GameObject.Instantiate(_planePfb, position, Quaternion.identity, transform).GetComponent<GridPlane>();
-                obj.gameObject.name = "M[" + x + "," + y + "]-" + "W:" + _grid.GetNode(x,y).walkable;
+                obj.gameObject.name = "M[" + x + "," + y + "]-" + "W:" + _grid.GetNode(x, y).walkable;
                 RaycastHit raycastHit;
                 if (Physics.Raycast(obj.transform.position, -Vector3.up, out raycastHit, Mathf.Infinity, _layer)) {
                     // RePosition del plane, justo encima del mapeado
@@ -61,7 +61,7 @@ public class GridBuilder : MonoBehaviour {
     /** Métodos para obtener el GridPlane */
     public GridPlane GetGridPlane(Node node) {
         return GetGridPlane(node.x, node.y);
-}
+    }
     public GridPlane GetGridPlane(int x, int y) {
         return _planeMap[x, y];
     }
@@ -87,22 +87,25 @@ public class GridBuilder : MonoBehaviour {
     }
 
     /** Método para cambiar el path de colores */
-    public void DisplayPath(List<Node> path, int range) {
+    public void DisplayValidPath(List<Node> path, int range) {
+        ClearGrid();
+        for (int i = 0; i < path.Count; i++) {
+            if (i < range) {
+                UpdateMaterial(path[i].x, path[i].y, _pathMath);
+            }
+        }
+    }
+
+    public void DisplayInValidPath(List<Node> path) {
+        for (int i = 0; i < path.Count; i++) {
+            UpdateMaterial(path[i].x, path[i].y, _badPathMat);
+        }
+    }
+
+    public void ClearGrid() {
         for (int x = 0; x < _grid.Rows; x++) {
             for (int y = 0; y < _grid.Columns; y++) {
                 UpdateMaterial(x, y);
-            }
-        }
-
-        //foreach (Node nd in path)
-        //{
-        //    UpdateMaterial(nd.x, nd.y, _pathMath);
-        //}
-        for (int i = 0; i < path.Count; i++)
-        {
-            if (i < range)
-            {
-                UpdateMaterial(path[i].x, path[i].y,_pathMath);
             }
         }
     }

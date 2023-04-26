@@ -65,10 +65,13 @@ public class TurnManager : MonoBehaviour {
         }
 
         if ((turneable.moving.Equals(progress.done)) && (turneable.acting.Equals(progress.done))) {
-            turneable.EndTurn();
-            onEndTurn?.Invoke();
+            EndTurn();
         }
 
+    }
+
+    public void EndTurn() {
+        _turnables[_index].EndTurn();
     }
 
     public IEnumerator NextTurn() {
@@ -78,6 +81,7 @@ public class TurnManager : MonoBehaviour {
         if (_index >= _turnables.Count)
             _index = 0;
         _waiting = false;
+        onEndTurn?.Invoke();
     }
 
     private bool Contains(ITurnable element) {

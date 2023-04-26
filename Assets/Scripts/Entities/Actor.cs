@@ -3,17 +3,18 @@ using System.Collections.Generic;
 
 public abstract class Actor : MonoBehaviour, ITurnable {
 
+    // Grid Movement
+    protected GridMovement _gridMovement;
+
     [SerializeField, Header("Core:")]
     protected int _health;
-    [SerializeField]
-    protected int _defense;
     [SerializeField]
     protected bool _isAlive;
     public bool IsAlive() { return _isAlive; }
 
     [SerializeField, Header("Movement:")]
     protected int _movement;
-    public int Movement() { return _movement; }
+    protected int _movementsDone;
 
     [SerializeField, Header("Equipment:")]
     protected ArmorItem _armor;
@@ -21,6 +22,9 @@ public abstract class Actor : MonoBehaviour, ITurnable {
     protected WeaponItem _weapon;
     [SerializeField]
     protected ArmorItem _shield;
+
+    [SerializeField]
+    protected List<Expertise> _upgrades;
 
     [SerializeField, Header("Inventory:")]
     protected Inventory _inventory;
@@ -31,45 +35,76 @@ public abstract class Actor : MonoBehaviour, ITurnable {
     [SerializeField, Header("Skills avaliable:")]
     protected List<SkillItem> _skills;
 
-    protected virtual void BuildStats() {
-        foreach (Perk pk in _perks) {
-            switch (pk._modificationType) {
-                case perkModification.damage:
-                    break;
-                case perkModification.armor:
-                    break;
-                case perkModification.health:
-                    break;
-                case perkModification.skill:
-                    break;
-            }
-        }
+    protected virtual void Awake() {
+        _gridMovement = GetComponent<GridMovement>();
+        _gridMovement.onStepReached += () => { _movementsDone++; };
+    }
 
+    protected void BuildSkills() {
+        if (_weapon != null) {
+            AddSkill(_weapon._skill._skill);
+        }
+        foreach (Perk pk in _perks) {
+            if (pk is SkillPerk)
+                AddSkill(((SkillPerk)pk)._skill._skill);
+        }
     }
 
     public int Damage() {
         int dmg = 0;
 
         // Get Values
-        dmg += _weapon._damage[0];
+        Expertise ex = _upgrades.Find(x => x._item.Equals(_weapon._item));
+        dmg += _weapon._damage[(ex != null ? ex._level : 0)];
 
         // Apply Modifiers
-        
+        foreach (Perk pk in _perks) {
+            if (pk is ModPerk) {
+                if (pk._modificationType.Equals(perkModification.damage)) {
+                    dmg += ((ModPerk)pk)._modifier;
+                }
+            }
+        }
 
         return dmg;
     }
-    public void TakeDamage(int damage) {
-        int defense = 0, health = 0;
+
+    public int Health() {
+        return _health;
+    }
+
+    public int Defense() {
+        int defense = 0;
 
         // Get Values
-        defense = _armor._defense[0];
-        health = _health;
+        Expertise ex = _upgrades.Find(x => x._item.Equals(_armor._item));
+        defense = _armor._defense[(ex != null ? ex._level : 0)];
 
         // Apply Modifiers
-        health = Mathf.Max(0, health -= Mathf.Max(0, (damage - defense)));
+        foreach (Perk pk in _perks) {
+            if (pk is ModPerk) {
+                if (pk._modificationType.Equals(perkModification.armor)) {
+                    defense += ((ModPerk)pk)._modifier;
+                }
+            }
+        }
+
+        return defense;
+    }
+
+    public virtual int Movement() {
+        int movement = _movement;
+
+        movement -= _movementsDone;
+
+        return movement;
+    }
+
+    public void TakeDamage(int damage) {
+
+        _health = Mathf.Max(0, _health -= Mathf.Max(0, (damage - Defense())));
 
         // Cal Result
-        _health = health;
         if (_health == 0) {
             _isAlive = false;
         }
@@ -141,6 +176,10 @@ public abstract class Actor : MonoBehaviour, ITurnable {
         return false;
     }
 
+    public List<SkillItem> Skills() {
+        return _skills;
+    }
+
     #region ITurnable 
     public Actor actor {
         get { return this; } private set { }
@@ -167,6 +206,7 @@ public abstract class Actor : MonoBehaviour, ITurnable {
     public void BeginTurn() {
         moving = progress.ready;
         acting = progress.ready;
+        _movementsDone = 0;
         hasTurnEnded = false;
     }
     public void EndTurn() {

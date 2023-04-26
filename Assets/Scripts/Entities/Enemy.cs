@@ -3,18 +3,17 @@
 [RequireComponent(typeof(GridMovement))]
 public class Enemy : Actor {
 
-    // Grid Movement
-    private GridMovement _gridMovement;
     [SerializeField] CameraController cameraController;
 
-    // UnityAwake
-    void Awake() {
-        _gridMovement = GetComponent<GridMovement>();
+    // Unity Awake
+    protected override void Awake() {
+        base.Awake();
     }
 
     // Unity Start
     void Start() {
         SubscribeManager();
+        BuildSkills();
     }
 
     public override bool CanAct() { return acting.Equals(progress.ready) && !moving.Equals(progress.doing); }

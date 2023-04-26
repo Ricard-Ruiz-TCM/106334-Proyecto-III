@@ -3,14 +3,11 @@ using UnityEngine;
 [RequireComponent(typeof(GridMovement))]
 public class Player : Actor {
 
-    // Grid Movement
-    protected GridMovement _gridMovement;
-
     [SerializeField] CameraController cameraController;
 
-    // UnityAwake
-    protected void Awake() {
-        _gridMovement = GetComponent<GridMovement>();
+    // Unity Awake
+    protected override void Awake() {
+        base.Awake();
     }
 
     // Unity Start
@@ -19,17 +16,21 @@ public class Player : Actor {
 
         FindObjectOfType<InventoryUI>().AsignInventory(_inventory);
         FindObjectOfType<InventoryUI>().UpdateInventory(_inventory);
-
-        //_statistics.AddSkill();
+        
+        BuildSkills();
 
     }
 
     public override bool CanMove() {
+        if (hasTurnEnded)
+            return false;
+
         cameraController.ChangeTarget(transform);
         if (_gridMovement.Builder().MosueOverGrid()) {
             if (_gridMovement.Builder().GetMouseGridPlane().node.walkable) {
-                _gridMovement.CalcRoute(transform.position, _gridMovement.Builder().GetMouseGridPlane());
-                _gridMovement.Builder().DisplayPath(_gridMovement.VisualRoute, _movement);
+                _gridMovement.CalcRoute(transform.position, _gridMovement.Builder().GetMouseGridPlane(), Movement());
+                _gridMovement.Builder().DisplayValidPath(_gridMovement.VisualRouteValid, Movement());
+                _gridMovement.Builder().DisplayInValidPath(_gridMovement.VisualRouteInvaild);
             }
         }
 
@@ -38,8 +39,8 @@ public class Player : Actor {
     public override void Move() {
         base.Move();
         GridPlane gr = _gridMovement.Builder().GetMouseGridPlane();
-        if (gr.node.walkable) {
-            _gridMovement.SetDestination(transform.position, gr, _movement);
+        if ((gr != null) && (gr.node.walkable)) {
+            _gridMovement.SetDestination(transform.position, gr, Movement());
             _gridMovement.onDestinationReached += EndMovement;
         }
 
@@ -53,7 +54,11 @@ public class Player : Actor {
 
         _inventory.AddItem(items.Bow);
 
+        Damage();
+
         EndAction();
+
+        _gridMovement.Builder().ClearGrid();
 
     }
 

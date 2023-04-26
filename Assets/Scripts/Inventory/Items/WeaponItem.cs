@@ -7,6 +7,6 @@ public class WeaponItem : Item {
     public int[] _damage;
     public int _range;
 
-    public Skill _special;
+    public Skill _skill;
 
 }

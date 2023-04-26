@@ -42,9 +42,19 @@ public abstract class Actor : MonoBehaviour, ITurnable {
     [SerializeField, Header("CanMove:")]
     public bool canMove = true;
 
+    [SerializeField, Header("Invisible:")]
+    protected bool isInvisible = false;
+    protected int invisibleRounds = 1;
+    int invisibleRoundsController;
+    [SerializeField] Material materialInvisible;
+    Material materialDefault;
+
+
     protected virtual void Awake() {
         _gridMovement = GetComponent<GridMovement>();
         _gridMovement.onStepReached += () => { _movementsDone++; };
+        invisibleRoundsController = invisibleRounds;
+        materialDefault = gameObject.GetComponentInChildren<SkinnedMeshRenderer>().material; 
     }
 
     protected void BuildSkills() {
@@ -84,6 +94,11 @@ public abstract class Actor : MonoBehaviour, ITurnable {
         _tempDef = def;
     }
 
+    public void SetInvisible(bool inv)
+    {
+        isInvisible = inv;
+        gameObject.GetComponentInChildren<SkinnedMeshRenderer>().material = materialInvisible;
+    }
     public int Defense() {
         int defense = 0;
 
@@ -211,6 +226,7 @@ public abstract class Actor : MonoBehaviour, ITurnable {
     /** Métodos para entrar/salir al sistema de turnos */
     protected void SubscribeManager() {
         FindObjectOfType<TurnManager>().Add(this);
+        FindObjectOfType<CombatManager>().Add(this);
     }
     protected void UnSubscribeManger() {
         FindObjectOfType<TurnManager>().Remove(this);
@@ -223,6 +239,17 @@ public abstract class Actor : MonoBehaviour, ITurnable {
         _movementsDone = 0;
         _tempDef = 0;
         hasTurnEnded = false;
+        if(invisibleRoundsController > 0 && isInvisible)
+        {
+            invisibleRoundsController--;
+        }
+        else if (isInvisible)
+        {
+            invisibleRoundsController = invisibleRounds;
+            isInvisible = false;
+            gameObject.GetComponentInChildren<SkinnedMeshRenderer>().material = materialDefault;
+        }
+
     }
     public void EndTurn() {
         hasTurnEnded = true;

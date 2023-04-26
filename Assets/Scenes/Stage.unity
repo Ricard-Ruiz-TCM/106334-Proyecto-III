@@ -765,7 +765,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 116379409}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 65.4, y: 0, z: 60}
+  m_LocalPosition: {x: 90.3, y: 0, z: 59.3}
   m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -842,6 +842,9 @@ MonoBehaviour:
     cooldown: 0
   - skill: {fileID: 11400000, guid: 234758a2c003b0242a05312c2c0838a8, type: 2}
     cooldown: 1
+  canMove: 1
+  isInvisible: 0
+  materialInvisible: {fileID: 0}
 --- !u!1 &117717330
 GameObject:
   m_ObjectHideFlags: 0
@@ -5351,10 +5354,17 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f9624734122b9774e907d3a1c08ec698, type: 2}
   - {fileID: 11400000, guid: 477c95bd9bbf29c40b20cada08a40935, type: 2}
   _skills:
-  - skill: {fileID: 11400000, guid: ca76b89f17d018440bfc72d229fdb6ca, type: 2}
+  - skill: {fileID: 11400000, guid: c35c4c186ba7f3e41835ec53ff181ffe, type: 2}
     cooldown: 0
-  - skill: {fileID: 11400000, guid: 234758a2c003b0242a05312c2c0838a8, type: 2}
-    cooldown: 1
+  - skill: {fileID: 11400000, guid: 9ab3460c81bed6942a4368717f6e086e, type: 2}
+    cooldown: 0
+  - skill: {fileID: 11400000, guid: 5fc16295566cd6d4a96ddab30f8c772a, type: 2}
+    cooldown: 0
+  - skill: {fileID: 11400000, guid: 71cfe4ff8ec55584eb91f5ea330b8e01, type: 2}
+    cooldown: 0
+  canMove: 1
+  isInvisible: 0
+  materialInvisible: {fileID: 2100000, guid: b174949cb3e795940b60006a57eca13e, type: 2}
 --- !u!195 &1049018095
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -5887,6 +5897,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cc970d69c1b16f45814006b729fb8af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  layerActor:
+    serializedVersion: 2
+    m_Bits: 512
+  shootMat: {fileID: 2100000, guid: a1503898bbdd4504f8f0188fa962e25e, type: 2}
 --- !u!1 &1181642704
 GameObject:
   m_ObjectHideFlags: 0
@@ -6595,6 +6609,9 @@ MonoBehaviour:
     cooldown: 0
   - skill: {fileID: 11400000, guid: 234758a2c003b0242a05312c2c0838a8, type: 2}
     cooldown: 1
+  canMove: 1
+  isInvisible: 0
+  materialInvisible: {fileID: 0}
 --- !u!195 &1404224692
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -7824,6 +7841,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e41177b236ee7df4198672aa36d210da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _grid: {fileID: 0}
   _planePfb: {fileID: 3826263984375952515, guid: 294161b8a70fd124ab6abf3533fe3203,
     type: 3}
   _planeSize: 10
@@ -9355,6 +9373,9 @@ MonoBehaviour:
     cooldown: 0
   - skill: {fileID: 11400000, guid: 234758a2c003b0242a05312c2c0838a8, type: 2}
     cooldown: 1
+  canMove: 1
+  isInvisible: 0
+  materialInvisible: {fileID: 0}
 --- !u!195 &1892520413
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -10302,6 +10323,9 @@ MonoBehaviour:
     cooldown: 0
   - skill: {fileID: 11400000, guid: 234758a2c003b0242a05312c2c0838a8, type: 2}
     cooldown: 1
+  canMove: 1
+  isInvisible: 0
+  materialInvisible: {fileID: 0}
 --- !u!1 &2112277864
 GameObject:
   m_ObjectHideFlags: 0

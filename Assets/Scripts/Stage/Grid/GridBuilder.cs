@@ -4,7 +4,7 @@ using UnityEngine;
 [RequireComponent(typeof(Grid2D))]
 public class GridBuilder : MonoBehaviour {
 
-    private Grid2D _grid;
+    public Grid2D _grid;
     private GridPlane[,] _planeMap;
 
     [SerializeField, Header("Plane Prefab for Grid:")]
@@ -98,16 +98,22 @@ public class GridBuilder : MonoBehaviour {
     public Node DisplayLastNodePath(List<Node> path, int range)
     {
         ClearGrid();
-
-        if(path.Count < range)
+        if(path.Count != 0)
         {
-            UpdateMaterial(path[path.Count-1].x, path[path.Count-1].y, _pathMath);
-            return path[path.Count - 1];
+            if (path.Count < range)
+            {
+                UpdateMaterial(path[path.Count - 1].x, path[path.Count - 1].y, _pathMath);
+                return path[path.Count - 1];
+            }
+            else
+            {
+                UpdateMaterial(path[range - 1].x, path[range - 1].y, _pathMath);
+                return path[range - 1];
+            }
         }
         else
         {
-            UpdateMaterial(path[range -1].x, path[range -1].y, _pathMath);
-            return path[range - 1];
+            return null;
         }
 
     }

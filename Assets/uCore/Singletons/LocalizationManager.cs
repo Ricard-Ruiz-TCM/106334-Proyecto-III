@@ -25,9 +25,9 @@ public class LocalizationManager : MonoBehaviour {
     private language _language = language.EN;
 
     [SerializeField, Header("Localization file Path:")]
-    private string _LocalizationPath = "/Resources/Localization/";
+    private string _LocalizationPath = /**"/Resources/*/"Localization/";
     [Header("Localization file format:")]
-    private string _format = ".json";
+    private string _format = "" /*".json"*/;
 
     [SerializeField]
     private Dictionary<string, string> _texts = new Dictionary<string, string>();
@@ -42,7 +42,7 @@ public class LocalizationManager : MonoBehaviour {
      * @paam language len Nuevo idioma */
     public void ChangeLocalization(language len) {
         _language = len;
-        LoadLocalizationFile(Application.dataPath + _LocalizationPath + _language.ToString() + _format);
+        LoadLocalizationFile(/**Application.dataPath + */ _LocalizationPath + _language.ToString() + _format);
         OnChangeLocalization?.Invoke();
     }
 
@@ -50,14 +50,15 @@ public class LocalizationManager : MonoBehaviour {
      * Carga el fichero de idioma al diccionario
      * @param string path Dirección del fichero */
     private void LoadLocalizationFile(string path) {
-        if (File.Exists(path)) {
+        /**if (File.Exists(path)) {*/
             _texts.Clear();
-            string json = File.ReadAllText(path);
+            //string json = File.ReadAllText(path);
+            string json = Resources.Load<TextAsset>(path).text;
             LocalizationData loadedData = JsonUtility.FromJson<LocalizationData>(json);
             for (int i = 0; i < loadedData.items.Length; i++) {
                 _texts.Add(loadedData.items[i].key, loadedData.items[i].value);
             }
-        }
+        /**}*/
     }
 
     /** Método GetText

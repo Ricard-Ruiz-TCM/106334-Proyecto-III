@@ -12,7 +12,8 @@
  * 
  */
 
-public class EffectElement : BasicElement<EffectElement> {
+public class EffectElement : BasicElement<EffectElement>
+{
 
     /** Effecto */
     private effects _type;
@@ -45,7 +46,8 @@ public class EffectElement : BasicElement<EffectElement> {
     /** Método Type
      * Get de _type
      * @return effects Tipo de efecto */
-    public effects Type() {
+    public effects Type()
+    {
         return _type;
     }
 
@@ -53,7 +55,8 @@ public class EffectElement : BasicElement<EffectElement> {
      * Estabecle el tipo de efecto y la duración
      * @param effects type Tipo de efecto ya defininod
      * @param float duration Duración del efecto o infinito */
-    public EffectElement Set(effects type, float duration = float.PositiveInfinity) {
+    public EffectElement Set(effects type, float duration = float.PositiveInfinity)
+    {
         _duration = duration;
         _type = type;
         return this;
@@ -73,7 +76,8 @@ public class EffectElement : BasicElement<EffectElement> {
      * Override del método DestoryAtEnd
      * Destruye el objeto según duración
      * @return EffectElement se devuelve a si mismo */
-    public override EffectElement destroyAtEnd() {
+    public override EffectElement destroyAtEnd()
+    {
         destroyOnTime(Duration);
         return this;
     }

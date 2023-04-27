@@ -1,6 +1,7 @@
 using UnityEngine;
 
-public class IntroScene : MonoBehaviour {
+public class IntroScene : MonoBehaviour
+{
 
     [SerializeField]
     private GameObject _inputPanel;
@@ -8,28 +9,35 @@ public class IntroScene : MonoBehaviour {
     private bool _sceneLoaded = false;
 
     // Unity OnEnable
-    void OnEnable() {
+    void OnEnable()
+    {
         SceneDirector.OnSceneLoaded += OnSceneLoaded;
     }
 
     // Unity OnDisable
-    void OnDisable() {
+    void OnDisable()
+    {
         SceneDirector.OnSceneLoaded -= OnSceneLoaded;
     }
 
     // Unity Update
-    void Update() {
-        if (_sceneLoaded) {
-            if (uCore.Action.isInputConfigured()) {
+    void Update()
+    {
+        if (_sceneLoaded)
+        {
+            if (uCore.Action.isInputConfigured())
+            {
                 uCore.Director.AllowScene();
             }
         }
     }
 
     // OnSceneLoaded Callback observer
-    private void OnSceneLoaded() {
+    private void OnSceneLoaded()
+    {
         // Innitial input configured
-        if (!uCore.Action.isInputConfigured()) {
+        if (!uCore.Action.isInputConfigured())
+        {
             _inputPanel.SetActive(true);
         }
         _sceneLoaded = true;

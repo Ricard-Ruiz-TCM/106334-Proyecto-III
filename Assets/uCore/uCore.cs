@@ -19,7 +19,8 @@ using UnityEngine.InputSystem;
  * 
  */
 
-public class uCore : MonoBehaviour {
+public class uCore : MonoBehaviour
+{
 
     /** Prefijo y Sufijo de uCore */
     private static string _preFix = "-->  ";
@@ -35,8 +36,10 @@ public class uCore : MonoBehaviour {
     private static LocalizationManager _localizationManager = null;
 
     /** Singleton Getters */
-    public static AudioManager Audio {
-        get {
+    public static AudioManager Audio
+    {
+        get
+        {
             if (_audioManager != null)
                 return _audioManager;
 
@@ -50,8 +53,10 @@ public class uCore : MonoBehaviour {
             return _audioManager;
         }
     }
-    public static ActionManager Action {
-        get {
+    public static ActionManager Action
+    {
+        get
+        {
             if (_actionManager != null)
                 return _actionManager;
 
@@ -71,8 +76,10 @@ public class uCore : MonoBehaviour {
             return _actionManager;
         }
     }
-    public static EffectsManager Effects {
-        get {
+    public static EffectsManager Effects
+    {
+        get
+        {
             if (_effects != null)
                 return _effects;
 
@@ -86,8 +93,10 @@ public class uCore : MonoBehaviour {
             return _effects;
         }
     }
-    public static SceneDirector Director {
-        get {
+    public static SceneDirector Director
+    {
+        get
+        {
             if (_sceneDirector != null)
                 return _sceneDirector;
 
@@ -101,8 +110,10 @@ public class uCore : MonoBehaviour {
             return _sceneDirector;
         }
     }
-    public static GameManager GameManager {
-        get {
+    public static GameManager GameManager
+    {
+        get
+        {
             if (_gameManager != null)
                 return _gameManager;
 
@@ -115,8 +126,10 @@ public class uCore : MonoBehaviour {
             return _gameManager;
         }
     }
-    public static ParticleInstancer Particles {
-        get {
+    public static ParticleInstancer Particles
+    {
+        get
+        {
             if (_particleInstancer != null)
                 return _particleInstancer;
 
@@ -130,8 +143,10 @@ public class uCore : MonoBehaviour {
             return _particleInstancer;
         }
     }
-    public static LocalizationManager Localization {
-        get {
+    public static LocalizationManager Localization
+    {
+        get
+        {
             if (_localizationManager != null)
                 return _localizationManager;
 
@@ -148,10 +163,12 @@ public class uCore : MonoBehaviour {
 
     /** Método InstranceDestroyer
      * Se encarga de hacer el objetoa de esta clase Singleton */
-    private void InstanceDestroyer() {
+    private void InstanceDestroyer()
+    {
         GameManager[] instances = GameObject.FindObjectsOfType<GameManager>();
         int count = instances.Length;
-        if (count >= 1) {
+        if (count >= 1)
+        {
             for (var i = 1; i < instances.Length; i++)
                 GameObject.Destroy(instances[i].gameObject);
             _gameManager = instances[0];
@@ -159,7 +176,8 @@ public class uCore : MonoBehaviour {
     }
 
     // Unity Awake
-    void Awake() {
+    void Awake()
+    {
         InstanceDestroyer();
         DontDestroyOnLoad(this.gameObject);
     }

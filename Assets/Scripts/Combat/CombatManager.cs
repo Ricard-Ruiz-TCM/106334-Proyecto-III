@@ -17,17 +17,18 @@ public class CombatManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
-    public List<Actor> FindPlayers() {
+    public List<Actor> FindPlayers()
+    {
         return _actors.FindAll(x => x is Player);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
     public void Add(Actor element)
     {
@@ -36,7 +37,8 @@ public class CombatManager : MonoBehaviour
 
     }
 
-    public void Remove(Actor element) {
+    public void Remove(Actor element)
+    {
         if (Contains(element))
             _actors.Remove(element);
 
@@ -46,7 +48,7 @@ public class CombatManager : MonoBehaviour
     {
         return _actors.Contains(element);
     }
-    public void Prova (Actor actor, int range)
+    public void Prova(Actor actor, int range)
     {
         actor.canMove = false;
         StartCoroutine(Porro(actor, range));
@@ -82,9 +84,9 @@ public class CombatManager : MonoBehaviour
                 GetActorInNode(node, actor, "cono");
 
             }
-            if(node != null)
+            if (node != null)
             {
-                if(Mathf.RoundToInt(actor.transform.position.x / 10) == node.x)
+                if (Mathf.RoundToInt(actor.transform.position.x / 10) == node.x)
                 {
                     if (ChechIfPositionIsInGrid(node.x + 1, node.y))
                     {
@@ -104,9 +106,9 @@ public class CombatManager : MonoBehaviour
                         }
 
                     }
-                    if(Mathf.RoundToInt(actor.transform.position.z / 10) > node.y)
+                    if (Mathf.RoundToInt(actor.transform.position.z / 10) > node.y)
                     {
-                        if (ChechIfPositionIsInGrid(node.x, node.y -1))
+                        if (ChechIfPositionIsInGrid(node.x, node.y - 1))
                         {
                             _gridMovement.Builder().UpdateMaterial(node.x, node.y - 1, shootMat);
                             if (canEnd)
@@ -134,7 +136,7 @@ public class CombatManager : MonoBehaviour
 
                 if (Mathf.RoundToInt(actor.transform.position.z / 10) == node.y)
                 {
-                    if (ChechIfPositionIsInGrid(node.x, node.y +1 ))
+                    if (ChechIfPositionIsInGrid(node.x, node.y + 1))
                     {
                         _gridMovement.Builder().UpdateMaterial(node.x, node.y + 1, shootMat);
                         if (canEnd)
@@ -210,7 +212,7 @@ public class CombatManager : MonoBehaviour
             {
                 Debug.Log("J pressed");
                 canEnd = true;
-                GetActorInNode(node,actor,"lanza");
+                GetActorInNode(node, actor, "lanza");
 
             }
             if (uCore.Action.GetKeyDown(KeyCode.Escape))
@@ -223,7 +225,7 @@ public class CombatManager : MonoBehaviour
         actor.canMove = true;
 
     }
-    private void GetActorInNode(Node node, Actor from,string attackType)
+    private void GetActorInNode(Node node, Actor from, string attackType)
     {
         //Debug.Log(node.x * 10 + "" + node.y * 10);
         //RaycastHit hit;
@@ -238,7 +240,7 @@ public class CombatManager : MonoBehaviour
         //}
         for (int i = 0; i < _actors.Count; i++)
         {
-            if(node.x == Mathf.RoundToInt(_actors[i].transform.position.x/10) && node.y == Mathf.RoundToInt(_actors[i].transform.position.z / 10))
+            if (node.x == Mathf.RoundToInt(_actors[i].transform.position.x / 10) && node.y == Mathf.RoundToInt(_actors[i].transform.position.z / 10))
             {
                 switch (attackType)
                 {
@@ -255,8 +257,8 @@ public class CombatManager : MonoBehaviour
                         _actors[i].Stun();
                         break;
                 }
-                    
-                
+
+
             }
         }
 
@@ -285,12 +287,12 @@ public class CombatManager : MonoBehaviour
             }
             if (uCore.Action.GetKeyDown(KeyCode.J))
             {
-                GetActorInNode(node,actor, "arrows");
+                GetActorInNode(node, actor, "arrows");
                 canEnd = true;
             }
-            if(node != null)
+            if (node != null)
             {
-                if (ChechIfPositionIsInGrid(node.x + 1,node.y))
+                if (ChechIfPositionIsInGrid(node.x + 1, node.y))
                 {
                     _gridMovement.Builder().UpdateMaterial(node.x + 1, node.y, shootMat);
                     if (canEnd)
@@ -307,26 +309,27 @@ public class CombatManager : MonoBehaviour
                         GetActorInNode(_gridMovement.Builder().GetGridPlane(node.x - 1, node.y).node, actor, "arrows");
                     }
                 }
-                if (ChechIfPositionIsInGrid(node.x , node.y + 1))
+                if (ChechIfPositionIsInGrid(node.x, node.y + 1))
                 {
                     _gridMovement.Builder().UpdateMaterial(node.x, node.y + 1, shootMat);
                     if (canEnd)
                     {
-                        GetActorInNode(_gridMovement.Builder().GetGridPlane(node.x, node.y +1).node, actor, "arrows");
+                        GetActorInNode(_gridMovement.Builder().GetGridPlane(node.x, node.y + 1).node, actor, "arrows");
                     }
                 }
-                if (ChechIfPositionIsInGrid(node.x , node.y -1))
+                if (ChechIfPositionIsInGrid(node.x, node.y - 1))
                 {
-                    _gridMovement.Builder().UpdateMaterial(node.x, node.y- 1, shootMat);
+                    _gridMovement.Builder().UpdateMaterial(node.x, node.y - 1, shootMat);
                     if (canEnd)
                     {
-                        GetActorInNode(_gridMovement.Builder().GetGridPlane(node.x, node.y -1).node, actor, "arrows");
+                        GetActorInNode(_gridMovement.Builder().GetGridPlane(node.x, node.y - 1).node, actor, "arrows");
                     }
                 }
 
 
             }
-            if (uCore.Action.GetKeyDown(KeyCode.Escape)) {
+            if (uCore.Action.GetKeyDown(KeyCode.Escape))
+            {
                 canEnd = true;
             }
             yield return null;

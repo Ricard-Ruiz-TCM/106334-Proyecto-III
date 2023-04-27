@@ -1,8 +1,7 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraController : MonoBehaviour 
+public class CameraController : MonoBehaviour
 {
     [SerializeField] Animator _animator;
 
@@ -29,7 +28,8 @@ public class CameraController : MonoBehaviour
 
     [SerializeField, Header("Position:")]
     private Vector2 _offset;
-    public void SetOffset(Vector2 offset) {
+    public void SetOffset(Vector2 offset)
+    {
         _offset = offset;
     }
     [SerializeField]
@@ -61,7 +61,7 @@ public class CameraController : MonoBehaviour
 
 
     // Unity LateUpdate
-    void LateUpdate() 
+    void LateUpdate()
     {
         if (changeTarget)
         {
@@ -75,8 +75,8 @@ public class CameraController : MonoBehaviour
 
         if (!animating)
         {
-            
-            
+
+
             if (uCore.Action.GetKeyDown(KeyCode.Z))
             {
                 StartCoroutine(EndAnim());
@@ -95,7 +95,7 @@ public class CameraController : MonoBehaviour
 
             if (_target.gameObject.GetComponent<GridMovement>()._canMove)
             {
-                if(xAnterior != _target.GetComponent<GridMovement>().GetLastNode().x || yAnterior != _target.GetComponent<GridMovement>().GetLastNode().y)
+                if (xAnterior != _target.GetComponent<GridMovement>().GetLastNode().x || yAnterior != _target.GetComponent<GridMovement>().GetLastNode().y)
                 {
                     xAnterior = _target.GetComponent<GridMovement>().GetLastNode().x;
                     yAnterior = _target.GetComponent<GridMovement>().GetLastNode().y;
@@ -161,7 +161,7 @@ public class CameraController : MonoBehaviour
     }
     public void ChangeTarget()
     {
-        
+
     }
 
     //IEnumerator Prova()

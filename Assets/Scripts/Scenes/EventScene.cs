@@ -1,6 +1,7 @@
 using UnityEngine;
 
-public class EventScene : MonoBehaviour {
+public class EventScene : MonoBehaviour
+{
 
     [SerializeField, Header("Dialogue:")]
     private GameObject _dialogue;
@@ -14,7 +15,8 @@ public class EventScene : MonoBehaviour {
     private GameObject _blacksmith;
 
     // Unity OnEnable
-    private void OnEnable() {
+    private void OnEnable()
+    {
         OpenPerkPanel.openPerkPanel += PerkPanel;
         OpenShopPanel.openShopPanel += ShopPanel;
         OpenUpgradePanel.openUpgradePanel += UpgradePanel;
@@ -23,7 +25,8 @@ public class EventScene : MonoBehaviour {
     }
 
     // Unity OnDisable
-    private void OnDisable() {
+    private void OnDisable()
+    {
         OpenPerkPanel.openPerkPanel -= PerkPanel;
         OpenShopPanel.openShopPanel -= ShopPanel;
         OpenUpgradePanel.openUpgradePanel -= UpgradePanel;
@@ -32,8 +35,10 @@ public class EventScene : MonoBehaviour {
     }
 
     // Unity Start
-    void Start() {
-        switch (uCore.GameManager.RoadEvent) {
+    void Start()
+    {
+        switch (uCore.GameManager.RoadEvent)
+        {
             case roadEvent.blacksmith:
                 GameObject.FindAnyObjectByType<DialogueManager>().StartDialogue(uCore.GameManager.BlacksmithNode);
                 break;
@@ -44,38 +49,46 @@ public class EventScene : MonoBehaviour {
         }
     }
 
-    private void PerkPanel() {
+    private void PerkPanel()
+    {
         HideDialogue();
         _comrade.SetActive(true);
     }
 
-    private void ShopPanel() {
+    private void ShopPanel()
+    {
         HideDialogue();
         _blacksmith.SetActive(true);
     }
 
-    private void UpgradePanel() {
+    private void UpgradePanel()
+    {
         HideDialogue();
         _blacksmith.SetActive(true);
     }
 
-    private void HideDialogue() {
+    private void HideDialogue()
+    {
         _dialogue.SetActive(false);
     }
 
-    private void EndEvent() {
+    private void EndEvent()
+    {
         uCore.Director.LoadSceneAsync(gameScenes.Stage);
     }
 
-    public void BTN_CompletePerks() {
+    public void BTN_CompletePerks()
+    {
         _complete.SetActive(true);
     }
 
-    public void BTN_Cancel() {
+    public void BTN_Cancel()
+    {
         _complete.SetActive(false);
     }
 
-    public void BTN_Sure() {
+    public void BTN_Sure()
+    {
         EndEvent();
     }
 

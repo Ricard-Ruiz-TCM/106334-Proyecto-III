@@ -1,7 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CombatUI : MonoBehaviour {
+public class CombatUI : MonoBehaviour
+{
 
     [SerializeField]
     private UIText _txtName;
@@ -27,7 +28,8 @@ public class CombatUI : MonoBehaviour {
     private Actor _currentActor;
 
     // Unity Awake
-    void Awake() {
+    void Awake()
+    {
         _turnManager = GameObject.FindObjectOfType<TurnManager>();
         // Set callback para actualizar el panel
         _turnManager.onEndTurn += UpdatePanel;
@@ -36,29 +38,37 @@ public class CombatUI : MonoBehaviour {
     }
 
     // Unity Update
-    void Update() {
-        if (_currentActor is Player) {
+    void Update()
+    {
+        if (_currentActor is Player)
+        {
             _txtMovement.UpdateText(_currentActor.Movement());
             _txtHealth.UpdateText(_currentActor.Health());
             _txtDefense.UpdateText(_currentActor.Defense());
         }
     }
 
-    private void UpdatePanel() {
+    private void UpdatePanel()
+    {
 
         _currentActor = _turnManager.CurrentTurnActor();
 
         _txtName.UpdateText(_currentActor.gameObject.name);
 
-        if (_currentActor is Player) {
+        if (_currentActor is Player)
+        {
             ClearSkills();
-            foreach (SkillItem skI in _currentActor.Skills()) {
+            foreach (SkillItem skI in _currentActor.Skills())
+            {
                 GameObject btn = GameObject.Instantiate(_skillButtonUI, _panelSkills);
                 btn.GetComponent<SkillButtonUI>().Set(_currentActor, skI);
                 btn.GetComponent<Button>().interactable = (skI.cooldown <= 0);
             }
-        } else {
-            foreach (Transform child in _panelSkills) {
+        }
+        else
+        {
+            foreach (Transform child in _panelSkills)
+            {
                 child.GetComponent<Button>().interactable = false;
             }
         }
@@ -67,8 +77,10 @@ public class CombatUI : MonoBehaviour {
 
     }
 
-    public void ClearSkills() {
-        foreach (Transform child in _panelSkills) {
+    public void ClearSkills()
+    {
+        foreach (Transform child in _panelSkills)
+        {
             GameObject.Destroy(child.gameObject);
         }
     }

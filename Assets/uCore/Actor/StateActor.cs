@@ -17,7 +17,8 @@ using UnityEngine;
  */
 
 [RequireComponent(typeof(FStateMachine))]
-public abstract class StateActor : MonoBehaviour {
+public abstract class StateActor : MonoBehaviour
+{
 
     /** FSM */
     protected FStateMachine StateMachine;
@@ -27,18 +28,21 @@ public abstract class StateActor : MonoBehaviour {
     protected abstract void ConstructMachine();
 
     // Unity Awake
-    protected void Awake() {
+    protected void Awake()
+    {
         StateMachine = GetComponent<FStateMachine>();
         ConstructMachine();
     }
 
     // Unity Start
-    protected void Start() {
+    protected void Start()
+    {
         StateMachine.StartMachine();
     }
 
     // Unity Update
-    protected void Update() {
+    protected void Update()
+    {
         StateMachine.UpdateMachine();
     }
 
@@ -48,7 +52,8 @@ public abstract class StateActor : MonoBehaviour {
      * @param StateTransition.TCD condition Delegado para controlar la condición de cambio de estado
      * @param StateTransition.TTD trigger Delegado para controlar el "in between", se ejecuta entre el OnExit y el OnEnter del cambiod estado
      * @param BasicState to Estado destino */
-    protected void CreateTransition(BasicState from, BasicState to, StateTransition.TCD condition, StateTransition.TTD trigger = null) {
+    protected void CreateTransition(BasicState from, BasicState to, StateTransition.TCD condition, StateTransition.TTD trigger = null)
+    {
         from.AddTransition(new StateTransition(condition, trigger), to);
     }
 
@@ -57,7 +62,8 @@ public abstract class StateActor : MonoBehaviour {
      * @param BasicState from Estado origen
      * @param StateTransition transition Transición ya creada y configurada, solo lista para añadirse al estado
      * @param BasicState to Estado destino */
-    protected void AddTransition(BasicState from, StateTransition transition, BasicState to) {
+    protected void AddTransition(BasicState from, StateTransition transition, BasicState to)
+    {
         from.AddTransition(transition, to);
     }
 

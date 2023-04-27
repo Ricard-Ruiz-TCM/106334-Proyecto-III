@@ -1,15 +1,19 @@
-﻿public interface ITurnable {
+﻿public interface ITurnable
+{
 
     // Turnable Actor
     public Actor actor { get; }
 
-    public progress moving {
+    public progress moving
+    {
         get;
     }
-    public progress acting {
+    public progress acting
+    {
         get;
     }
-    public bool hasTurnEnded {
+    public bool hasTurnEnded
+    {
         get;
     }
 

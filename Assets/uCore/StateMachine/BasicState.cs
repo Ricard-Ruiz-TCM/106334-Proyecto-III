@@ -14,19 +14,23 @@ using UnityEngine;
  * @version: v4.0 (04/2023)
  * */
 
-public abstract class BasicState : MonoBehaviour, IState {
+public abstract class BasicState : MonoBehaviour, IState
+{
 
     /** IState */
     [HideInInspector]
-    public string Name {
+    public string Name
+    {
         get; set;
     }
     [HideInInspector]
-    public status Status {
+    public status Status
+    {
         get; set;
     }
     [HideInInspector]
-    public FStateMachine StateMachine {
+    public FStateMachine StateMachine
+    {
         get; set;
     }
 
@@ -49,13 +53,16 @@ public abstract class BasicState : MonoBehaviour, IState {
     /** Métodos AciveTime & InactiveTime & ResetTime
      * Control del tiempo de los estados, para saber el tiempo activa e inactivo
      * los métodos son publicos pero controlados principalmente por la FSM */
-    public void ActiveTime() {
+    public void ActiveTime()
+    {
         TimeActive += Time.deltaTime;
     }
-    public void InactiveTime() {
+    public void InactiveTime()
+    {
         TimeInactive += Time.deltaTime;
     }
-    public void ResetTime() {
+    public void ResetTime()
+    {
         TimeActive = 0f;
         TimeInactive = 0f;
     }
@@ -64,7 +71,8 @@ public abstract class BasicState : MonoBehaviour, IState {
      * Añade una transición a la lista de estados/transiciones
      * @param StateTransition transition Transicion ya creada
      * @param BasicState next Estado destino */
-    public void AddTransition(StateTransition transition, BasicState next) {
+    public void AddTransition(StateTransition transition, BasicState next)
+    {
         if (Transitions == null)
             Transitions = new List<StateTransition>();
         transition.SetNext(next);

@@ -67,19 +67,22 @@ public class CombatManager : MonoBehaviour {
         bool canEnd = false;
         Node node = null;
 
-        while (!canEnd) {
-            if (_gridMovement.Builder().MosueOverGrid()) {
+        while (!canEnd)
+        {
+            if (_gridMovement.Builder().MosueOverGrid())
+            {
                 _gridMovement.CalcRoute(actor.transform.position, _gridMovement.Builder().GetMouseGridPlane(), range);
                 node = _gridMovement.Builder().DisplayLastNodePath(_gridMovement.VisualRouteValid, range);
 
             }
-            if (uCore.Action.GetKeyDown(KeyCode.J)) {
-                Debug.Log("J pressed");
+            if (uCore.Action.GetKeyDown(KeyCode.J))
+            {
                 canEnd = true;
                 GetActorInNode(node, actor, skillType);
 
             }
-            if (node != null) {
+            if (node != null) 
+            {
                 if (Mathf.RoundToInt(actor.transform.position.x / 10) == node.x) 
                 {
                     ExtendAttack(node.x + 1, node.y, actor, canEnd, skillType);
@@ -123,15 +126,11 @@ public class CombatManager : MonoBehaviour {
         }
         _gridMovement.Builder().ClearGrid();
         actor.canMove = true;
-
-
     }
-
 
     IEnumerator NormalAttack(Actor actor, int range, skills skillType) {
         bool canEnd = false;
         Node node = null;
-        //List<Node> nodes = new List<Node>();
 
 
         while (!canEnd) {
@@ -141,7 +140,6 @@ public class CombatManager : MonoBehaviour {
 
             }
             if (uCore.Action.GetKeyDown(KeyCode.J)) {
-                Debug.Log("J pressed");
                 canEnd = true;
                 GetActorInNode(node, actor, skillType);
 
@@ -194,6 +192,7 @@ public class CombatManager : MonoBehaviour {
 
     }
 
+    //metodo para los ataques que tienen daño en area (comprueba si esta dentro de la grid - cambia el material - y si hay un enemigo hace efecto)
     private void ExtendAttack(int i, int j, Actor actor, bool canEnd, skills skillType)
     {
         if (ChechIfPositionIsInGrid(i, j))
@@ -207,7 +206,7 @@ public class CombatManager : MonoBehaviour {
         }
     }
 
-
+    //metodo para checkear si hay un actor en un nodo y aplica la skill en el actor
     private void GetActorInNode(Node node, Actor from, skills skillType)
     {
         for (int i = 0; i < _actors.Count; i++)
@@ -234,6 +233,8 @@ public class CombatManager : MonoBehaviour {
         from.EndAction();
 
     }
+
+    //pasa de cordenadas de mundo a grid
     bool ChechIfPositionIsInGrid(int i, int j) {
         return (!(i < 0 || j < 0 || i >= _gridMovement.Builder()._grid.Rows || j >= _gridMovement.Builder()._grid.Columns));
     }

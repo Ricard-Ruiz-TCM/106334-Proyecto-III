@@ -60,7 +60,6 @@ public class CameraController : MonoBehaviour {
     // Unity LateUpdate
     void LateUpdate() {
         if (changeTarget) {
-            Debug.Log("asda");
             _target = turnManager.CurrentTurnActor().transform;
             changeTarget = false;
             targetPos = new Vector3(Mathf.RoundToInt(_target.position.x / 10) - grid.Rows / 2.5f, Mathf.RoundToInt(_target.position.z / 10) - grid.Columns / 2.5f);

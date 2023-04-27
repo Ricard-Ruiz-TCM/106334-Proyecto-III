@@ -25,35 +25,45 @@ public class CombatManager : MonoBehaviour {
     void Update() {
 
     }
+    //añadir o remover actores de una lista (lo hacemos para controlar en que posicion se encuentran los actores y aplicarle efectos)
     public void Add(Actor element) {
         if (!Contains(element))
             _actors.Add(element);
 
     }
-
     public void Remove(Actor element) {
         if (Contains(element))
             _actors.Remove(element);
 
     }
-
     private bool Contains(Actor element) {
         return _actors.Contains(element);
     }
-    public void Prova(Actor actor, int range) {
+
+
+    //metodos para hacer las skills
+    //los que no estan aqui se hacen desde su scriptableObject, eso es porque la skill se hace sin tener que seleccionar ninguna casilla
+    public void Attack(Actor actor, int range, skills skillType) {
         actor.canMove = false;
-        StartCoroutine(Porro(actor, range));
+        StartCoroutine(NormalAttack(actor, range, skillType));
     }
-    public void Lanza(Actor actor, int range) {
+    public void Lanza(Actor actor, int range, skills skillType) {
         actor.canMove = false;
-        StartCoroutine(Porro(actor, range));
+        StartCoroutine(NormalAttack(actor, range, skillType));
     }
-    public void GolpeDemoledor(Actor actor, int range) {
+    public void GolpeDemoledor(Actor actor, int range, skills skillType) {
         actor.canMove = false;
-        StartCoroutine(ShowGolpeDemoledor(actor, range));
+        StartCoroutine(ShowGolpeDemoledor(actor, range, skillType));
+    }
+    public void Arco(Actor actor, int range, skills skillType)
+    {
+        actor.canMove = false;
+        StartCoroutine(ShowArrows(actor, range, skillType));
     }
 
-    IEnumerator ShowGolpeDemoledor(Actor actor, int range) {
+
+    //enumerators que funcionan como "updates" para hacer las funciones de las skills
+    IEnumerator ShowGolpeDemoledor(Actor actor, int range, skills skillType) {
         bool canEnd = false;
         Node node = null;
 
@@ -66,77 +76,41 @@ public class CombatManager : MonoBehaviour {
             if (uCore.Action.GetKeyDown(KeyCode.J)) {
                 Debug.Log("J pressed");
                 canEnd = true;
-                GetActorInNode(node, actor, "cono");
+                GetActorInNode(node, actor, skillType);
 
             }
             if (node != null) {
-                if (Mathf.RoundToInt(actor.transform.position.x / 10) == node.x) {
-                    if (ChechIfPositionIsInGrid(node.x + 1, node.y)) {
-                        _gridMovement.Builder().UpdateMaterial(node.x + 1, node.y, shootMat);
-                        if (canEnd) {
-                            GetActorInNode(_gridMovement.Builder().GetGridPlane(node.x + 1, node.y).node, actor, "cono");
-                        }
+                if (Mathf.RoundToInt(actor.transform.position.x / 10) == node.x) 
+                {
+                    ExtendAttack(node.x + 1, node.y, actor, canEnd, skillType);
 
-                    }
-                    if (ChechIfPositionIsInGrid(node.x - 1, node.y)) {
-                        _gridMovement.Builder().UpdateMaterial(node.x - 1, node.y, shootMat);
-                        if (canEnd) {
-                            GetActorInNode(_gridMovement.Builder().GetGridPlane(node.x - 1, node.y).node, actor, "cono");
-                        }
+                    ExtendAttack(node.x - 1, node.y, actor, canEnd, skillType);
 
-                    }
-                    if (Mathf.RoundToInt(actor.transform.position.z / 10) > node.y) {
-                        if (ChechIfPositionIsInGrid(node.x, node.y - 1)) {
-                            _gridMovement.Builder().UpdateMaterial(node.x, node.y - 1, shootMat);
-                            if (canEnd) {
-                                GetActorInNode(_gridMovement.Builder().GetGridPlane(node.x, node.y - 1).node, actor, "cono");
-                            }
-
-                        }
-                    } else {
-                        if (ChechIfPositionIsInGrid(node.x, node.y + 1)) {
-                            _gridMovement.Builder().UpdateMaterial(node.x, node.y + 1, shootMat);
-                            if (canEnd) {
-                                GetActorInNode(_gridMovement.Builder().GetGridPlane(node.x, node.y + 1).node, actor, "cono");
-                            }
-
-                        }
+                    if (Mathf.RoundToInt(actor.transform.position.z / 10) > node.y) 
+                    {
+                        ExtendAttack(node.x, node.y - 1, actor, canEnd, skillType);                        
+                    } 
+                    else 
+                    {
+                        ExtendAttack(node.x, node.y + 1, actor, canEnd, skillType);
                     }
                 }
 
 
 
-                if (Mathf.RoundToInt(actor.transform.position.z / 10) == node.y) {
-                    if (ChechIfPositionIsInGrid(node.x, node.y + 1)) {
-                        _gridMovement.Builder().UpdateMaterial(node.x, node.y + 1, shootMat);
-                        if (canEnd) {
-                            GetActorInNode(_gridMovement.Builder().GetGridPlane(node.x, node.y + 1).node, actor, "cono");
-                        }
+                if (Mathf.RoundToInt(actor.transform.position.z / 10) == node.y) 
+                {
+                    ExtendAttack(node.x , node.y + 1, actor, canEnd, skillType);
 
-                    }
-                    if (ChechIfPositionIsInGrid(node.x, node.y - 1)) {
-                        _gridMovement.Builder().UpdateMaterial(node.x, node.y - 1, shootMat);
-                        if (canEnd) {
-                            GetActorInNode(_gridMovement.Builder().GetGridPlane(node.x, node.y - 1).node, actor, "cono");
-                        }
+                    ExtendAttack(node.x, node.y - 1, actor, canEnd, skillType);
 
-                    }
-                    if (Mathf.RoundToInt(actor.transform.position.x / 10) > node.x) {
-                        if (ChechIfPositionIsInGrid(node.x - 1, node.y)) {
-                            _gridMovement.Builder().UpdateMaterial(node.x - 1, node.y, shootMat);
-                            if (canEnd) {
-                                GetActorInNode(_gridMovement.Builder().GetGridPlane(node.x - 1, node.y).node, actor, "cono");
-                            }
-
-                        }
-                    } else {
-                        if (ChechIfPositionIsInGrid(node.x + 1, node.y)) {
-                            _gridMovement.Builder().UpdateMaterial(node.x + 1, node.y, shootMat);
-                            if (canEnd) {
-                                GetActorInNode(_gridMovement.Builder().GetGridPlane(node.x + 1, node.y).node, actor, "cono");
-                            }
-
-                        }
+                    if (Mathf.RoundToInt(actor.transform.position.x / 10) > node.x) 
+                    {
+                        ExtendAttack(node.x - 1, node.y, actor, canEnd, skillType);
+                    } 
+                    else 
+                    {
+                        ExtendAttack(node.x + 1, node.y, actor, canEnd, skillType);
                     }
 
 
@@ -150,9 +124,11 @@ public class CombatManager : MonoBehaviour {
         _gridMovement.Builder().ClearGrid();
         actor.canMove = true;
 
+
     }
 
-    IEnumerator Porro(Actor actor, int range) {
+
+    IEnumerator NormalAttack(Actor actor, int range, skills skillType) {
         bool canEnd = false;
         Node node = null;
         //List<Node> nodes = new List<Node>();
@@ -167,7 +143,7 @@ public class CombatManager : MonoBehaviour {
             if (uCore.Action.GetKeyDown(KeyCode.J)) {
                 Debug.Log("J pressed");
                 canEnd = true;
-                GetActorInNode(node, actor, "lanza");
+                GetActorInNode(node, actor, skillType);
 
             }
             if (uCore.Action.GetKeyDown(KeyCode.Escape)) {
@@ -179,31 +155,74 @@ public class CombatManager : MonoBehaviour {
         actor.canMove = true;
 
     }
-    private void GetActorInNode(Node node, Actor from, string attackType) {
-        //Debug.Log(node.x * 10 + "" + node.y * 10);
-        //RaycastHit hit;
-        //Debug.Break();
-        //Debug.DrawRay(new Vector3(node.x * 10, -10, node.y * 10), new Vector3(0, 1, 0), Color.green);
-        //if (Physics.Raycast(new Vector3(node.x * 10,-10,node.y * 10),new Vector3(0,1,0),out hit,100f, layerActor))
-        //{
-        //    if (hit.transform.CompareTag("Enemy"))
-        //    {
-        //        Debug.Log("enemyDetected");
-        //    }
-        //}
-        for (int i = 0; i < _actors.Count; i++) {
-            if (node.x == Mathf.RoundToInt(_actors[i].transform.position.x / 10) && node.y == Mathf.RoundToInt(_actors[i].transform.position.z / 10)) {
-                switch (attackType) {
-                    case "attack":
+  
+    IEnumerator ShowArrows(Actor actor, int range, skills skillType) {
+        bool canEnd = false;
+        Node node = null;
+        //List<Node> nodes = new List<Node>();
+
+
+        while (!canEnd) {
+            if (_gridMovement.Builder().MosueOverGrid()) {
+                _gridMovement.CalcRoute(actor.transform.position, _gridMovement.Builder().GetMouseGridPlane(), range);
+                node = _gridMovement.Builder().DisplayLastNodePath(_gridMovement.VisualRouteValid, range);
+
+            }
+            if (uCore.Action.GetKeyDown(KeyCode.J)) {
+                GetActorInNode(node, actor, skillType);
+                canEnd = true;
+            }
+            if (node != null) 
+            {
+                ExtendAttack(node.x + 1, node.y, actor, canEnd, skillType);
+
+                ExtendAttack(node.x - 1, node.y, actor, canEnd, skillType);
+
+                ExtendAttack(node.x, node.y + 1, actor, canEnd, skillType);
+
+                ExtendAttack(node.x, node.y - 1, actor, canEnd, skillType);
+
+            }
+            if (uCore.Action.GetKeyDown(KeyCode.Escape)) {
+                canEnd = true;
+            }
+            yield return null;
+        }
+
+        _gridMovement.Builder().ClearGrid();
+        actor.canMove = true;
+
+    }
+
+    private void ExtendAttack(int i, int j, Actor actor, bool canEnd, skills skillType)
+    {
+        if (ChechIfPositionIsInGrid(i, j))
+        {
+            _gridMovement.Builder().UpdateMaterial(i, j, shootMat);
+            if (canEnd)
+            {
+                GetActorInNode(_gridMovement.Builder().GetGridPlane(i, j).node, actor, skillType);
+            }
+
+        }
+    }
+
+
+    private void GetActorInNode(Node node, Actor from, skills skillType)
+    {
+        for (int i = 0; i < _actors.Count; i++)
+        {
+            if (node.x == Mathf.RoundToInt(_actors[i].transform.position.x / 10) && node.y == Mathf.RoundToInt(_actors[i].transform.position.z / 10))
+            {
+                switch (skillType)
+                {
+                    default:
                         _actors[i].TakeDamage(from.Damage());
                         break;
-                    case "arrows":
-                        _actors[i].TakeDamage(from.Damage());
-                        break;
-                    case "lanza":
+                    case skills.DoubleLunge:
                         _actors[i].TakeDamage(from.Damage() * 2);
                         break;
-                    case "cono":
+                    case skills.Cleave:
                         _actors[i].Stun();
                         break;
                 }
@@ -213,65 +232,6 @@ public class CombatManager : MonoBehaviour {
         }
 
         from.EndAction();
-
-    }
-    public void ProvaArco(Actor actor, int range) {
-        actor.canMove = false;
-        StartCoroutine(Porro2(actor, range));
-    }
-    IEnumerator Porro2(Actor actor, int range) {
-        bool canEnd = false;
-        Node node = null;
-        //List<Node> nodes = new List<Node>();
-
-
-        while (!canEnd) {
-            if (_gridMovement.Builder().MosueOverGrid()) {
-                _gridMovement.CalcRoute(actor.transform.position, _gridMovement.Builder().GetMouseGridPlane(), range);
-                node = _gridMovement.Builder().DisplayLastNodePath(_gridMovement.VisualRouteValid, range);
-
-            }
-            if (uCore.Action.GetKeyDown(KeyCode.J)) {
-                GetActorInNode(node, actor, "arrows");
-                canEnd = true;
-            }
-            if (node != null) {
-                if (ChechIfPositionIsInGrid(node.x + 1, node.y)) {
-                    _gridMovement.Builder().UpdateMaterial(node.x + 1, node.y, shootMat);
-                    if (canEnd) {
-                        GetActorInNode(_gridMovement.Builder().GetGridPlane(node.x + 1, node.y).node, actor, "arrows");
-                    }
-
-                }
-                if (ChechIfPositionIsInGrid(node.x - 1, node.y)) {
-                    _gridMovement.Builder().UpdateMaterial(node.x - 1, node.y, shootMat);
-                    if (canEnd) {
-                        GetActorInNode(_gridMovement.Builder().GetGridPlane(node.x - 1, node.y).node, actor, "arrows");
-                    }
-                }
-                if (ChechIfPositionIsInGrid(node.x, node.y + 1)) {
-                    _gridMovement.Builder().UpdateMaterial(node.x, node.y + 1, shootMat);
-                    if (canEnd) {
-                        GetActorInNode(_gridMovement.Builder().GetGridPlane(node.x, node.y + 1).node, actor, "arrows");
-                    }
-                }
-                if (ChechIfPositionIsInGrid(node.x, node.y - 1)) {
-                    _gridMovement.Builder().UpdateMaterial(node.x, node.y - 1, shootMat);
-                    if (canEnd) {
-                        GetActorInNode(_gridMovement.Builder().GetGridPlane(node.x, node.y - 1).node, actor, "arrows");
-                    }
-                }
-
-
-            }
-            if (uCore.Action.GetKeyDown(KeyCode.Escape)) {
-                canEnd = true;
-            }
-            yield return null;
-        }
-
-        _gridMovement.Builder().ClearGrid();
-        actor.canMove = true;
 
     }
     bool ChechIfPositionIsInGrid(int i, int j) {

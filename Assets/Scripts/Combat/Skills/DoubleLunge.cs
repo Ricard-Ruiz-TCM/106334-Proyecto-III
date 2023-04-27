@@ -9,7 +9,7 @@ public class DoubleLunge : Skill {
         /** Actor to = _combat.TryGetActor(-..);
 
          to.TakeDamage(from.Damage());*/
-        FindObjectOfType<CombatManager>().Prova(from, _range);
+        FindObjectOfType<CombatManager>().Lanza(from, _range, _skill);
         Debug.Log("DoubleLunge special attack");
     }
 

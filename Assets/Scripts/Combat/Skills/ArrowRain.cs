@@ -4,7 +4,7 @@ using UnityEngine;
 public class ArrowRain : Skill {
 
     public override void Special(Actor from) {
-        FindObjectOfType<CombatManager>().ProvaArco(from, _range);
+        FindObjectOfType<CombatManager>().Arco(from, _range, _skill);
         Debug.Log("ArrowRain special attack");
     }
 

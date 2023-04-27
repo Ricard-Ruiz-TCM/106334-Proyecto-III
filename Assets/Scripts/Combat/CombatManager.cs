@@ -35,6 +35,13 @@ public class CombatManager : MonoBehaviour
             _actors.Add(element);
 
     }
+
+    public void Remove(Actor element) {
+        if (Contains(element))
+            _actors.Remove(element);
+
+    }
+
     private bool Contains(Actor element)
     {
         return _actors.Contains(element);
@@ -245,7 +252,7 @@ public class CombatManager : MonoBehaviour
                         _actors[i].TakeDamage(from.Damage() * 2);
                         break;
                     case "cono":
-                        Debug.Log("coned");
+                        _actors[i].Stun();
                         break;
                 }
                     

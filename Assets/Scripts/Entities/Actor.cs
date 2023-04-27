@@ -47,7 +47,14 @@ public abstract class Actor : MonoBehaviour, ITurnable {
 
     [SerializeField, Header("Invisible:")]
     protected bool isInvisible = false;
+    public bool IsInvisible() { return isInvisible; }
     protected int invisibleRounds = 1;
+
+    [SerializeField, Header("Stun:")]
+    protected int _isStuned = 0;
+    protected int _stunedRounds = 1;
+
+    
     int invisibleRoundsController;
     [SerializeField] Material materialInvisible;
     Material materialDefault;
@@ -144,6 +151,8 @@ public abstract class Actor : MonoBehaviour, ITurnable {
         // Cal Result
         if (_health == 0) {
             _isAlive = false;
+            UnSubscribeManger();
+            GameObject.Destroy(this.gameObject);
         }
     }
 
@@ -217,6 +226,10 @@ public abstract class Actor : MonoBehaviour, ITurnable {
         return _skills;
     }
 
+    public void Stun() {
+        _isStuned = _stunedRounds;
+    }
+
     #region ITurnable 
     public Actor actor {
         get { return this; } private set { }
@@ -238,6 +251,7 @@ public abstract class Actor : MonoBehaviour, ITurnable {
     }
     protected void UnSubscribeManger() {
         FindObjectOfType<TurnManager>().Remove(this);
+        FindObjectOfType<CombatManager>().Remove(this);
     }
 
     /** Métodos de control del turno **/
@@ -258,10 +272,16 @@ public abstract class Actor : MonoBehaviour, ITurnable {
             gameObject.GetComponentInChildren<SkinnedMeshRenderer>().material = materialDefault;
         }
 
+        if (_isStuned > 0) {
+            moving = progress.done;
+            acting = progress.done;
+        }
+
     }
     public void EndTurn() {
         hasTurnEnded = true;
         UpdateSkillCooldown();
+        _isStuned--;
     }
 
     /** Método de control de Acción */

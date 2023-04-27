@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028334, g: 0.2257134, b: 0.30692226, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -841,6 +841,7 @@ MonoBehaviour:
   _skills: []
   canMove: 1
   isInvisible: 0
+  _isStuned: 0
   materialInvisible: {fileID: 0}
   _Cmanager: {fileID: 0}
   _target: {fileID: 0}
@@ -5730,9 +5731,12 @@ MonoBehaviour:
   _perks:
   - {fileID: 11400000, guid: f9624734122b9774e907d3a1c08ec698, type: 2}
   - {fileID: 11400000, guid: 477c95bd9bbf29c40b20cada08a40935, type: 2}
-  _skills: []
+  _skills:
+  - skill: {fileID: 11400000, guid: c35c4c186ba7f3e41835ec53ff181ffe, type: 2}
+    cooldown: 0
   canMove: 1
   isInvisible: 0
+  _isStuned: 0
   materialInvisible: {fileID: 0}
 --- !u!195 &1049018095
 NavMeshAgent:
@@ -7050,7 +7054,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1404224688
 Transform:
   m_ObjectHideFlags: 0
@@ -7113,6 +7117,7 @@ MonoBehaviour:
   _skills: []
   canMove: 1
   isInvisible: 0
+  _isStuned: 0
   materialInvisible: {fileID: 0}
   _Cmanager: {fileID: 0}
   _target: {fileID: 0}
@@ -9814,7 +9819,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1892520409
 Transform:
   m_ObjectHideFlags: 0
@@ -9879,6 +9884,7 @@ MonoBehaviour:
   _skills: []
   canMove: 1
   isInvisible: 0
+  _isStuned: 0
   materialInvisible: {fileID: 0}
   _Cmanager: {fileID: 0}
   _target: {fileID: 0}
@@ -10831,6 +10837,7 @@ MonoBehaviour:
   _skills: []
   canMove: 1
   isInvisible: 0
+  _isStuned: 0
   materialInvisible: {fileID: 0}
 --- !u!1 &2112277864
 GameObject:

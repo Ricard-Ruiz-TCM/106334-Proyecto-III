@@ -79,7 +79,9 @@ public class Enemy : Actor
         foreach (Actor obj in _Cmanager.FindPlayers()) {
             float distance = Vector3.Distance(obj.transform.position, transform.position);
             if (distance < dist) {
-                actor = obj; dist = distance;
+                if (!obj.IsInvisible()) { 
+                    actor = obj; dist = distance;
+                }
             }
         }
 

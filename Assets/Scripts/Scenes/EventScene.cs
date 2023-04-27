@@ -12,6 +12,10 @@ public class EventScene : MonoBehaviour {
 
     [SerializeField, Header("Blacksmith:")]
     private GameObject _blacksmith;
+    [SerializeField]
+    private GameObject _upgrades;
+    [SerializeField]
+    private GameObject _shop;
 
     // Unity OnEnable
     private void OnEnable() {
@@ -52,11 +56,13 @@ public class EventScene : MonoBehaviour {
     private void ShopPanel() {
         HideDialogue();
         _blacksmith.SetActive(true);
+        _shop.SetActive(true);
     }
 
     private void UpgradePanel() {
         HideDialogue();
         _blacksmith.SetActive(true);
+        _upgrades.SetActive(true);
     }
 
     private void HideDialogue() {
@@ -73,6 +79,14 @@ public class EventScene : MonoBehaviour {
 
     public void BTN_Cancel() {
         _complete.SetActive(false);
+    }
+
+    public void BTN_OpenBlacksmithOptions() {
+        _blacksmith.SetActive(false);
+        _shop.SetActive(false);
+        _upgrades.SetActive(false);
+        _dialogue.SetActive(true);
+        GameObject.FindAnyObjectByType<DialogueManager>().StartDialogue(uCore.GameManager.BlacksmithNode.Next);
     }
 
     public void BTN_Sure() {

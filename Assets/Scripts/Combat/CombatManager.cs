@@ -20,6 +20,10 @@ public class CombatManager : MonoBehaviour
         
     }
 
+    public List<Actor> FindPlayers() {
+        return _actors.FindAll(x => x is Player);
+    }
+
     // Update is called once per frame
     void Update()
     {

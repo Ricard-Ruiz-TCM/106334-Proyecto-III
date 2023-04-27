@@ -22,10 +22,13 @@ public abstract class Actor : MonoBehaviour, ITurnable {
 
     [SerializeField, Header("Equipment:")]
     protected ArmorItem _armor;
+    public ArmorItem Armor() { return _armor; }
     [SerializeField]
     protected WeaponItem _weapon;
+    public WeaponItem Weapon() { return _weapon; }
     [SerializeField]
     protected ArmorItem _shield;
+    public ArmorItem Shield() { return _shield; }
 
     [SerializeField]
     protected List<Expertise> _upgrades;
@@ -59,10 +62,13 @@ public abstract class Actor : MonoBehaviour, ITurnable {
 
     protected void BuildSkills() {
         if (_weapon != null) {
-            AddSkill(_weapon._skill._skill);
+            AddSkill(skills.Attack);
         }
         if (_shield != null) {
-            //AddSkill(_shield._defense)
+            AddSkill(skills.Defense);
+        }
+        if (_weapon != null) {
+            AddSkill(_weapon._skill._skill);
         }
         foreach (Perk pk in _perks) {
             if (pk is SkillPerk)
@@ -235,7 +241,7 @@ public abstract class Actor : MonoBehaviour, ITurnable {
     }
 
     /** Métodos de control del turno **/
-    public void BeginTurn() {
+    public virtual void BeginTurn() {
         moving = progress.ready;
         acting = progress.ready;
         _movementsDone = 0;

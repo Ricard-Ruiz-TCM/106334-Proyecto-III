@@ -53,7 +53,7 @@ public class GridMovement : MonoBehaviour {
         NextPoint();
     }
 
-    public void CalcRoute(Vector3 origin, GridPlane plane, int amount = -1) {
+    public List<Node> CalcRoute(Vector3 origin, GridPlane plane, int amount = -1) {
         List<Node> route = _pathfinder.FindPath(_builder.GetGridPlane(origin).node, plane.node);
         VisualRouteValid.Clear();
         VisualRouteInvaild.Clear();
@@ -67,6 +67,7 @@ public class GridMovement : MonoBehaviour {
         } else {
             VisualRouteValid = route;
         }
+        return route;
     }
 
     public int StepsRemain() {

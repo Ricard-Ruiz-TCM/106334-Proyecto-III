@@ -27,6 +27,10 @@ public class TurnManager : MonoBehaviour {
         if (!Contains(element))
             _turnables.Add(element);
 
+        if (_turnables.Count == 1) {
+            _turnables[0].BeginTurn();
+        }
+
         onModifyTurnList?.Invoke();
     }
 

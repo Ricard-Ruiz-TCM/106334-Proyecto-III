@@ -78,6 +78,44 @@ public class GridBuilder : MonoBehaviour {
         return null;
     }
 
+    public int GetGridDistanceBetween(GridPlane a, GridPlane b) {
+        int dx = Mathf.Abs(a.node.x - b.node.x);
+        int dy = Mathf.Abs(a.node.y - b.node.y);
+
+        return dx + dy;
+    }
+
+    public GridPlane FindClosesGridPlaneTo(GridPlane target, GridPlane origin) {
+        int closestDistance = 1000;
+        GridPlane closestCell = null;
+
+        List<GridPlane> adsCells = new List<GridPlane>();
+
+        if (_grid.insideGrid(target.node.x, target.node.y + 1))
+            adsCells.Add(GetGridPlane(target.node.x, target.node.y + 1));
+        
+        if (_grid.insideGrid(target.node.x, target.node.y - 1))
+            adsCells.Add(GetGridPlane(target.node.x, target.node.y - 1));
+
+        if (_grid.insideGrid(target.node.x + 1, target.node.y))
+            adsCells.Add(GetGridPlane(target.node.x + 1, target.node.y));
+        
+        if (_grid.insideGrid(target.node.x - 1, target.node.y))
+            adsCells.Add(GetGridPlane(target.node.x - 1, target.node.y));
+
+        foreach (GridPlane cell in adsCells) {
+            if (cell != target) {
+                int distance = GetGridDistanceBetween(origin, cell);
+                if (distance < closestDistance) {
+                    closestDistance = distance;
+                    closestCell = cell;
+                }
+            }
+        }
+
+        return closestCell;
+    }
+
     // Update del material del Plane
     public void UpdateMaterial(int x, int y, Material mat = null) {
         if (mat == null) {

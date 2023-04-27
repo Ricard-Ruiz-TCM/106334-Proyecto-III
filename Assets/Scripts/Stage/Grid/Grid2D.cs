@@ -62,7 +62,7 @@ public class Grid2D : MonoBehaviour {
     }
 
     /** Comprueba si la cordenada está dentro del Grid*/
-    private bool insideGrid(int x, int y) {
+    public bool insideGrid(int x, int y) {
         return ((x >= 0) && (x < Rows) && (y >= 0) && (y < Columns));
     }
 

@@ -81,11 +81,11 @@ public class CameraController : MonoBehaviour
             {
                 StartCoroutine(EndAnim());
             }
-            if (uCore.Action.GetKeyDown(KeyCode.C))
+            if (!_target.GetComponent<Actor>().canMove)
             {
                 _animator.SetBool("zoom", true);
             }
-            if (uCore.Action.GetKeyDown(KeyCode.X))
+            if (_target.GetComponent<Actor>().canMove)
             {
                 _animator.SetBool("zoom", false);
             }

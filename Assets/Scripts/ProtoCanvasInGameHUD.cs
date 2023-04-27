@@ -1,21 +1,18 @@
 using UnityEngine;
 
-public class ProtoCanvasInGameHUD : MonoBehaviour
-{
+public class ProtoCanvasInGameHUD : MonoBehaviour {
 
     [SerializeField]
     private Actor _actor;
     [SerializeField]
     private UIText _text;
 
-    void Awake()
-    {
+    void Awake() {
         _actor = GetComponentInParent<Actor>();
         _text = GetComponentInChildren<UIText>();
     }
 
-    void Update()
-    {
+    void Update() {
         if (_actor == null || _text == null)
             return;
 

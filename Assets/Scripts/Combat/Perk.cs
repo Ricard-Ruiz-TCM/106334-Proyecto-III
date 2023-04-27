@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 
-public abstract class Perk : ScriptableObject
-{
+public abstract class Perk : ScriptableObject {
 
     public perks _perk;
     public perkCategory _category;

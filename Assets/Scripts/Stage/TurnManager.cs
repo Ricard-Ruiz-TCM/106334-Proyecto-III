@@ -3,8 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TurnManager : MonoBehaviour
-{
+public class TurnManager : MonoBehaviour {
 
     // Callback cuando modificando la lista
     public Action onEndTurn;
@@ -20,40 +19,34 @@ public class TurnManager : MonoBehaviour
 
     private bool _waiting = false;
 
-    private void Awake()
-    {
+    private void Awake() {
         _turnables = new List<ITurnable>();
     }
 
-    public void Add(ITurnable element)
-    {
+    public void Add(ITurnable element) {
         if (!Contains(element))
             _turnables.Add(element);
 
-        if (_turnables.Count == 1)
-        {
+        if (_turnables.Count == 1) {
             _turnables[0].BeginTurn();
         }
 
         onModifyTurnList?.Invoke();
     }
 
-    public void Remove(ITurnable element)
-    {
+    public void Remove(ITurnable element) {
         if (Contains(element))
             _turnables.Remove(element);
 
         onModifyTurnList?.Invoke();
     }
 
-    public Actor CurrentTurnActor()
-    {
+    public Actor CurrentTurnActor() {
         return _turnables[_index].actor;
     }
 
     // Unity Update
-    private void Update()
-    {
+    private void Update() {
         ITurnable turneable = _turnables[_index];
 
         // Estamos esperando que el turno cambie
@@ -61,36 +54,30 @@ public class TurnManager : MonoBehaviour
             return;
 
         // Turno finalizado
-        if (turneable.hasTurnEnded)
-        {
+        if (turneable.hasTurnEnded) {
             StartCoroutine(NextTurn());
             return;
         }
 
-        if (turneable.CanMove())
-        {
+        if (turneable.CanMove()) {
             turneable.Move();
         }
 
-        if (turneable.CanAct())
-        {
+        if (turneable.CanAct()) {
             turneable.Act();
         }
 
-        if ((turneable.moving.Equals(progress.done)) && (turneable.acting.Equals(progress.done)))
-        {
+        if ((turneable.moving.Equals(progress.done)) && (turneable.acting.Equals(progress.done))) {
             EndTurn();
         }
 
     }
 
-    public void EndTurn()
-    {
+    public void EndTurn() {
         _turnables[_index].EndTurn();
     }
 
-    public IEnumerator NextTurn()
-    {
+    public IEnumerator NextTurn() {
         _waiting = true;
         yield return new WaitForSeconds(_delay);
         _index++;
@@ -101,18 +88,15 @@ public class TurnManager : MonoBehaviour
         _turnables[_index].BeginTurn();
     }
 
-    private bool Contains(ITurnable element)
-    {
+    private bool Contains(ITurnable element) {
         return _turnables.Contains(element);
     }
 
     /** Método que ordena la lista de turnos por orden */
-    public List<ITurnable> TurnablesSorted()
-    {
+    public List<ITurnable> TurnablesSorted() {
         List<ITurnable> sorted = new List<ITurnable>();
 
-        for (int i = _index; sorted.Count != _turnables.Count; i++)
-        {
+        for (int i = _index; sorted.Count != _turnables.Count; i++) {
 
             i = i % _turnables.Count;
             sorted.Add(_turnables[i]);

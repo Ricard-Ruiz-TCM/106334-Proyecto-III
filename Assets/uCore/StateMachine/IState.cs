@@ -9,20 +9,16 @@
  * 
  */
 
-public interface IState
-{
+public interface IState {
 
     /** Core */
-    public string Name
-    {
+    public string Name {
         get; set;
     }
-    public status Status
-    {
+    public status Status {
         get; set;
     }
-    public FStateMachine StateMachine
-    {
+    public FStateMachine StateMachine {
         get; set;
     }
 

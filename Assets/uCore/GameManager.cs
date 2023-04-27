@@ -16,8 +16,7 @@ using UnityEngine;
  * 
  */
 
-public class GameManager : MonoBehaviour
-{
+public class GameManager : MonoBehaviour {
 
     // Evento que nos ofrece el road entre stages
     public roadEvent RoadEvent;
@@ -25,33 +24,27 @@ public class GameManager : MonoBehaviour
     #region Dialogues
 
     private DialogueNode _comradeNode;
-    public DialogueNode ComradeNode
-    {
-        get
-        {
+    public DialogueNode ComradeNode {
+        get {
             if (_comradeNode == null)
                 _comradeNode = Resources.Load<DialogueNode>("ScriptableObjects/Dialogue/Comrade/[C, 0] Intro");
 
             return _comradeNode;
         }
-        set
-        {
+        set {
             _comradeNode = value;
         }
     }
 
     private DialogueNode _blacksmithNode;
-    public DialogueNode BlacksmithNode
-    {
-        get
-        {
+    public DialogueNode BlacksmithNode {
+        get {
             if (_blacksmithNode == null)
                 _blacksmithNode = Resources.Load<DialogueNode>("ScriptableObjects/Dialogue/Blacksmith/[B, 0] Intro");
 
             return _blacksmithNode;
         }
-        set
-        {
+        set {
             _blacksmithNode = value;
         }
     }
@@ -62,28 +55,21 @@ public class GameManager : MonoBehaviour
 
     private Dictionary<items, Item> _items;
 
-    public void LoadItemData()
-    {
+    public void LoadItemData() {
         _items = new Dictionary<items, Item>();
         Item[] allItems = Resources.LoadAll<Item>("ScriptableObjects/Items");
-        foreach (Item it in allItems)
-        {
+        foreach (Item it in allItems) {
             items itE;
-            if (Enum.TryParse(it.name, out itE))
-            {
+            if (Enum.TryParse(it.name, out itE)) {
                 _items.Add(itE, it);
-            }
-            else
-            {
+            } else {
                 Debug.LogWarning("Missmatch de nombre con el SO y el Enum en: " + it.name);
             }
         }
     }
 
-    public Item GetItem(items name)
-    {
-        if (_items == null)
-        {
+    public Item GetItem(items name) {
+        if (_items == null) {
             LoadItemData();
         }
         return _items[name];
@@ -95,28 +81,21 @@ public class GameManager : MonoBehaviour
 
     private Dictionary<skills, Skill> _skills;
 
-    public void LoadSkillData()
-    {
+    public void LoadSkillData() {
         _skills = new Dictionary<skills, Skill>();
         Skill[] allSkills = Resources.LoadAll<Skill>("ScriptableObjects/Skills");
-        foreach (Skill sk in allSkills)
-        {
+        foreach (Skill sk in allSkills) {
             skills skl;
-            if (Enum.TryParse(sk.name, out skl))
-            {
+            if (Enum.TryParse(sk.name, out skl)) {
                 _skills.Add(skl, sk);
-            }
-            else
-            {
+            } else {
                 Debug.LogWarning("Missmatch de nombre con el SO y el Enum en: " + sk.name);
             }
         }
     }
 
-    public Skill GetSkill(skills name)
-    {
-        if (_skills == null)
-        {
+    public Skill GetSkill(skills name) {
+        if (_skills == null) {
             LoadSkillData();
         }
         return _skills[name];
@@ -128,28 +107,21 @@ public class GameManager : MonoBehaviour
 
     private Dictionary<perks, Perk> _perks;
 
-    public void LoadPerkData()
-    {
+    public void LoadPerkData() {
         _perks = new Dictionary<perks, Perk>();
         Perk[] allPerks = Resources.LoadAll<Perk>("ScriptableObjects/Perks");
-        foreach (Perk perk in allPerks)
-        {
+        foreach (Perk perk in allPerks) {
             perks skl;
-            if (Enum.TryParse(perk.name, out skl))
-            {
+            if (Enum.TryParse(perk.name, out skl)) {
                 _perks.Add(skl, perk);
-            }
-            else
-            {
+            } else {
                 Debug.LogWarning("Missmatch de nombre con el SO y el Enum en: " + perk.name);
             }
         }
     }
 
-    public Perk GetSkill(perks name)
-    {
-        if (_perks == null)
-        {
+    public Perk GetSkill(perks name) {
+        if (_perks == null) {
             LoadPerkData();
         }
         return _perks[name];

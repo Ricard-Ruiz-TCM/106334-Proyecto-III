@@ -1,9 +1,7 @@
 
-public class Ally : Player
-{
+public class Ally : Player {
 
-    protected override void Start()
-    {
+    protected override void Start() {
         SubscribeManager();
         BuildSkills();
     }

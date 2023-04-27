@@ -17,14 +17,11 @@ using UnityEngine;
  */
 
 [RequireComponent(typeof(AudioSource))]
-public class AudioElement : BasicElement<AudioElement>
-{
+public class AudioElement : BasicElement<AudioElement> {
 
     /** AudioSource */
-    public AudioSource Source
-    {
-        get
-        {
+    public AudioSource Source {
+        get {
             return GetComponent<AudioSource>();
         }
     }
@@ -32,8 +29,7 @@ public class AudioElement : BasicElement<AudioElement>
     /** Método Reset
      * Reinicia el audio
      * @return AudioElement Se devuevle a si mismo */
-    public AudioElement Reset()
-    {
+    public AudioElement Reset() {
         Stop();
         Play(Source.volume);
         return this;
@@ -43,8 +39,7 @@ public class AudioElement : BasicElement<AudioElement>
      * Reproduce un audio con volume o máx volumen
      * @param float volume Volumen del sonido
      * @return AudioElement Se devuevle a si mismo */
-    public AudioElement Play(float volume = -1f)
-    {
+    public AudioElement Play(float volume = -1f) {
         Source.volume = (volume == -1f ? Source.volume : volume);
         Source.Play();
         return this;
@@ -53,8 +48,7 @@ public class AudioElement : BasicElement<AudioElement>
     /** Método Stop
      * Para el audio
      * @return AudioElement Se devuevle a si mismo */
-    public AudioElement Stop()
-    {
+    public AudioElement Stop() {
         Source.Pause();
         return this;
     }
@@ -65,10 +59,8 @@ public class AudioElement : BasicElement<AudioElement>
      * @param delay Delay del para el inicio del tiempo
      * @param max Volumen máximo que queremos alcanzar
      * @return AudioElement Se devuevle a si mismo */
-    public AudioElement FadeOut(float time, float delay = 0f, float min = 0f)
-    {
-        if (Source.isPlaying)
-        {
+    public AudioElement FadeOut(float time, float delay = 0f, float min = 0f) {
+        if (Source.isPlaying) {
             StartCoroutine(C_FadeAudio(time, delay, Source.volume, min));
         }
         return this;
@@ -80,10 +72,8 @@ public class AudioElement : BasicElement<AudioElement>
      * @param delay Delay del para el inicio del tiempo
      * @param max Volumen máximo que queremos alcanzar
      * @return AudioElement Se devuevle a si mismo */
-    public AudioElement FadeIn(float time, float delay = 0f, float max = 1f)
-    {
-        if (!Source.isPlaying)
-        {
+    public AudioElement FadeIn(float time, float delay = 0f, float max = 1f) {
+        if (!Source.isPlaying) {
             Play(0f);
         }
         StartCoroutine(C_FadeAudio(time, delay, Source.volume, max));
@@ -97,12 +87,10 @@ public class AudioElement : BasicElement<AudioElement>
      * @param float start Volumen origen
      * @param float end Volumen destino
      * @return AudioElement Se devuevle a si mismo */
-    private IEnumerator C_FadeAudio(float time, float delay, float start, float end)
-    {
+    private IEnumerator C_FadeAudio(float time, float delay, float start, float end) {
         yield return new WaitForSeconds(delay);
         float startTime = Time.time;
-        while (Time.time < startTime + time)
-        {
+        while (Time.time < startTime + time) {
             Source.volume = Mathf.Lerp(start, end, (Time.time - startTime) / time);
             yield return null;
         }
@@ -113,8 +101,7 @@ public class AudioElement : BasicElement<AudioElement>
      * Reproduce un audio con delay
      * @param float delay Tiempo de delay
      * @return AudioElement Se devuevle a si mismo */
-    public AudioElement PlayDelayed(float delay)
-    {
+    public AudioElement PlayDelayed(float delay) {
         Source.PlayDelayed(delay);
         return this;
     }
@@ -123,8 +110,7 @@ public class AudioElement : BasicElement<AudioElement>
      * Reproduce un tiempo en un momento concreto
      * @param double time Tiempo en el que se ejeecutara
      * @return AudioElement Se devuevle a si mismo */
-    public AudioElement PlayScheduled(double time)
-    {
+    public AudioElement PlayScheduled(double time) {
         Source.PlayScheduled(time);
         return this;
     }
@@ -132,8 +118,7 @@ public class AudioElement : BasicElement<AudioElement>
     /** Método Mute
      * Mutea el AudioSource
      * @return AudioElement Se devuevle a si mismo */
-    public AudioElement Mute()
-    {
+    public AudioElement Mute() {
         Source.mute = true;
         return this;
     }
@@ -141,8 +126,7 @@ public class AudioElement : BasicElement<AudioElement>
     /** Método UnMute
      * Desmutea el AudioSource
      * @return AudioElement Se devuevle a si mismo */
-    public AudioElement UnMute()
-    {
+    public AudioElement UnMute() {
         Source.mute = false;
         return this;
     }
@@ -150,8 +134,7 @@ public class AudioElement : BasicElement<AudioElement>
     /** Método EnableByPassEffects
      * Habilita los efectos
      * @return AudioElement Se devuevle a si mismo */
-    public AudioElement EnableByPassEffects()
-    {
+    public AudioElement EnableByPassEffects() {
         Source.bypassEffects = true;
         return this;
     }
@@ -159,8 +142,7 @@ public class AudioElement : BasicElement<AudioElement>
     /** Método DisableByPassEffects
      * Desabilita los effectdos
      * @return AudioElement Se devuevle a si mismo */
-    public AudioElement DisableByPassEffects()
-    {
+    public AudioElement DisableByPassEffects() {
         Source.bypassEffects = false;
         return this;
     }
@@ -168,8 +150,7 @@ public class AudioElement : BasicElement<AudioElement>
     /** Método looped
      * Asiga el valor de loop al AudioSource
      * @return AudioElement Se devuevle a si mismo */
-    public AudioElement looped()
-    {
+    public AudioElement looped() {
         Source.loop = true;
         return this;
     }
@@ -177,8 +158,7 @@ public class AudioElement : BasicElement<AudioElement>
     /** Método noLoop
      * Deshabilita la opción de lopear del AudioSource
      * @return AudioElement Se devuevle a si mismo */
-    public AudioElement noLoop()
-    {
+    public AudioElement noLoop() {
         Source.loop = false;
         return this;
     }
@@ -186,8 +166,7 @@ public class AudioElement : BasicElement<AudioElement>
     /** Método destroyAtEnd
      * Override de destroyAtEnd, destruye el audio al final de su reproducción
      * @return AudioElement Se devuevle a si mismo */
-    public override AudioElement destroyAtEnd()
-    {
+    public override AudioElement destroyAtEnd() {
         destroyOnTime(Source.clip.length - Source.time);
         return this;
     }
@@ -196,8 +175,7 @@ public class AudioElement : BasicElement<AudioElement>
      * Establece el volumen del audio
      * @param float volume Volumen
      * @return AudioElement Se devuevle a si mismo */
-    public AudioElement withVolumeEq(float volume)
-    {
+    public AudioElement withVolumeEq(float volume) {
         Source.volume = volume;
         return this;
     }
@@ -206,8 +184,7 @@ public class AudioElement : BasicElement<AudioElement>
      * Establece el pitch al audio
      * @param float value Valor de pitch
      * @return AudioElement Se devuevle a si mismo */
-    public AudioElement withPitchEq(float value)
-    {
+    public AudioElement withPitchEq(float value) {
         Source.pitch = value;
         return this;
     }
@@ -216,8 +193,7 @@ public class AudioElement : BasicElement<AudioElement>
      * Establece el valor del panning del audio
      * @param float pan Valor de Panning
      * @return AudioElement Se devuevle a si mismo */
-    public AudioElement withPanningEq(float pan)
-    {
+    public AudioElement withPanningEq(float pan) {
         Source.panStereo = pan;
         return this;
     }
@@ -226,8 +202,7 @@ public class AudioElement : BasicElement<AudioElement>
      * Declara el CustomRollOff a modo 3D
      * @param float value la cantidad de "3D" que es el audio
      * @return AudioElement Se devuevle a si mismo */
-    public AudioElement with3D(float value = 1f)
-    {
+    public AudioElement with3D(float value = 1f) {
         Source.spatialBlend = value;
         return this;
     }
@@ -236,8 +211,7 @@ public class AudioElement : BasicElement<AudioElement>
      * Declara el CustomRollOff a modo 2D
      * @param float value la cantidad de "2D" que es el audio
      * @return AudioElement Se devuevle a si mismo */
-    public AudioElement with2D(float value = 0f)
-    {
+    public AudioElement with2D(float value = 0f) {
         with3D(value);
         return this;
     }
@@ -247,8 +221,7 @@ public class AudioElement : BasicElement<AudioElement>
      * @param float min Distancia minima
      * @param float max Distancia máxima
      * @return AudioElement Se devuevle a si mismo */
-    public AudioElement onMinMaxDistance(float min = 0f, float max = 12f)
-    {
+    public AudioElement onMinMaxDistance(float min = 0f, float max = 12f) {
         Source.maxDistance = max;
         Source.minDistance = min;
         return this;
@@ -260,8 +233,7 @@ public class AudioElement : BasicElement<AudioElement>
      * @param float min Distancia minima
      * @param float max Distancia máxima
      * @return AudioElement Se devuevle a si mismo */
-    public AudioElement rollOfType(AudioRolloffMode type, float min = 0f, float max = 12f)
-    {
+    public AudioElement rollOfType(AudioRolloffMode type, float min = 0f, float max = 12f) {
         Source.rolloffMode = type;
         onMinMaxDistance(min, max);
         return this;
@@ -272,8 +244,7 @@ public class AudioElement : BasicElement<AudioElement>
      * @param float min Valor minimo
      * @param float max Valor máximo
      * @return AudioElement Se devuevle a si mismo */
-    public AudioElement randomPitch(float min, float max)
-    {
+    public AudioElement randomPitch(float min, float max) {
         return withPitchEq(Random.Range(min, max));
     }
 
@@ -282,8 +253,7 @@ public class AudioElement : BasicElement<AudioElement>
      * @param float min Valor minimo
      * @param float max Valor máximo
      * @return AudioElement Se devuevle a si mismo */
-    public AudioElement randomVolume(float min, float max)
-    {
+    public AudioElement randomVolume(float min, float max) {
         return withVolumeEq(Random.Range(min, max));
     }
 

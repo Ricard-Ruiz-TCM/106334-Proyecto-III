@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class GridMovement : MonoBehaviour
-{
+public class GridMovement : MonoBehaviour {
 
     // callback
     public Action onStepReached;
@@ -16,8 +15,7 @@ public class GridMovement : MonoBehaviour
     // Pathfinder y Builder del escenario
     private Pathfinding _pathfinder;
     private GridBuilder _builder;
-    public GridBuilder Builder()
-    {
+    public GridBuilder Builder() {
         return _builder;
     }
 
@@ -30,8 +28,7 @@ public class GridMovement : MonoBehaviour
     private List<Node> _destionationRoute;
 
     // Unity Awake
-    void Awake()
-    {
+    void Awake() {
         _agent = GetComponent<NavMeshAgent>();
         _builder = GetComponent<GridBuilder>();
         VisualRouteValid = new List<Node>();
@@ -39,51 +36,41 @@ public class GridMovement : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
         _pathfinder = GameObject.FindObjectOfType<Pathfinding>();
         _builder = GameObject.FindObjectOfType<GridBuilder>();
     }
 
     /** Establece el origen y el destino del movimiento */
-    public void SetDestination(Vector3 origin, GridPlane plane, int amount)
-    {
+    public void SetDestination(Vector3 origin, GridPlane plane, int amount) {
         _canMove = true;
         _index = -1;
         _destionationRoute = new List<Node>();
         List<Node> tmp = _pathfinder.FindPath(_builder.GetGridPlane(origin).node, plane.node);
-        for (int i = 0; i < Mathf.Min(tmp.Count, amount); i++)
-        {
+        for (int i = 0; i < Mathf.Min(tmp.Count, amount); i++) {
             _destionationRoute.Add(tmp[i]);
         }
         NextPoint();
     }
 
-    public List<Node> CalcRoute(Vector3 origin, GridPlane plane, int amount = -1)
-    {
+    public List<Node> CalcRoute(Vector3 origin, GridPlane plane, int amount = -1) {
         List<Node> route = _pathfinder.FindPath(_builder.GetGridPlane(origin).node, plane.node);
         VisualRouteValid.Clear();
         VisualRouteInvaild.Clear();
-        if (amount != -1)
-        {
-            for (int i = 0; i < MathF.Min(amount, route.Count); i++)
-            {
+        if (amount != -1) {
+            for (int i = 0; i < MathF.Min(amount, route.Count); i++) {
                 VisualRouteValid.Add(route[i]);
             }
-            for (int i = VisualRouteValid.Count; i < route.Count; i++)
-            {
+            for (int i = VisualRouteValid.Count; i < route.Count; i++) {
                 VisualRouteInvaild.Add(route[i]);
             }
-        }
-        else
-        {
+        } else {
             VisualRouteValid = route;
         }
         return route;
     }
 
-    public int StepsRemain()
-    {
+    public int StepsRemain() {
         if (_destionationRoute == null)
             return 0;
 
@@ -91,8 +78,7 @@ public class GridMovement : MonoBehaviour
     }
 
     // Unity Update
-    void Update()
-    {
+    void Update() {
         if (!_canMove)
             return;
 
@@ -101,29 +87,23 @@ public class GridMovement : MonoBehaviour
     }
 
     /** Comprueba si hemos llegado al punto */
-    public bool DestinationReached()
-    {
+    public bool DestinationReached() {
         return !_agent.hasPath && !_agent.pathPending && _agent.pathStatus == NavMeshPathStatus.PathComplete;
     }
 
     /** Método para ir al siguiente nodo */
-    private void NextPoint()
-    {
-        if (_index < _destionationRoute.Count - 1)
-        {
+    private void NextPoint() {
+        if (_index < _destionationRoute.Count - 1) {
             _index++;
             _agent.SetDestination(_builder.GetGridPlane(_destionationRoute[_index]).position);
             onStepReached?.Invoke();
-        }
-        else
-        {
+        } else {
             _canMove = false;
             onDestinationReached?.Invoke();
         }
     }
 
-    public Vector2 GetLastNode()
-    {
+    public Vector2 GetLastNode() {
         return new Vector2(_destionationRoute[_destionationRoute.Count - 1].x, _destionationRoute[_destionationRoute.Count - 1].y);
     }
 

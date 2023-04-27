@@ -20,8 +20,7 @@ using UnityEngine;
  * 
  */
 
-public class FStateMachine : MonoBehaviour
-{
+public class FStateMachine : MonoBehaviour {
 
     /** State Core */
     [Header("Status & Security:")]
@@ -42,18 +41,13 @@ public class FStateMachine : MonoBehaviour
      * Carga los estados que tiene de componentes
      * CArga los estados que pasamos por parametros
      * @param params BAsicStates[] state Listado de estados agregados por comas */
-    public void LoadStates()
-    {
+    public void LoadStates() {
         LoadStates(GetComponents<BasicState>());
     }
-    public void LoadStates(params BasicState[] state)
-    {
-        foreach (BasicState s in state)
-        {
-            if (Security >= fsmSecurity.Hard)
-            {
-                if (s.gameObject != gameObject)
-                {
+    public void LoadStates(params BasicState[] state) {
+        foreach (BasicState s in state) {
+            if (Security >= fsmSecurity.Hard) {
+                if (s.gameObject != gameObject) {
                     Debug.LogWarning("StateMachine can't hold another gameObject state.");
                     return;
                 }
@@ -65,14 +59,11 @@ public class FStateMachine : MonoBehaviour
     /** Método ILoadStates
      * Método interno que carga los estados en la maquina
      * @param BasicState state Estado para cargar */
-    private void ILoadStates(BasicState state)
-    {
-        if (States == null)
-        {
+    private void ILoadStates(BasicState state) {
+        if (States == null) {
             States = new List<BasicState>();
         }
-        if (States.Contains(state))
-        {
+        if (States.Contains(state)) {
             return;
         }
         States.Add(state);
@@ -85,17 +76,12 @@ public class FStateMachine : MonoBehaviour
      * Tiene en cuenta la seguridad de la máquina para agregar o no el estado
      * @param BasicState state Estado destino
      * @param Action trigger Callback del trigger del StateTransition */
-    public void ChangeState(BasicState state, Action trigger = null)
-    {
-        if (!States.Contains(state))
-        {
-            if (Security >= fsmSecurity.Soft)
-            {
+    public void ChangeState(BasicState state, Action trigger = null) {
+        if (!States.Contains(state)) {
+            if (Security >= fsmSecurity.Soft) {
                 LoadStates(state);
                 Debug.LogWarning("StateMachine load " + state.Name + " satate on the flow.");
-            }
-            else if (Security >= fsmSecurity.Hard)
-            {
+            } else if (Security >= fsmSecurity.Hard) {
                 Debug.LogWarning("StateMachine can change to " + state.Name + ".");
                 return;
             }
@@ -109,12 +95,9 @@ public class FStateMachine : MonoBehaviour
 
     /** Método StartMachine 
      * @param SimpleState Estado inicla o (null, primer estado de la máquina) */
-    public void StartMachine()
-    {
-        if (Security >= fsmSecurity.Hard)
-        {
-            if (InnitialState == null)
-            {
+    public void StartMachine() {
+        if (Security >= fsmSecurity.Hard) {
+            if (InnitialState == null) {
                 Debug.LogWarning("StateMachine cant' start with empty InnitialState.");
                 return;
             }
@@ -126,27 +109,20 @@ public class FStateMachine : MonoBehaviour
     /** Método UpdateMachine 
      * Actualiza la maquina, hacinedo el OnState de los estados
      * Comprueba las transiciones y ejecuta todo el tinglao */
-    public void UpdateMachine()
-    {
-        if (Status.Equals(status.Inactive))
-        {
+    public void UpdateMachine() {
+        if (Status.Equals(status.Inactive)) {
             return;
         }
-        foreach (StateTransition t in CurrentState.Transitions)
-        {
-            if (t.CheckTransition())
-            {
+        foreach (StateTransition t in CurrentState.Transitions) {
+            if (t.CheckTransition()) {
                 ChangeState(t.Next(), t.OnTrigger);
                 return;
             }
         }
-        if (CurrentState.Status.Equals(status.Active))
-        {
+        if (CurrentState.Status.Equals(status.Active)) {
             CurrentState.ActiveTime();
             CurrentState.OnState();
-        }
-        else
-        {
+        } else {
             CurrentState.InactiveTime();
         }
     }

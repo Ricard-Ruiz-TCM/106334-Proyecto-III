@@ -2,8 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "new Node", menuName = "Dialogue/DialogueNode", order = 0)]
-public class DialogueNode : ScriptableObject
-{
+public class DialogueNode : ScriptableObject {
 
     [Header("Speaker:")]
     public string NameKey;

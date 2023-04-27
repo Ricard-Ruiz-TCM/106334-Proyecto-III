@@ -13,26 +13,21 @@ using UnityEngine;
  */
 
 [System.Serializable]
-public class Container<T> : Object where T : Object
-{
+public class Container<T> : Object where T : Object {
 
-    public string Path
-    {
+    public string Path {
         get; private set;
     }
-    public List<T> Elements
-    {
+    public List<T> Elements {
         get; private set;
     }
-    public Dictionary<string, int> Diccionary
-    {
+    public Dictionary<string, int> Diccionary {
         get; private set;
     }
 
     /** Constructor
      * @param string path Ubicación */
-    public Container(string path = "NONE")
-    {
+    public Container(string path = "NONE") {
         Path = path;
         Elements = new List<T>();
         Diccionary = new Dictionary<string, int>();
@@ -42,16 +37,13 @@ public class Container<T> : Object where T : Object
      * Busca y/o Carga un elementos nuevo
      * @param string name Ubicación/Nombre del archivo
      * @return T Elemento almacenado */
-    public T Get(string name)
-    {
-        if (!Exists(name))
-        {
+    public T Get(string name) {
+        if (!Exists(name)) {
             ILoad(name);
         }
         return Elements[Diccionary[name]];
     }
-    public T Load(string name)
-    {
+    public T Load(string name) {
         return Get(name);
     }
 
@@ -59,8 +51,7 @@ public class Container<T> : Object where T : Object
      * Si existe un elemento, lo saca por OUT
      * @param T elemento encontrado
      * @return bool True -> Existe | False -> No Existe */
-    public bool TryGet(string name, out T value)
-    {
+    public bool TryGet(string name, out T value) {
         if (Exists(name))
             value = Get(name);
         else
@@ -73,16 +64,12 @@ public class Container<T> : Object where T : Object
      * @param string name Nombre ID para el diccionario
      * @param T t Elemento ya creado
      * @return T el elemento creado */
-    public T Add(string name, T t)
-    {
+    public T Add(string name, T t) {
         int i = FindSpot();
-        if (i == -1)
-        {
+        if (i == -1) {
             i = Elements.Count;
             Elements.Add(t);
-        }
-        else
-        {
+        } else {
             Elements[i] = t;
         }
         Diccionary.Add(name, i);
@@ -91,8 +78,7 @@ public class Container<T> : Object where T : Object
 
     /** Método Remove
      * @param string name Elemento a eliminar */
-    public void Remove(string name)
-    {
+    public void Remove(string name) {
         if (!Exists(name))
             return;
         Elements[Diccionary[name]] = null;
@@ -100,33 +86,27 @@ public class Container<T> : Object where T : Object
     }
 
     /** Método Clear */
-    public void Clear()
-    {
+    public void Clear() {
         Elements.Clear();
         Diccionary.Clear();
     }
 
     /** Método Exists
      * @param string name Elemento a comprobar */
-    public bool Exists(string name)
-    {
+    public bool Exists(string name) {
         return Diccionary.ContainsKey(name);
     }
 
     /** Método Load
      * @param string name Elemento a cargar */
-    private void ILoad(string name)
-    {
+    private void ILoad(string name) {
         if (Path == "NONE")
             return;
         int i = FindSpot();
-        if (i == -1)
-        {
+        if (i == -1) {
             i = Elements.Count;
             Elements.Add(Resources.Load<T>(Path + name));
-        }
-        else
-        {
+        } else {
             Elements[i] = Resources.Load<T>(Path + name);
         }
         Diccionary.Add(name, i);
@@ -134,11 +114,9 @@ public class Container<T> : Object where T : Object
 
     /** Método FindSpot
      * @return int i Valor con un elemento Null o -1 */
-    private int FindSpot()
-    {
+    private int FindSpot() {
         int i = -1;
-        for (int a = 0; a < Elements.Count; a++)
-        {
+        for (int a = 0; a < Elements.Count; a++) {
             if (i != -1)
                 break;
             if (Elements[a] == null)

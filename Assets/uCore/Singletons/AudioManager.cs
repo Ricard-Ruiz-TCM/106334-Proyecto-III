@@ -1,8 +1,7 @@
 using UnityEngine;
 using UnityEngine.Audio;
 
-public class AudioManager : MonoBehaviour
-{
+public class AudioManager : MonoBehaviour {
 
     [SerializeField, Header("Mixer:")]
     private AudioMixer _mixer;
@@ -10,8 +9,7 @@ public class AudioManager : MonoBehaviour
     private AudioMixerGroup _sfx;
     [SerializeField]
     private AudioMixerGroup _soundtrak;
-    public AudioMixer Mixer()
-    {
+    public AudioMixer Mixer() {
         return _mixer;
     }
 
@@ -29,8 +27,7 @@ public class AudioManager : MonoBehaviour
     private Container<AudioElement> _playing;
 
     // Unity Awake
-    void Awake()
-    {
+    void Awake() {
         _playing = new Container<AudioElement>();
         _audios = new Container<AudioClip>(_AudioPath);
         _mixer = Resources.Load<AudioMixer>(_MixerPath);
@@ -41,16 +38,13 @@ public class AudioManager : MonoBehaviour
     // * ------------ *
     // | - Play SFX - |
     // V ------------ V
-    public AudioElement PlaySFX(string file, audioType type = audioType.SFX_2D)
-    {
+    public AudioElement PlaySFX(string file, audioType type = audioType.SFX_2D) {
         return PlaySFX(file, null, type);
     }
-    public AudioElement PlaySFX(string file, Vector3 position, audioType type = audioType.SFX_3D)
-    {
+    public AudioElement PlaySFX(string file, Vector3 position, audioType type = audioType.SFX_3D) {
         return PlaySFX(file, type).setPosition(position);
     }
-    public AudioElement PlaySFX(string file, Transform parent, audioType type = audioType.SFX_3D)
-    {
+    public AudioElement PlaySFX(string file, Transform parent, audioType type = audioType.SFX_3D) {
         return IPlay(type, _audios.Get(_SFXPath + file), _sfx).setParent(parent).destroyAtEnd();
     }
     // A ------------ A
@@ -58,32 +52,24 @@ public class AudioManager : MonoBehaviour
     // * ------------------ *
     // | - Play Sountrack - |
     // V ------------------ V
-    public void StopAllSoundtracks()
-    {
-        foreach (AudioElement st in _playing.Elements)
-        {
+    public void StopAllSoundtracks() {
+        foreach (AudioElement st in _playing.Elements) {
             st.Stop();
         }
     }
-    public void StopSoundtrack(string file)
-    {
-        if (IsPlayingSoundtarck(file))
-        {
+    public void StopSoundtrack(string file) {
+        if (IsPlayingSoundtarck(file)) {
             _playing.Get(file).Stop();
         }
     }
-    public bool IsPlayingSoundtarck(string file)
-    {
-        if (!_playing.Exists(file))
-        {
+    public bool IsPlayingSoundtarck(string file) {
+        if (!_playing.Exists(file)) {
             return false;
         }
         return _playing.Get(file).Source.isPlaying;
     }
-    public AudioElement PlaySoundtrack(string file)
-    {
-        if (IsPlayingSoundtarck(file))
-        {
+    public AudioElement PlaySoundtrack(string file) {
+        if (IsPlayingSoundtarck(file)) {
             return _playing.Get(file).Reset();
         }
         return _playing.Add(file, IPlay(audioType.SoundTrack, _audios.Get(_SoundtrackPath + file), _soundtrak));
@@ -98,13 +84,11 @@ public class AudioManager : MonoBehaviour
      * @param AudioMixerGroup mixer Grupo del mixer donde se reproducida y controlara volumen y efectos
      * @return AudioElement el objeto creado
      */
-    private AudioElement IPlay(audioType type, AudioClip clip, AudioMixerGroup mixer)
-    {
+    private AudioElement IPlay(audioType type, AudioClip clip, AudioMixerGroup mixer) {
         AudioElement audio = new GameObject(clip.name).AddComponent<AudioElement>();
         audio.Source.clip = clip;
         audio.Source.outputAudioMixerGroup = mixer;
-        switch (type)
-        {
+        switch (type) {
             case audioType.SFX_3D:
                 audio.with3D().rollOfType(AudioRolloffMode.Custom);
                 break;

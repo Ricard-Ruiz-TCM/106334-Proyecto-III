@@ -13,8 +13,7 @@
  * 
  */
 
-public class StateTransition
-{
+public class StateTransition {
 
     /** Delegods: Definición */
     public delegate bool TCD(); // Condition
@@ -26,16 +25,14 @@ public class StateTransition
 
     /** Destiny */
     private BasicState _destiny;
-    public BasicState Next()
-    {
+    public BasicState Next() {
         return _destiny;
     }
 
     /** Contructor
      * @param TCD condition Callback de condicion
      * @param TTD trigger Callback de trigger */
-    public StateTransition(TCD condition, TTD trigger = null)
-    {
+    public StateTransition(TCD condition, TTD trigger = null) {
         _condition = condition;
         _trigger = trigger;
     }
@@ -43,22 +40,19 @@ public class StateTransition
     /** Método SetNext
      * Establece el destiny de la transición
      * @param BasicState destiny */
-    public void SetNext(BasicState destiny)
-    {
+    public void SetNext(BasicState destiny) {
         _destiny = destiny;
     }
 
     /** Método CheckTransition
      * Comprueba si se ha realizado al condición de salida
      * @return bool true -> Se ha cumplido false -> no se ha cumplido */
-    public bool CheckTransition()
-    {
+    public bool CheckTransition() {
         return _condition();
     }
     /** Método OnTrigger
      * Ejecuta el callback de _trigger */
-    public void OnTrigger()
-    {
+    public void OnTrigger() {
         _trigger?.Invoke();
     }
 

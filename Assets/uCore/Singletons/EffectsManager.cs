@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 
-public class EffectsManager : MonoBehaviour
-{
+public class EffectsManager : MonoBehaviour {
 
     [SerializeField, Header("Folder Paths:")]
     private string _EffectsPath = "Effects/";
@@ -18,8 +17,7 @@ public class EffectsManager : MonoBehaviour
     private Container<GameObject> _effects;
 
     // Unity Awake
-    void Awake()
-    {
+    void Awake() {
         //_layer = LayerMask.GetMask(_layerName);
         _effects = new Container<GameObject>(_EffectsPath);
     }
@@ -27,16 +25,13 @@ public class EffectsManager : MonoBehaviour
     // * ---------------- *
     // | - Play Effects - |
     // V ---------------- V
-    public EffectElement PlayEffect(string file)
-    {
+    public EffectElement PlayEffect(string file) {
         return PlayEffect(file, null);
     }
-    public EffectElement PlayEffect(string file, Vector3 position)
-    {
+    public EffectElement PlayEffect(string file, Vector3 position) {
         return PlayEffect(file).setPosition(position);
     }
-    public EffectElement PlayEffect(string file, Transform parent)
-    {
+    public EffectElement PlayEffect(string file, Transform parent) {
         return IEffect(file).setParent(parent);
     }
     // A ---------------- A
@@ -46,8 +41,7 @@ public class EffectsManager : MonoBehaviour
      * @param string file Dirección del prefab
      * @return EffectElement el objeto creado
      */
-    private EffectElement IEffect(string file)
-    {
+    private EffectElement IEffect(string file) {
         return GameObject.Instantiate(_effects.Get(file).gameObject).AddComponent<EffectElement>();
     }
 

@@ -1,8 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class CameraController : MonoBehaviour
-{
+public class CameraController : MonoBehaviour {
     [SerializeField] Animator _animator;
 
     //enter y exit animaciones
@@ -28,8 +27,7 @@ public class CameraController : MonoBehaviour
 
     [SerializeField, Header("Position:")]
     private Vector2 _offset;
-    public void SetOffset(Vector2 offset)
-    {
+    public void SetOffset(Vector2 offset) {
         _offset = offset;
     }
     [SerializeField]
@@ -51,8 +49,7 @@ public class CameraController : MonoBehaviour
 
     bool changeTarget = false;
 
-    private void Start()
-    {
+    private void Start() {
         StartCoroutine(StartAnim());
         xAnterior = 111111;
         xAnterior = 111111;
@@ -61,10 +58,8 @@ public class CameraController : MonoBehaviour
 
 
     // Unity LateUpdate
-    void LateUpdate()
-    {
-        if (changeTarget)
-        {
+    void LateUpdate() {
+        if (changeTarget) {
             Debug.Log("asda");
             _target = turnManager.CurrentTurnActor().transform;
             changeTarget = false;
@@ -73,30 +68,24 @@ public class CameraController : MonoBehaviour
             cameraSpeed = cameraMoveChangeTargetSpeed;
         }
 
-        if (!animating)
-        {
+        if (!animating) {
 
 
-            if (uCore.Action.GetKeyDown(KeyCode.Z))
-            {
+            if (uCore.Action.GetKeyDown(KeyCode.Z)) {
                 StartCoroutine(EndAnim());
             }
-            if (!_target.GetComponent<Actor>().canMove)
-            {
+            if (!_target.GetComponent<Actor>().canMove) {
                 _animator.SetBool("zoom", true);
             }
-            if (_target.GetComponent<Actor>().canMove)
-            {
+            if (_target.GetComponent<Actor>().canMove) {
                 _animator.SetBool("zoom", false);
             }
 
 
 
 
-            if (_target.gameObject.GetComponent<GridMovement>()._canMove)
-            {
-                if (xAnterior != _target.GetComponent<GridMovement>().GetLastNode().x || yAnterior != _target.GetComponent<GridMovement>().GetLastNode().y)
-                {
+            if (_target.gameObject.GetComponent<GridMovement>()._canMove) {
+                if (xAnterior != _target.GetComponent<GridMovement>().GetLastNode().x || yAnterior != _target.GetComponent<GridMovement>().GetLastNode().y) {
                     xAnterior = _target.GetComponent<GridMovement>().GetLastNode().x;
                     yAnterior = _target.GetComponent<GridMovement>().GetLastNode().y;
                     targetPos = new Vector3(_target.GetComponent<GridMovement>().GetLastNode().x - grid.Rows / 2.5f, _target.GetComponent<GridMovement>().GetLastNode().y - grid.Columns / 2.5f);
@@ -104,11 +93,8 @@ public class CameraController : MonoBehaviour
                     cameraSpeed = cameraMoveMovementSpeed;
                 }
 
-            }
-            else
-            {
-                if (uCore.Action.GetKeyDown(KeyCode.U))
-                {
+            } else {
+                if (uCore.Action.GetKeyDown(KeyCode.U)) {
                     targetPos = Vector3.zero;
                     cameraSpeed = cameraMoveChangeTargetSpeed;
                 }
@@ -119,16 +105,14 @@ public class CameraController : MonoBehaviour
 
     }
 
-    IEnumerator StartAnim()
-    {
+    IEnumerator StartAnim() {
         animating = true;
         transform.position = startAnimPos;
         transform.rotation = Quaternion.Euler(startAnimRot);
         yield return new WaitForSeconds(0.5f);
         float timer = 0;
 
-        while (timer < duration)
-        {
+        while (timer < duration) {
             timer += Time.deltaTime;
             float percentageDuration = timer / duration;
             transform.position = Vector3.Lerp(startAnimPos, startAnimFinalPos, percentageDuration);
@@ -140,15 +124,13 @@ public class CameraController : MonoBehaviour
         animating = false;
     }
 
-    IEnumerator EndAnim()
-    {
+    IEnumerator EndAnim() {
         animating = true;
         Vector3 startEndPos = transform.position;
         Vector3 startEndRot = transform.eulerAngles;
         float timer = 0;
 
-        while (timer < duration)
-        {
+        while (timer < duration) {
             timer += Time.deltaTime;
             float percentageDuration = timer / duration;
             transform.position = Vector3.Lerp(startEndPos, finalPos, percentageDuration);
@@ -159,8 +141,7 @@ public class CameraController : MonoBehaviour
         animating = false;
         transform.rotation = Quaternion.Euler(finalRot);
     }
-    public void ChangeTarget()
-    {
+    public void ChangeTarget() {
 
     }
 

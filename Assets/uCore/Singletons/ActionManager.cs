@@ -6,8 +6,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Utilities;
 
 [RequireComponent(typeof(PlayerInput))]
-public class ActionManager : MonoBehaviour
-{
+public class ActionManager : MonoBehaviour {
 
     // Observer para saber caundo se cambia de Scheme a.k.a enchufo/uso el mando eje
     public static event Action<inputScheme> OnChangeInput;
@@ -17,16 +16,13 @@ public class ActionManager : MonoBehaviour
 
     [SerializeField, Header("Current Scheme:")]
     private inputScheme _currentScheme;
-    public inputScheme Scheme()
-    {
+    public inputScheme Scheme() {
         return _currentScheme;
     }
-    public bool GamePad()
-    {
+    public bool GamePad() {
         return (Scheme().Equals(inputScheme.GamePad));
     }
-    public bool Keyboard()
-    {
+    public bool Keyboard() {
         return (Scheme().Equals(inputScheme.Keyboard));
     }
 
@@ -35,20 +31,17 @@ public class ActionManager : MonoBehaviour
 
     // Determine if the input system is ready to use
     private bool _isConfigured = false;
-    public bool isInputConfigured()
-    {
+    public bool isInputConfigured() {
         return _isConfigured;
     }
 
     // Unity OnEnable
-    void OnEnable()
-    {
+    void OnEnable() {
         InputSystem.onAnyButtonPress.CallOnce(OnAnyButtonPress);
     }
 
     // Unity Awake
-    void Awake()
-    {
+    void Awake() {
         _input = GetComponent<PlayerInput>();
         _currentScheme = inputScheme.Keyboard;
         _keyActions = new Dictionary<KeyCode, InputAction>();
@@ -57,8 +50,7 @@ public class ActionManager : MonoBehaviour
     // * ----------------------------------------- *
     // | - Send Mesagges - PlayerInput Component - |
     // V ----------------------------------------- V
-    void OnControlsChanged()
-    {
+    void OnControlsChanged() {
         if (_input.currentControlScheme.Equals("Gamepad"))
             _currentScheme = inputScheme.GamePad;
         if (_input.currentControlScheme.Equals("Keyboard&Mouse"))
@@ -67,14 +59,12 @@ public class ActionManager : MonoBehaviour
     }
 
     public Vector2 mousePosition;
-    void OnDestination(InputValue value)
-    {
+    void OnDestination(InputValue value) {
         mousePosition = value.Get<Vector2>();
     }
 
     public bool mouseLeftButton;
-    IEnumerator OnClick(InputValue value)
-    {
+    IEnumerator OnClick(InputValue value) {
         mouseLeftButton = value.isPressed;
         yield return new WaitForEndOfFrame();
         mouseLeftButton = false;
@@ -85,14 +75,10 @@ public class ActionManager : MonoBehaviour
     /** Método OnAnyButtonPress
      * Se encarga de configurar el input, setenado el esquema
      * Hace el call de InputSystem.onAnyButtonPress */
-    void OnAnyButtonPress(InputControl inputControl)
-    {
-        if (!Enum.TryParse(inputControl.device.description.deviceClass, out _currentScheme))
-        {
+    void OnAnyButtonPress(InputControl inputControl) {
+        if (!Enum.TryParse(inputControl.device.description.deviceClass, out _currentScheme)) {
             Debug.LogWarning("ActionManager -> Device nos supported: " + inputControl.device.description.deviceClass);
-        }
-        else
-        {
+        } else {
             _isConfigured = true;
         }
         OnChangeInput?.Invoke(Scheme());
@@ -101,28 +87,23 @@ public class ActionManager : MonoBehaviour
     // * ------------------------- *
     // | - KeyCodes InputActions - |
     // V ------------------------- V
-    public void AddNewKey(KeyCode key)
-    {
-        if (!_keyActions.ContainsKey(key))
-        {
+    public void AddNewKey(KeyCode key) {
+        if (!_keyActions.ContainsKey(key)) {
             InputAction action = new InputAction("key" + key.ToString(), InputActionType.Button, binding: "<Keyboard>/" + key.ToString().ToLower());
             _keyActions.Add(key, action);
             action.Enable();
         }
     }
     // Key, KeyDown & KeyUp
-    public bool GetKey(KeyCode key)
-    {
+    public bool GetKey(KeyCode key) {
         AddNewKey(key);
         return _keyActions[key].IsPressed();
     }
-    public bool GetKeyDown(KeyCode key)
-    {
+    public bool GetKeyDown(KeyCode key) {
         AddNewKey(key);
         return _keyActions[key].WasPressedThisFrame();
     }
-    public bool GetKeyUp(KeyCode key)
-    {
+    public bool GetKeyUp(KeyCode key) {
         AddNewKey(key);
         return _keyActions[key].WasReleasedThisFrame();
     }

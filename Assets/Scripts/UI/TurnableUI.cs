@@ -8,8 +8,8 @@ class TurnableUI : MonoBehaviour {
     [SerializeField]
     private UIText _text;
 
-    public void SetTurnable(ITurnable turnable) {
-        _text.UpdateText(turnable.actor.gameObject.name);
+    public void SetTurnable(Actor turnable) {
+        _text.UpdateText(turnable.gameObject.name);
     }
 
 }

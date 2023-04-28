@@ -1,8 +1,8 @@
 ﻿using System;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "new OpenUpgradePanel", menuName = "Dialogue/Custom/Open Upgrade Panel")]
-public class OpenUpgradePanel : DialogueTrigger {
+[CreateAssetMenu(fileName = "new OpenUpgradePanel", menuName = "Dialog/Custom/Open Upgrade Panel")]
+public class OpenUpgradePanel : DialogTrigger {
 
     public static event Action openUpgradePanel;
 

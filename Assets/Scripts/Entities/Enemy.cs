@@ -23,7 +23,7 @@ public class Enemy : Actor {
         SubscribeManager();
         BuildSkills();
 
-        if (_weapon._item.Equals(items.Bow)) {
+        if (_weapon.item.Equals(items.Bow)) {
             _combatStyle = enemyCombatStyle.ranged;
         } else {
             _combatStyle = enemyCombatStyle.melee;
@@ -37,7 +37,7 @@ public class Enemy : Actor {
         if (_target != null) {
             if (_weapon != null) {
                 // Weapon Básica, el ataque
-                if (InRange(_target, _weapon._range)) {
+                if (InRange(_target, _weapon.range)) {
                     _target.TakeDamage(Damage());
                 }
             }
@@ -60,8 +60,8 @@ public class Enemy : Actor {
         } else {
             List<Node> route = _gridMovement.CalcRoute(transform.position, targetPlane);
             route.Reverse();
-            if (route.Count > _weapon._range) {
-                destiny = _gridMovement.Builder().GetGridPlane(route[_weapon._range]);
+            if (route.Count > _weapon.range) {
+                destiny = _gridMovement.Builder().GetGridPlane(route[_weapon.range]);
             }
 
         }

@@ -3,13 +3,14 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "new Item", menuName = "Items/Item")]
 public class Item : ScriptableObject {
 
-    public items _item;
-    public Sprite _icon;
+    [Header("Core:")]
+    public items item;
+    public Sprite icon;
 
-    public float _weight;
+    public float weight;
 
     [Header("Localization Keys:")]
-    public string _keyName;
-    public string _keyDescription;
+    public string keyName;
+    public string keyDescription;
 
 }

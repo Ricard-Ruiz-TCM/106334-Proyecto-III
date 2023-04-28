@@ -39,10 +39,10 @@ public class EventScene : MonoBehaviour {
     void Start() {
         switch (uCore.GameManager.RoadEvent) {
             case roadEvent.blacksmith:
-                GameObject.FindAnyObjectByType<DialogueManager>().StartDialogue(uCore.GameManager.BlacksmithNode);
+                GameObject.FindAnyObjectByType<DialogManager>().StartDialog(uCore.GameManager.BlacksmithNode);
                 break;
             case roadEvent.comrade:
-                GameObject.FindAnyObjectByType<DialogueManager>().StartDialogue(uCore.GameManager.ComradeNode);
+                GameObject.FindAnyObjectByType<DialogManager>().StartDialog(uCore.GameManager.ComradeNode);
                 break;
             default: break;
         }
@@ -86,7 +86,7 @@ public class EventScene : MonoBehaviour {
         _shop.SetActive(false);
         _upgrades.SetActive(false);
         _dialogue.SetActive(true);
-        GameObject.FindAnyObjectByType<DialogueManager>().StartDialogue(uCore.GameManager.BlacksmithNode.Next);
+        GameObject.FindAnyObjectByType<DialogManager>().StartDialog(uCore.GameManager.BlacksmithNode.nextNode);
     }
 
     public void BTN_Sure() {

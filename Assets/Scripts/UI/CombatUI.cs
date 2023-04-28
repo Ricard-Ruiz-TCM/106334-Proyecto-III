@@ -32,7 +32,7 @@ public class CombatUI : MonoBehaviour {
         // Set callback para actualizar el panel
         _turnManager.onEndTurn += UpdatePanel;
         // SetButton
-        _btnEndTurn.onClick.AddListener(() => { _turnManager.EndTurn(); });
+        _btnEndTurn.onClick.AddListener(() => { _turnManager.Current().EndTurn(); });
     }
 
     // Unity Update
@@ -46,7 +46,7 @@ public class CombatUI : MonoBehaviour {
 
     private void UpdatePanel() {
 
-        _currentActor = _turnManager.CurrentTurnActor();
+        _currentActor = _turnManager.Current();
 
         _txtName.UpdateText(_currentActor.gameObject.name);
 

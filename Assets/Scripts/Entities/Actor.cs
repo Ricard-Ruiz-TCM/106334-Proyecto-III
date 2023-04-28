@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Actor : MonoBehaviour, ITurnable {
+public abstract class Actor : MonoBehaviour {
 
     // Grid Movement
     protected GridMovement _gridMovement;
@@ -75,7 +75,7 @@ public abstract class Actor : MonoBehaviour, ITurnable {
             AddSkill(skills.Defense);
         }
         if (_weapon != null) {
-            AddSkill(_weapon._skill._skill);
+            AddSkill(_weapon.skill._skill);
         }
         foreach (Perk pk in _perks) {
             if (pk is SkillPerk)
@@ -87,8 +87,8 @@ public abstract class Actor : MonoBehaviour, ITurnable {
         int dmg = 0;
 
         // Get Values
-        Expertise ex = _upgrades.Find(x => x._item.Equals(_weapon._item));
-        dmg += _weapon._damage[(ex != null ? ex._level : 0)];
+        Expertise ex = _upgrades.Find(x => x._item.Equals(_weapon.item));
+        dmg += _weapon.damage[(ex != null ? ex._level : 0)];
 
         // Apply Modifiers
         foreach (Perk pk in _perks) {
@@ -118,8 +118,8 @@ public abstract class Actor : MonoBehaviour, ITurnable {
         int defense = 0;
 
         // Get Values
-        Expertise ex = _upgrades.Find(x => x._item.Equals(_armor._item));
-        defense = _armor._defense[(ex != null ? ex._level : 0)];
+        Expertise ex = _upgrades.Find(x => x._item.Equals(_armor.item));
+        defense = _armor.defense[(ex != null ? ex._level : 0)];
 
         // Apply Modifiers
         foreach (Perk pk in _perks) {
@@ -246,11 +246,11 @@ public abstract class Actor : MonoBehaviour, ITurnable {
 
     /** Métodos para entrar/salir al sistema de turnos */
     protected void SubscribeManager() {
-        FindObjectOfType<TurnManager>().Add(this);
+        FindObjectOfType<TurnManager>().Subscribe(this);
         FindObjectOfType<CombatManager>().Add(this);
     }
     protected void UnSubscribeManger() {
-        FindObjectOfType<TurnManager>().Remove(this);
+        FindObjectOfType<TurnManager>().Unsubscribe(this);
         FindObjectOfType<CombatManager>().Remove(this);
     }
 

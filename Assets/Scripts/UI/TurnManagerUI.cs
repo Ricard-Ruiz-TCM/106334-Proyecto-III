@@ -13,7 +13,7 @@ class TurnManagerUI : MonoBehaviour {
     // Unity Awake
     void Awake() {
         _turnManager = GameObject.FindObjectOfType<TurnManager>();
-        _turnManager.onModifyTurnList += UpdateTurnList;
+        _turnManager.onModifyList += UpdateTurnList;
         _turnManager.onEndTurn += UpdateTurnList;
     }
 
@@ -21,7 +21,7 @@ class TurnManagerUI : MonoBehaviour {
     public void UpdateTurnList() {
         ClearList();
 
-        List<ITurnable> turnables = _turnManager.TurnablesSorted();
+        List<Actor> turnables = _turnManager.Sorted();
         // Instant the bigOne
         if (turnables.Count > 1) {
             InstantiateUI(_bTurnableUI).SetTurnable(turnables[0]);

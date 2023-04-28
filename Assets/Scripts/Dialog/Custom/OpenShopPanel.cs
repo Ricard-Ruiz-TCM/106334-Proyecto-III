@@ -1,8 +1,8 @@
 ﻿using System;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "new OpenShopPanel", menuName = "Dialogue/Custom/Open Shop Panel")]
-public class OpenShopPanel : DialogueTrigger {
+[CreateAssetMenu(fileName = "new OpenShopPanel", menuName = "Dialog/Custom/Open Shop Panel")]
+public class OpenShopPanel : DialogTrigger {
 
     public static event Action openShopPanel;
 

@@ -1,8 +1,8 @@
 ﻿using System;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "new EndRoadEvent", menuName = "Dialogue/Custom/End Road Event")]
-public class EndRoadEvent : DialogueTrigger {
+[CreateAssetMenu(fileName = "new EndRoadEvent", menuName = "Dialog/Custom/End Road Event")]
+public class EndRoadEvent : DialogTrigger {
 
     public static event Action endRoadEvent;
 

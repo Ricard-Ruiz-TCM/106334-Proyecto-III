@@ -1,108 +1,86 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using System.Collections;
 
-public class TurnManager : MonoBehaviour {
+public class TurnManager : ActorsListController {
 
-    // Callback cuando modificando la lista
+    /** Singleton Instance */
+    public static TurnManager instance = null;
+
+    /** Callbacks */
     public Action onEndTurn;
-    public Action onModifyTurnList;
+    public Action onNewRound;
 
-    [SerializeField]
-    private int _index = 0;
-    [SerializeField]
-    private List<ITurnable> _turnables;
+    [SerializeField, Header("Rondas:")]
+    private int _rounds = 0;
+
+    [SerializeField, Header("Turn:")] // ready -> Turno comenzado, "entando" al turno | doing -> Haciendo el turno | done -> Turno acabado, "cambiando" de turno
+    private progress _turnProgress = progress.done;
 
     [SerializeField, Header("Timing:")]
-    private float _delay = 2f;
+    private float _endTurnDelay = 2f;
+    [SerializeField]
+    private float _startTurnDelay = 1f;
 
-    private bool _waiting = false;
-
-    private void Awake() {
-        _turnables = new List<ITurnable>();
-    }
-
-    public void Add(ITurnable element) {
-        if (!Contains(element))
-            _turnables.Add(element);
-
-        if (_turnables.Count == 1) {
-            _turnables[0].BeginTurn();
+    // Unity Awake
+    void Awake() {
+        // Singleton
+        if ((instance != null) && (instance != this)) {
+            GameObject.Destroy(this.gameObject);
+        } else {
+            instance = this;
         }
-
-        onModifyTurnList?.Invoke();
-    }
-
-    public void Remove(ITurnable element) {
-        if (Contains(element))
-            _turnables.Remove(element);
-
-        onModifyTurnList?.Invoke();
-    }
-
-    public Actor CurrentTurnActor() {
-        return _turnables[_index].actor;
     }
 
     // Unity Update
     private void Update() {
-        ITurnable turneable = _turnables[_index];
 
-        // Estamos esperando que el turno cambie
-        if (_waiting)
+        // DelayTime para el efectivo del turno
+        if (_turnProgress.Equals(progress.done) || (_turnProgress.Equals(progress.ready)))
             return;
 
-        // Turno finalizado
-        if (turneable.hasTurnEnded) {
+        // Hemos terminado nuestro turno, go next
+        if (_actors[_current].hasTurnEnded) {
             StartCoroutine(NextTurn());
             return;
         }
 
-        if (turneable.CanMove()) {
-            turneable.Move();
+        // Move Action
+        if (_actors[_current].CanMove()) {
+            _actors[_current].Move();
         }
 
-        if (turneable.CanAct()) {
-            turneable.Act();
+        // Standart Action
+        if (_actors[_current].CanAct()) {
+            _actors[_current].Act();
         }
 
-        if ((turneable.moving.Equals(progress.done)) && (turneable.acting.Equals(progress.done))) {
-            EndTurn();
+        // End Turn Check
+        if ((_actors[_current].moving.Equals(progress.done)) && (_actors[_current].acting.Equals(progress.done))) {
+            _actors[_current].EndTurn();
         }
 
     }
 
-    public void EndTurn() {
-        _turnables[_index].EndTurn();
-    }
-
+    /** Control para el siguiente turno, añade delays y hace callbacks, plus control */
     public IEnumerator NextTurn() {
-        _waiting = true;
-        yield return new WaitForSeconds(_delay);
-        _index++;
-        if (_index >= _turnables.Count)
-            _index = 0;
-        _waiting = false;
+        // Fin de turno
+        _turnProgress = progress.done;
         onEndTurn?.Invoke();
-        _turnables[_index].BeginTurn();
-    }
 
-    private bool Contains(ITurnable element) {
-        return _turnables.Contains(element);
-    }
-
-    /** Método que ordena la lista de turnos por orden */
-    public List<ITurnable> TurnablesSorted() {
-        List<ITurnable> sorted = new List<ITurnable>();
-
-        for (int i = _index; sorted.Count != _turnables.Count; i++) {
-
-            i = i % _turnables.Count;
-            sorted.Add(_turnables[i]);
+        // Cambio de turno
+        yield return new WaitForSeconds(_endTurnDelay);
+        _turnProgress = progress.ready;
+        _current++;
+        if (_current >= _actors.Count) {
+            onNewRound?.Invoke();
+            _current = 0; _rounds++;
         }
 
-        return sorted;
+        // Entrando al turno
+        yield return new WaitForSeconds(_startTurnDelay);
+        _turnProgress = progress.doing;
+        _actors[_current].BeginTurn();
     }
 
 }

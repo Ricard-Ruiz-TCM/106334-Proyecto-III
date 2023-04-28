@@ -13,7 +13,7 @@ public class InventoryUI : MonoBehaviour {
     public void UpdateInventory(Inventory inventory) {
         ClearInventory();
 
-        foreach (InventoryItem iit in inventory.AllItems()) {
+        foreach (InventoryItem iit in inventory.Items) {
             GameObject.Instantiate(_inventoryItemUI, transform).GetComponent<InventoryItemUI>().Set(iit, inventory);
         }
     }

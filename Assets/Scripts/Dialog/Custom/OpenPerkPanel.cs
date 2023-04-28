@@ -1,8 +1,8 @@
 ﻿using System;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "new OpenPerkPanel", menuName = "Dialogue/Custom/Open Perk Panel")]
-public class OpenPerkPanel : DialogueTrigger {
+[CreateAssetMenu(fileName = "new OpenPerkPanel", menuName = "Dialog/Custom/Open Perk Panel")]
+public class OpenPerkPanel : DialogTrigger {
 
     public static event Action openPerkPanel;
 

@@ -10,32 +10,31 @@ public class Inventory {
 
     [SerializeField]
     private List<InventoryItem> _items;
-    public List<InventoryItem> AllItems() {
-        return _items;
-    }
+    public List<InventoryItem> Items => _items;
 
+    /** Constructor */
     public Inventory(params items[] itemsList) {
         _items = new List<InventoryItem>();
-
         foreach (items item in itemsList) {
             _items.Add(new InventoryItem() { item = uCore.GameManager.GetItem(item) });
         }
     }
 
-    public void AddItem(items item, int am = 1) {
-        Item it = uCore.GameManager.GetItem(item);
-        int pos = Find(it);
-        if (pos != -1) {
-            _items[pos].amount += am;
+    /** Añadir un item al inventario o aumenta su cantidad */
+    public void AddItem(items item, int amount = 1) {
+        Item itemData = uCore.GameManager.GetItem(item);
+        if (Contains(item)) {
+            _items[Find(itemData)].amount += amount;
         } else {
-            _items.Add(new InventoryItem() { item = it, amount = am });
+            _items.Add(new InventoryItem() { item = itemData, amount = amount });
         }
         onUpdateInventory?.Invoke(this);
     }
 
+    /** Elimina un item del inventario o disminute su cantidad */
     public void RemoveItem(items item) {
-        int pos = Find(uCore.GameManager.GetItem(item));
-        if (pos != -1) {
+        if (Contains(item)) {
+            int pos = Find(uCore.GameManager.GetItem(item));
             if (_items[pos].amount > 1) {
                 _items[pos].amount--;
             } else {
@@ -45,22 +44,12 @@ public class Inventory {
         }
     }
 
-    public void UseItem(items item) {
-        Item it = uCore.GameManager.GetItem(item);
-        int pos = Find(it);
-        if (pos != -1) {
-            if (it is UsableItem) {
-                ((UsableItem)it).Use();
-                RemoveItem(item);
-                onUpdateInventory?.Invoke(this);
-            }
-        }
-    }
-
+    /** Check si tenemos este item en el iventario */
     public bool Contains(items item) {
         return (Find(uCore.GameManager.GetItem(item)) != -1);
     }
 
+    /** Busca la posición del item | -1 -> no encontrado */
     private int Find(Item item) {
         for (int i = 0; i < _items.Count; i++) {
             if (_items[i].item.Equals(item)) {

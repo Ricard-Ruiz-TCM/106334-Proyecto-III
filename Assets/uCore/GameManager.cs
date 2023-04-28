@@ -23,11 +23,11 @@ public class GameManager : MonoBehaviour {
 
     #region Dialogues
 
-    private DialogueNode _comradeNode;
-    public DialogueNode ComradeNode {
+    private DialogNode _comradeNode;
+    public DialogNode ComradeNode {
         get {
             if (_comradeNode == null)
-                _comradeNode = Resources.Load<DialogueNode>("ScriptableObjects/Dialogue/Comrade/[C, 0] Intro");
+                _comradeNode = Resources.Load<DialogNode>("ScriptableObjects/Dialogue/Comrade/[C, 0] Intro");
 
             return _comradeNode;
         }
@@ -36,11 +36,11 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    private DialogueNode _blacksmithNode;
-    public DialogueNode BlacksmithNode {
+    private DialogNode _blacksmithNode;
+    public DialogNode BlacksmithNode {
         get {
             if (_blacksmithNode == null)
-                _blacksmithNode = Resources.Load<DialogueNode>("ScriptableObjects/Dialogue/Blacksmith/[B, 0] Intro");
+                _blacksmithNode = Resources.Load<DialogNode>("ScriptableObjects/Dialogue/Blacksmith/[B, 0] Intro");
 
             return _blacksmithNode;
         }

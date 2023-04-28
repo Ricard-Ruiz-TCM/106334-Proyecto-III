@@ -8,6 +8,7 @@ public class TurnManager : ActorsListController {
     public static TurnManager instance = null;
 
     /** Callbacks */
+    public Action onStartTurn;
     public Action onEndTurn;
     public Action onNewRound;
 
@@ -33,7 +34,7 @@ public class TurnManager : ActorsListController {
     }
 
     // Unity Update
-    private void Update() {
+    void Update() {
 
         // DelayTime para el efectivo del turno
         if (_turnProgress.Equals(progress.done) || (_turnProgress.Equals(progress.ready)))
@@ -62,8 +63,15 @@ public class TurnManager : ActorsListController {
 
     }
 
+    /** Método para iniciar el sistema desde fuera */
+    public void StartManager() {
+        _turnProgress = progress.ready;
+        _actors[_current].BeginTurn();
+        onStartTurn?.Invoke();
+    }
+
     /** Control para el siguiente turno, añade delays y hace callbacks, plus control */
-    public IEnumerator NextTurn() {
+    private IEnumerator NextTurn() {
         // Fin de turno
         _turnProgress = progress.done;
         onEndTurn?.Invoke();
@@ -79,8 +87,7 @@ public class TurnManager : ActorsListController {
 
         // Entrando al turno
         yield return new WaitForSeconds(_startTurnDelay);
-        _turnProgress = progress.doing;
-        _actors[_current].BeginTurn();
+        StartManager();
     }
 
 }

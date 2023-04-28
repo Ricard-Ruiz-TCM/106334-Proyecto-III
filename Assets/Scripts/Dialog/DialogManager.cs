@@ -33,15 +33,24 @@ public class DialogManager : MonoBehaviour {
         onNextDialog?.Invoke(_current);
     }
 
+    /** Control del siguietne dialogo */
     public void NextDialog() {
         NextDialog(_current.nextNode);
     }
 
+    /** Control del siguietne dialogo, pero especificando cual ;3 */
     public void NextDialog(DialogNode node) {
         onEndDialog?.Invoke();
         // Add to pasts
         _history.Add(_current);
         _current = node;
+
+        // Trigger DialogNode
+        if (_current is DialogTrigger) {
+            ((DialogTrigger)_current).Trigger();
+            NextDialog(_current.nextNode);
+        }
+
         // NextDialog
         onNextDialog?.Invoke(_current);
     }

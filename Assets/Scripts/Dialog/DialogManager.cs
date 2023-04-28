@@ -17,6 +17,13 @@ public class DialogManager : MonoBehaviour {
     [SerializeField]
     private List<DialogNode> _history = new List<DialogNode>();
 
+    /** Special Nodes */
+    private DialogNode _lastOptionsNode;
+    public DialogNode LastOptions() { return _lastOptionsNode; }
+
+    private DialogNode _lastTriggerNode;
+    public DialogNode LastTrigger() { return _lastTriggerNode; }
+
     // Unity Awake
     void Awake() {
         // Singleton
@@ -41,18 +48,24 @@ public class DialogManager : MonoBehaviour {
     /** Control del siguietne dialogo, pero especificando cual ;3 */
     public void NextDialog(DialogNode node) {
         onEndDialog?.Invoke();
-        // Add to pasts
+
         _history.Add(_current);
         _current = node;
 
+        // NextDialog
+        onNextDialog?.Invoke(_current);
+
         // Trigger DialogNode
         if (_current is DialogTrigger) {
+            _lastTriggerNode = _current;
             ((DialogTrigger)_current).Trigger();
             NextDialog(_current.nextNode);
         }
 
-        // NextDialog
-        onNextDialog?.Invoke(_current);
+        // Options DialogNode
+        if (_current.options.Count != 0) {
+            _lastOptionsNode = _current;
+        }
     }
 
 }

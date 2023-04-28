@@ -2,12 +2,11 @@
 
 public abstract class Perk : ScriptableObject {
 
-    public perks _perk;
-    public perkCategory _category;
-    public perkModification _modificationType;
+    public perks perk;
+    public perkCategory category;
+    public perkModification modificationType;
 
     [Header("Dependency:")]
-    public perks _dependency;
-
+    public perks dependency;
 
 }

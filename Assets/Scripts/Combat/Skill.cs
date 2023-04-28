@@ -2,21 +2,21 @@ using UnityEngine;
 
 public abstract class Skill : ScriptableObject {
 
-    public Sprite _icon;
+    public Sprite icon;
 
     [Header("Localization Keys:")]
-    public string _keyName;
-    public string _keyDescription;
+    public string keyName;
+    public string keyDesc;
 
     [Header("Skill:")]
-    public skills _skill;
-    public int _cooldown;
+    public skills skill;
+    public int cooldown;
 
-    public int _range;
+    public int range;
 
     [Header("Stats Modifiers:")]
-    public int _damageMod;
-    public int _defenseMod;
+    public int damageMod;
+    public int defenseMod;
 
     public abstract void Special(Actor from);
 

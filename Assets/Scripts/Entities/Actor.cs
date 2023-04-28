@@ -75,11 +75,11 @@ public abstract class Actor : MonoBehaviour {
             AddSkill(skills.Defense);
         }
         if (_weapon != null) {
-            AddSkill(_weapon.skill._skill);
+            AddSkill(_weapon.skill.skill);
         }
         foreach (Perk pk in _perks) {
             if (pk is SkillPerk)
-                AddSkill(((SkillPerk)pk)._skill._skill);
+                AddSkill(((SkillPerk)pk)._skill.skill);
         }
     }
 
@@ -87,14 +87,14 @@ public abstract class Actor : MonoBehaviour {
         int dmg = 0;
 
         // Get Values
-        Expertise ex = _upgrades.Find(x => x._item.Equals(_weapon.item));
-        dmg += _weapon.damage[(ex != null ? ex._level : 0)];
+        Expertise ex = _upgrades.Find(x => x.item.Equals(_weapon.item));
+        dmg += _weapon.damage[(ex != null ? ex.level : 0)];
 
         // Apply Modifiers
         foreach (Perk pk in _perks) {
             if (pk is ModPerk) {
-                if (pk._modificationType.Equals(perkModification.damage)) {
-                    dmg += ((ModPerk)pk)._modifier;
+                if (pk.modificationType.Equals(perkModification.damage)) {
+                    dmg += ((ModPerk)pk).modifier;
                 }
             }
         }
@@ -118,14 +118,14 @@ public abstract class Actor : MonoBehaviour {
         int defense = 0;
 
         // Get Values
-        Expertise ex = _upgrades.Find(x => x._item.Equals(_armor.item));
-        defense = _armor.defense[(ex != null ? ex._level : 0)];
+        Expertise ex = _upgrades.Find(x => x.item.Equals(_armor.item));
+        defense = _armor.defense[(ex != null ? ex.level : 0)];
 
         // Apply Modifiers
         foreach (Perk pk in _perks) {
             if (pk is ModPerk) {
-                if (pk._modificationType.Equals(perkModification.armor)) {
-                    defense += ((ModPerk)pk)._modifier;
+                if (pk.modificationType.Equals(perkModification.armor)) {
+                    defense += ((ModPerk)pk).modifier;
                 }
             }
         }
@@ -163,7 +163,7 @@ public abstract class Actor : MonoBehaviour {
     }
     public bool HavePerk(perks perk) {
         foreach (Perk pks in _perks) {
-            if (pks._perk.Equals(perk))
+            if (pks.perk.Equals(perk))
                 return true;
         }
         return false;
@@ -173,13 +173,13 @@ public abstract class Actor : MonoBehaviour {
         bool already = false;
 
         foreach (SkillItem skillItem in _skills) {
-            if (skillItem.skill._skill.Equals(skill))
+            if (skillItem.skill.skill.Equals(skill))
                 already = true;
         }
 
         if (!already) {
             Skill sk = uCore.GameManager.GetSkill(skill);
-            _skills.Add(new SkillItem() { skill = sk, cooldown = sk._cooldown }); ;
+            _skills.Add(new SkillItem() { skill = sk, cooldown = sk.cooldown }); ;
         }
     }
     public void RemoveSkill(skills skill) {
@@ -198,10 +198,10 @@ public abstract class Actor : MonoBehaviour {
     }
     public void UseSkill(skills skill) {
         foreach (SkillItem skillItem in _skills) {
-            if (skillItem.skill._skill.Equals(skill)) {
+            if (skillItem.skill.skill.Equals(skill)) {
                 if (skillItem.cooldown <= 0) {
                     skillItem.skill.Special(this);
-                    skillItem.cooldown = skillItem.skill._cooldown;
+                    skillItem.cooldown = skillItem.skill.cooldown;
                 }
             }
         }
@@ -215,7 +215,7 @@ public abstract class Actor : MonoBehaviour {
     }
     public bool HaveSkill(skills skill) {
         foreach (SkillItem skillItem in _skills) {
-            if (skillItem.skill._skill.Equals(skill))
+            if (skillItem.skill.skill.Equals(skill))
                 return true;
         }
         return false;

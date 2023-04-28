@@ -5,7 +5,7 @@ public class Cleave : Skill {
 
     public override void Special(Actor from) 
     {
-        FindObjectOfType<CombatManager>().GolpeDemoledor(from, _range,_skill);
+        FindObjectOfType<CombatManager>().GolpeDemoledor(from, range,skill);
         Debug.Log("Cleave special attack");
     }
 

@@ -3,8 +3,9 @@ using UnityEngine;
 
 [Serializable]
 public class Expertise {
-    public items _item;
+    public items item;
 
     [Range(0, 2)]
-    public int _level;
+    public int level;
+
 }

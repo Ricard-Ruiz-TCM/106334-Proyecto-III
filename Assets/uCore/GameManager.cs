@@ -21,6 +21,8 @@ public class GameManager : MonoBehaviour {
     // Evento que nos ofrece el road entre stages
     public roadEvent RoadEvent;
 
+    public List<GameObject> _players;
+
     #region Dialogues
 
     private DialogNode _comradeNode;

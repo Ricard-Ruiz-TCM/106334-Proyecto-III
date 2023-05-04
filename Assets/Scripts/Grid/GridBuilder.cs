@@ -4,6 +4,7 @@ using UnityEngine;
 [RequireComponent(typeof(Grid2D))]
 public class GridBuilder : MonoBehaviour {
 
+    [HideInInspector]
     public Grid2D _grid;
     private GridPlane[,] _planeMap;
 

@@ -136,11 +136,37 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    public Perk GetSkill(perks name) {
+    public Perk GetPerk(perks name) {
         if (_perks == null) {
             LoadPerkData();
         }
         return _perks[name];
+    }
+
+    #endregion
+
+    #region Status
+
+    private Dictionary<aStatus, Status> _status;
+
+    public void LoadStatusData() {
+        _status = new Dictionary<aStatus, Status>();
+        Status[] allStatus = Resources.LoadAll<Status>("ScriptableObjects/Status");
+        foreach (Status astatus in allStatus) {
+            aStatus sts;
+            if (Enum.TryParse(astatus.name, out sts)) {
+                _status.Add(sts, astatus);
+            } else {
+                Debug.LogWarning("Missmatch de nombre con el SO y el Enum en: " + astatus.name);
+            }
+        }
+    }
+
+    public Status GetStatus(aStatus name) {
+        if (_status == null) {
+            LoadPerkData();
+        }
+        return _status[name];
     }
 
     #endregion

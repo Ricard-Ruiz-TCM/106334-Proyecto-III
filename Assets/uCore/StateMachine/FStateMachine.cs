@@ -24,7 +24,7 @@ public class FStateMachine : MonoBehaviour {
 
     /** State Core */
     [Header("Status & Security:")]
-    public status Status;
+    public state Status;
     public fsmSecurity Security;
 
     /** Relevant BasicStates */
@@ -110,7 +110,7 @@ public class FStateMachine : MonoBehaviour {
      * Actualiza la maquina, hacinedo el OnState de los estados
      * Comprueba las transiciones y ejecuta todo el tinglao */
     public void UpdateMachine() {
-        if (Status.Equals(status.Inactive)) {
+        if (Status.Equals(state.Inactive)) {
             return;
         }
         foreach (StateTransition t in CurrentState.Transitions) {
@@ -119,7 +119,7 @@ public class FStateMachine : MonoBehaviour {
                 return;
             }
         }
-        if (CurrentState.Status.Equals(status.Active)) {
+        if (CurrentState.Status.Equals(state.Active)) {
             CurrentState.ActiveTime();
             CurrentState.OnState();
         } else {

@@ -35,7 +35,7 @@ public class ActorsListController : MonoBehaviour {
     }
 
     /** Método que ordena la lista tomando _current como inicio */
-    public List<Actor> Sorted() {
+    public List<Actor> SortedByIndex() {
         List<Actor> sorted = new List<Actor>();
         for (int i = _current; sorted.Count != _actors.Count; i++) {
             i %= _actors.Count;

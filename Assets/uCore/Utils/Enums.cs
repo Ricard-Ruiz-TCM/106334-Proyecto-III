@@ -5,7 +5,7 @@ public enum gameScenes {
 }
 
 // Enum "básico" para determinar el estado de algo
-public enum status {
+public enum state {
     Active, Inactive
 }
 
@@ -52,7 +52,7 @@ public enum items {
     NONE,
 
     // Weapons
-    Gladius, Hasta, Bow, Catapult, ShadowDagger, Claymore,
+    Gladius, Hasta, Bow, Catapult, Pugio, Dolabra,
     // Armors
     Segmentata, Hamata, Squamata, CatapultCoating,
     // Shields
@@ -97,4 +97,9 @@ public enum perkCategory {
 // Tipo de combate del enemigo
 public enum enemyCombatStyle {
     ranged, melee
+}
+
+// Tipo de estados
+public enum aStatus {
+    Stunned, Bleed, Poisoned, Invisible
 }

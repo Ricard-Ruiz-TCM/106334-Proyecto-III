@@ -78,6 +78,11 @@ public class TurnManager : ActorsListController {
         }
     }
 
+    /** Método para ordenar la lista según el valor de Movimiento de los actores */
+    public void sort() {
+        
+    }
+
     /** Método para indicar si estoy en la ronda de posicionamiento */
     public bool isPositioningRound() {
         return _roundType.Equals(rounds.positioningRound);
@@ -97,7 +102,7 @@ public class TurnManager : ActorsListController {
     }
 
     /** Método para indicar que se acabo el combate dentro del stage */
-    public void combatEnds() {
+    public void stageEnds() {
         _roundType = rounds.endRound;
     }
 

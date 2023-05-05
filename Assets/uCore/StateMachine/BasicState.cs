@@ -22,7 +22,7 @@ public abstract class BasicState : MonoBehaviour, IState {
         get; set;
     }
     [HideInInspector]
-    public status Status {
+    public state Status {
         get; set;
     }
     [HideInInspector]

@@ -15,7 +15,7 @@ public interface IState {
     public string Name {
         get; set;
     }
-    public status Status {
+    public state Status {
         get; set;
     }
     public FStateMachine StateMachine {

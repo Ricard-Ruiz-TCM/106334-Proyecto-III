@@ -18,7 +18,7 @@ class TurnManagerUI : MonoBehaviour {
     public void UpdateTurnList() {
         ClearList();
 
-        List<Actor> turnables = TurnManager.instance.Sorted();
+        List<Actor> turnables = TurnManager.instance.SortedByIndex();
         // Instant the bigOne
         if (turnables.Count > 1) {
             InstantiateUI(_bTurnableUI).SetTurnable(turnables[0]);

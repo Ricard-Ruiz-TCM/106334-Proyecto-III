@@ -22,8 +22,6 @@ public class Stage : MonoBehaviour {
         foreach (GameObject a in _enemies) {
             GameObject.Instantiate(a);
         }
-
-        TurnManager.instance.startManager();
     }
 
 }

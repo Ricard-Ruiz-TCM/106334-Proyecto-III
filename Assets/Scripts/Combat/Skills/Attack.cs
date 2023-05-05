@@ -4,7 +4,7 @@
 public class Attack : Skill {
 
     public override void Special(Actor from) {
-        FindObjectOfType<CombatManager>().Attack(from, range,skill);
+        FindObjectOfType<CombatManager>().Attack(from, duration,skill);
 
     }
 

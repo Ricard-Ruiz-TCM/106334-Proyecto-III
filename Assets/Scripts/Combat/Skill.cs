@@ -12,11 +12,7 @@ public abstract class Skill : ScriptableObject {
     public skills skill;
     public int cooldown;
 
-    public int range;
-
-    [Header("Stats Modifiers:")]
-    public int damageMod;
-    public int defenseMod;
+    public int duration;
 
     public abstract void Special(Actor from);
 

@@ -52,11 +52,11 @@ public enum items {
     NONE,
 
     // Weapons
-    Gladius, Hasta, Bow,
+    Gladius, Hasta, Bow, Catapult, ShadowDagger, Claymore,
     // Armors
-    Scutum, Segmentata, Hamata, Squamata,
-    // Resoruces and Quests/Books
-    Gold, Leather, Thread, Metal, Wood,
+    Segmentata, Hamata, Squamata, CatapultCoating,
+    // Shields
+    Scutum,
 
     MAX
 }
@@ -65,7 +65,7 @@ public enum items {
 public enum skills {
     NONE,
 
-    ArrowRain, Attack, Cleave, Defense, DoubleLunge, MoralizingShout, Vanish,
+    ArrowRain, Attack, Defense, DemolishingBlow, Disarm, DoubleLunge, MoralizingShout, TurtleShield, Vanish,
 
     MAX
 }
@@ -74,7 +74,7 @@ public enum skills {
 public enum perks {
     NONE,
 
-    PerkSkillVanish, PerkWeaponDamage,
+    PerkDisarmSkill, PerkTurtleShieldSkill, PerkEmpireRage, PerkCementSkin,
 
     MAX
 }
@@ -86,7 +86,7 @@ public enum roadEvent {
 
 // Tipo de modificación que da una perk
 public enum perkModification {
-    damage, armor, health, skill
+    damage, defense, health, skill
 }
 
 // Tipo de perk

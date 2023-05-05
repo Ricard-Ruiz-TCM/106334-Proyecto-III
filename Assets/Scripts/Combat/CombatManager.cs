@@ -232,9 +232,6 @@ public class CombatManager : MonoBehaviour {
                     case skills.DoubleLunge:
                         _actors[i].TakeDamage(from.Damage() * 2);
                         break;
-                    case skills.Cleave:
-                        _actors[i].Stun();
-                        break;
                 }
 
 

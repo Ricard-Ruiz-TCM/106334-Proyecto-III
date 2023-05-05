@@ -90,7 +90,7 @@ public abstract class Actor : MonoBehaviour {
         foreach (Perk pk in _perks) {
             if (pk is ModPerk) {
                 if (pk.modificationType.Equals(perkModification.damage)) {
-                    dmg += ((ModPerk)pk).modifier;
+                    dmg += (int)((ModPerk)pk).modifier;
                 }
             }
         }
@@ -119,8 +119,8 @@ public abstract class Actor : MonoBehaviour {
         // Apply Modifiers
         foreach (Perk pk in _perks) {
             if (pk is ModPerk) {
-                if (pk.modificationType.Equals(perkModification.armor)) {
-                    defense += ((ModPerk)pk).modifier;
+                if (pk.modificationType.Equals(perkModification.defense)) {
+                    defense += (int)((ModPerk)pk).modifier;
                 }
             }
         }
@@ -150,15 +150,15 @@ public abstract class Actor : MonoBehaviour {
         }
     }
 
-    public void AddPerk(perks perk) {
+    public void AddPerk(Perk perk) {
 
     }
-    public void RemovePerk(perks perk) {
+    public void RemovePerk(Perk perk) {
 
     }
-    public bool HavePerk(perks perk) {
+    public bool HavePerk(Perk perk) {
         foreach (Perk pks in _perks) {
-            if (pks.perk.Equals(perk))
+            if (pks.Equals(perk))
                 return true;
         }
         return false;

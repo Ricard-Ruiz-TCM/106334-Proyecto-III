@@ -4,7 +4,9 @@
 public class ArmorItem : Item {
 
     [Header("Armor Stats:")]
-    public int health;
     public int[] defense;
+    public int movement;
+    public items toughness;
+    public items weakness;
 
 }

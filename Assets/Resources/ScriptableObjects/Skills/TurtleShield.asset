@@ -9,10 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d4ed4190663ab545aa96e586dba3dac, type: 3}
-  m_Name: Gold
+  m_Script: {fileID: 11500000, guid: 84671552f87f96c418a5420d60daf7bf, type: 3}
+  m_Name: TurtleShield
   m_EditorClassIdentifier: 
-  _item: 8
-  _icon: {fileID: -593869560, guid: 692efb561ed53554a83352ca5872ecc2, type: 3}
-  _keyName: ITEM.GOLD.NAME
-  _keyDescription: ITEM.GOLD.DESC
+  icon: {fileID: 0}
+  keyName: SKILL.TURTLE_SHIELD.NAME
+  keyDesc: SKILL.TURTLE_SHIELD.DESC
+  skill: 8
+  cooldown: 3
+  duration: 1

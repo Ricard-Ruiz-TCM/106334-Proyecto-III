@@ -21,13 +21,14 @@ public class Enemy : Actor {
     // Unity Start
     void Start() {
         SubscribeManager();
-        BuildSkills();
+        /**BuildSkills();
 
         if (_weapon.item.Equals(items.Bow)) {
             _combatStyle = enemyCombatStyle.ranged;
         } else {
             _combatStyle = enemyCombatStyle.melee;
-        }
+        }*/
+
     }
 
     public override bool CanAct() { return acting.Equals(progress.ready) && moving.Equals(progress.done); }

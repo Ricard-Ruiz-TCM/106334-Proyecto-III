@@ -39,6 +39,14 @@ public enum progress {
     ready, doing, done
 }
 
+// GAME ENUMS
+
+
+// Tipos y esatdos del sistema de turnos
+public enum rounds {
+    waitingRound, positioningRound, combatRound, endRound
+}
+
 // Todos los items del juego
 public enum items {
     NONE,

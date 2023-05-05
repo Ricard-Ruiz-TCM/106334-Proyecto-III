@@ -45,22 +45,20 @@ public class CameraController : MonoBehaviour {
 
     float xAnterior, yAnterior;
 
-    [SerializeField] TurnManager turnManager;
-
     bool changeTarget = false;
 
     private void Start() {
         StartCoroutine(StartAnim());
         xAnterior = 111111;
         xAnterior = 111111;
-        turnManager.onEndTurn += () => { changeTarget = true; };
+        TurnManager.instance.onEndTurn += () => { changeTarget = true; };
     }
 
 
     // Unity LateUpdate
     void LateUpdate() {
         if (changeTarget) {
-            _target = turnManager.Current().transform;
+            _target = TurnManager.instance.Current().transform;
             changeTarget = false;
             targetPos = new Vector3(Mathf.RoundToInt(_target.position.x / 10) - grid.Rows / 2.5f, Mathf.RoundToInt(_target.position.z / 10) - grid.Columns / 2.5f);
             targetPos *= 3;

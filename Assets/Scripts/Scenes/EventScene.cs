@@ -20,8 +20,6 @@ public class EventScene : MonoBehaviour {
     // Unity OnEnable
     private void OnEnable() {
         OpenPerkPanel.openPerkPanel += PerkPanel;
-        OpenShopPanel.openShopPanel += ShopPanel;
-        OpenUpgradePanel.openUpgradePanel += UpgradePanel;
 
         EndRoadEvent.endRoadEvent += EndEvent;
     }
@@ -29,8 +27,6 @@ public class EventScene : MonoBehaviour {
     // Unity OnDisable
     private void OnDisable() {
         OpenPerkPanel.openPerkPanel -= PerkPanel;
-        OpenShopPanel.openShopPanel -= ShopPanel;
-        OpenUpgradePanel.openUpgradePanel -= UpgradePanel;
 
         EndRoadEvent.endRoadEvent -= EndEvent;
     }
@@ -51,18 +47,6 @@ public class EventScene : MonoBehaviour {
     private void PerkPanel() {
         HideDialogue();
         _comrade.SetActive(true);
-    }
-
-    private void ShopPanel() {
-        HideDialogue();
-        _blacksmith.SetActive(true);
-        _shop.SetActive(true);
-    }
-
-    private void UpgradePanel() {
-        HideDialogue();
-        _blacksmith.SetActive(true);
-        _upgrades.SetActive(true);
     }
 
     private void HideDialogue() {

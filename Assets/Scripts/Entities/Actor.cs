@@ -30,9 +30,6 @@ public abstract class Actor : MonoBehaviour {
     protected ArmorItem _shield;
     public ArmorItem Shield() { return _shield; }
 
-    [SerializeField]
-    protected List<Expertise> _upgrades;
-
     [SerializeField, Header("Inventory:")]
     protected Inventory _inventory;
 
@@ -87,8 +84,7 @@ public abstract class Actor : MonoBehaviour {
         int dmg = 0;
 
         // Get Values
-        Expertise ex = _upgrades.Find(x => x.item.Equals(_weapon.item));
-        dmg += _weapon.damage[(ex != null ? ex.level : 0)];
+        dmg += _weapon.damage[0];
 
         // Apply Modifiers
         foreach (Perk pk in _perks) {
@@ -118,8 +114,7 @@ public abstract class Actor : MonoBehaviour {
         int defense = 0;
 
         // Get Values
-        Expertise ex = _upgrades.Find(x => x.item.Equals(_armor.item));
-        defense = _armor.defense[(ex != null ? ex.level : 0)];
+        defense = _armor.defense[0];
 
         // Apply Modifiers
         foreach (Perk pk in _perks) {
@@ -246,12 +241,12 @@ public abstract class Actor : MonoBehaviour {
 
     /** Métodos para entrar/salir al sistema de turnos */
     protected void SubscribeManager() {
-        FindObjectOfType<TurnManager>().Subscribe(this);
-        FindObjectOfType<CombatManager>().Add(this);
+        TurnManager.instance.Subscribe(this);
+        CombatManager.instance.Subscribe(this);
     }
     protected void UnSubscribeManger() {
-        FindObjectOfType<TurnManager>().Unsubscribe(this);
-        FindObjectOfType<CombatManager>().Remove(this);
+        TurnManager.instance.Unsubscribe(this);
+        CombatManager.instance.Unsubscribe(this);
     }
 
     /** Métodos de control del turno **/

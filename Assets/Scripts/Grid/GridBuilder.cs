@@ -4,6 +4,7 @@ using UnityEngine;
 [RequireComponent(typeof(Grid2D))]
 public class GridBuilder : MonoBehaviour {
 
+    [HideInInspector]
     public Grid2D _grid;
     private GridPlane[,] _planeMap;
 
@@ -26,7 +27,7 @@ public class GridBuilder : MonoBehaviour {
     void Awake() {
         _grid = GetComponent<Grid2D>();
         _planeMap = new GridPlane[_grid.Rows, _grid.Columns];
-        FindObjectOfType<TurnManager>().onEndTurn += ClearGrid;
+        TurnManager.instance.onEndTurn += ClearGrid;
     }
 
     // Unity Start

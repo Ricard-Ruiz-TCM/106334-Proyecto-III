@@ -6,15 +6,15 @@ public class Stage : MonoBehaviour {
     public int _difficulty;
     public List<GameObject> _enemies;
 
-    private Grid2D _grid;
-
     public static Grid2D StageGrid = null;
+    public static GridBuilder StageBuilder = null;
+    public static GridManager StageManager = null;
 
     // Unity Awake
     void Awake() {
-        _grid = transform.GetComponentInChildren<Grid2D>();
-
-        Stage.StageGrid = _grid;
+        Stage.StageGrid = transform.GetComponentInChildren<Grid2D>();
+        Stage.StageBuilder = transform.GetComponentInChildren<GridBuilder>();
+        Stage.StageManager = transform.GetComponentInChildren<GridManager>();
     }
 
     // Unity StartStart
@@ -22,6 +22,8 @@ public class Stage : MonoBehaviour {
         foreach (GameObject a in _enemies) {
             GameObject.Instantiate(a);
         }
+
+        TurnManager.instance.startManager();
     }
 
 }

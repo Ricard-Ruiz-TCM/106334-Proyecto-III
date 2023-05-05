@@ -8,20 +8,17 @@ class TurnManagerUI : MonoBehaviour {
     [SerializeField]
     private GameObject _sTurnableUI;
 
-    private TurnManager _turnManager;
-
-    // Unity Awake
-    void Awake() {
-        _turnManager = GameObject.FindObjectOfType<TurnManager>();
-        _turnManager.onModifyList += UpdateTurnList;
-        _turnManager.onEndTurn += UpdateTurnList;
+    // Unity Start
+    void Start() {
+        TurnManager.instance.onModifyList += UpdateTurnList;
+        TurnManager.instance.onEndTurn += UpdateTurnList;
     }
 
     /** Añade los elementos a los turnos */
     public void UpdateTurnList() {
         ClearList();
 
-        List<Actor> turnables = _turnManager.Sorted();
+        List<Actor> turnables = TurnManager.instance.Sorted();
         // Instant the bigOne
         if (turnables.Count > 1) {
             InstantiateUI(_bTurnableUI).SetTurnable(turnables[0]);
@@ -40,6 +37,10 @@ class TurnManagerUI : MonoBehaviour {
         foreach (Transform child in transform) {
             Destroy(child.gameObject);
         }
+    }
+
+    public void BTN_EndPositioning() {
+        TurnManager.instance.positioningDone();
     }
 
 }

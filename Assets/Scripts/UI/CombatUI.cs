@@ -22,21 +22,16 @@ public class CombatUI : MonoBehaviour {
     [SerializeField]
     private GameObject _skillButtonUI;
 
-    private TurnManager _turnManager;
-
     private Actor _currentActor;
-
-    // Unity Awake
-    void Awake() {
-        _turnManager = GameObject.FindObjectOfType<TurnManager>();
-        // Set callback para actualizar el panel
-        _turnManager.onEndTurn += UpdatePanel;
-        // SetButton
-        _btnEndTurn.onClick.AddListener(() => { _turnManager.Current().EndTurn(); });
-    }
 
     // Unity Update
     void Update() {
+
+        // Set callback para actualizar el panel
+        TurnManager.instance.onEndTurn += UpdatePanel;
+        // SetButton
+        _btnEndTurn.onClick.AddListener(() => { TurnManager.instance.Current().EndTurn(); });
+
         if (_currentActor is Player) {
             _txtMovement.UpdateText(_currentActor.Movement());
             _txtHealth.UpdateText(_currentActor.Health());
@@ -46,7 +41,7 @@ public class CombatUI : MonoBehaviour {
 
     private void UpdatePanel() {
 
-        _currentActor = _turnManager.Current();
+        _currentActor = TurnManager.instance.Current();
 
         _txtName.UpdateText(_currentActor.gameObject.name);
 

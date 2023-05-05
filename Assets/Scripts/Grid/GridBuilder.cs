@@ -27,7 +27,7 @@ public class GridBuilder : MonoBehaviour {
     void Awake() {
         _grid = GetComponent<Grid2D>();
         _planeMap = new GridPlane[_grid.Rows, _grid.Columns];
-        FindObjectOfType<TurnManager>().onEndTurn += ClearGrid;
+        TurnManager.instance.onEndTurn += ClearGrid;
     }
 
     // Unity Start

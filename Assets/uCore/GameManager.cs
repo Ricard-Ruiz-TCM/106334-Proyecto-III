@@ -1,4 +1,4 @@
-using System;
+    using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -21,7 +21,21 @@ public class GameManager : MonoBehaviour {
     // Evento que nos ofrece el road entre stages
     public roadEvent RoadEvent;
 
-    public List<GameObject> _players;
+    #region Progress
+
+    private int _stagePro = 0;
+
+    /** Método para comprobar el progreso del juego */
+    public int StageProgress() {
+        return _stagePro;
+    }
+
+    /** Método para incrementar el progreso del juego */
+    public void IncStagePro() {
+        _stagePro++;
+    }
+
+    #endregion
 
     #region Dialogues
 
@@ -127,6 +141,20 @@ public class GameManager : MonoBehaviour {
             LoadPerkData();
         }
         return _perks[name];
+    }
+
+    #endregion
+
+    #region GameData
+
+    /** LOAD */
+    public void LoadGameData() {
+    
+    }
+
+    /** SAVE */
+    public void SaveGameDat() {
+        
     }
 
     #endregion

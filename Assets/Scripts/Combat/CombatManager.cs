@@ -3,12 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CombatManager : MonoBehaviour {
+
+    public static CombatManager instance = null;
+
     GridMovement _gridMovement;
     [SerializeField] LayerMask layerActor;
     [SerializeField] Material shootMat;
     private List<Actor> _actors;
 
     private void Awake() {
+
+        // Singleton
+        if ((instance != null) && (instance != this)) {
+            GameObject.Destroy(this.gameObject);
+        } else {
+            instance = this;
+        }
+
         _actors = new List<Actor>();
         _gridMovement = GameObject.FindObjectOfType<GridMovement>();
     }
@@ -26,12 +37,12 @@ public class CombatManager : MonoBehaviour {
 
     }
     //añadir o remover actores de una lista (lo hacemos para controlar en que posicion se encuentran los actores y aplicarle efectos)
-    public void Add(Actor element) {
+    public void Subscribe(Actor element) {
         if (!Contains(element))
             _actors.Add(element);
 
     }
-    public void Remove(Actor element) {
+    public void Unsubscribe(Actor element) {
         if (Contains(element))
             _actors.Remove(element);
 

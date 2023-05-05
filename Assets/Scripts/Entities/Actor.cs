@@ -241,12 +241,12 @@ public abstract class Actor : MonoBehaviour {
 
     /** Métodos para entrar/salir al sistema de turnos */
     protected void SubscribeManager() {
-        FindObjectOfType<TurnManager>().Subscribe(this);
-        FindObjectOfType<CombatManager>().Add(this);
+        TurnManager.instance.Subscribe(this);
+        CombatManager.instance.Subscribe(this);
     }
     protected void UnSubscribeManger() {
-        FindObjectOfType<TurnManager>().Unsubscribe(this);
-        FindObjectOfType<CombatManager>().Remove(this);
+        TurnManager.instance.Unsubscribe(this);
+        CombatManager.instance.Unsubscribe(this);
     }
 
     /** Métodos de control del turno **/

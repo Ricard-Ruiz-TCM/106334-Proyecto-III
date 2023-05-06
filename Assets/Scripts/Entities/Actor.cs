@@ -45,6 +45,9 @@ public abstract class Actor : MonoBehaviour, ITurnable {
     [SerializeField, Header("CanMove:")]
     public bool canMove = true;
 
+    [SerializeField, Header("CanInteract:")]
+    public bool canInteract = true;
+
     [SerializeField, Header("Invisible:")]
     protected bool isInvisible = false;
     public bool IsInvisible() { return isInvisible; }

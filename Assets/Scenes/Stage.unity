@@ -840,6 +840,7 @@ MonoBehaviour:
   _perks: []
   _skills: []
   canMove: 1
+  canInteract: 0
   isInvisible: 0
   _isStuned: 0
   materialInvisible: {fileID: 0}
@@ -3210,6 +3211,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 116379410}
     m_Modifications:
+    - target: {fileID: 4774432277719934896, guid: 152e37b7179d1e14e8d945751140f07d,
+        type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4774432277719934898, guid: 152e37b7179d1e14e8d945751140f07d,
+        type: 3}
+      propertyPath: _text
+      value: 
+      objectReference: {fileID: 1902638937}
+    - target: {fileID: 4774432277719934898, guid: 152e37b7179d1e14e8d945751140f07d,
+        type: 3}
+      propertyPath: _actor
+      value: 
+      objectReference: {fileID: 116379415}
     - target: {fileID: 4774432277719934901, guid: 152e37b7179d1e14e8d945751140f07d,
         type: 3}
       propertyPath: m_Name
@@ -5716,7 +5732,7 @@ MonoBehaviour:
   _weapon: {fileID: 11400000, guid: 166a475cd6f81744a82dab3d373c4626, type: 2}
   _shield: {fileID: 0}
   _upgrades:
-  - _item: 1
+  - _item: 0
     _level: 0
   _inventory:
     _items:
@@ -5735,9 +5751,10 @@ MonoBehaviour:
   - skill: {fileID: 11400000, guid: c35c4c186ba7f3e41835ec53ff181ffe, type: 2}
     cooldown: 0
   canMove: 1
+  canInteract: 1
   isInvisible: 0
   _isStuned: 0
-  materialInvisible: {fileID: 0}
+  materialInvisible: {fileID: 2100000, guid: b174949cb3e795940b60006a57eca13e, type: 2}
 --- !u!195 &1049018095
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -7116,6 +7133,7 @@ MonoBehaviour:
   _perks: []
   _skills: []
   canMove: 1
+  canInteract: 0
   isInvisible: 0
   _isStuned: 0
   materialInvisible: {fileID: 0}
@@ -9883,6 +9901,7 @@ MonoBehaviour:
   _perks: []
   _skills: []
   canMove: 1
+  canInteract: 0
   isInvisible: 0
   _isStuned: 0
   materialInvisible: {fileID: 0}
@@ -9911,6 +9930,18 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 0
+--- !u!114 &1902638937 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4774432278028210925, guid: 152e37b7179d1e14e8d945751140f07d,
+    type: 3}
+  m_PrefabInstance: {fileID: 598759270}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56db7e32f7a3f74d84cfca9e696afda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1910005495
 GameObject:
   m_ObjectHideFlags: 0
@@ -10836,6 +10867,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 477c95bd9bbf29c40b20cada08a40935, type: 2}
   _skills: []
   canMove: 1
+  canInteract: 1
   isInvisible: 0
   _isStuned: 0
   materialInvisible: {fileID: 0}

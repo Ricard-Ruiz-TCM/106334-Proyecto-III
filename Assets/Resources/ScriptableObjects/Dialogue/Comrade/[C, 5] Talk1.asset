@@ -10,13 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b04de7246f0ff23449fa32f1baea4e7b, type: 3}
-  m_Name: '[B, 1] Options'
+  m_Name: '[C, 5] Talk1'
   m_EditorClassIdentifier: 
-  keyName: 
-  keyMessage: 
-  nextNode: {fileID: 0}
-  options:
-  - keyText: DIALOGUE.BLACKSMITH.1.OP.1
-    next: {fileID: 11400000, guid: 72900cd959e4f88429fa08679da97cd9, type: 2}
-  - keyText: DIALOGUE.OP.END_DIALOG
-    next: {fileID: 11400000, guid: 9e8608ff8080a8742b67ea9c1e71251a, type: 2}
+  keyName: DIALOGUE.COMRADE
+  keyMessage: DIALOGUE.COMRADE.5
+  nextNode: {fileID: 11400000, guid: 78e856250ddcbf04f904ed852632cccc, type: 2}
+  options: []

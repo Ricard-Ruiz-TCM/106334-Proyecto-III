@@ -2,70 +2,65 @@ using UnityEngine;
 
 public class SceneStageManager : MonoBehaviour {
 
-    public void BTN_Menu() {
-        uCore.Director.LoadSceneAsync(gameScenes.Menu);
-    }
-
-    public void BTN_StageSelector() {
-        uCore.Director.LoadSceneAsync(gameScenes.StageSelector);
-    }
-
-    [SerializeField, Header("Dialogue:")]
-    private GameObject _dialogue;
-
-    [SerializeField, Header("Comrade:")]
-    private GameObject _comrade;
+    [SerializeField, Header("Dialog:")]
+    private GameObject _dialogUI;
     [SerializeField]
-    private GameObject _complete;
-
-    [SerializeField, Header("Blacksmith:")]
-    private GameObject _blacksmith;
-    [SerializeField]
-    private GameObject _upgrades;
-    [SerializeField]
-    private GameObject _shop;
+    private GameObject _upgradeUI;
+    [SerializeField, Header("Combat:")]
+    private GameObject _combatUI;
 
     // Unity OnEnable
-    private void OnEnable() {
-
+    void OnEnable() {
+        // DialogTriggers
+        OnEndDialog.onTrigger += StageSuccess;
+        OnOpenUpgradePanel.onTrigger += OpenUpgradePanel;
     }
 
     // Unity OnDisable
-    private void OnDisable() {
+    void OnDisable() {
+        // DialogTriggers
+        OnEndDialog.onTrigger -= StageSuccess;
+        OnOpenUpgradePanel.onTrigger -= OpenUpgradePanel;
+    }
+
+    // Unity Awake
+    void Start() {
+        StageData stage = uCore.GameManager.NextStage;
+
+        switch (stage.type) {
+            case stageType.combat:
+                //EnableCombat();
+                StageSuccess();
+                break;
+            case stageType.comrade:
+            case stageType.blacksmith:
+            case stageType.campfire:
+                EnableDialog(stage.innitialDialog);
+                break;
+        }
 
     }
 
-    private void PerkPanel() {
-        HideDialogue();
-        _comrade.SetActive(true);
+    /** Métodos para habilitar los managers necesarios del stage */
+    private void EnableDialog(DialogNode node) {
+        _dialogUI.SetActive(true);
+        // Innit del dialogManager
+        DialogManager.instance.StartDialog(node);
     }
-
-    private void HideDialogue() {
-        _dialogue.SetActive(false);
+    private void EnableCombat() {
+        _combatUI.SetActive(true);
+        // Innit del stageLoader
+        GameObject.FindAnyObjectByType<StageLoader>().BuildStage();
+        GameObject.FindAnyObjectByType<StageLoader>().BuildPlayer();
+        // Innit del turnManager
+        TurnManager.instance.startManager();
     }
+    /** -------------------------------------------------------- */
 
-    private void EndEvent() {
-        uCore.Director.LoadSceneAsync(gameScenes.Stage);
-    }
-
-    public void BTN_CompletePerks() {
-        _complete.SetActive(true);
-    }
-
-    public void BTN_Cancel() {
-        _complete.SetActive(false);
-    }
-
-    public void BTN_OpenBlacksmithOptions() {
-        _blacksmith.SetActive(false);
-        _shop.SetActive(false);
-        _upgrades.SetActive(false);
-        _dialogue.SetActive(true);
-        GameObject.FindAnyObjectByType<DialogManager>().StartDialog(uCore.GameManager.BlacksmithNode.nextNode);
-    }
-
-    public void BTN_Sure() {
-        EndEvent();
+    /** Método para abrir el panel de upgrades del blacsmith */
+    public void OpenUpgradePanel() {
+        _dialogUI.SetActive(false);
+        _upgradeUI.SetActive(true);
     }
 
     /** Método para determinar qeu se ha ganado el Stage */
@@ -79,5 +74,11 @@ public class SceneStageManager : MonoBehaviour {
         uCore.GameManager.StageSelected(uCore.GameManager.LastStage);
         uCore.Director.LoadSceneAsync(gameScenes.StageSelector);
     }
+
+    /** Botones */
+    public void BTN_UpgradePanelCloase() {
+        StageSuccess();
+    }
+    /** ------- */
 
 }

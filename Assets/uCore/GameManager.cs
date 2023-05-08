@@ -174,17 +174,23 @@ public class GameManager : MonoBehaviour {
     #region GameData
 
     public bool ExistGameData() {
+        Debug.Log("CHECKING SI EXISTE GAME DATA, TODO");
         return false;
     }
 
     /** LOAD */
     public void LoadGameData() {
-
+        Debug.Log("CARGANDO GAME DATA, TODO");
     }
 
     /** SAVE */
     public void SaveGameData() {
-        
+        Debug.Log("GUARDANDO GAME DATA, TODO");
+    }
+
+    /** CLEAR */
+    public void ClearGameData() {
+        Debug.Log("CLEAR GAME DATA, TODO");
     }
 
     #endregion

@@ -49,8 +49,13 @@ public class DialogManager : MonoBehaviour {
     public void NextDialog(DialogNode node) {
         onEndDialog?.Invoke();
 
+        // Exit si vamos null
+        if (node == null)
+            return;
+
         _history.Add(_current);
         _current = node;
+
 
         // NextDialog
         onNextDialog?.Invoke(_current);
@@ -60,10 +65,9 @@ public class DialogManager : MonoBehaviour {
             _lastTriggerNode = _current;
             ((DialogTrigger)_current).Trigger();
             NextDialog(_current.nextNode);
-        }
-
+        } 
         // Options DialogNode
-        if (_current.options.Count != 0) {
+        else if (_current.options.Count != 0) {
             _lastOptionsNode = _current;
         }
     }

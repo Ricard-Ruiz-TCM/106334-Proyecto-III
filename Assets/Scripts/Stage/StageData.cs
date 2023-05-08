@@ -10,4 +10,6 @@ public struct StageData {
     public stageTerrain terrain;
     public stageDifficulty diff;
 
+    public DialogNode innitialDialog;
+
 }

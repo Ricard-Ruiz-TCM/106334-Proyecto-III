@@ -280,10 +280,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _data:
     ID: 15
-    keyName: 
-    type: 0
+    keyName: SCENE.SS.NAME.STAGE_BS
+    type: 2
     terrain: 0
     diff: 0
+    innitialDialog: {fileID: 11400000, guid: d760f299ff4a109429bac6b1eb49aba5, type: 2}
   _panelInfo: {fileID: 2134909803}
   _visible: 0
   _panelPreview: {fileID: 21300000, guid: e80c1b1ad484e664694e0c31a4a0a7e6, type: 3}
@@ -437,10 +438,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _data:
     ID: 8
-    keyName: 
-    type: 0
-    terrain: 0
+    keyName: SCENE.SS.NAME.STAGE_CM
+    type: 1
+    terrain: 2
     diff: 0
+    innitialDialog: {fileID: 11400000, guid: c6f5bc89c010e29459081e19ea5c1134, type: 2}
   _panelInfo: {fileID: 2134909803}
   _visible: 0
   _panelPreview: {fileID: 21300000, guid: f0b0cb75d70ea3244b449de1ab1fe5f4, type: 3}
@@ -596,10 +598,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _data:
     ID: 18
-    keyName: 
+    keyName: SCENE.SS.NAME.STAGE_18
     type: 0
-    terrain: 0
-    diff: 0
+    terrain: 2
+    diff: 2
+    innitialDialog: {fileID: 0}
   _panelInfo: {fileID: 2134909803}
   _visible: 1
   _panelPreview: {fileID: 21300000, guid: bab919364f3dcdb48a1539693f5faf67, type: 3}
@@ -718,7 +721,7 @@ GameObject:
   m_IsActive: 1
 --- !u!114 &189668532
 MonoBehaviour:
-  m_ObjectHideFlags: 2
+  m_ObjectHideFlags: 10
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -798,10 +801,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _data:
     ID: 1
-    keyName: 
-    type: 0
-    terrain: 0
+    keyName: SCENE.SS.NAME.STAGE_CM
+    type: 1
+    terrain: 2
     diff: 0
+    innitialDialog: {fileID: 11400000, guid: 390f0eb469ae6f347b0a555f46ec5d44, type: 2}
   _panelInfo: {fileID: 2134909803}
   _visible: 0
   _panelPreview: {fileID: 21300000, guid: f0b0cb75d70ea3244b449de1ab1fe5f4, type: 3}
@@ -957,10 +961,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _data:
     ID: 0
-    keyName: 
+    keyName: SCENE.SS.NAME.STAGE_0
     type: 0
-    terrain: 0
-    diff: 0
+    terrain: 2
+    diff: 2
+    innitialDialog: {fileID: 0}
   _panelInfo: {fileID: 2134909803}
   _visible: 1
   _panelPreview: {fileID: 21300000, guid: bab919364f3dcdb48a1539693f5faf67, type: 3}
@@ -1397,8 +1402,9 @@ MonoBehaviour:
     ID: 5
     keyName: 
     type: 0
-    terrain: 0
-    diff: 0
+    terrain: 1
+    diff: 1
+    innitialDialog: {fileID: 0}
   _panelInfo: {fileID: 2134909803}
   _visible: 0
   _panelPreview: {fileID: 21300000, guid: bab919364f3dcdb48a1539693f5faf67, type: 3}
@@ -1554,8 +1560,9 @@ MonoBehaviour:
     ID: 4
     keyName: 
     type: 0
-    terrain: 0
-    diff: 0
+    terrain: 2
+    diff: 1
+    innitialDialog: {fileID: 0}
   _panelInfo: {fileID: 2134909803}
   _visible: 0
   _panelPreview: {fileID: 21300000, guid: bab919364f3dcdb48a1539693f5faf67, type: 3}
@@ -1709,10 +1716,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _data:
     ID: 17
-    keyName: 
-    type: 0
+    keyName: SCENE.SS.NAME.STAGE_CF
+    type: 3
     terrain: 0
     diff: 0
+    innitialDialog: {fileID: 11400000, guid: f6f6f6666738aae48b362577bd4e8fc7, type: 2}
   _panelInfo: {fileID: 2134909803}
   _visible: 0
   _panelPreview: {fileID: 734416942, guid: 692efb561ed53554a83352ca5872ecc2, type: 3}
@@ -1866,10 +1874,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _data:
     ID: 7
-    keyName: 
+    keyName: SCENE.SS.NAME.STAGE_7
     type: 0
-    terrain: 0
-    diff: 0
+    terrain: 2
+    diff: 2
+    innitialDialog: {fileID: 0}
   _panelInfo: {fileID: 2134909803}
   _visible: 1
   _panelPreview: {fileID: 21300000, guid: bab919364f3dcdb48a1539693f5faf67, type: 3}
@@ -2023,10 +2032,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _data:
     ID: 19
-    keyName: 
+    keyName: SCENE.SS.NAME.STAGE_19
     type: 0
-    terrain: 0
-    diff: 0
+    terrain: 2
+    diff: 2
+    innitialDialog: {fileID: 0}
   _panelInfo: {fileID: 2134909803}
   _visible: 1
   _panelPreview: {fileID: 21300000, guid: bab919364f3dcdb48a1539693f5faf67, type: 3}
@@ -2075,9 +2085,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 861681391}
-        m_TargetAssemblyTypeName: StageSelectorItem, Assembly-CSharp
-        m_MethodName: BTN_EnterStage
+      - m_Target: {fileID: 440898306}
+        m_TargetAssemblyTypeName: SceneStageSelectorManager, Assembly-CSharp
+        m_MethodName: BTN_CompleteGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2230,10 +2240,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _data:
     ID: 6
-    keyName: 
-    type: 0
-    terrain: 0
+    keyName: SCENE.SS.NAME.STAGE_CF
+    type: 3
+    terrain: 1
     diff: 0
+    innitialDialog: {fileID: 11400000, guid: 364764401a383bc4680d1433d4717a26, type: 2}
   _panelInfo: {fileID: 2134909803}
   _visible: 0
   _panelPreview: {fileID: 21300000, guid: bab919364f3dcdb48a1539693f5faf67, type: 3}
@@ -2391,6 +2402,7 @@ MonoBehaviour:
     type: 0
     terrain: 0
     diff: 0
+    innitialDialog: {fileID: 0}
   _panelInfo: {fileID: 2134909803}
   _visible: 0
   _panelPreview: {fileID: 21300000, guid: bab919364f3dcdb48a1539693f5faf67, type: 3}
@@ -2681,8 +2693,9 @@ MonoBehaviour:
     ID: 11
     keyName: 
     type: 0
-    terrain: 0
-    diff: 0
+    terrain: 1
+    diff: 2
+    innitialDialog: {fileID: 0}
   _panelInfo: {fileID: 2134909803}
   _visible: 0
   _panelPreview: {fileID: 21300000, guid: bab919364f3dcdb48a1539693f5faf67, type: 3}
@@ -2836,10 +2849,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _data:
     ID: 3
-    keyName: 
-    type: 0
+    keyName: SCENE.SS.NAME.STAGE_BS
+    type: 2
     terrain: 0
     diff: 0
+    innitialDialog: {fileID: 11400000, guid: d760f299ff4a109429bac6b1eb49aba5, type: 2}
   _panelInfo: {fileID: 2134909803}
   _visible: 0
   _panelPreview: {fileID: 21300000, guid: e80c1b1ad484e664694e0c31a4a0a7e6, type: 3}
@@ -3299,10 +3313,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _data:
     ID: 10
-    keyName: 
-    type: 0
-    terrain: 0
+    keyName: SCENE.SS.NAME.STAGE_CF
+    type: 3
+    terrain: 1
     diff: 0
+    innitialDialog: {fileID: 11400000, guid: d7649fe7fe7ffce46a0ee01bdc5745ad, type: 2}
   _panelInfo: {fileID: 2134909803}
   _visible: 0
   _panelPreview: {fileID: 734416942, guid: 692efb561ed53554a83352ca5872ecc2, type: 3}
@@ -3459,7 +3474,8 @@ MonoBehaviour:
     keyName: 
     type: 0
     terrain: 0
-    diff: 0
+    diff: 1
+    innitialDialog: {fileID: 0}
   _panelInfo: {fileID: 2134909803}
   _visible: 0
   _panelPreview: {fileID: 21300000, guid: bab919364f3dcdb48a1539693f5faf67, type: 3}
@@ -3613,10 +3629,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _data:
     ID: 12
-    keyName: 
-    type: 0
-    terrain: 0
+    keyName: SCENE.SS.NAME.STAGE_BS
+    type: 2
+    terrain: 1
     diff: 0
+    innitialDialog: {fileID: 11400000, guid: d760f299ff4a109429bac6b1eb49aba5, type: 2}
   _panelInfo: {fileID: 2134909803}
   _visible: 0
   _panelPreview: {fileID: 21300000, guid: e80c1b1ad484e664694e0c31a4a0a7e6, type: 3}
@@ -3770,10 +3787,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _data:
     ID: 13
-    keyName: 
-    type: 0
-    terrain: 0
+    keyName: SCENE.SS.NAME.STAGE_CF
+    type: 3
+    terrain: 2
     diff: 0
+    innitialDialog: {fileID: 11400000, guid: 07dcf5c7a9c03e942a48b4f280f8ee7c, type: 2}
   _panelInfo: {fileID: 2134909803}
   _visible: 0
   _panelPreview: {fileID: 734416942, guid: 692efb561ed53554a83352ca5872ecc2, type: 3}
@@ -3929,8 +3947,9 @@ MonoBehaviour:
     ID: 9
     keyName: 
     type: 0
-    terrain: 0
-    diff: 0
+    terrain: 2
+    diff: 1
+    innitialDialog: {fileID: 0}
   _panelInfo: {fileID: 2134909803}
   _visible: 0
   _panelPreview: {fileID: 21300000, guid: bab919364f3dcdb48a1539693f5faf67, type: 3}
@@ -4206,6 +4225,7 @@ MonoBehaviour:
     type: 0
     terrain: 0
     diff: 0
+    innitialDialog: {fileID: 0}
   _panelInfo: {fileID: 2134909803}
   _visible: 0
   _panelPreview: {fileID: 21300000, guid: bab919364f3dcdb48a1539693f5faf67, type: 3}

@@ -25,7 +25,7 @@ public class Player : Actor {
     public void Placing() {
 
         if (_gridMovement.Builder().MosueOverGrid()) {
-            if (_gridMovement.Builder().GetMouseGridPlane().node.type.Equals(Array2DEditor.nodeType.P)) {
+            if (Stage.StageBuilder.GetMouseGridPlane().node.type.Equals(Array2DEditor.nodeType.P)) {
                 if (uCore.Action.GetKeyDown(KeyCode.M)) {
                     transform.position = _gridMovement.Builder().GetMouseGridPlane().position;
                 }

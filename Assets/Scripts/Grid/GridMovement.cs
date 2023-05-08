@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public class GridMovement : MonoBehaviour {
 
     // callback
-    public Action onStepReached;
+    public Action<Array2DEditor.nodeType> onStepReached;
     public Action onDestinationReached;
 
     // NavMesh Agent
@@ -48,7 +48,15 @@ public class GridMovement : MonoBehaviour {
         _destionationRoute = new List<Node>();
         List<Node> tmp = _pathfinder.FindPath(_builder.GetGridPlane(origin).node, plane.node);
         for (int i = 0; i < Mathf.Min(tmp.Count, amount); i++) {
-            _destionationRoute.Add(tmp[i]);
+            if (tmp[i].type.Equals(Array2DEditor.nodeType.M)) {
+                amount--;
+            }
+            if (tmp[i].type.Equals(Array2DEditor.nodeType.H)) {
+                amount -= 2;
+            }
+            if (i < Mathf.Min(tmp.Count, amount)) {
+                _destionationRoute.Add(tmp[i]);
+            }
         }
         NextPoint();
     }
@@ -59,7 +67,15 @@ public class GridMovement : MonoBehaviour {
         VisualRouteInvaild.Clear();
         if (amount != -1) {
             for (int i = 0; i < MathF.Min(amount, route.Count); i++) {
-                VisualRouteValid.Add(route[i]);
+                if (route[i].type == Array2DEditor.nodeType.M) {
+                    amount--;
+                }
+                if (route[i].type == Array2DEditor.nodeType.H) {
+                    amount -= 2;
+                }
+                if (i < MathF.Min(amount, route.Count)) {
+                    VisualRouteValid.Add(route[i]);
+                }
             }
             for (int i = VisualRouteValid.Count; i < route.Count; i++) {
                 VisualRouteInvaild.Add(route[i]);
@@ -96,7 +112,7 @@ public class GridMovement : MonoBehaviour {
         if (_index < _destionationRoute.Count - 1) {
             _index++;
             _agent.SetDestination(_builder.GetGridPlane(_destionationRoute[_index]).position);
-            onStepReached?.Invoke();
+            onStepReached?.Invoke(_builder.GetGridPlane(_destionationRoute[_index]).node.type);
         } else {
             _canMove = false;
             onDestinationReached?.Invoke();

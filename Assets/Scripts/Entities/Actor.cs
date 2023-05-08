@@ -62,7 +62,14 @@ public abstract class Actor : ActorManager {
         _inventory = GetComponent<ActorInventory>();
 
         _gridMovement = GetComponent<GridMovement>();
-        _gridMovement.onStepReached += () => { _movementsDone++; };
+        _gridMovement.onStepReached += (Array2DEditor.nodeType t) => { 
+            _movementsDone++;
+            if (t.Equals(Array2DEditor.nodeType.M)) {
+                _movementsDone++;
+            } else if (t.Equals(Array2DEditor.nodeType.H)) {
+                _movementsDone += 2;
+            }
+        };
         materialDefault = gameObject.GetComponentInChildren<SkinnedMeshRenderer>().material;
     }
 

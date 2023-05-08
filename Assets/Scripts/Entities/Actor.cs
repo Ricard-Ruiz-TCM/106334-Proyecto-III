@@ -27,8 +27,8 @@ public abstract class Actor : MonoBehaviour {
     protected WeaponItem _weapon;
     public WeaponItem Weapon() { return _weapon; }
     [SerializeField]
-    protected ArmorItem _shield;
-    public ArmorItem Shield() { return _shield; }
+    protected ShieldItem _shield;
+    public ShieldItem Shield() { return _shield; }
 
     [SerializeField, Header("Inventory:")]
     protected Inventory _inventory;

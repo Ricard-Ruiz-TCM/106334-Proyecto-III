@@ -10,7 +10,7 @@ public class StageLoader : MonoBehaviour {
     [SerializeField]
     private string _stageName;
 
-    [SerializeField, Header("Stage:")]
+    /** Stage */
     private Stage _stage;
 
     // Unity Awake
@@ -24,19 +24,21 @@ public class StageLoader : MonoBehaviour {
     }
 
     /** Método para consturi todo el stage */
-    public void buildStage() {
-        BuildLevel();
+    public void buildStage(StageData data) {
+        BuildLevel(data);
         BuildPlayer();
     }
 
     /** Método para instanciar el stage según el progreso del juego */
-    private void BuildLevel() {
-
+    private void BuildLevel(StageData data) {
+        GameObject g = Resources.Load<GameObject>(_stagePath + _stageName + data.ID.ToString());
+        _stage = GameObject.Instantiate(g).GetComponent<Stage>();
+        _stage.SetData(data);
     }
 
     /** Método para instanciar al player con todas sus costias dentro del nivel */
     private void BuildPlayer() {
-        
+        // TODO
     }
 
     /** Método para recuperar el stage actual */

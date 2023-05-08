@@ -3,8 +3,11 @@ using System.Collections.Generic;
 
 public class Stage : MonoBehaviour {
 
-    public StageData _data;
-    public List<GameObject> _enemies;
+    /** Información del stage */
+    private StageData _data;
+
+    [SerializeField, Header("Enemies on Stage:")]
+    private List<GameObject> _enemies;
 
     public static Grid2D StageGrid = null;
     public static GridBuilder StageBuilder = null;
@@ -22,6 +25,11 @@ public class Stage : MonoBehaviour {
         foreach (GameObject a in _enemies) {
             GameObject.Instantiate(a);
         }
+    }
+
+    /** Método set d ela informaicón */
+    public void SetData(StageData data) {
+        _data = data;
     }
 
 }

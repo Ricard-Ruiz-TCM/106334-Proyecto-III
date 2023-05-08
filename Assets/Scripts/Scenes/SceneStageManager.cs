@@ -38,27 +38,27 @@ public class SceneStageManager : MonoBehaviour {
 
         switch (stage.type) {
             case stageType.combat:
-                EnableCombat();
+                EnableCombat(stage);
                 break;
             case stageType.comrade:
             case stageType.blacksmith:
             case stageType.campfire:
-                EnableDialog(stage.innitialDialog);
+                EnableDialog(stage);
                 break;
         }
 
     }
 
     /** Métodos para habilitar los managers necesarios del stage */
-    private void EnableDialog(DialogNode node) {
+    private void EnableDialog(StageData data) {
         _dialogUI.SetActive(true);
         // Innit del dialogManager
-        DialogManager.instance.startDialog(node);
+        DialogManager.instance.startDialog(data.innitialDialog);
     }
-    private void EnableCombat() {
+    private void EnableCombat(StageData data) {
         _combatUI.SetActive(true);
         // Innit del stageLoader
-        StageLoader.instance.buildStage();
+        StageLoader.instance.buildStage(data);
         // Innit del turnManager
         TurnManager.instance.startManager();
     }

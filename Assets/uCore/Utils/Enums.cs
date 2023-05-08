@@ -113,3 +113,8 @@ public enum stageType {
 public enum stageTerrain {
     mountain, swamp, meadow
 }
+
+// Tipo de dificiultades del terreno
+public enum gridNodeDiff {
+    diff0 = 0, diff1 = 1, diff99 = 99
+}

@@ -65,7 +65,7 @@ public enum items {
 public enum skills {
     NONE,
 
-    ArrowRain, Attack, Defense, DemolishingBlow, Disarm, DoubleLunge, MoralizingShout, TurtleShield, Vanish,
+    ArrowRain, Attack, Cleave, Defense, DoubleLunge, MoralizingShout, Vanish,TalonDeAquiles,FormacionTortuga,CaballoDeTroya,
 
     MAX
 }

@@ -50,6 +50,27 @@ public abstract class Actor : ActorManager {
     [SerializeField, Header("CanMove:")]
     public bool canMove = true;
 
+    [SerializeField, Header("CanInteract:")]
+    public bool canInteract = true;
+
+    [SerializeField, Header("Invisible:")]
+    protected bool isInvisible = false;
+    public bool IsInvisible() { return isInvisible; }
+    protected int invisibleRounds = 1;
+
+    [SerializeField, Header("Stun:")]
+    protected int _isStuned = 0;
+    protected int _stunedRounds = 1;
+
+    [SerializeField, Header("Turtle:")]
+    protected bool _isTurtle = false;
+
+    int damageModRounds = 0;
+    int defenseModRounds = 0;
+    int anteriorDefense = 0;
+    int anteriorDamage = 0;
+    int invisibleRoundsController;
+
     [SerializeField] Material materialInvisible;
     Material materialDefault;
 
@@ -132,6 +153,56 @@ public abstract class Actor : ActorManager {
 
         return defense;
     }
+    public void UpdateDefense(int number, string equation, int roundsToLast)
+    {
+        Expertise ex = _upgrades.Find(x => x._item.Equals(_armor._item));
+        if (anteriorDefense == 0)
+        {
+            anteriorDefense = _armor._defense[(ex != null ? ex._level : 0)];
+        }
+
+        switch (equation)
+        {
+            case "+":
+                _armor._defense[(ex != null ? ex._level : 0)] += number;
+                break;
+            case "-":
+                _armor._defense[(ex != null ? ex._level : 0)] -= number;
+                break;
+            case "/":
+                _armor._defense[(ex != null ? ex._level : 0)] /= number;
+                break;
+            case "*":
+                _armor._defense[(ex != null ? ex._level : 0)] *= number;
+                break;
+        }
+        defenseModRounds = roundsToLast;
+    }
+    public void UpdateAttack(int number, string equation, int roundsToLast)
+    {
+        Expertise ex = _upgrades.Find(x => x._item.Equals(_weapon._item));
+        if(anteriorDamage == 0)
+        {
+            anteriorDamage = _weapon._damage[(ex != null ? ex._level : 0)];
+        }
+
+        switch (equation)
+        {
+            case "+":
+                _weapon._damage[(ex != null ? ex._level : 0)] += number;
+                break;
+            case "-":
+                _weapon._damage[(ex != null ? ex._level : 0)] -= number;
+                break;
+            case "/":
+                _weapon._damage[(ex != null ? ex._level : 0)] /= number;
+                break;
+            case "*":
+                _weapon._damage[(ex != null ? ex._level : 0)] *= number;
+                break;
+        }
+        damageModRounds = roundsToLast;
+    }
 
     public virtual int Movement() {
         int movement = _movement;
@@ -181,22 +252,38 @@ public abstract class Actor : ActorManager {
         _tempDef = 0;
         hasTurnEnded = false;
 
-        /** Custom Status EFFECTS */
-        // Invisible
-        if (_status.isStatusActive(buffsnDebuffs.Invisible)) {
-            gameObject.GetComponentInChildren<SkinnedMeshRenderer>().material = materialDefault;
-        }
-        // Stunned
-        if (_status.isStatusActive(buffsnDebuffs.Stunned)) {
+        /** Effects of the Status */
+        _status.StatusEffect();
+
+        _isTurtle = false;
+
+        if (_isStuned > 0) {
             moving = progress.done;
             acting = progress.done;
+        }
+
+        if(damageModRounds != 0)
+        {
+            damageModRounds--;
+            if(damageModRounds == 0)
+            {
+                Expertise ex = _upgrades.Find(x => x._item.Equals(_weapon._item));
+                _weapon._damage[(ex != null ? ex._level : 0)] = anteriorDamage;
+            }
+        }
+        if (defenseModRounds != 0)
+        {
+            defenseModRounds--;
+            if (defenseModRounds == 0)
+            {
+                Expertise ex = _upgrades.Find(x => x._item.Equals(_armor._item));
+                _armor._defense[(ex != null ? ex._level : 0)] = anteriorDefense;
+            }
         }
 
     }
     public void EndTurn() {
         hasTurnEnded = true;
-        /** Effects of the Status */
-        _status.StatusEffect();
         /** Update the duration of the Status */
         _status.UpdateStatus();
     }
@@ -221,7 +308,7 @@ public abstract class Actor : ActorManager {
     protected void StartMove() {
         moving = progress.doing;
     }
-    protected void EndMovement() {
+    public void EndMovement() {
         moving = progress.done;
     }
 

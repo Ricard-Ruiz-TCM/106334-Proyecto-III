@@ -149,10 +149,10 @@ public class GridBuilder : MonoBehaviour {
         ClearGrid();
         if (path.Count != 0) {
             if (path.Count < range) {
-                UpdateMaterial(path[path.Count - 1].x, path[path.Count - 1].y, _pathMath);
+                UpdateMaterial(path[path.Count - 1].x, path[path.Count - 1].y, _rangeMath);
                 return path[path.Count - 1];
             } else {
-                UpdateMaterial(path[range - 1].x, path[range - 1].y, _pathMath);
+                UpdateMaterial(path[range - 1].x, path[range - 1].y, _rangeMath);
                 return path[range - 1];
             }
         } else {

@@ -32,11 +32,7 @@ public class CombatManager : MonoBehaviour {
         return _actors.FindAll(x => x is Player);
     }
 
-    // Update is called once per frame
-    void Update() {
-
-    }
-    //añadir o remover actores de una lista (lo hacemos para controlar en que posicion se encuentran los actores y aplicarle efectos)
+    //aï¿½adir o remover actores de una lista (lo hacemos para controlar en que posicion se encuentran los actores y aplicarle efectos)
     public void Subscribe(Actor element) {
         if (!Contains(element))
             _actors.Add(element);
@@ -54,135 +50,223 @@ public class CombatManager : MonoBehaviour {
 
     //metodos para hacer las skills
     //los que no estan aqui se hacen desde su scriptableObject, eso es porque la skill se hace sin tener que seleccionar ninguna casilla
-    public void Attack(Actor actor, int range, skills skillType) {
-        actor.canMove = false;
-        StartCoroutine(NormalAttack(actor, range, skillType));
-    }
-    public void Lanza(Actor actor, int range, skills skillType) {
-        actor.canMove = false;
-        StartCoroutine(NormalAttack(actor, range, skillType));
-    }
-    public void GolpeDemoledor(Actor actor, int range, skills skillType) {
-        actor.canMove = false;
-        StartCoroutine(ShowGolpeDemoledor(actor, range, skillType));
-    }
-    public void Arco(Actor actor, int range, skills skillType)
+
+    public void UseSkill(Actor actor, int range, skills skillType, bool canInteract)
     {
         actor.canMove = false;
-        StartCoroutine(ShowArrows(actor, range, skillType));
+
+        switch (skillType)
+        {
+            case skills.Attack:
+                StartCoroutine(NormalAttack(actor, range, skillType, canInteract));
+                break;
+            case skills.DoubleLunge:
+                StartCoroutine(NormalAttack(actor, range, skillType, canInteract));
+                break;
+            case skills.Cleave:
+                StartCoroutine(ShowGolpeDemoledor(actor, range, skillType,canInteract));
+                break;
+            case skills.ArrowRain:
+                StartCoroutine(ShowArrows(actor, range, skillType, canInteract));
+                break;
+            case skills.MoralizingShout:
+                StartCoroutine(ShowMoralizingShout(actor, range, skillType));
+                break;
+        }
+
     }
 
-
     //enumerators que funcionan como "updates" para hacer las funciones de las skills
-    IEnumerator ShowGolpeDemoledor(Actor actor, int range, skills skillType) {
+    IEnumerator ShowGolpeDemoledor(Actor actor, int range, skills skillType, bool canInteract) {
         bool canEnd = false;
         Node node = null;
 
-        while (!canEnd)
+        if (canInteract)
         {
-            if (_gridMovement.Builder().MosueOverGrid())
+            while (!canEnd)
             {
-                _gridMovement.CalcRoute(actor.transform.position, _gridMovement.Builder().GetMouseGridPlane(), range);
-                node = _gridMovement.Builder().DisplayLastNodePath(_gridMovement.VisualRouteValid, range);
+                if (_gridMovement.Builder().MosueOverGrid())
+                {
+                    _gridMovement.CalcRoute(actor.transform.position, _gridMovement.Builder().GetMouseGridPlane(), range);
+                    node = _gridMovement.Builder().DisplayLastNodePath(_gridMovement.VisualRouteValid, range);
+                }
+                if (uCore.Action.GetKeyDown(KeyCode.J))
+                {
+                    canEnd = true;
+                    GetActorInNode(node, actor, skillType);
 
+                }
+                if (node != null)
+                {
+                    ExtendGolpeDemoledor(actor, range, skillType, node, canEnd);
+                }
+                if (uCore.Action.GetKeyDown(KeyCode.Escape))
+                {
+                    canEnd = true;
+                }
+                yield return null;
             }
-            if (uCore.Action.GetKeyDown(KeyCode.J))
+        }
+        else
+        {
+            Actor player = FindNearest();
+            node = _gridMovement.Builder().GetGridPlane(Mathf.RoundToInt(player.transform.position.x / 10), Mathf.RoundToInt(player.transform.position.z / 10)).node;
+            _gridMovement.Builder().GetGridPlane(node.x, node.y).SetMaterial(_gridMovement.Builder()._rangeMath);
+            if (node != null)
             {
-                canEnd = true;
                 GetActorInNode(node, actor, skillType);
-
+                ExtendGolpeDemoledor(actor, range, skillType, node, false);
             }
-            if (node != null) 
+        }
+
+        StartCoroutine(EndAttack(actor));
+    }
+    public Actor FindNearest()
+    {
+
+        Actor actor = null;
+        float dist = Mathf.Infinity;
+
+        foreach (Actor obj in FindPlayers())
+        {
+            float distance = Vector3.Distance(obj.transform.position, transform.position);
+            if (distance < dist)
             {
-                if (Mathf.RoundToInt(actor.transform.position.x / 10) == node.x) 
+                if (!obj.IsInvisible())
+                {
+                    actor = obj; dist = distance;
+                }
+            }
+        }
+
+        return actor;
+    }
+    private void ExtendGolpeDemoledor(Actor actor, int range, skills skillType,Node node,bool canEnd)
+    {
+        if (Mathf.RoundToInt(actor.transform.position.x / 10) == node.x)
+        {
+            ExtendAttack(node.x + 1, node.y, actor, canEnd, skillType);
+
+            ExtendAttack(node.x - 1, node.y, actor, canEnd, skillType);
+
+            if (Mathf.RoundToInt(actor.transform.position.z / 10) > node.y)
+            {
+                ExtendAttack(node.x, node.y - 1, actor, canEnd, skillType);
+            }
+            else
+            {
+                ExtendAttack(node.x, node.y + 1, actor, canEnd, skillType);
+            }
+        }
+
+
+
+        if (Mathf.RoundToInt(actor.transform.position.z / 10) == node.y)
+        {
+            ExtendAttack(node.x, node.y + 1, actor, canEnd, skillType);
+
+            ExtendAttack(node.x, node.y - 1, actor, canEnd, skillType);
+
+            if (Mathf.RoundToInt(actor.transform.position.x / 10) > node.x)
+            {
+                ExtendAttack(node.x - 1, node.y, actor, canEnd, skillType);
+            }
+            else
+            {
+                ExtendAttack(node.x + 1, node.y, actor, canEnd, skillType);
+            }
+
+
+        }
+    }
+
+    IEnumerator NormalAttack(Actor actor, int range, skills skillType, bool canInteract) {
+        bool canEnd = false;
+        Node node = null;
+
+        if (canInteract)
+        {
+            while (!canEnd)
+            {
+                if (_gridMovement.Builder().MosueOverGrid())
+                {
+                    _gridMovement.CalcRoute(actor.transform.position, _gridMovement.Builder().GetMouseGridPlane(), range);
+                    node = _gridMovement.Builder().DisplayLastNodePath(_gridMovement.VisualRouteValid, range);
+
+                }
+                if (uCore.Action.GetKeyDown(KeyCode.J))
+                {
+                    canEnd = true;
+                    GetActorInNode(node, actor, skillType);
+
+                }
+                if (uCore.Action.GetKeyDown(KeyCode.Escape))
+                {
+                    canEnd = true;
+                }
+                yield return null;
+            }
+        }
+        else
+        {
+            Actor player = FindNearest();
+            node = _gridMovement.Builder().GetGridPlane(Mathf.RoundToInt(player.transform.position.x / 10), Mathf.RoundToInt(player.transform.position.z / 10)).node;
+            _gridMovement.Builder().GetGridPlane(node.x, node.y).SetMaterial(_gridMovement.Builder()._rangeMath);
+            if (node != null)
+            {
+                GetActorInNode(node, actor, skillType);
+            }
+        }
+        StartCoroutine(EndAttack(actor));
+
+    }
+  
+    IEnumerator ShowArrows(Actor actor, int range, skills skillType, bool canInteract) {
+        bool canEnd = false;
+        Node node = null;
+        //List<Node> nodes = new List<Node>();
+
+        if (canInteract)
+        {
+            while (!canEnd)
+            {
+                if (_gridMovement.Builder().MosueOverGrid())
+                {
+                    _gridMovement.CalcRoute(actor.transform.position, _gridMovement.Builder().GetMouseGridPlane(), range);
+                    node = _gridMovement.Builder().DisplayLastNodePath(_gridMovement.VisualRouteValid, range);
+
+                }
+                if (uCore.Action.GetKeyDown(KeyCode.J))
+                {
+                    GetActorInNode(node, actor, skillType);
+                    canEnd = true;
+                }
+                if (node != null)
                 {
                     ExtendAttack(node.x + 1, node.y, actor, canEnd, skillType);
 
                     ExtendAttack(node.x - 1, node.y, actor, canEnd, skillType);
 
-                    if (Mathf.RoundToInt(actor.transform.position.z / 10) > node.y) 
-                    {
-                        ExtendAttack(node.x, node.y - 1, actor, canEnd, skillType);                        
-                    } 
-                    else 
-                    {
-                        ExtendAttack(node.x, node.y + 1, actor, canEnd, skillType);
-                    }
-                }
-
-
-
-                if (Mathf.RoundToInt(actor.transform.position.z / 10) == node.y) 
-                {
-                    ExtendAttack(node.x , node.y + 1, actor, canEnd, skillType);
+                    ExtendAttack(node.x, node.y + 1, actor, canEnd, skillType);
 
                     ExtendAttack(node.x, node.y - 1, actor, canEnd, skillType);
 
-                    if (Mathf.RoundToInt(actor.transform.position.x / 10) > node.x) 
-                    {
-                        ExtendAttack(node.x - 1, node.y, actor, canEnd, skillType);
-                    } 
-                    else 
-                    {
-                        ExtendAttack(node.x + 1, node.y, actor, canEnd, skillType);
-                    }
-
-
                 }
+                if (uCore.Action.GetKeyDown(KeyCode.Escape))
+                {
+                    canEnd = true;
+                }
+                yield return null;
             }
-            if (uCore.Action.GetKeyDown(KeyCode.Escape)) {
-                canEnd = true;
-            }
-            yield return null;
         }
-        _gridMovement.Builder().ClearGrid();
-        actor.canMove = true;
-    }
-
-    IEnumerator NormalAttack(Actor actor, int range, skills skillType) {
-        bool canEnd = false;
-        Node node = null;
-
-
-        while (!canEnd) {
-            if (_gridMovement.Builder().MosueOverGrid()) {
-                _gridMovement.CalcRoute(actor.transform.position, _gridMovement.Builder().GetMouseGridPlane(), range);
-                node = _gridMovement.Builder().DisplayLastNodePath(_gridMovement.VisualRouteValid, range);
-
-            }
-            if (uCore.Action.GetKeyDown(KeyCode.J)) {
-                canEnd = true;
-                GetActorInNode(node, actor, skillType);
-
-            }
-            if (uCore.Action.GetKeyDown(KeyCode.Escape)) {
-                canEnd = true;
-            }
-            yield return null;
-        }
-        _gridMovement.Builder().ClearGrid();
-        actor.canMove = true;
-
-    }
-  
-    IEnumerator ShowArrows(Actor actor, int range, skills skillType) {
-        bool canEnd = false;
-        Node node = null;
-        //List<Node> nodes = new List<Node>();
-
-
-        while (!canEnd) {
-            if (_gridMovement.Builder().MosueOverGrid()) {
-                _gridMovement.CalcRoute(actor.transform.position, _gridMovement.Builder().GetMouseGridPlane(), range);
-                node = _gridMovement.Builder().DisplayLastNodePath(_gridMovement.VisualRouteValid, range);
-
-            }
-            if (uCore.Action.GetKeyDown(KeyCode.J)) {
-                GetActorInNode(node, actor, skillType);
-                canEnd = true;
-            }
-            if (node != null) 
+        else
+        {
+            Actor player = FindNearest();
+            node = _gridMovement.Builder().GetGridPlane(Mathf.RoundToInt(player.transform.position.x / 10), Mathf.RoundToInt(player.transform.position.z / 10)).node;
+            _gridMovement.Builder().GetGridPlane(node.x, node.y).SetMaterial(_gridMovement.Builder()._rangeMath);
+            if (node != null)
             {
+                GetActorInNode(node, actor, skillType);
                 ExtendAttack(node.x + 1, node.y, actor, canEnd, skillType);
 
                 ExtendAttack(node.x - 1, node.y, actor, canEnd, skillType);
@@ -190,20 +274,53 @@ public class CombatManager : MonoBehaviour {
                 ExtendAttack(node.x, node.y + 1, actor, canEnd, skillType);
 
                 ExtendAttack(node.x, node.y - 1, actor, canEnd, skillType);
-
             }
-            if (uCore.Action.GetKeyDown(KeyCode.Escape)) {
-                canEnd = true;
-            }
-            yield return null;
         }
-
-        _gridMovement.Builder().ClearGrid();
-        actor.canMove = true;
+        StartCoroutine(EndAttack(actor));
 
     }
+    IEnumerator ShowMoralizingShout(Actor actor, int range, skills skillType)
+    {
+        Node node = null;
+        //List<Node> nodes = new List<Node>();
 
-    //metodo para los ataques que tienen daño en area (comprueba si esta dentro de la grid - cambia el material - y si hay un enemigo hace efecto)
+
+        node = _gridMovement.Builder().GetGridPlane(Mathf.RoundToInt(actor.transform.position.x / 10), Mathf.RoundToInt(actor.transform.position.z / 10)).node;
+
+        int count = 1;
+        int totalCount = 1;
+        for (int i = node.x - range; i <= node.x + range; i++)
+        {
+            for (int j = node.y; j < count + node.y; j++)
+            {
+                ExtendAttack(i, j, actor, true, skillType);
+            }
+            for (int z = node.y - 1; z > node.y - count; z--)
+            {
+                ExtendAttack(i, z, actor, true, skillType);
+            }
+
+            if (totalCount > range)
+            {
+                count--;
+            }
+            else
+            {
+                count++;
+            }
+            totalCount++;
+        }
+        yield return null;
+        StartCoroutine(EndAttack(actor));
+    }
+    IEnumerator EndAttack(Actor actor)
+    {
+        yield return new WaitForSeconds(1f);
+        _gridMovement.Builder().ClearGrid();
+        actor.canMove = true;
+    }
+
+    //metodo para los ataques que tienen daï¿½o en area (comprueba si esta dentro de la grid - cambia el material - y si hay un enemigo hace efecto)
     private void ExtendAttack(int i, int j, Actor actor, bool canEnd, skills skillType)
     {
         if (ChechIfPositionIsInGrid(i, j))
@@ -231,6 +348,16 @@ public class CombatManager : MonoBehaviour {
                         break;
                     case skills.DoubleLunge:
                         _actors[i].TakeDamage(from.Damage() * 2);
+                        break;
+                    case skills.Cleave:
+                        _actors[i].Stun();
+                        break;
+                    case skills.MoralizingShout:
+                        if (_actors[i].transform.CompareTag("Player"))
+                        {
+                            _actors[i].UpdateAttack(2, "+",1);
+                            Debug.Log("mola");
+                        }
                         break;
                 }
 

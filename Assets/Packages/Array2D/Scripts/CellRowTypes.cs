@@ -21,6 +21,6 @@ namespace Array2DEditor {
     public class CellRowAudioClip : CellRow<AudioClip> { }
 
     [System.Serializable]
-    public class CellNodeEnum : CellRow<gridNodeDiff> { }
+    public class CellNodeEnum : CellRow<nodeType> { }
 
 }

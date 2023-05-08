@@ -129,7 +129,7 @@ public class TurnManager : ActorsListController {
 
         // Entrando al turno
         yield return new WaitForSeconds(_startTurnDelay);
-        startManager();
+        positioningDone();
     }
 
 }

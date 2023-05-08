@@ -107,7 +107,8 @@ public abstract class Actor : ActorManager {
         int defense = 0;
 
         // Get Values
-        defense = _inventory.Armor().defense[0];
+        if (_inventory.Armor() != null)
+            defense = _inventory.Armor().defense[0];
 
         // Apply Modifiers
         foreach (Perk pk in _perks.Perks()) {

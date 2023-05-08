@@ -1,3 +1,4 @@
+using Array2DEditor;
 
 public class Node {
 
@@ -9,13 +10,22 @@ public class Node {
         get { return g + h; }
     }
 
-    // ValidPosition
-    public bool walkable;
+    // Check if node is walkable
+    public bool walkable {
+        get {
+            return !type.Equals(nodeType.X);
+        }
+    }
+
+    public nodeType type;
     public Node parent;
 
     // Constructor
-    public Node(bool isWalkable, int xPos, int yPos) {
-        walkable = isWalkable; x = xPos; y = yPos;
+    public Node(nodeType nType, int xPos, int yPos) {
+        x = xPos; 
+        y = yPos; 
+        type = nType; 
+        g = (int)type;
     }
 
 }

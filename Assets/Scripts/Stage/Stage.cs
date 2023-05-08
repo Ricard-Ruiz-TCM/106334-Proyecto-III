@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public class Stage : MonoBehaviour {
 
-    /** Información del stage */
+    [SerializeField, Header("Info:")]
     private StageData _data;
 
     [SerializeField, Header("Enemies on Stage:")]

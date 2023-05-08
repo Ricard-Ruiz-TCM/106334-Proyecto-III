@@ -20,20 +20,14 @@ public class Grid2D : MonoBehaviour {
     private Node[,] _nodeMap;
 
     [SerializeField, Header("(z Right, x Down)")]
-    private Array2DBool _gridMap;
-
-    [SerializeField, Header("(z Right, x Down)")]
-    private Array2DNodeEnum _gridNodes;
-
-    [SerializeField, Header("(z Right, x Down)")]
-    private Array2DNodeEnum _grid2Nodes;
+    private Array2DNodeEnum _gridMap;
 
     // Unity Awake
     void Awake() {
         _nodeMap = new Node[Rows, Columns];
         for (int x = 0; x < Rows; x++) {
             for (int y = 0; y < Columns; y++) {
-                _nodeMap[x, y] = new Node(!_gridMap.GetCell(x, y), x, y);
+                _nodeMap[x, y] = new Node(_gridMap.GetCell(x, y), x, y);
             }
         }
     }

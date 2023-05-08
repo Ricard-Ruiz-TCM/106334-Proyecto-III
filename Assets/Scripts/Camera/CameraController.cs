@@ -41,7 +41,14 @@ public class CameraController : MonoBehaviour {
     [SerializeField] float cameraMoveChangeTargetSpeed;
     float cameraSpeed;
 
-    [SerializeField] Grid2D grid;
+    [SerializeField]
+    public Grid2D grid {
+        get {
+            return Stage.StageGrid;
+        }
+        set {
+        }
+    }
 
     float xAnterior, yAnterior;
 

@@ -42,7 +42,7 @@ public class TurnManager : ActorsListController {
                 Debug.Log("WAITING");
                 break;
             case rounds.positioningRound:
-                foreach(Actor a in _actors) {
+                foreach (Actor a in _actors) {
                     if (a.CanBePlaced) {
                         a.GetComponent<Player>().Placing();
                     }
@@ -84,7 +84,7 @@ public class TurnManager : ActorsListController {
 
     /** Método para ordenar la lista según el valor de Movimiento de los actores */
     public void sort() {
-        
+
     }
 
     /** Método para indicar si estoy en la ronda de posicionamiento */

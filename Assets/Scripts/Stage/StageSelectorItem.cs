@@ -1,13 +1,13 @@
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class StageSelectorItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler {
 
     [SerializeField]
     private StageData _data;
     public StageData Data => _data;
-    
+
     [SerializeField, Header("UI Purpouse:")]
     public StageSelectorPanelInfoUI _panelInfo;
     [SerializeField]

@@ -4,8 +4,7 @@ using UnityEngine;
 public class ArrowRain : Skill {
 
     public override void Special(Actor from) {
-        FindObjectOfType<CombatManager>().UseSkill(from, _range, _skill,from.canInteract);
-        Debug.Log("ArrowRain special attack");
+        CombatManager.instance.UseSkill(from, range, skill, from.canInteract);
     }
 
 }

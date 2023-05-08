@@ -118,7 +118,7 @@ public class GridBuilder : MonoBehaviour {
 
     // Update del material del Plane
     public void UpdateMaterial(int x, int y, Material mat = null) {
-        if (mat == null) { 
+        if (mat == null) {
             Node data = GetGridPlane(x, y).node;
             Material m = new Material(Shader.Find("Universal Render Pipeline/Lit"));
 

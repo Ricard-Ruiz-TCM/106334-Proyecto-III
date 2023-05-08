@@ -11,7 +11,9 @@ public class GridPlane : MonoBehaviour {
 
     // Fast position access
     public Vector3 position {
-        get { return transform.position; }
+        get {
+            return transform.position;
+        }
     }
 
     // Unity Awake
@@ -21,7 +23,8 @@ public class GridPlane : MonoBehaviour {
 
     /** Método set de Grid y Nodo */
     public void SetGrid(Grid2D grid, Node node) {
-        grid2D = grid; this.node = node;
+        grid2D = grid;
+        this.node = node;
     }
 
     /** Método para setear el material */

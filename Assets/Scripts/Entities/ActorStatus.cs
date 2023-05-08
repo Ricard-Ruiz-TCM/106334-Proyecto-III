@@ -5,6 +5,7 @@ public class ActorStatus : ActorManager {
 
     [SerializeField, Header("Stats:")]
     protected List<StatusItem> _status;
+    public List<StatusItem> ActiveStatus => _status;
 
     public bool isStatusActive(buffsnDebuffs status) {
         foreach (StatusItem statusItem in _status) {
@@ -29,7 +30,7 @@ public class ActorStatus : ActorManager {
         if (!already) {
             Status st = uCore.GameManager.GetStatus(status);
             _status.Add(new StatusItem() { status = st, duration = st.duration });
-        } 
+        }
     }
 
     public void UpdateStatus() {

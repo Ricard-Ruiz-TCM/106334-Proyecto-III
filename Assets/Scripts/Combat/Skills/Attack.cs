@@ -4,7 +4,7 @@
 public class Attack : Skill {
 
     public override void Special(Actor from) {
-        FindObjectOfType<CombatManager>().UseSkill(from, _range, _skill, from.canInteract);
+        CombatManager.instance.UseSkill(from, range, skill, from.canInteract);
 
     }
 

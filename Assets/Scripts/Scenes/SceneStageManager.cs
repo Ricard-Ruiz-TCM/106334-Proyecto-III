@@ -75,7 +75,7 @@ public class SceneStageManager : MonoBehaviour {
         _dialogUI.SetActive(false);
         _perksUI.SetActive(true);
     }
-    
+
     /** Método para determinar qeu se ha ganado el Stage */
     public void StageSuccess() {
         uCore.GameManager.SaveGameData();

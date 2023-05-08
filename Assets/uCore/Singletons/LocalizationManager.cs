@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
 
 public class LocalizationManager : MonoBehaviour {
@@ -51,13 +50,13 @@ public class LocalizationManager : MonoBehaviour {
      * @param string path Dirección del fichero */
     private void LoadLocalizationFile(string path) {
         /**if (File.Exists(path)) {*/
-            _texts.Clear();
-            //string json = File.ReadAllText(path);
-            string json = Resources.Load<TextAsset>(path).text;
-            LocalizationData loadedData = JsonUtility.FromJson<LocalizationData>(json);
-            for (int i = 0; i < loadedData.items.Length; i++) {
-                _texts.Add(loadedData.items[i].key, loadedData.items[i].value);
-            }
+        _texts.Clear();
+        //string json = File.ReadAllText(path);
+        string json = Resources.Load<TextAsset>(path).text;
+        LocalizationData loadedData = JsonUtility.FromJson<LocalizationData>(json);
+        for (int i = 0; i < loadedData.items.Length; i++) {
+            _texts.Add(loadedData.items[i].key, loadedData.items[i].value);
+        }
         /**}*/
     }
 

@@ -10,3 +10,5 @@ public class DamageStatus : Status {
         me.TakeDamage(damage);
     }
 }
+
+

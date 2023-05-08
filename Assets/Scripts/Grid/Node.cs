@@ -7,7 +7,9 @@ public class Node {
     // Heuristic Costs
     public int g, h;
     public int f {
-        get { return g + h; }
+        get {
+            return g + h;
+        }
     }
 
     // Check if node is walkable
@@ -22,7 +24,9 @@ public class Node {
 
     // Constructor
     public Node(nodeType nType, int xPos, int yPos) {
-        x = xPos; y = yPos; type = nType;
+        x = xPos;
+        y = yPos;
+        type = nType;
     }
 
 }

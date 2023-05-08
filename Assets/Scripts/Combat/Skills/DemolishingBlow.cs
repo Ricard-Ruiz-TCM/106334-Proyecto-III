@@ -4,8 +4,8 @@
 public class DemolishingBlow : Skill {
 
     public override void Special(Actor from) {
-        FindObjectOfType<CombatManager>().GolpeDemoledor(from, duration, skill);
-        Debug.Log("Cleave special attack");
+        //FindObjectOfType<CombatManager>().GolpeDemoledor(from, duration, skill);
+        //Debug.Log("Cleave special attack");
     }
 
 }

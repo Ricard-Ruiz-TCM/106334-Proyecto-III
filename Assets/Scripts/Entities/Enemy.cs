@@ -33,7 +33,9 @@ public class Enemy : Actor {
 
     }
 
-    public override bool CanAct() { return acting.Equals(progress.ready) && moving.Equals(progress.done); }
+    public override bool CanAct() {
+        return acting.Equals(progress.ready) && moving.Equals(progress.done);
+    }
     public override void Act() {
         base.Act();
 
@@ -42,21 +44,24 @@ public class Enemy : Actor {
                 // Weapon Básica, el ataque
                 if (InRange(_target, _inventory.Weapon().range)) {
                     _target.TakeDamage(Damage());
-                //if (InRange(_target, _weapon._range)) {
-                //    _target.TakeDamage(Damage());
-                //}
-                /*if (InRange(_target, Skills()[1].skill._range))
-                {
-                    Debug.Log("hola");
-                    UseSkill(Skills()[1].skill._skill);
-                    //_target.TakeDamage(Damage());
-                }*/
+                    //if (InRange(_target, _weapon._range)) {
+                    //    _target.TakeDamage(Damage());
+                    //}
+                    /*if (InRange(_target, Skills()[1].skill._range))
+                    {
+                        Debug.Log("hola");
+                        UseSkill(Skills()[1].skill._skill);
+                        //_target.TakeDamage(Damage());
+                    }*/
+                }
             }
+            EndAction();
         }
-        EndAction();
     }
 
-    public override bool CanMove() { return moving.Equals(progress.ready) && !acting.Equals(progress.doing) && canMove; }
+    public override bool CanMove() {
+        return moving.Equals(progress.ready) && !acting.Equals(progress.doing) && canMove;
+    }
     public override void Move() {
         base.Move();
         if (_target == null) {
@@ -90,7 +95,8 @@ public class Enemy : Actor {
             float distance = Vector3.Distance(obj.transform.position, transform.position);
             if (distance < dist) {
                 if (!obj.GetComponent<ActorStatus>().isStatusActive(buffsnDebuffs.Invisible)) {
-                    actor = obj; dist = distance;
+                    actor = obj;
+                    dist = distance;
                 }
             }
         }

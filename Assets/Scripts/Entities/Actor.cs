@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public abstract class ActorManager : MonoBehaviour {
 
@@ -24,7 +23,9 @@ public abstract class Actor : ActorManager {
     protected ActorPerks _perks;
     protected ActorSkills _skills;
     protected ActorStatus _status;
+    public ActorStatus Status => _status;
     protected ActorInventory _inventory;
+    public WeaponItem Weapon => _inventory.Weapon();
 
     public bool CanBePlaced = false;
 
@@ -55,7 +56,9 @@ public abstract class Actor : ActorManager {
 
     [SerializeField, Header("Invisible:")]
     protected bool isInvisible = false;
-    public bool IsInvisible() { return isInvisible; }
+    public bool IsInvisible() {
+        return isInvisible;
+    }
     protected int invisibleRounds = 1;
 
     [SerializeField, Header("Stun:")]
@@ -83,7 +86,7 @@ public abstract class Actor : ActorManager {
         _inventory = GetComponent<ActorInventory>();
 
         _gridMovement = GetComponent<GridMovement>();
-        _gridMovement.onStepReached += (Array2DEditor.nodeType t) => { 
+        _gridMovement.onStepReached += (Array2DEditor.nodeType t) => {
             _movementsDone++;
             if (t.Equals(Array2DEditor.nodeType.M)) {
                 _movementsDone++;
@@ -106,7 +109,7 @@ public abstract class Actor : ActorManager {
         }
         foreach (Perk pk in _perks.Perks()) {
             if (pk is SkillPerk) {
-                _skills.AddSkill(((SkillPerk)pk)._skill.skill);
+                _skills.AddSkill(((SkillPerk)pk).skill.skill);
             }
         }
     }
@@ -120,8 +123,17 @@ public abstract class Actor : ActorManager {
         // Apply Modifiers
         foreach (Perk pk in _perks.Perks()) {
             if (pk is ModPerk) {
-                if (pk.modificationType.Equals(perkModification.damage)) {
+                if (pk.modificationType.Equals(modificationType.damage)) {
                     dmg += (int)((ModPerk)pk).modifier;
+                }
+            }
+        }
+
+        // check Status
+        foreach (StatusItem sitem in _status.ActiveStatus) {
+            if (sitem.status is ModStatus) {
+                if (((ModStatus)sitem.status).type.Equals(modificationType.damage)){
+                    dmg *= ((ModStatus)sitem.status).modification;
                 }
             }
         }
@@ -143,8 +155,17 @@ public abstract class Actor : ActorManager {
         // Apply Modifiers
         foreach (Perk pk in _perks.Perks()) {
             if (pk is ModPerk) {
-                if (pk.modificationType.Equals(perkModification.defense)) {
+                if (pk.modificationType.Equals(modificationType.defense)) {
                     defense += (int)((ModPerk)pk).modifier;
+                }
+            }
+        }
+
+        // check Status
+        foreach (StatusItem sitem in _status.ActiveStatus) {
+            if (sitem.status is ModStatus) {
+                if (((ModStatus)sitem.status).type.Equals(modificationType.defense)) {
+                    defense *= ((ModStatus)sitem.status).modification;
                 }
             }
         }
@@ -153,16 +174,13 @@ public abstract class Actor : ActorManager {
 
         return defense;
     }
-    public void UpdateDefense(int number, string equation, int roundsToLast)
-    {
-        Expertise ex = _upgrades.Find(x => x._item.Equals(_armor._item));
-        if (anteriorDefense == 0)
-        {
+    public void UpdateDefense(int number, string equation, int roundsToLast) {
+        /**Expertise ex = _upgrades.Find(x => x._item.Equals(_armor._item));
+        if (anteriorDefense == 0) {
             anteriorDefense = _armor._defense[(ex != null ? ex._level : 0)];
         }
 
-        switch (equation)
-        {
+        switch (equation) {
             case "+":
                 _armor._defense[(ex != null ? ex._level : 0)] += number;
                 break;
@@ -176,18 +194,15 @@ public abstract class Actor : ActorManager {
                 _armor._defense[(ex != null ? ex._level : 0)] *= number;
                 break;
         }
-        defenseModRounds = roundsToLast;
+        defenseModRounds = roundsToLast;*/
     }
-    public void UpdateAttack(int number, string equation, int roundsToLast)
-    {
-        Expertise ex = _upgrades.Find(x => x._item.Equals(_weapon._item));
-        if(anteriorDamage == 0)
-        {
+    public void UpdateAttack(int number, string equation, int roundsToLast) {
+        /*Expertise ex = _upgrades.Find(x => x._item.Equals(_weapon._item));
+        if (anteriorDamage == 0) {
             anteriorDamage = _weapon._damage[(ex != null ? ex._level : 0)];
         }
 
-        switch (equation)
-        {
+        switch (equation) {
             case "+":
                 _weapon._damage[(ex != null ? ex._level : 0)] += number;
                 break;
@@ -201,7 +216,7 @@ public abstract class Actor : ActorManager {
                 _weapon._damage[(ex != null ? ex._level : 0)] *= number;
                 break;
         }
-        damageModRounds = roundsToLast;
+        damageModRounds = roundsToLast;*/
     }
 
     public virtual int Movement() {
@@ -212,9 +227,19 @@ public abstract class Actor : ActorManager {
         return movement;
     }
 
-    public void TakeDamage(int damage) {
+    public void TakeDamage(int damage, items weaponItem = items.NONE) {
 
-        _health = Mathf.Max(0, _health -= Mathf.Max(0, (damage - Defense())));
+        int newH = Mathf.Max(0, _health -= Mathf.Max(0, (damage - Defense())));
+
+
+        if (weaponItem.Equals(items.Bow)) {
+            if (Status.isStatusActive(buffsnDebuffs.ArrowInmune)){
+                newH = _health;
+            }
+        }
+
+        _health = newH;
+
 
         // Cal Result
         if (_health == 0) {
@@ -262,22 +287,18 @@ public abstract class Actor : ActorManager {
             acting = progress.done;
         }
 
-        if(damageModRounds != 0)
-        {
+        if (damageModRounds != 0) {
             damageModRounds--;
-            if(damageModRounds == 0)
-            {
-                Expertise ex = _upgrades.Find(x => x._item.Equals(_weapon._item));
-                _weapon._damage[(ex != null ? ex._level : 0)] = anteriorDamage;
+            if (damageModRounds == 0) {
+                //Expertise ex = _upgrades.Find(x => x._item.Equals(_weapon._item));
+                //_weapon._damage[(ex != null ? ex._level : 0)] = anteriorDamage;
             }
         }
-        if (defenseModRounds != 0)
-        {
+        if (defenseModRounds != 0) {
             defenseModRounds--;
-            if (defenseModRounds == 0)
-            {
-                Expertise ex = _upgrades.Find(x => x._item.Equals(_armor._item));
-                _armor._defense[(ex != null ? ex._level : 0)] = anteriorDefense;
+            if (defenseModRounds == 0) {
+                //Expertise ex = _upgrades.Find(x => x._item.Equals(_armor._item));
+                //_armor._defense[(ex != null ? ex._level : 0)] = anteriorDefense;
             }
         }
 

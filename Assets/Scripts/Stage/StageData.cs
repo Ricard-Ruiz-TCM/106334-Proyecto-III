@@ -2,7 +2,7 @@
 
 [Serializable]
 public struct StageData {
-    
+
     public int ID;
     public string keyName;
 

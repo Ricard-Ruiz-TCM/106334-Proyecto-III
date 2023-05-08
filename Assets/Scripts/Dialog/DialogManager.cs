@@ -19,10 +19,14 @@ public class DialogManager : MonoBehaviour {
 
     /** Special Nodes */
     private DialogNode _lastOptionsNode;
-    public DialogNode LastOptions() { return _lastOptionsNode; }
+    public DialogNode LastOptions() {
+        return _lastOptionsNode;
+    }
 
     private DialogNode _lastTriggerNode;
-    public DialogNode LastTrigger() { return _lastTriggerNode; }
+    public DialogNode LastTrigger() {
+        return _lastTriggerNode;
+    }
 
     // Unity Awake
     void Awake() {
@@ -65,7 +69,7 @@ public class DialogManager : MonoBehaviour {
             _lastTriggerNode = _current;
             ((DialogTrigger)_current).Trigger();
             NextDialog(_current.nextNode);
-        } 
+        }
         // Options DialogNode
         else if (_current.options.Count != 0) {
             _lastOptionsNode = _current;

@@ -14,6 +14,8 @@ public abstract class Skill : ScriptableObject {
 
     public int duration;
 
+    public int range;
+
     public abstract void Special(Actor from);
 
 }

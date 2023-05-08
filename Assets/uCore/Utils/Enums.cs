@@ -65,7 +65,7 @@ public enum items {
 public enum skills {
     NONE,
 
-    ArrowRain, Attack, Cleave, Defense, DoubleLunge, MoralizingShout, Vanish,TalonDeAquiles,FormacionTortuga,CaballoDeTroya,
+    ArrowRain, Attack, Cleave, Defense, DoubleLunge, MoralizingShout, Vanish, TalonDeAquiles, FormacionTortuga, CaballoDeTroya,
 
     MAX
 }
@@ -80,7 +80,7 @@ public enum perks {
 }
 
 // Tipo de modificación que da una perk
-public enum perkModification {
+public enum modificationType {
     damage, defense, health, skill
 }
 
@@ -96,7 +96,7 @@ public enum enemyCombatStyle {
 
 // Tipo de estados
 public enum buffsnDebuffs {
-    Stunned, Bleed, Poisoned, Invisible
+    Stunned, Bleed, Poisoned, Invisible, DamageBuffx3, DefenseBuffx3, ArrowInmune
 }
 
 // Dificultad del stage
@@ -116,7 +116,7 @@ public enum stageTerrain {
 
 // Tipo de dificultad del terreno, Enum especial para el package de Array2DEditor
 namespace Array2DEditor {
-    public enum nodeType{
+    public enum nodeType {
         __ = 0,
         P = 1,
         E = 51,

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class SceneMenuManager : MonoBehaviour {
 
-    [SerializeField, Header("Tutorial Stage:" )]
+    [SerializeField, Header("Tutorial Stage:")]
     private StageData _tutorial;
 
     [SerializeField, Header("Continue Button:")]
@@ -24,7 +24,7 @@ public class SceneMenuManager : MonoBehaviour {
         uCore.GameManager.StageSelected(_tutorial);
         uCore.Director.LoadSceneAsync(gameScenes.Stage);
     }
-        
+
     public void BTN_Settings() {
         Debug.Log("Options");
     }

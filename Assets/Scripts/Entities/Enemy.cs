@@ -6,8 +6,6 @@ using UnityEngine;
 [RequireComponent(typeof(ActorInventory))]
 public class Enemy : Actor {
 
-    public CombatManager _Cmanager;
-
     public Actor _target;
 
     [SerializeField]
@@ -16,8 +14,6 @@ public class Enemy : Actor {
     // Unity Awake
     protected override void Awake() {
         base.Awake();
-
-        _Cmanager = GameObject.FindObjectOfType<CombatManager>();
     }
 
     // Unity Start
@@ -91,7 +87,7 @@ public class Enemy : Actor {
         Actor actor = null;
         float dist = Mathf.Infinity;
 
-        foreach (Actor obj in _Cmanager.FindPlayers()) {
+        foreach (Actor obj in CombatManager.instance.FindPlayers()) {
             float distance = Vector3.Distance(obj.transform.position, transform.position);
             if (distance < dist) {
                 if (!obj.GetComponent<ActorStatus>().isStatusActive(buffsnDebuffs.Invisible)) {

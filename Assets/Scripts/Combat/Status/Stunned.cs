@@ -4,7 +4,8 @@
 public class Stunned : Status {
 
     public override void Effect(Actor me) {
-        Debug.Log("Stunned Effect");
+        me.EndAction();
+        me.EndMovement();
     }
 
 }

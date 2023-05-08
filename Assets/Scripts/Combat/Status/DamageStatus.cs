@@ -4,9 +4,9 @@
 public class DamageStatus : Status {
 
     [SerializeField, Header("Damage:")]
-    private float damage;
+    private int damage;
 
     public override void Effect(Actor me) {
-        Debug.Log("DAMAGE STATUS EFFECT FROM " + status.ToString());
+        me.TakeDamage(damage);
     }
 }

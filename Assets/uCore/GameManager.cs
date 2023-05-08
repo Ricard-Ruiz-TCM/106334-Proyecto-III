@@ -147,13 +147,13 @@ public class GameManager : MonoBehaviour {
 
     #region Status
 
-    private Dictionary<aStatus, Status> _status;
+    private Dictionary<buffsnDebuffs, Status> _status;
 
     public void LoadStatusData() {
-        _status = new Dictionary<aStatus, Status>();
+        _status = new Dictionary<buffsnDebuffs, Status>();
         Status[] allStatus = Resources.LoadAll<Status>("ScriptableObjects/Status");
         foreach (Status astatus in allStatus) {
-            aStatus sts;
+            buffsnDebuffs sts;
             if (Enum.TryParse(astatus.name, out sts)) {
                 _status.Add(sts, astatus);
             } else {
@@ -162,7 +162,7 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    public Status GetStatus(aStatus name) {
+    public Status GetStatus(buffsnDebuffs name) {
         if (_status == null) {
             LoadPerkData();
         }

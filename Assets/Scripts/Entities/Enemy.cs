@@ -81,7 +81,7 @@ public class Enemy : Actor {
         foreach (Actor obj in _Cmanager.FindPlayers()) {
             float distance = Vector3.Distance(obj.transform.position, transform.position);
             if (distance < dist) {
-                if (!obj.GetComponent<ActorStatus>().isStatusActive(aStatus.Invisible)) {
+                if (!obj.GetComponent<ActorStatus>().isStatusActive(buffsnDebuffs.Invisible)) {
                     actor = obj; dist = distance;
                 }
             }

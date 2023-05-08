@@ -6,7 +6,7 @@ public class ActorStatus : ActorManager {
     [SerializeField, Header("Stats:")]
     protected List<StatusItem> _status;
 
-    public bool isStatusActive(aStatus status) {
+    public bool isStatusActive(buffsnDebuffs status) {
         foreach (StatusItem statusItem in _status) {
             if (statusItem.status.status.Equals(status)) {
                 return true;
@@ -16,7 +16,7 @@ public class ActorStatus : ActorManager {
         return false;
     }
 
-    public void ApplyStatus(aStatus status) {
+    public void ApplyStatus(buffsnDebuffs status) {
         bool already = false;
 
         foreach (StatusItem statusItem in _status) {

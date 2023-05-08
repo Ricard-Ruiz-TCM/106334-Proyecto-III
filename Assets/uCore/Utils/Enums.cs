@@ -95,7 +95,7 @@ public enum enemyCombatStyle {
 }
 
 // Tipo de estados
-public enum aStatus {
+public enum buffsnDebuffs {
     Stunned, Bleed, Poisoned, Invisible
 }
 

@@ -183,11 +183,11 @@ public abstract class Actor : ActorManager {
 
         /** Custom Status EFFECTS */
         // Invisible
-        if (_status.isStatusActive(aStatus.Invisible)) {
+        if (_status.isStatusActive(buffsnDebuffs.Invisible)) {
             gameObject.GetComponentInChildren<SkinnedMeshRenderer>().material = materialDefault;
         }
         // Stunned
-        if (_status.isStatusActive(aStatus.Stunned)) {
+        if (_status.isStatusActive(buffsnDebuffs.Stunned)) {
             moving = progress.done;
             acting = progress.done;
         }

@@ -7,7 +7,7 @@ public abstract class Status : ScriptableObject {
     public string keyDesc;
 
     [Header("Status:")]
-    public aStatus status;
+    public buffsnDebuffs status;
     public int duration;
 
     public abstract void Effect(Actor me);

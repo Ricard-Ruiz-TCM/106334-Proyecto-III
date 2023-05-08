@@ -8,16 +8,8 @@ public class Pathfinding : MonoBehaviour {
         Manhattan, Diagonal, Euclidean
     }
 
-    // Grid
-    private Grid2D _grid;
-
     [SerializeField]
     private heuristic _heuristic;
-
-    // Unity Awake
-    void Awake() {
-        _grid = GetComponent<Grid2D>();
-    }
 
     /** Método FindPath, busca la mejor ruta entre 2 nodos, devuelve la lista de origin -> target **/
     public List<Node> FindPath(Node origin, Node target) {
@@ -48,7 +40,7 @@ public class Pathfinding : MonoBehaviour {
             }
 
             // Revisamos los vecinos al nodo en cuestión 
-            foreach (Node neighbour in _grid.GetNeighbours(node)) {
+            foreach (Node neighbour in Stage.StageGrid.GetNeighbours(node)) {
                 if (!neighbour.walkable || closedList.Contains(neighbour)) {
                     continue;
                 }

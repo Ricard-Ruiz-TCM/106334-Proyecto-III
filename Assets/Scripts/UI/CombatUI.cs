@@ -54,7 +54,7 @@ public class CombatUI : MonoBehaviour {
 
         if (_currentActor is Player) {
             ClearSkills();
-            foreach (SkillItem skI in _currentActor.Skills()) {
+            foreach (SkillItem skI in _currentActor.GetComponent<ActorSkills>().Skills()) {
                 GameObject btn = GameObject.Instantiate(_skillButtonUI, _panelSkills);
                 btn.GetComponent<SkillButtonUI>().Set(_currentActor, skI);
                 btn.GetComponent<Button>().interactable = (skI.cooldown <= 0);

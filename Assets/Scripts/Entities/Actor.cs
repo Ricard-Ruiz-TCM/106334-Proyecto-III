@@ -6,7 +6,7 @@ public abstract class ActorManager : MonoBehaviour {
     // Actor getter
     private Actor _actor = null;
     [HideInInspector]
-    protected Actor actor {
+    public Actor actor {
         get {
             if (_actor == null)
                 _actor = GetComponent<Actor>();
@@ -21,10 +21,10 @@ public abstract class ActorManager : MonoBehaviour {
 
 public abstract class Actor : ActorManager {
 
-    ActorPerks _perks;
-    ActorSkills _skills;
-    ActorStatus _status;
-    ActorInventory _inventory;
+    protected ActorPerks _perks;
+    protected ActorSkills _skills;
+    protected ActorStatus _status;
+    protected ActorInventory _inventory;
 
     // Grid Movement
     protected GridMovement _gridMovement;

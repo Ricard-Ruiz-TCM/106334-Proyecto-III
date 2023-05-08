@@ -36,9 +36,9 @@ public class Enemy : Actor {
         base.Act();
 
         if (_target != null) {
-            if (_weapon != null) {
+            if (_inventory.Weapon() != null) {
                 // Weapon Básica, el ataque
-                if (InRange(_target, _weapon.range)) {
+                if (InRange(_target, _inventory.Weapon().range)) {
                     _target.TakeDamage(Damage());
                 }
             }
@@ -61,8 +61,8 @@ public class Enemy : Actor {
         } else {
             List<Node> route = _gridMovement.CalcRoute(transform.position, targetPlane);
             route.Reverse();
-            if (route.Count > _weapon.range) {
-                destiny = _gridMovement.Builder().GetGridPlane(route[_weapon.range]);
+            if (route.Count > _inventory.Weapon().range) {
+                destiny = _gridMovement.Builder().GetGridPlane(route[_inventory.Weapon().range]);
             }
 
         }
@@ -79,7 +79,7 @@ public class Enemy : Actor {
         foreach (Actor obj in _Cmanager.FindPlayers()) {
             float distance = Vector3.Distance(obj.transform.position, transform.position);
             if (distance < dist) {
-                if (!obj.IsInvisible()) {
+                if (!obj.GetComponent<ActorStatus>().isStatusActive(aStatus.Invisible)) {
                     actor = obj; dist = distance;
                 }
             }

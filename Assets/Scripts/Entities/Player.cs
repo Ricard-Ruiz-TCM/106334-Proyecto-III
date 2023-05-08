@@ -13,9 +13,6 @@ public class Player : Actor {
     protected virtual void Start() {
         SubscribeManager();
 
-        FindObjectOfType<InventoryUI>().AsignInventory(_inventory);
-        FindObjectOfType<InventoryUI>().UpdateInventory(_inventory);
-
         BuildSkills();
 
     }
@@ -57,7 +54,7 @@ public class Player : Actor {
     public override void Act() {
         base.Act();
 
-        _inventory.AddItem(items.Bow);
+        //_inventory.AddItem(items.Bow);
 
         Damage();
 

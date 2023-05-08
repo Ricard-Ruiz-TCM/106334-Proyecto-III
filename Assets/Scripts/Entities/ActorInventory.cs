@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-class ActorInventory : ActorManager {
+public class ActorInventory : ActorManager {
 
     [SerializeField, Header("Equipment:")]
     protected ArmorItem _armor;

@@ -57,7 +57,13 @@ public abstract class Actor : MonoBehaviour, ITurnable {
     protected int _isStuned = 0;
     protected int _stunedRounds = 1;
 
+    [SerializeField, Header("Turtle:")]
+    protected bool _isTurtle = false;
 
+    int damageModRounds = 0;
+    int defenseModRounds = 0;
+    int anteriorDefense = 0;
+    int anteriorDamage = 0;
     int invisibleRoundsController;
     [SerializeField] Material materialInvisible;
     Material materialDefault;
@@ -136,6 +142,56 @@ public abstract class Actor : MonoBehaviour, ITurnable {
         defense += _tempDef;
 
         return defense;
+    }
+    public void UpdateDefense(int number, string equation, int roundsToLast)
+    {
+        Expertise ex = _upgrades.Find(x => x._item.Equals(_armor._item));
+        if (anteriorDefense == 0)
+        {
+            anteriorDefense = _armor._defense[(ex != null ? ex._level : 0)];
+        }
+
+        switch (equation)
+        {
+            case "+":
+                _armor._defense[(ex != null ? ex._level : 0)] += number;
+                break;
+            case "-":
+                _armor._defense[(ex != null ? ex._level : 0)] -= number;
+                break;
+            case "/":
+                _armor._defense[(ex != null ? ex._level : 0)] /= number;
+                break;
+            case "*":
+                _armor._defense[(ex != null ? ex._level : 0)] *= number;
+                break;
+        }
+        defenseModRounds = roundsToLast;
+    }
+    public void UpdateAttack(int number, string equation, int roundsToLast)
+    {
+        Expertise ex = _upgrades.Find(x => x._item.Equals(_weapon._item));
+        if(anteriorDamage == 0)
+        {
+            anteriorDamage = _weapon._damage[(ex != null ? ex._level : 0)];
+        }
+
+        switch (equation)
+        {
+            case "+":
+                _weapon._damage[(ex != null ? ex._level : 0)] += number;
+                break;
+            case "-":
+                _weapon._damage[(ex != null ? ex._level : 0)] -= number;
+                break;
+            case "/":
+                _weapon._damage[(ex != null ? ex._level : 0)] /= number;
+                break;
+            case "*":
+                _weapon._damage[(ex != null ? ex._level : 0)] *= number;
+                break;
+        }
+        damageModRounds = roundsToLast;
     }
 
     public virtual int Movement() {
@@ -232,6 +288,11 @@ public abstract class Actor : MonoBehaviour, ITurnable {
         _isStuned = _stunedRounds;
     }
 
+    public void Turtle()
+    {
+        _isTurtle = true;
+    }
+
     #region ITurnable 
     public Actor actor {
         get { return this; }
@@ -271,10 +332,30 @@ public abstract class Actor : MonoBehaviour, ITurnable {
             isInvisible = false;
             gameObject.GetComponentInChildren<SkinnedMeshRenderer>().material = materialDefault;
         }
+        _isTurtle = false;
 
         if (_isStuned > 0) {
             moving = progress.done;
             acting = progress.done;
+        }
+
+        if(damageModRounds != 0)
+        {
+            damageModRounds--;
+            if(damageModRounds == 0)
+            {
+                Expertise ex = _upgrades.Find(x => x._item.Equals(_weapon._item));
+                _weapon._damage[(ex != null ? ex._level : 0)] = anteriorDamage;
+            }
+        }
+        if (defenseModRounds != 0)
+        {
+            defenseModRounds--;
+            if (defenseModRounds == 0)
+            {
+                Expertise ex = _upgrades.Find(x => x._item.Equals(_armor._item));
+                _armor._defense[(ex != null ? ex._level : 0)] = anteriorDefense;
+            }
         }
 
     }

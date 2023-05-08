@@ -284,6 +284,10 @@ public class CombatManager : MonoBehaviour {
             {
                 ExtendAttack(i, j, actor, true, skillType);
             }
+            for (int z = node.y - 1; z > node.y - count; z--)
+            {
+                ExtendAttack(i, z, actor, true, skillType);
+            }
 
             if (totalCount > range)
             {
@@ -338,7 +342,11 @@ public class CombatManager : MonoBehaviour {
                         _actors[i].Stun();
                         break;
                     case skills.MoralizingShout:
-                        Debug.Log("mola");
+                        if (_actors[i].transform.CompareTag("Player"))
+                        {
+                            _actors[i].UpdateAttack(2, "+",1);
+                            Debug.Log("mola");
+                        }
                         break;
                 }
 

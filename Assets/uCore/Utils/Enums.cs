@@ -91,7 +91,7 @@ public enum perkCategory {
 
 // Tipo de combate del enemigo
 public enum enemyCombatStyle {
-    ranged, melee
+    ranged, melee, flee
 }
 
 // Tipo de estados

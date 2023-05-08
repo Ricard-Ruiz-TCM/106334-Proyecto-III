@@ -1,23 +1,20 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class ActorStatus : MonoBehaviour {
-
-    private Actor _actor = null;
-    [HideInInspector]
-    public Actor actor {
-        get {
-            if (_actor == null)
-                _actor = GetComponent<Actor>();
-
-            return _actor;
-        }
-        set {
-        }
-    }
+public class ActorStatus : ActorManager {
 
     [SerializeField, Header("Stats:")]
     protected List<StatusItem> _status;
+
+    public bool isStatusActive(aStatus status) {
+        foreach (StatusItem statusItem in _status) {
+            if (statusItem.status.status.Equals(status)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 
     public void ApplyStatus(aStatus status) {
         bool already = false;

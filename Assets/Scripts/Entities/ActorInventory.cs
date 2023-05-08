@@ -1,10 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using UnityEngine;
 
-namespace Assets.Scripts.Entities {
-    class ActorInventory {
+class ActorInventory : ActorManager {
+
+    [SerializeField, Header("Equipment:")]
+    protected ArmorItem _armor;
+    public ArmorItem Armor() {
+        return _armor;
     }
+    [SerializeField]
+    protected WeaponItem _weapon;
+    public WeaponItem Weapon() {
+        return _weapon;
+    }
+    [SerializeField]
+    protected ShieldItem _shield;
+    public ShieldItem Shield() {
+        return _shield;
+    }
+
+    [SerializeField, Header("Inventory:")]
+    protected Inventory _inventory;
+
 }

@@ -1,10 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
-namespace Assets.Scripts.Entities {
-    class ActorPerks {
+
+public class ActorPerks : ActorManager {
+
+    [SerializeField, Header("Acive Perks:")]
+    protected List<Perk> _perks;
+    public List<Perk> Perks() {
+        return _perks;
     }
+
+    public void AddPerk(Perk perk) {
+
+    }
+
+    public void RemovePerk(Perk perk) {
+
+    }
+
+    public bool HavePerk(Perk perk) {
+        foreach (Perk pks in _perks) {
+            if (pks.Equals(perk))
+                return true;
+        }
+        return false;
+    }
+
 }

@@ -96,7 +96,7 @@ public class TurnManager : ActorsListController {
     /** Método para indicar que ya hemos hecho el posicionamiento */
     public void positioningDone() {
         _roundType = rounds.combatRound;
-        _turnProgress = progress.ready;
+        _turnProgress = progress.doing;
         _actors[_current].BeginTurn();
         onStartTurn?.Invoke();
     }

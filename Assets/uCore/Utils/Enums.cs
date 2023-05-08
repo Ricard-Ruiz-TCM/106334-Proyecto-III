@@ -91,7 +91,7 @@ public enum perkCategory {
 
 // Tipo de combate del enemigo
 public enum enemyCombatStyle {
-    ranged, melee
+    ranged, melee, flee
 }
 
 // Tipo de estados
@@ -114,7 +114,11 @@ public enum stageTerrain {
     mountain, swamp, meadow
 }
 
-// Tipo de dificiultades del terreno
-public enum gridNodeDiff {
-    diff0 = 0, diff1 = 1, diff99 = 99
+// Tipo de dificultad del terreno, Enum especial para el package de Array2DEditor
+namespace Array2DEditor {
+    public enum gridNodeDiff{
+        _ = 1,
+        P = 1,
+        X = 99
+    }
 }

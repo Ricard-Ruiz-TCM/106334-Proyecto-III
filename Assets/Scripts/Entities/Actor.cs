@@ -1,7 +1,30 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Actor : MonoBehaviour {
+public abstract class ActorManager : MonoBehaviour {
+
+    // Actor getter
+    private Actor _actor = null;
+    [HideInInspector]
+    public Actor actor {
+        get {
+            if (_actor == null)
+                _actor = GetComponent<Actor>();
+
+            return _actor;
+        }
+        set {
+        }
+    }
+
+}
+
+public abstract class Actor : ActorManager {
+
+    protected ActorPerks _perks;
+    protected ActorSkills _skills;
+    protected ActorStatus _status;
+    protected ActorInventory _inventory;
 
     // Grid Movement
     protected GridMovement _gridMovement;
@@ -14,69 +37,47 @@ public abstract class Actor : MonoBehaviour {
     protected int _tempDef;
     [SerializeField]
     protected bool _isAlive;
-    public bool IsAlive() { return _isAlive; }
+    public bool IsAlive() {
+        return _isAlive;
+    }
 
     [SerializeField, Header("Movement:")]
     protected int _movement;
     protected int _movementsDone;
 
-    [SerializeField, Header("Equipment:")]
-    protected ArmorItem _armor;
-    public ArmorItem Armor() { return _armor; }
-    [SerializeField]
-    protected WeaponItem _weapon;
-    public WeaponItem Weapon() { return _weapon; }
-    [SerializeField]
-    protected ArmorItem _shield;
-    public ArmorItem Shield() { return _shield; }
-
-    [SerializeField, Header("Inventory:")]
-    protected Inventory _inventory;
-
-    [SerializeField, Header("Acive Perks:")]
-    protected List<Perk> _perks;
-
-    [SerializeField, Header("Skills avaliable:")]
-    protected List<SkillItem> _skills;
-
     [SerializeField, Header("CanMove:")]
     public bool canMove = true;
 
-    [SerializeField, Header("Invisible:")]
-    protected bool isInvisible = false;
-    public bool IsInvisible() { return isInvisible; }
-    protected int invisibleRounds = 1;
-
-    [SerializeField, Header("Stun:")]
-    protected int _isStuned = 0;
-    protected int _stunedRounds = 1;
-
-
-    int invisibleRoundsController;
     [SerializeField] Material materialInvisible;
     Material materialDefault;
 
 
     protected virtual void Awake() {
+
+        _perks = GetComponent<ActorPerks>();
+        _skills = GetComponent<ActorSkills>();
+        _status = GetComponent<ActorStatus>();
+        _inventory = GetComponent<ActorInventory>();
+
         _gridMovement = GetComponent<GridMovement>();
         _gridMovement.onStepReached += () => { _movementsDone++; };
-        invisibleRoundsController = invisibleRounds;
         materialDefault = gameObject.GetComponentInChildren<SkinnedMeshRenderer>().material;
     }
 
     protected void BuildSkills() {
-        if (_weapon != null) {
-            AddSkill(skills.Attack);
+        if (_inventory.Weapon() != null) {
+            _skills.AddSkill(skills.Attack);
         }
-        if (_shield != null) {
-            AddSkill(skills.Defense);
+        if (_inventory.Shield() != null) {
+            _skills.AddSkill(skills.Defense);
         }
-        if (_weapon != null) {
-            AddSkill(_weapon.skill.skill);
+        if (_inventory.Weapon() != null) {
+            _skills.AddSkill(_inventory.Weapon().skill.skill);
         }
-        foreach (Perk pk in _perks) {
-            if (pk is SkillPerk)
-                AddSkill(((SkillPerk)pk)._skill.skill);
+        foreach (Perk pk in _perks.Perks()) {
+            if (pk is SkillPerk) {
+                _skills.AddSkill(((SkillPerk)pk)._skill.skill);
+            }
         }
     }
 
@@ -84,10 +85,10 @@ public abstract class Actor : MonoBehaviour {
         int dmg = 0;
 
         // Get Values
-        dmg += _weapon.damage[0];
+        dmg += _inventory.Weapon().damage[0];
 
         // Apply Modifiers
-        foreach (Perk pk in _perks) {
+        foreach (Perk pk in _perks.Perks()) {
             if (pk is ModPerk) {
                 if (pk.modificationType.Equals(perkModification.damage)) {
                     dmg += (int)((ModPerk)pk).modifier;
@@ -102,22 +103,14 @@ public abstract class Actor : MonoBehaviour {
         return _health;
     }
 
-    public void AddTempDef(int def) {
-        _tempDef = def;
-    }
-
-    public void SetInvisible(bool inv) {
-        isInvisible = inv;
-        gameObject.GetComponentInChildren<SkinnedMeshRenderer>().material = materialInvisible;
-    }
     public int Defense() {
         int defense = 0;
 
         // Get Values
-        defense = _armor.defense[0];
+        defense = _inventory.Armor().defense[0];
 
         // Apply Modifiers
-        foreach (Perk pk in _perks) {
+        foreach (Perk pk in _perks.Perks()) {
             if (pk is ModPerk) {
                 if (pk.modificationType.Equals(perkModification.defense)) {
                     defense += (int)((ModPerk)pk).modifier;
@@ -150,85 +143,6 @@ public abstract class Actor : MonoBehaviour {
         }
     }
 
-    public void AddPerk(Perk perk) {
-
-    }
-    public void RemovePerk(Perk perk) {
-
-    }
-    public bool HavePerk(Perk perk) {
-        foreach (Perk pks in _perks) {
-            if (pks.Equals(perk))
-                return true;
-        }
-        return false;
-    }
-
-    public void AddSkill(skills skill) {
-        bool already = false;
-
-        foreach (SkillItem skillItem in _skills) {
-            if (skillItem.skill.skill.Equals(skill))
-                already = true;
-        }
-
-        if (!already) {
-            Skill sk = uCore.GameManager.GetSkill(skill);
-            _skills.Add(new SkillItem() { skill = sk, cooldown = sk.cooldown }); ;
-        }
-    }
-    public void RemoveSkill(skills skill) {
-        if (HaveSkill(skill)) {
-            int pos = -1;
-            for (int i = 0; i < _skills.Count; i++) {
-                if (_skills[i].skill.Equals(skill)) {
-                    pos = i;
-                    break;
-                }
-            }
-            if (pos != -1) {
-                _skills.RemoveAt(pos);
-            }
-        }
-    }
-    public void UseSkill(skills skill) {
-        foreach (SkillItem skillItem in _skills) {
-            if (skillItem.skill.skill.Equals(skill)) {
-                if (skillItem.cooldown <= 0) {
-                    skillItem.skill.Special(this);
-                    skillItem.cooldown = skillItem.skill.cooldown;
-                }
-            }
-        }
-    }
-    public void UpdateSkillCooldown() {
-        foreach (SkillItem skillItem in _skills) {
-            if (skillItem.cooldown > 0) {
-                skillItem.cooldown--;
-            }
-        }
-    }
-    public bool HaveSkill(skills skill) {
-        foreach (SkillItem skillItem in _skills) {
-            if (skillItem.skill.skill.Equals(skill))
-                return true;
-        }
-        return false;
-    }
-
-    public List<SkillItem> Skills() {
-        return _skills;
-    }
-
-    public void Stun() {
-        _isStuned = _stunedRounds;
-    }
-
-    #region ITurnable 
-    public Actor actor {
-        get { return this; }
-        private set { }
-    }
     public progress moving {
         get; private set;
     }
@@ -256,15 +170,14 @@ public abstract class Actor : MonoBehaviour {
         _movementsDone = 0;
         _tempDef = 0;
         hasTurnEnded = false;
-        if (invisibleRoundsController > 0 && isInvisible) {
-            invisibleRoundsController--;
-        } else if (isInvisible) {
-            invisibleRoundsController = invisibleRounds;
-            isInvisible = false;
+
+        /** Custom Status EFFECTS */
+        // Invisible
+        if (_status.isStatusActive(aStatus.Invisible)) {
             gameObject.GetComponentInChildren<SkinnedMeshRenderer>().material = materialDefault;
         }
-
-        if (_isStuned > 0) {
+        // Stunned
+        if (_status.isStatusActive(aStatus.Stunned)) {
             moving = progress.done;
             acting = progress.done;
         }
@@ -272,8 +185,10 @@ public abstract class Actor : MonoBehaviour {
     }
     public void EndTurn() {
         hasTurnEnded = true;
-        UpdateSkillCooldown();
-        _isStuned--;
+        /** Effects of the Status */
+        _status.StatusEffect();
+        /** Update the duration of the Status */
+        _status.UpdateStatus();
     }
 
     /** Método de control de Acción */
@@ -299,6 +214,5 @@ public abstract class Actor : MonoBehaviour {
     protected void EndMovement() {
         moving = progress.done;
     }
-    #endregion
 
 }

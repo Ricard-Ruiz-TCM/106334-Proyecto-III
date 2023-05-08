@@ -1,6 +1,8 @@
 using UnityEngine;
 
-[RequireComponent(typeof(GridMovement))]
+[RequireComponent(typeof(GridMovement)), RequireComponent(typeof(ActorPerks))]
+[RequireComponent(typeof(ActorSkills)), RequireComponent(typeof(ActorStatus))]
+[RequireComponent(typeof(ActorInventory))]
 public class Player : Actor {
 
     bool moveController = true;
@@ -12,9 +14,6 @@ public class Player : Actor {
     // Unity Start
     protected virtual void Start() {
         SubscribeManager();
-
-        FindObjectOfType<InventoryUI>().AsignInventory(_inventory);
-        FindObjectOfType<InventoryUI>().UpdateInventory(_inventory);
 
         BuildSkills();
 
@@ -57,7 +56,7 @@ public class Player : Actor {
     public override void Act() {
         base.Act();
 
-        _inventory.AddItem(items.Bow);
+        //_inventory.AddItem(items.Bow);
 
         Damage();
 

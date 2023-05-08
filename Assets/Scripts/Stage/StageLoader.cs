@@ -38,7 +38,8 @@ public class StageLoader : MonoBehaviour {
 
     /** Método para instanciar al player con todas sus costias dentro del nivel */
     private void BuildPlayer() {
-        // TODO
+        GameObject g = GameObject.Instantiate(Resources.Load<GameObject>("Prefabs/Actors/Player"));
+        GameObject.FindObjectOfType<CameraController>()._target = g.transform;
     }
 
     /** Método para recuperar el stage actual */

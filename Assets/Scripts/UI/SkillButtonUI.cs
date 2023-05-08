@@ -19,7 +19,7 @@ public class SkillButtonUI : MonoBehaviour {
         _skill = skill.skill;
         _btn.image.sprite = _skill.icon;
         _cooldownTxt.UpdateText(skill.cooldown);
-        _btn.onClick.AddListener(() => { actor.UseSkill(skill.skill.skill); });
+        _btn.onClick.AddListener(() => { actor.GetComponent<ActorSkills>().UseSkill(skill.skill.skill); });
     }
 
 }

@@ -21,8 +21,19 @@ public class StageLoader : MonoBehaviour {
 
     /** Método para instanciar el stage según el progreso del juego */
     public void BuildStage() {
-        GameObject g = Resources.Load<GameObject>(_stagePath + _stageName + uCore.GameManager.StageProgress().ToString());
-        _stage = GameObject.Instantiate(g).GetComponent<Stage>();
+
+        StageData stage = uCore.GameManager.NextStage;
+
+        switch (stage.type) {
+            case stageType.combat:
+                break;
+            case stageType.comrade:
+                break;
+            case stageType.blacksmith:
+                break;
+            case stageType.campfire:
+                break;
+        }
     }
 
     /** Método para instanciar al player con todas sus costias dentro del nivel */

@@ -79,11 +79,6 @@ public enum perks {
     MAX
 }
 
-// Tipo de  camino
-public enum roadEvent {
-    noEvent, blacksmith, comrade
-}
-
 // Tipo de modificación que da una perk
 public enum perkModification {
     damage, defense, health, skill
@@ -102,4 +97,19 @@ public enum enemyCombatStyle {
 // Tipo de estados
 public enum aStatus {
     Stunned, Bleed, Poisoned, Invisible
+}
+
+// Dificultad del stage
+public enum stageDifficulty {
+    diff0, diff1, diff2
+}
+
+// Tipo de stage
+public enum stageType {
+    combat, comrade, blacksmith, campfire
+}
+
+// Tipo de terreno del stage
+public enum stageTerrain {
+    mountain, swamp, meadow
 }

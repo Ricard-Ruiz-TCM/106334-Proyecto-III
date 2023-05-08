@@ -18,21 +18,21 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour {
 
-    // Evento que nos ofrece el road entre stages
-    public roadEvent RoadEvent;
-
     #region Progress
 
-    private int _stagePro = 0;
+    public int StageID = 0;
+    public StageData NextStage;
+    public StageData LastStage;
+    public List<StageData> StageRecord = new List<StageData>();
 
-    /** Método para comprobar el progreso del juego */
-    public int StageProgress() {
-        return _stagePro;
-    }
-
-    /** Método para incrementar el progreso del juego */
-    public void IncStagePro() {
-        _stagePro++;
+    /** Método de selección de stage */
+    public void StageSelected(StageData data) {
+        StageID = data.ID;
+        LastStage = NextStage;
+        NextStage = data;
+        if (!StageRecord.Contains(data)) {
+            StageRecord.Add(data);
+        }
     }
 
     #endregion
@@ -173,13 +173,17 @@ public class GameManager : MonoBehaviour {
 
     #region GameData
 
+    public bool ExistGameData() {
+        return false;
+    }
+
     /** LOAD */
     public void LoadGameData() {
-    
+
     }
 
     /** SAVE */
-    public void SaveGameDat() {
+    public void SaveGameData() {
         
     }
 

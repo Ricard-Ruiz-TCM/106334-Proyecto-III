@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public class Stage : MonoBehaviour {
 
-    public int _difficulty;
+    public StageData _data;
     public List<GameObject> _enemies;
 
     public static Grid2D StageGrid = null;

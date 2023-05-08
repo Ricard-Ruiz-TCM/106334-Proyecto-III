@@ -1,6 +1,14 @@
 using UnityEngine;
 
-public class EventScene : MonoBehaviour {
+public class SceneStageManager : MonoBehaviour {
+
+    public void BTN_Menu() {
+        uCore.Director.LoadSceneAsync(gameScenes.Menu);
+    }
+
+    public void BTN_StageSelector() {
+        uCore.Director.LoadSceneAsync(gameScenes.StageSelector);
+    }
 
     [SerializeField, Header("Dialogue:")]
     private GameObject _dialogue;
@@ -19,29 +27,12 @@ public class EventScene : MonoBehaviour {
 
     // Unity OnEnable
     private void OnEnable() {
-        OpenPerkPanel.openPerkPanel += PerkPanel;
 
-        EndRoadEvent.endRoadEvent += EndEvent;
     }
 
     // Unity OnDisable
     private void OnDisable() {
-        OpenPerkPanel.openPerkPanel -= PerkPanel;
 
-        EndRoadEvent.endRoadEvent -= EndEvent;
-    }
-
-    // Unity Start
-    void Start() {
-        switch (uCore.GameManager.RoadEvent) {
-            case roadEvent.blacksmith:
-                GameObject.FindAnyObjectByType<DialogManager>().StartDialog(uCore.GameManager.BlacksmithNode);
-                break;
-            case roadEvent.comrade:
-                GameObject.FindAnyObjectByType<DialogManager>().StartDialog(uCore.GameManager.ComradeNode);
-                break;
-            default: break;
-        }
     }
 
     private void PerkPanel() {
@@ -75,6 +66,18 @@ public class EventScene : MonoBehaviour {
 
     public void BTN_Sure() {
         EndEvent();
+    }
+
+    /** Método para determinar qeu se ha ganado el Stage */
+    public void StageSuccess() {
+        uCore.GameManager.SaveGameData();
+        uCore.Director.LoadSceneAsync(gameScenes.StageSelector);
+    }
+
+    /** Método para determinar que se ha perdido el Stage */
+    public void StageFailed() {
+        uCore.GameManager.StageSelected(uCore.GameManager.LastStage);
+        uCore.Director.LoadSceneAsync(gameScenes.StageSelector);
     }
 
 }

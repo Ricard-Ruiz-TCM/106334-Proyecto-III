@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class IntroScene : MonoBehaviour {
+public class SceneIntroManager : MonoBehaviour {
 
     [SerializeField]
     private GameObject _inputPanel;

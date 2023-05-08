@@ -18,7 +18,4 @@ public class ActorInventory : ActorManager {
         return _shield;
     }
 
-    [SerializeField, Header("Inventory:")]
-    protected Inventory _inventory;
-
 }

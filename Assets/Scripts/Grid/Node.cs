@@ -22,10 +22,7 @@ public class Node {
 
     // Constructor
     public Node(nodeType nType, int xPos, int yPos) {
-        x = xPos; 
-        y = yPos; 
-        type = nType; 
-        g = (int)type;
+        x = xPos; y = yPos; type = nType;
     }
 
 }

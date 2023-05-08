@@ -6,9 +6,12 @@ using UnityEngine;
 public class Player : Actor {
 
     bool moveController = true;
+
     // Unity Awake
     protected override void Awake() {
         base.Awake();
+
+        CanBePlaced = true;
     }
 
     // Unity Start
@@ -16,6 +19,18 @@ public class Player : Actor {
         SubscribeManager();
 
         BuildSkills();
+
+    }
+
+    public void Placing() {
+
+        if (_gridMovement.Builder().MosueOverGrid()) {
+            if (_gridMovement.Builder().GetMouseGridPlane().node.type.Equals(Array2DEditor.nodeType.P)) {
+                if (uCore.Action.GetKeyDown(KeyCode.M)) {
+                    transform.position = _gridMovement.Builder().GetMouseGridPlane().position;
+                }
+            }
+        }
 
     }
 
@@ -29,7 +44,6 @@ public class Player : Actor {
                 _gridMovement.CalcRoute(transform.position, _gridMovement.Builder().GetMouseGridPlane(), Movement());
                 _gridMovement.Builder().DisplayValidPath(_gridMovement.VisualRouteValid, Movement());
                 _gridMovement.Builder().DisplayInValidPath(_gridMovement.VisualRouteInvaild);
-
             }
         }
         //else if (!canMove && moveController)

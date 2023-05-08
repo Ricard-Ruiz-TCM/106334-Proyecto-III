@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(GridMovement))]
+[RequireComponent(typeof(GridMovement)), RequireComponent(typeof(ActorPerks))]
+[RequireComponent(typeof(ActorSkills)), RequireComponent(typeof(ActorStatus))]
+[RequireComponent(typeof(ActorInventory))]
 public class Enemy : Actor {
 
     public CombatManager _Cmanager;

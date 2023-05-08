@@ -26,6 +26,8 @@ public abstract class Actor : ActorManager {
     protected ActorStatus _status;
     protected ActorInventory _inventory;
 
+    public bool CanBePlaced = false;
+
     // Grid Movement
     protected GridMovement _gridMovement;
     public GridMovement GridM() {

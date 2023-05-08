@@ -117,8 +117,11 @@ public enum stageTerrain {
 // Tipo de dificultad del terreno, Enum especial para el package de Array2DEditor
 namespace Array2DEditor {
     public enum nodeType{
-        __ = 1,
-        P = 2,
-        X = 99
+        __ = 0,
+        P = 1,
+        E = 51,
+        M = 102,
+        H = 153,
+        X = 255
     }
 }

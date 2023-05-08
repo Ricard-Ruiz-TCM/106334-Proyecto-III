@@ -17,8 +17,6 @@ public class GridBuilder : MonoBehaviour {
     private LayerMask _layer;
 
     [SerializeField, Header("Materials_")]
-    public Material _walkableMat;
-    public Material _unwalkableMat;
     public Material _pathMath;
     public Material _badPathMat;
     public Material _rangeMath;
@@ -120,9 +118,21 @@ public class GridBuilder : MonoBehaviour {
 
     // Update del material del Plane
     public void UpdateMaterial(int x, int y, Material mat = null) {
-        if (mat == null) {
-            mat = (_grid.GetNode(x, y).walkable ? _walkableMat : _unwalkableMat);
+        if (mat == null) { 
+            Node data = GetGridPlane(x, y).node;
+            Material m = new Material(Shader.Find("Universal Render Pipeline/Lit"));
+
+            // Color según dificultad
+            float c = Mathf.Abs(((float)data.type / 255f) - 1.0f);
+            m.SetColor("_BaseColor", new Color(c, c, c));
+
+            // Verde para posicion inicial
+            if (data.type.Equals(Array2DEditor.nodeType.P))
+                m.SetColor("_BaseColor", Color.green);
+
+            mat = m;
         }
+
         GetGridPlane(x, y).SetMaterial(mat);
     }
 

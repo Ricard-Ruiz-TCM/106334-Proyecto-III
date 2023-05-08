@@ -42,7 +42,11 @@ public class TurnManager : ActorsListController {
                 Debug.Log("WAITING");
                 break;
             case rounds.positioningRound:
-                Debug.Log("POSITIONING");
+                foreach(Actor a in _actors) {
+                    if (a.CanBePlaced) {
+                        a.GetComponent<Player>().Placing();
+                    }
+                }
                 break;
             case rounds.combatRound:
                 // DelayTime para el efectivo del turno

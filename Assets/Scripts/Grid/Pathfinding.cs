@@ -33,7 +33,7 @@ public class Pathfinding : MonoBehaviour {
 
             // Buscamos el nodo con coste en h más bajo
             for (int i = 1; i < openList.Count; i++) {
-                if (openList[i].f < node.f || openList[i].f == node.f) {
+                if (openList[i].f <= node.f) {
                     if (openList[i].h < node.h)
                         node = openList[i];
                 }

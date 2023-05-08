@@ -5,6 +5,7 @@ public class SceneIntroManager : MonoBehaviour {
     [SerializeField]
     private GameObject _inputPanel;
 
+    /** Loaded */
     private bool _sceneLoaded = false;
 
     // Unity OnEnable
@@ -26,7 +27,7 @@ public class SceneIntroManager : MonoBehaviour {
         }
     }
 
-    // OnSceneLoaded Callback observer
+    /** Método para callback del cargado de escenas */
     private void OnSceneLoaded() {
         // Innitial input configured
         if (!uCore.Action.isInputConfigured()) {

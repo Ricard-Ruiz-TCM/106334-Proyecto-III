@@ -24,11 +24,18 @@ public class CombatUI : MonoBehaviour {
 
     private Actor _currentActor;
 
+    // Unity OnEnable
+    void OnEnable() {
+        TurnManager.instance.onEndTurn += UpdatePanel;
+    }
+
+    // Unity OnDisable
+    void OnDisable() {
+        TurnManager.instance.onEndTurn -= UpdatePanel;
+    }
+
     // Unity Update
     void Update() {
-
-        // Set callback para actualizar el panel
-        TurnManager.instance.onEndTurn += UpdatePanel;
         // SetButton
         _btnEndTurn.onClick.AddListener(() => { TurnManager.instance.Current().EndTurn(); });
 

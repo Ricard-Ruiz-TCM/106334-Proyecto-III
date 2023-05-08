@@ -31,15 +31,21 @@ public class DialogUI : MonoBehaviour {
     [SerializeField, Header("Timing:")]
     private float _textSpeed = 0.05f;
 
+    // Unity OnEnable
+    void OnEnable() {
+        DialogManager.instance.onEndDialog += Clear;
+        DialogManager.instance.onNextDialog += UpdateDialog;
+    }
+
+    // Unity OnDisable
+    void OnDisable() {
+        DialogManager.instance.onEndDialog += Clear;
+        DialogManager.instance.onNextDialog += UpdateDialog;
+    }
+
     // Unity Awake
     void Awake() {
         _optionPrefab = Resources.Load<GameObject>("Prefabs/Interface/OptionUI");
-    }
-
-    // Unity Start  
-    void Start() {
-        DialogManager.instance.onEndDialog += Clear;
-        DialogManager.instance.onNextDialog += UpdateDialog;
     }
 
     // Limpia y actualiza el flow de dialogos

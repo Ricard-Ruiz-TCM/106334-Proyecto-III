@@ -23,13 +23,19 @@ public class StageLoader : MonoBehaviour {
         }
     }
 
+    /** Método para consturi todo el stage */
+    public void buildStage() {
+        BuildLevel();
+        BuildPlayer();
+    }
+
     /** Método para instanciar el stage según el progreso del juego */
-    public void BuildStage() {
+    private void BuildLevel() {
 
     }
 
     /** Método para instanciar al player con todas sus costias dentro del nivel */
-    public void BuildPlayer() {
+    private void BuildPlayer() {
         
     }
 

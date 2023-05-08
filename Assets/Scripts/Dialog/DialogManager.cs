@@ -35,7 +35,7 @@ public class DialogManager : MonoBehaviour {
     }
 
     /** Inicia el dialogo desde un nodo concreto */
-    public void StartDialog(DialogNode node) {
+    public void startDialog(DialogNode node) {
         _current = node;
         onNextDialog?.Invoke(_current);
     }

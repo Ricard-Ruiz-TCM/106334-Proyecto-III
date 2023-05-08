@@ -6,13 +6,19 @@ public class SceneStageManager : MonoBehaviour {
     private GameObject _dialogUI;
     [SerializeField]
     private GameObject _upgradeUI;
+    [SerializeField]
+    private GameObject _perksUI;
     [SerializeField, Header("Combat:")]
     private GameObject _combatUI;
+
+    [SerializeField, Header("testing loading stage:")]
+    private StageData _testing;
 
     // Unity OnEnable
     void OnEnable() {
         // DialogTriggers
         OnEndDialog.onTrigger += StageSuccess;
+        OnOpenPerkPanel.onTrigger += OpenPerkPanel;
         OnOpenUpgradePanel.onTrigger += OpenUpgradePanel;
     }
 
@@ -20,17 +26,19 @@ public class SceneStageManager : MonoBehaviour {
     void OnDisable() {
         // DialogTriggers
         OnEndDialog.onTrigger -= StageSuccess;
+        OnOpenPerkPanel.onTrigger -= OpenPerkPanel;
         OnOpenUpgradePanel.onTrigger -= OpenUpgradePanel;
     }
 
-    // Unity Awake
+    // Unity Start
     void Start() {
         StageData stage = uCore.GameManager.NextStage;
 
+        stage = _testing;
+
         switch (stage.type) {
             case stageType.combat:
-                //EnableCombat();
-                StageSuccess();
+                EnableCombat();
                 break;
             case stageType.comrade:
             case stageType.blacksmith:
@@ -45,13 +53,12 @@ public class SceneStageManager : MonoBehaviour {
     private void EnableDialog(DialogNode node) {
         _dialogUI.SetActive(true);
         // Innit del dialogManager
-        DialogManager.instance.StartDialog(node);
+        DialogManager.instance.startDialog(node);
     }
     private void EnableCombat() {
         _combatUI.SetActive(true);
         // Innit del stageLoader
-        GameObject.FindAnyObjectByType<StageLoader>().BuildStage();
-        GameObject.FindAnyObjectByType<StageLoader>().BuildPlayer();
+        StageLoader.instance.buildStage();
         // Innit del turnManager
         TurnManager.instance.startManager();
     }
@@ -63,6 +70,12 @@ public class SceneStageManager : MonoBehaviour {
         _upgradeUI.SetActive(true);
     }
 
+    /** Método para abrir el panel de perks */
+    public void OpenPerkPanel() {
+        _dialogUI.SetActive(false);
+        _perksUI.SetActive(true);
+    }
+    
     /** Método para determinar qeu se ha ganado el Stage */
     public void StageSuccess() {
         uCore.GameManager.SaveGameData();
@@ -76,7 +89,7 @@ public class SceneStageManager : MonoBehaviour {
     }
 
     /** Botones */
-    public void BTN_UpgradePanelCloase() {
+    public void BTN_StageUIClose() {
         StageSuccess();
     }
     /** ------- */

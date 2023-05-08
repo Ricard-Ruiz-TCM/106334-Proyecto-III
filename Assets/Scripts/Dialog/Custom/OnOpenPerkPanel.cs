@@ -1,8 +1,8 @@
 ﻿using System;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "new OnOpenUpgradePanel", menuName = "Dialogue/Open Upgrade Panel Node")]
-public class OnOpenUpgradePanel : DialogTrigger {
+[CreateAssetMenu(fileName = "new OnOpenPerkPanel", menuName = "Dialogue/Open Perk Panel Node")]
+public class OnOpenPerkPanel : DialogTrigger {
 
     public static event Action onTrigger;
 

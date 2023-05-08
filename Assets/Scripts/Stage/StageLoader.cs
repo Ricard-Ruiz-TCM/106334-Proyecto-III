@@ -23,10 +23,18 @@ public class StageLoader : MonoBehaviour {
         }
     }
 
+    public GameObject player, stage;
+
     /** Método para consturi todo el stage */
     public void buildStage(StageData data) {
-        BuildLevel(data);
-        BuildPlayer();
+        //BuildLevel(data);
+        //BuildPlayer();
+
+        player.SetActive(true);
+        stage.SetActive(true);
+
+        _stage = stage.GetComponent<Stage>();
+        GameObject.FindObjectOfType<CameraController>()._target = player.transform;
     }
 
     /** Método para instanciar el stage según el progreso del juego */

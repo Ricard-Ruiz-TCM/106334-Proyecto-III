@@ -163,7 +163,7 @@ public class CombatManager : MonoBehaviour {
 
         if (canInteract) {
             while (!canEnd) {
-                if (_gridMovement.Builder().MosueOverGrid()) {
+                if (Stage.StageBuilder.MosueOverGrid()) {
                     _gridMovement.CalcRoute(actor.transform.position, _gridMovement.Builder().GetMouseGridPlane(), range);
                     node = _gridMovement.Builder().DisplayLastNodePath(_gridMovement.VisualRouteValid, range);
 

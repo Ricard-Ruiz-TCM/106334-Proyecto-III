@@ -58,7 +58,9 @@ public class CombatManager : MonoBehaviour {
             case skills.ArrowRain:
                 StartCoroutine(ShowArrows(actor, range, skillType, canInteract));
                 break;
-
+            case skills.MoralizingShout:
+                StartCoroutine(ShowMoralizingShout(actor, range, skillType));
+                break;
         }
 
     }
@@ -96,12 +98,37 @@ public class CombatManager : MonoBehaviour {
         }
         else
         {
-            //node = actor.FindNearest();
-
+            Actor player = FindNearest();
+            node = _gridMovement.Builder().GetGridPlane(Mathf.RoundToInt(player.transform.position.x / 10), Mathf.RoundToInt(player.transform.position.z / 10)).node;
+            _gridMovement.Builder().GetGridPlane(node.x, node.y).SetMaterial(_gridMovement.Builder()._rangeMath);
+            if (node != null)
+            {
+                GetActorInNode(node, actor, skillType);
+                ExtendGolpeDemoledor(actor, range, skillType, node, false);
+            }
         }
-        
-        _gridMovement.Builder().ClearGrid();
-        actor.canMove = true;
+
+        StartCoroutine(EndAttack(actor));
+    }
+    public Actor FindNearest()
+    {
+
+        Actor actor = null;
+        float dist = Mathf.Infinity;
+
+        foreach (Actor obj in FindPlayers())
+        {
+            float distance = Vector3.Distance(obj.transform.position, transform.position);
+            if (distance < dist)
+            {
+                if (!obj.IsInvisible())
+                {
+                    actor = obj; dist = distance;
+                }
+            }
+        }
+
+        return actor;
     }
     private void ExtendGolpeDemoledor(Actor actor, int range, skills skillType,Node node,bool canEnd)
     {
@@ -146,25 +173,40 @@ public class CombatManager : MonoBehaviour {
         bool canEnd = false;
         Node node = null;
 
+        if (canInteract)
+        {
+            while (!canEnd)
+            {
+                if (_gridMovement.Builder().MosueOverGrid())
+                {
+                    _gridMovement.CalcRoute(actor.transform.position, _gridMovement.Builder().GetMouseGridPlane(), range);
+                    node = _gridMovement.Builder().DisplayLastNodePath(_gridMovement.VisualRouteValid, range);
 
-        while (!canEnd) {
-            if (_gridMovement.Builder().MosueOverGrid()) {
-                _gridMovement.CalcRoute(actor.transform.position, _gridMovement.Builder().GetMouseGridPlane(), range);
-                node = _gridMovement.Builder().DisplayLastNodePath(_gridMovement.VisualRouteValid, range);
+                }
+                if (uCore.Action.GetKeyDown(KeyCode.J))
+                {
+                    canEnd = true;
+                    GetActorInNode(node, actor, skillType);
 
+                }
+                if (uCore.Action.GetKeyDown(KeyCode.Escape))
+                {
+                    canEnd = true;
+                }
+                yield return null;
             }
-            if (uCore.Action.GetKeyDown(KeyCode.J)) {
-                canEnd = true;
-                GetActorInNode(node, actor, skillType);
-
-            }
-            if (uCore.Action.GetKeyDown(KeyCode.Escape)) {
-                canEnd = true;
-            }
-            yield return null;
         }
-        _gridMovement.Builder().ClearGrid();
-        actor.canMove = true;
+        else
+        {
+            Actor player = FindNearest();
+            node = _gridMovement.Builder().GetGridPlane(Mathf.RoundToInt(player.transform.position.x / 10), Mathf.RoundToInt(player.transform.position.z / 10)).node;
+            _gridMovement.Builder().GetGridPlane(node.x, node.y).SetMaterial(_gridMovement.Builder()._rangeMath);
+            if (node != null)
+            {
+                GetActorInNode(node, actor, skillType);
+            }
+        }
+        StartCoroutine(EndAttack(actor));
 
     }
   
@@ -173,19 +215,47 @@ public class CombatManager : MonoBehaviour {
         Node node = null;
         //List<Node> nodes = new List<Node>();
 
-
-        while (!canEnd) {
-            if (_gridMovement.Builder().MosueOverGrid()) {
-                _gridMovement.CalcRoute(actor.transform.position, _gridMovement.Builder().GetMouseGridPlane(), range);
-                node = _gridMovement.Builder().DisplayLastNodePath(_gridMovement.VisualRouteValid, range);
-
-            }
-            if (uCore.Action.GetKeyDown(KeyCode.J)) {
-                GetActorInNode(node, actor, skillType);
-                canEnd = true;
-            }
-            if (node != null) 
+        if (canInteract)
+        {
+            while (!canEnd)
             {
+                if (_gridMovement.Builder().MosueOverGrid())
+                {
+                    _gridMovement.CalcRoute(actor.transform.position, _gridMovement.Builder().GetMouseGridPlane(), range);
+                    node = _gridMovement.Builder().DisplayLastNodePath(_gridMovement.VisualRouteValid, range);
+
+                }
+                if (uCore.Action.GetKeyDown(KeyCode.J))
+                {
+                    GetActorInNode(node, actor, skillType);
+                    canEnd = true;
+                }
+                if (node != null)
+                {
+                    ExtendAttack(node.x + 1, node.y, actor, canEnd, skillType);
+
+                    ExtendAttack(node.x - 1, node.y, actor, canEnd, skillType);
+
+                    ExtendAttack(node.x, node.y + 1, actor, canEnd, skillType);
+
+                    ExtendAttack(node.x, node.y - 1, actor, canEnd, skillType);
+
+                }
+                if (uCore.Action.GetKeyDown(KeyCode.Escape))
+                {
+                    canEnd = true;
+                }
+                yield return null;
+            }
+        }
+        else
+        {
+            Actor player = FindNearest();
+            node = _gridMovement.Builder().GetGridPlane(Mathf.RoundToInt(player.transform.position.x / 10), Mathf.RoundToInt(player.transform.position.z / 10)).node;
+            _gridMovement.Builder().GetGridPlane(node.x, node.y).SetMaterial(_gridMovement.Builder()._rangeMath);
+            if (node != null)
+            {
+                GetActorInNode(node, actor, skillType);
                 ExtendAttack(node.x + 1, node.y, actor, canEnd, skillType);
 
                 ExtendAttack(node.x - 1, node.y, actor, canEnd, skillType);
@@ -193,17 +263,46 @@ public class CombatManager : MonoBehaviour {
                 ExtendAttack(node.x, node.y + 1, actor, canEnd, skillType);
 
                 ExtendAttack(node.x, node.y - 1, actor, canEnd, skillType);
-
             }
-            if (uCore.Action.GetKeyDown(KeyCode.Escape)) {
-                canEnd = true;
-            }
-            yield return null;
         }
+        StartCoroutine(EndAttack(actor));
 
+    }
+    IEnumerator ShowMoralizingShout(Actor actor, int range, skills skillType)
+    {
+        Node node = null;
+        //List<Node> nodes = new List<Node>();
+
+
+        node = _gridMovement.Builder().GetGridPlane(Mathf.RoundToInt(actor.transform.position.x / 10), Mathf.RoundToInt(actor.transform.position.z / 10)).node;
+
+        int count = 1;
+        int totalCount = 1;
+        for (int i = node.x - range; i <= node.x + range; i++)
+        {
+            for (int j = node.y; j < count + node.y; j++)
+            {
+                ExtendAttack(i, j, actor, true, skillType);
+            }
+
+            if (totalCount > range)
+            {
+                count--;
+            }
+            else
+            {
+                count++;
+            }
+            totalCount++;
+        }
+        yield return null;
+        StartCoroutine(EndAttack(actor));
+    }
+    IEnumerator EndAttack(Actor actor)
+    {
+        yield return new WaitForSeconds(1f);
         _gridMovement.Builder().ClearGrid();
         actor.canMove = true;
-
     }
 
     //metodo para los ataques que tienen daño en area (comprueba si esta dentro de la grid - cambia el material - y si hay un enemigo hace efecto)
@@ -237,6 +336,9 @@ public class CombatManager : MonoBehaviour {
                         break;
                     case skills.Cleave:
                         _actors[i].Stun();
+                        break;
+                    case skills.MoralizingShout:
+                        Debug.Log("mola");
                         break;
                 }
 

@@ -37,8 +37,14 @@ public class Enemy : Actor {
         if (_target != null) {
             if (_weapon != null) {
                 // Weapon Básica, el ataque
-                if (InRange(_target, _weapon._range)) {
-                    _target.TakeDamage(Damage());
+                //if (InRange(_target, _weapon._range)) {
+                //    _target.TakeDamage(Damage());
+                //}
+                if (InRange(_target, Skills()[1].skill._range))
+                {
+                    Debug.Log("hola");
+                    UseSkill(Skills()[1].skill._skill);
+                    //_target.TakeDamage(Damage());
                 }
             }
         }

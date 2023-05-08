@@ -1,6 +1,8 @@
 using UnityEngine;
 
-[RequireComponent(typeof(GridMovement))]
+[RequireComponent(typeof(GridMovement)), RequireComponent(typeof(ActorPerks))]
+[RequireComponent(typeof(ActorSkills)), RequireComponent(typeof(ActorStatus))]
+[RequireComponent(typeof(ActorInventory))]
 public class Player : Actor {
 
     bool moveController = true;

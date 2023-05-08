@@ -22,6 +22,12 @@ public class Grid2D : MonoBehaviour {
     [SerializeField, Header("(z Right, x Down)")]
     private Array2DBool _gridMap;
 
+    [SerializeField, Header("(z Right, x Down)")]
+    private Array2DNodeEnum _gridNodes;
+
+    [SerializeField, Header("(z Right, x Down)")]
+    private Array2DNodeEnum _grid2Nodes;
+
     // Unity Awake
     void Awake() {
         _nodeMap = new Node[Rows, Columns];

@@ -64,16 +64,16 @@ public class Enemy : Actor {
             EndMovement();
             return;
         }
-        GridPlane targetPlane = _gridMovement.Builder().GetGridPlane(_target.transform.position);
-        GridPlane myPlane = _gridMovement.Builder().GetGridPlane(transform.position);
+        GridPlane targetPlane = Stage.StageBuilder.GetGridPlane(_target.transform.position);
+        GridPlane myPlane = Stage.StageBuilder.GetGridPlane(transform.position);
         GridPlane destiny = myPlane;
         if (_combatStyle.Equals(enemyCombatStyle.melee)) {
-            destiny = _gridMovement.Builder().FindClosesGridPlaneTo(targetPlane, myPlane);
+            destiny = Stage.StageBuilder.FindClosesGridPlaneTo(targetPlane, myPlane);
         } else {
             List<Node> route = _gridMovement.CalcRoute(transform.position, targetPlane);
             route.Reverse();
             if (route.Count > _inventory.Weapon().range) {
-                destiny = _gridMovement.Builder().GetGridPlane(route[_inventory.Weapon().range]);
+                destiny = Stage.StageBuilder.GetGridPlane(route[_inventory.Weapon().range]);
             }
 
         }
@@ -90,7 +90,8 @@ public class Enemy : Actor {
         foreach (Actor obj in CombatManager.instance.FindPlayers()) {
             float distance = Vector3.Distance(obj.transform.position, transform.position);
             if (distance < dist) {
-                if (!obj.GetComponent<ActorStatus>().isStatusActive(buffsnDebuffs.Invisible)) {
+                if (obj.Status.isStatusActive(buffsnDebuffs.Invisible)) 
+                {
                     actor = obj;
                     dist = distance;
                 }
@@ -101,9 +102,9 @@ public class Enemy : Actor {
     }
 
     public bool InRange(Actor target, int range) {
-        GridPlane targetPlane = _gridMovement.Builder().GetGridPlane(target.transform.position);
-        GridPlane myPlane = _gridMovement.Builder().GetGridPlane(transform.position);
-        return _gridMovement.Builder().GetGridDistanceBetween(myPlane, targetPlane) <= range;
+        GridPlane targetPlane = Stage.StageBuilder.GetGridPlane(target.transform.position);
+        GridPlane myPlane = Stage.StageBuilder.GetGridPlane(transform.position);
+        return Stage.StageBuilder.GetGridDistanceBetween(myPlane, targetPlane) <= range;
     }
 
 

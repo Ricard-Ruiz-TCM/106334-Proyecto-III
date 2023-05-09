@@ -1,14 +1,12 @@
-﻿using UnityEngine;
-
-[CreateAssetMenu(fileName = "new Invisible", menuName = "Combat/Status/Invisible")]
-public class Invisible : Status {
+using UnityEngine;
+[CreateAssetMenu(fileName = "new Invencibility", menuName = "Combat/Status/Invencibility")]
+public class Invencibility : Status
+{
 
     [SerializeField, Header("Material:")]
     private Material materialDefault;
-
-    public override void Effect(Actor me) 
+    public override void Effect(Actor me)
     {
         me.gameObject.GetComponentInChildren<SkinnedMeshRenderer>().material = materialDefault;
     }
-
 }

@@ -70,6 +70,9 @@ public class CombatManager : MonoBehaviour {
             case skills.MoralizingShout:
                 StartCoroutine(ShowMoralizingShout(actor, range, skillType));
                 break;
+            case skills.Disarm:
+                StartCoroutine(NormalAttack(actor, range, skillType, canInteract));
+                break;
         }
 
     }
@@ -81,9 +84,9 @@ public class CombatManager : MonoBehaviour {
 
         if (canInteract) {
             while (!canEnd) {
-                if (_gridMovement.Builder().MosueOverGrid()) {
-                    _gridMovement.CalcRoute(actor.transform.position, _gridMovement.Builder().GetMouseGridPlane(), range);
-                    node = _gridMovement.Builder().DisplayLastNodePath(_gridMovement.VisualRouteValid, range);
+                if (Stage.StageBuilder.MosueOverGrid()) {
+                    _gridMovement.CalcRoute(actor.transform.position, Stage.StageBuilder.GetMouseGridPlane(), range);
+                    node = Stage.StageBuilder.DisplayLastNodePath(_gridMovement.VisualRouteValid, range);
                 }
                 if (uCore.Action.GetKeyDown(KeyCode.J)) {
                     canEnd = true;
@@ -100,8 +103,8 @@ public class CombatManager : MonoBehaviour {
             }
         } else {
             Actor player = FindNearest();
-            node = _gridMovement.Builder().GetGridPlane(Mathf.RoundToInt(player.transform.position.x / 10), Mathf.RoundToInt(player.transform.position.z / 10)).node;
-            _gridMovement.Builder().GetGridPlane(node.x, node.y).SetMaterial(_gridMovement.Builder()._rangeMath);
+            node = Stage.StageBuilder.GetGridPlane(Mathf.RoundToInt(player.transform.position.x / 10), Mathf.RoundToInt(player.transform.position.z / 10)).node;
+            Stage.StageBuilder.GetGridPlane(node.x, node.y).SetMaterial(Stage.StageBuilder._rangeMath);
             if (node != null) {
                 GetActorInNode(node, actor, skillType);
                 ExtendGolpeDemoledor(actor, range, skillType, node, false);
@@ -118,7 +121,8 @@ public class CombatManager : MonoBehaviour {
         foreach (Actor obj in FindPlayers()) {
             float distance = Vector3.Distance(obj.transform.position, transform.position);
             if (distance < dist) {
-                if (!obj.IsInvisible()) {
+                if (!obj.Status.isStatusActive(buffsnDebuffs.Invisible))
+                {                    
                     actor = obj;
                     dist = distance;
                 }
@@ -164,8 +168,8 @@ public class CombatManager : MonoBehaviour {
         if (canInteract) {
             while (!canEnd) {
                 if (Stage.StageBuilder.MosueOverGrid()) {
-                    _gridMovement.CalcRoute(actor.transform.position, _gridMovement.Builder().GetMouseGridPlane(), range);
-                    node = _gridMovement.Builder().DisplayLastNodePath(_gridMovement.VisualRouteValid, range);
+                    _gridMovement.CalcRoute(actor.transform.position, Stage.StageBuilder.GetMouseGridPlane(), range);
+                    node = Stage.StageBuilder.DisplayLastNodePath(_gridMovement.VisualRouteValid, range);
 
                 }
                 if (uCore.Action.GetKeyDown(KeyCode.J)) {
@@ -180,8 +184,8 @@ public class CombatManager : MonoBehaviour {
             }
         } else {
             Actor player = FindNearest();
-            node = _gridMovement.Builder().GetGridPlane(Mathf.RoundToInt(player.transform.position.x / 10), Mathf.RoundToInt(player.transform.position.z / 10)).node;
-            _gridMovement.Builder().GetGridPlane(node.x, node.y).SetMaterial(_gridMovement.Builder()._rangeMath);
+            node = Stage.StageBuilder.GetGridPlane(Mathf.RoundToInt(player.transform.position.x / 10), Mathf.RoundToInt(player.transform.position.z / 10)).node;
+            Stage.StageBuilder.GetGridPlane(node.x, node.y).SetMaterial(Stage.StageBuilder._rangeMath);
             if (node != null) {
                 GetActorInNode(node, actor, skillType);
             }
@@ -197,9 +201,9 @@ public class CombatManager : MonoBehaviour {
 
         if (canInteract) {
             while (!canEnd) {
-                if (_gridMovement.Builder().MosueOverGrid()) {
-                    _gridMovement.CalcRoute(actor.transform.position, _gridMovement.Builder().GetMouseGridPlane(), range);
-                    node = _gridMovement.Builder().DisplayLastNodePath(_gridMovement.VisualRouteValid, range);
+                if (Stage.StageBuilder.MosueOverGrid()) {
+                    _gridMovement.CalcRoute(actor.transform.position, Stage.StageBuilder.GetMouseGridPlane(), range);
+                    node = Stage.StageBuilder.DisplayLastNodePath(_gridMovement.VisualRouteValid, range);
 
                 }
                 if (uCore.Action.GetKeyDown(KeyCode.J)) {
@@ -223,8 +227,8 @@ public class CombatManager : MonoBehaviour {
             }
         } else {
             Actor player = FindNearest();
-            node = _gridMovement.Builder().GetGridPlane(Mathf.RoundToInt(player.transform.position.x / 10), Mathf.RoundToInt(player.transform.position.z / 10)).node;
-            _gridMovement.Builder().GetGridPlane(node.x, node.y).SetMaterial(_gridMovement.Builder()._rangeMath);
+            node = Stage.StageBuilder.GetGridPlane(Mathf.RoundToInt(player.transform.position.x / 10), Mathf.RoundToInt(player.transform.position.z / 10)).node;
+            Stage.StageBuilder.GetGridPlane(node.x, node.y).SetMaterial(Stage.StageBuilder._rangeMath);
             if (node != null) {
                 GetActorInNode(node, actor, skillType);
                 ExtendAttack(node.x + 1, node.y, actor, canEnd, skillType);
@@ -244,7 +248,7 @@ public class CombatManager : MonoBehaviour {
         //List<Node> nodes = new List<Node>();
 
 
-        node = _gridMovement.Builder().GetGridPlane(Mathf.RoundToInt(actor.transform.position.x / 10), Mathf.RoundToInt(actor.transform.position.z / 10)).node;
+        node = Stage.StageBuilder.GetGridPlane(Mathf.RoundToInt(actor.transform.position.x / 10), Mathf.RoundToInt(actor.transform.position.z / 10)).node;
 
         int count = 1;
         int totalCount = 1;
@@ -268,16 +272,16 @@ public class CombatManager : MonoBehaviour {
     }
     IEnumerator EndAttack(Actor actor) {
         yield return new WaitForSeconds(1f);
-        _gridMovement.Builder().ClearGrid();
+        Stage.StageBuilder.ClearGrid();
         actor.canMove = true;
     }
 
     //metodo para los ataques que tienen da�o en area (comprueba si esta dentro de la grid - cambia el material - y si hay un enemigo hace efecto)
     private void ExtendAttack(int i, int j, Actor actor, bool canEnd, skills skillType) {
         if (ChechIfPositionIsInGrid(i, j)) {
-            _gridMovement.Builder().UpdateMaterial(i, j, shootMat);
+            Stage.StageBuilder.UpdateMaterial(i, j, shootMat);
             if (canEnd) {
-                GetActorInNode(_gridMovement.Builder().GetGridPlane(i, j).node, actor, skillType);
+                GetActorInNode(Stage.StageBuilder.GetGridPlane(i, j).node, actor, skillType);
             }
 
         }
@@ -296,12 +300,16 @@ public class CombatManager : MonoBehaviour {
                         break;
                     case skills.Cleave:
                         //_actors[i].Stun();
+                        _actors[i].Status.ApplyStatus(buffsnDebuffs.Stunned);
                         break;
                     case skills.MoralizingShout:
                         if (_actors[i].transform.CompareTag("Player")) {
-                            _actors[i].UpdateAttack(2, "+", 1);
-                            Debug.Log("mola");
+                            _actors[i].Status.ApplyStatus(buffsnDebuffs.MoralizingShoutBuff);
                         }
+                        break;
+                    case skills.Disarm:
+                        //_actors[i].Stun();
+                        _actors[i].Status.ApplyStatus(buffsnDebuffs.Disarmed);
                         break;
                 }
 
@@ -315,6 +323,6 @@ public class CombatManager : MonoBehaviour {
 
     //pasa de cordenadas de mundo a grid
     bool ChechIfPositionIsInGrid(int i, int j) {
-        return (!(i < 0 || j < 0 || i >= _gridMovement.Builder()._grid.Rows || j >= _gridMovement.Builder()._grid.Columns));
+        return (!(i < 0 || j < 0 || i >= Stage.StageBuilder._grid.Rows || j >= Stage.StageBuilder._grid.Columns));
     }
 }

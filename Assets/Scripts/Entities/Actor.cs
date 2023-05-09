@@ -37,7 +37,6 @@ public abstract class Actor : ActorManager {
 
     [SerializeField, Header("Core:")]
     protected int _health;
-    protected int _tempDef;
     [SerializeField]
     protected bool _isAlive;
     public bool IsAlive() {
@@ -53,13 +52,6 @@ public abstract class Actor : ActorManager {
 
     [SerializeField, Header("CanInteract:")]
     public bool canInteract = true;
-
-    [SerializeField, Header("Invisible:")]
-    protected bool isInvisible = false;
-    public bool IsInvisible() {
-        return isInvisible;
-    }
-    protected int invisibleRounds = 1;
 
     [SerializeField, Header("Stun:")]
     protected int _isStuned = 0;
@@ -132,8 +124,24 @@ public abstract class Actor : ActorManager {
         // check Status
         foreach (StatusItem sitem in _status.ActiveStatus) {
             if (sitem.status is ModStatus) {
-                if (((ModStatus)sitem.status).type.Equals(modificationType.damage)){
-                    dmg *= ((ModStatus)sitem.status).modification;
+                if (((ModStatus)sitem.status).type.Equals(modificationType.damage))
+                {
+                    switch (((ModStatus)sitem.status).operationType)
+                    {
+                        case modificationOperations.Suma:
+                            dmg += ((ModStatus)sitem.status).modification;
+                            break;
+                        case modificationOperations.Resta:
+                            dmg -= ((ModStatus)sitem.status).modification;
+                            break;
+                        case modificationOperations.Multiplicacion:
+                            dmg *= ((ModStatus)sitem.status).modification;
+                            break;
+                        case modificationOperations.Division:
+                            dmg /= ((ModStatus)sitem.status).modification;
+                            break;
+                    }
+                    
                 }
             }
         }
@@ -165,59 +173,27 @@ public abstract class Actor : ActorManager {
         foreach (StatusItem sitem in _status.ActiveStatus) {
             if (sitem.status is ModStatus) {
                 if (((ModStatus)sitem.status).type.Equals(modificationType.defense)) {
-                    defense *= ((ModStatus)sitem.status).modification;
+                    switch (((ModStatus)sitem.status).operationType)
+                    {
+                        case modificationOperations.Suma:
+                            defense += ((ModStatus)sitem.status).modification;
+                            break;
+                        case modificationOperations.Resta:
+                            defense -= ((ModStatus)sitem.status).modification;
+                            break;
+                        case modificationOperations.Multiplicacion:
+                            defense *= ((ModStatus)sitem.status).modification;
+                            break;
+                        case modificationOperations.Division:
+                            defense /= ((ModStatus)sitem.status).modification;
+                            break;
+                    }
                 }
             }
         }
 
-        defense += _tempDef;
-
         return defense;
-    }
-    public void UpdateDefense(int number, string equation, int roundsToLast) {
-        /**Expertise ex = _upgrades.Find(x => x._item.Equals(_armor._item));
-        if (anteriorDefense == 0) {
-            anteriorDefense = _armor._defense[(ex != null ? ex._level : 0)];
-        }
-
-        switch (equation) {
-            case "+":
-                _armor._defense[(ex != null ? ex._level : 0)] += number;
-                break;
-            case "-":
-                _armor._defense[(ex != null ? ex._level : 0)] -= number;
-                break;
-            case "/":
-                _armor._defense[(ex != null ? ex._level : 0)] /= number;
-                break;
-            case "*":
-                _armor._defense[(ex != null ? ex._level : 0)] *= number;
-                break;
-        }
-        defenseModRounds = roundsToLast;*/
-    }
-    public void UpdateAttack(int number, string equation, int roundsToLast) {
-        /*Expertise ex = _upgrades.Find(x => x._item.Equals(_weapon._item));
-        if (anteriorDamage == 0) {
-            anteriorDamage = _weapon._damage[(ex != null ? ex._level : 0)];
-        }
-
-        switch (equation) {
-            case "+":
-                _weapon._damage[(ex != null ? ex._level : 0)] += number;
-                break;
-            case "-":
-                _weapon._damage[(ex != null ? ex._level : 0)] -= number;
-                break;
-            case "/":
-                _weapon._damage[(ex != null ? ex._level : 0)] /= number;
-                break;
-            case "*":
-                _weapon._damage[(ex != null ? ex._level : 0)] *= number;
-                break;
-        }
-        damageModRounds = roundsToLast;*/
-    }
+    }    
 
     public virtual int Movement() {
         int movement = _movement;
@@ -227,26 +203,35 @@ public abstract class Actor : ActorManager {
         return movement;
     }
 
-    public void TakeDamage(int damage, items weaponItem = items.NONE) {
+    public void TakeDamage(int damage, items weaponItem = items.NONE) 
+    {
+        foreach (StatusItem sitem in _status.ActiveStatus)
+        {
+            if (!((ModStatus)sitem.status).type.Equals(buffsnDebuffs.Invencibility))  //puede estar mal
+            {
+                int newH = Mathf.Max(0, _health -= Mathf.Max(0, (damage - Defense())));
 
-        int newH = Mathf.Max(0, _health -= Mathf.Max(0, (damage - Defense())));
+
+                if (weaponItem.Equals(items.Bow))
+                {
+                    if (Status.isStatusActive(buffsnDebuffs.ArrowInmune))
+                    {
+                        newH = _health;
+                    }
+                }
+
+                _health = newH;
 
 
-        if (weaponItem.Equals(items.Bow)) {
-            if (Status.isStatusActive(buffsnDebuffs.ArrowInmune)){
-                newH = _health;
+                // Cal Result
+                if (_health == 0)
+                {
+                    _isAlive = false;
+                    UnSubscribeManger();
+                    GameObject.Destroy(this.gameObject);
+                }
             }
-        }
-
-        _health = newH;
-
-
-        // Cal Result
-        if (_health == 0) {
-            _isAlive = false;
-            UnSubscribeManger();
-            GameObject.Destroy(this.gameObject);
-        }
+        }     
     }
 
     public progress moving {
@@ -274,7 +259,6 @@ public abstract class Actor : ActorManager {
         moving = progress.ready;
         acting = progress.ready;
         _movementsDone = 0;
-        _tempDef = 0;
         hasTurnEnded = false;
 
         /** Effects of the Status */

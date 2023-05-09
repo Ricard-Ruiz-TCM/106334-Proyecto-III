@@ -6,6 +6,7 @@ public class Attack : Skill {
     public override void Special(Actor from) {
         CombatManager.instance.UseSkill(from, range, skill, from.canInteract);
 
+
     }
 
 }

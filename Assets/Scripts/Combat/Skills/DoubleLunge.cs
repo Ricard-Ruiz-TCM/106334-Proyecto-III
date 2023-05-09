@@ -10,7 +10,7 @@ public class DoubleLunge : Skill {
 
          to.TakeDamage(from.Damage());*/
 
-        FindObjectOfType<CombatManager>().UseSkill(from, range, skill, from.canInteract);
+        CombatManager.instance.UseSkill(from, range, skill, from.canInteract);
 
         Debug.Log("DoubleLunge special attack");
     }

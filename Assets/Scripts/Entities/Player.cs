@@ -24,10 +24,10 @@ public class Player : Actor {
 
     public void Placing() {
 
-        if (_gridMovement.Builder().MosueOverGrid()) {
+        if (Stage.StageBuilder.MosueOverGrid()) {
             if (Stage.StageBuilder.GetMouseGridPlane().node.type.Equals(Array2DEditor.nodeType.P)) {
                 if (uCore.Action.GetKeyDown(KeyCode.M)) {
-                    transform.position = _gridMovement.Builder().GetMouseGridPlane().position;
+                    transform.position = Stage.StageBuilder.GetMouseGridPlane().position;
                 }
             }
         }
@@ -38,25 +38,25 @@ public class Player : Actor {
         if (hasTurnEnded)
             return false;
 
-        if (_gridMovement.Builder().MosueOverGrid() && canMove) {
+        if (Stage.StageBuilder.MosueOverGrid() && canMove) {
             moveController = true;
-            if (_gridMovement.Builder().GetMouseGridPlane().node.walkable) {
-                _gridMovement.CalcRoute(transform.position, _gridMovement.Builder().GetMouseGridPlane(), Movement());
-                _gridMovement.Builder().DisplayValidPath(_gridMovement.VisualRouteValid, Movement());
-                _gridMovement.Builder().DisplayInValidPath(_gridMovement.VisualRouteInvaild);
+            if (Stage.StageBuilder.GetMouseGridPlane().node.walkable) {
+                _gridMovement.CalcRoute(transform.position, Stage.StageBuilder.GetMouseGridPlane(), Movement());
+                Stage.StageBuilder.DisplayValidPath(_gridMovement.VisualRouteValid, Movement());
+                Stage.StageBuilder.DisplayInValidPath(_gridMovement.VisualRouteInvaild);
             }
         }
         //else if (!canMove && moveController)
         //{
         //    moveController = false;
-        //    _gridMovement.Builder().ClearGrid();
+        //    Stage.StageBuilder.ClearGrid();
         //}
         return (uCore.Action.GetKeyDown(KeyCode.M) && canMove);
 
     }
     public override void Move() {
         base.Move();
-        GridPlane gr = _gridMovement.Builder().GetMouseGridPlane();
+        GridPlane gr = Stage.StageBuilder.GetMouseGridPlane();
         if ((gr != null) && (gr.node.walkable)) {
             _gridMovement.SetDestination(transform.position, gr, Movement());
             _gridMovement.onDestinationReached += EndMovement;
@@ -76,7 +76,7 @@ public class Player : Actor {
 
         EndAction();
 
-        _gridMovement.Builder().ClearGrid();
+        Stage.StageBuilder.ClearGrid();
 
     }
 

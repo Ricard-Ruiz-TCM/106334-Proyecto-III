@@ -65,7 +65,7 @@ public enum items {
 public enum skills {
     NONE,
 
-    ArrowRain, Attack, Cleave, Defense, DoubleLunge, MoralizingShout, Vanish, TalonDeAquiles, FormacionTortuga, CaballoDeTroya,
+    ArrowRain, Attack, Cleave, Defense, DoubleLunge, MoralizingShout, Vanish, TalonDeAquiles, FormacionTortuga, CaballoDeTroya,Disarm,
 
     MAX
 }
@@ -81,7 +81,7 @@ public enum perks {
 
 // Tipo de modificación que da una perk
 public enum modificationType {
-    damage, defense, health, skill
+    damage, defense, health, skill, movement
 }
 
 // Tipo de perk
@@ -95,8 +95,14 @@ public enum enemyCombatStyle {
 }
 
 // Tipo de estados
-public enum buffsnDebuffs {
-    Stunned, Bleed, Poisoned, Invisible, DamageBuffx3, DefenseBuffx3, ArrowInmune
+public enum buffsnDebuffs 
+{
+    Stunned, Bleed, Poisoned, Invisible, DamageBuffx3, DefenseBuffx3, ArrowInmune,NormalDefense,MoralizingShoutBuff,Disarmed,Invencibility, Movementx2
+}
+
+public enum modificationOperations
+{
+    Suma,Resta,Multiplicacion,Division
 }
 
 // Dificultad del stage

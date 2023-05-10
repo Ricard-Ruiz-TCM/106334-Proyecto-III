@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 
 public abstract class ActorManager : MonoBehaviour {
 
@@ -69,6 +71,7 @@ public abstract class Actor : ActorManager {
     [SerializeField] Material materialInvisible;
     Material materialDefault;
 
+    int healtDif = 0;
 
     protected virtual void Awake() {
 
@@ -149,8 +152,13 @@ public abstract class Actor : ActorManager {
         return dmg;
     }
 
-    public int Health() {
+    public int GetHealth()
+    {
         return _health;
+    }
+    public void SetHealth(int value)
+    {
+        _health = value;
     }
 
     public int Defense() {
@@ -203,7 +211,7 @@ public abstract class Actor : ActorManager {
         return movement;
     }
 
-    public void TakeDamage(int damage, items weaponItem = items.NONE) 
+    public void TakeDamage(int damage, items weaponItem = items.NONE)
     {
         foreach (StatusItem sitem in _status.ActiveStatus)
         {
@@ -220,6 +228,7 @@ public abstract class Actor : ActorManager {
                     }
                 }
 
+                 healtDif = _health - newH;
                 _health = newH;
 
 
@@ -231,7 +240,11 @@ public abstract class Actor : ActorManager {
                     GameObject.Destroy(this.gameObject);
                 }
             }
-        }     
+        }
+    }
+    public int DamageTaken()
+    {
+        return healtDif;
     }
 
     public progress moving {

@@ -71,6 +71,9 @@ public class CombatManager : MonoBehaviour {
             case skills.Disarm:
                 StartCoroutine(NormalAttack(actor, range, skillType, canInteract));
                 break;
+            case skills.SedDeSangre:
+                StartCoroutine(NormalAttack(actor, range, skillType, canInteract));
+                break;
         }
 
     }
@@ -168,7 +171,7 @@ public class CombatManager : MonoBehaviour {
                 if (Stage.StageBuilder.MosueOverGrid()) {
                     actor.GridM().CalcRoute(actor.transform.position, Stage.StageBuilder.GetMouseGridPlane(), range);
                     node = Stage.StageBuilder.DisplayLastNodePath(actor.GridM().VisualRouteValid, range);
-
+                    Debug.Log(node);
                 }
                 if (uCore.Action.GetKeyDown(KeyCode.J)) {
                     canEnd = true;
@@ -292,9 +295,11 @@ public class CombatManager : MonoBehaviour {
                 switch (skillType) {
                     default:
                         _actors[i].TakeDamage(from.Damage(), from.Weapon.item);
+                        HealPerHitBuffActive(from, _actors[i]);
                         break;
                     case skills.DoubleLunge:
                         _actors[i].TakeDamage(from.Damage() * 2, from.Weapon.item);
+                        HealPerHitBuffActive(from, _actors[i]);
                         break;
                     case skills.Cleave:
                         //_actors[i].Stun();
@@ -309,6 +314,10 @@ public class CombatManager : MonoBehaviour {
                         //_actors[i].Stun();
                         _actors[i].Status.ApplyStatus(buffsnDebuffs.Disarmed);
                         break;
+                    case skills.SedDeSangre:
+                        //_actors[i].Stun();
+                        _actors[i].Status.ApplyStatus(buffsnDebuffs.Bleed);
+                        break;
                 }
 
 
@@ -318,7 +327,16 @@ public class CombatManager : MonoBehaviour {
         from.EndAction();
 
     }
-
+    void HealPerHitBuffActive(Actor from,Actor to)
+    {
+        foreach (StatusItem sitem in from.GetComponent<ActorStatus>().ActiveStatus)
+        {
+            if (((ModStatus)sitem.status).type.Equals(buffsnDebuffs.Invencibility))  //puede estar mal
+            {
+                from.SetHealth(to.DamageTaken());
+            }
+        }
+    }
     //pasa de cordenadas de mundo a grid
     bool ChechIfPositionIsInGrid(int i, int j) {
         return (!(i < 0 || j < 0 || i >= Stage.StageBuilder._grid.Rows || j >= Stage.StageBuilder._grid.Columns));

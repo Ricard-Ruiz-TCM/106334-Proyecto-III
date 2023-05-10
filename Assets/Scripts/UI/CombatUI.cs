@@ -41,7 +41,7 @@ public class CombatUI : MonoBehaviour {
 
         if (_currentActor is Player) {
             _txtMovement.UpdateText(_currentActor.Movement());
-            _txtHealth.UpdateText(_currentActor.Health());
+            _txtHealth.UpdateText(_currentActor.GetHealth());
             _txtDefense.UpdateText(_currentActor.Defense());
         }
     }

@@ -65,7 +65,7 @@ public enum items {
 public enum skills {
     NONE,
 
-    ArrowRain, Attack, Cleave, Defense, DoubleLunge, MoralizingShout, Vanish, TalonDeAquiles, FormacionTortuga, CaballoDeTroya,Disarm,
+    ArrowRain, Attack, Cleave, Defense, DoubleLunge, MoralizingShout, Vanish, TalonDeAquiles, FormacionTortuga, CaballoDeTroya,Disarm,SedDeSangre,
 
     MAX
 }
@@ -97,7 +97,7 @@ public enum enemyCombatStyle {
 // Tipo de estados
 public enum buffsnDebuffs 
 {
-    Stunned, Bleed, Poisoned, Invisible, DamageBuffx3, DefenseBuffx3, ArrowInmune,NormalDefense,MoralizingShoutBuff,Disarmed,Invencibility, Movementx2
+    Stunned, Bleed, Poisoned, Invisible, DamageBuffx3, DefenseBuffx3, ArrowInmune,NormalDefense,MoralizingShoutBuff,Disarmed,Invencibility, Movementx2, HealPerHit
 }
 
 public enum modificationOperations

@@ -6,7 +6,6 @@ public class CombatManager : MonoBehaviour {
 
     public static CombatManager instance = null;
 
-    GridMovement _gridMovement;
     [SerializeField] LayerMask layerActor;
     [SerializeField] Material shootMat;
     private List<Actor> _actors;
@@ -21,7 +20,6 @@ public class CombatManager : MonoBehaviour {
         }
 
         _actors = new List<Actor>();
-        _gridMovement = GameObject.FindObjectOfType<GridMovement>();
     }
     // Start is called before the first frame update
     void Start() {
@@ -85,8 +83,8 @@ public class CombatManager : MonoBehaviour {
         if (canInteract) {
             while (!canEnd) {
                 if (Stage.StageBuilder.MosueOverGrid()) {
-                    _gridMovement.CalcRoute(actor.transform.position, Stage.StageBuilder.GetMouseGridPlane(), range);
-                    node = Stage.StageBuilder.DisplayLastNodePath(_gridMovement.VisualRouteValid, range);
+                    actor.GridM().CalcRoute(actor.transform.position, Stage.StageBuilder.GetMouseGridPlane(), range);
+                    node = Stage.StageBuilder.DisplayLastNodePath(actor.GridM().VisualRouteValid, range);
                 }
                 if (uCore.Action.GetKeyDown(KeyCode.J)) {
                     canEnd = true;
@@ -168,8 +166,8 @@ public class CombatManager : MonoBehaviour {
         if (canInteract) {
             while (!canEnd) {
                 if (Stage.StageBuilder.MosueOverGrid()) {
-                    _gridMovement.CalcRoute(actor.transform.position, Stage.StageBuilder.GetMouseGridPlane(), range);
-                    node = Stage.StageBuilder.DisplayLastNodePath(_gridMovement.VisualRouteValid, range);
+                    actor.GridM().CalcRoute(actor.transform.position, Stage.StageBuilder.GetMouseGridPlane(), range);
+                    node = Stage.StageBuilder.DisplayLastNodePath(actor.GridM().VisualRouteValid, range);
 
                 }
                 if (uCore.Action.GetKeyDown(KeyCode.J)) {
@@ -202,8 +200,8 @@ public class CombatManager : MonoBehaviour {
         if (canInteract) {
             while (!canEnd) {
                 if (Stage.StageBuilder.MosueOverGrid()) {
-                    _gridMovement.CalcRoute(actor.transform.position, Stage.StageBuilder.GetMouseGridPlane(), range);
-                    node = Stage.StageBuilder.DisplayLastNodePath(_gridMovement.VisualRouteValid, range);
+                    actor.GridM().CalcRoute(actor.transform.position, Stage.StageBuilder.GetMouseGridPlane(), range);
+                    node = Stage.StageBuilder.DisplayLastNodePath(actor.GridM().VisualRouteValid, range);
 
                 }
                 if (uCore.Action.GetKeyDown(KeyCode.J)) {

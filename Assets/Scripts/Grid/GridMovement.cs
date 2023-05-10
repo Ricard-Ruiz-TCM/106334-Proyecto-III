@@ -62,9 +62,12 @@ public class GridMovement : MonoBehaviour {
     }
 
     public List<Node> CalcRoute(Vector3 origin, GridPlane plane, int amount = -1) {
-        List<Node> route = _pathfinder.FindPath(_builder.GetGridPlane(origin).node, plane.node);
+        List<Node> route = Stage.Pathfinder.FindPath(Stage.StageBuilder.GetGridPlane(origin).node, plane.node);
         VisualRouteValid.Clear();
         VisualRouteInvaild.Clear();
+        if (route == null)
+            return route;
+
         if (amount != -1) {
             for (int i = 0; i < MathF.Min(amount, route.Count); i++) {
                 if (route[i].type == Array2DEditor.nodeType.M) {

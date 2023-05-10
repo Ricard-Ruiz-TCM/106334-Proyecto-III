@@ -6,9 +6,10 @@ using UnityEngine;
 [RequireComponent(typeof(ActorInventory))]
 public class Enemy : Actor {
 
-    public Actor _target;
+    // Actor target de skills y ataques, etc.
+    private Actor _target;
 
-    [SerializeField]
+    [SerializeField, Header("IA:")]
     private enemyCombatStyle _combatStyle;
 
     // Unity Awake
@@ -19,14 +20,7 @@ public class Enemy : Actor {
     // Unity Start
     void Start() {
         SubscribeManager();
-        /**BuildSkills();
-
-        if (_weapon.item.Equals(items.Bow)) {
-            _combatStyle = enemyCombatStyle.ranged;
-        } else {
-            _combatStyle = enemyCombatStyle.melee;
-        }*/
-
+        BuildSkills();
     }
 
     public override bool CanAct() {
@@ -38,7 +32,7 @@ public class Enemy : Actor {
         if (_target != null) {
             if (_inventory.Weapon() != null) {
                 // Weapon Básica, el ataque
-                if (InRange(_target, _inventory.Weapon().range)) {
+                if (Stage.StageManager.InRange(transform, _target, _inventory.Weapon().range)) {
                     _target.TakeDamage(Damage());
                     //if (InRange(_target, _weapon._range)) {
                     //    _target.TakeDamage(Damage());
@@ -58,6 +52,7 @@ public class Enemy : Actor {
     public override bool CanMove() {
         return moving.Equals(progress.ready) && !acting.Equals(progress.doing) && canMove;
     }
+
     public override void Move() {
         base.Move();
         if (_target == null) {
@@ -81,37 +76,10 @@ public class Enemy : Actor {
         _gridMovement.onDestinationReached += EndMovement;
     }
 
-
-    public Actor FindNearest() {
-
-        Actor actor = null;
-        float dist = Mathf.Infinity;
-
-        foreach (Actor obj in CombatManager.instance.FindPlayers()) {
-            float distance = Vector3.Distance(obj.transform.position, transform.position);
-            if (distance < dist) {
-                if (obj.Status.isStatusActive(buffsnDebuffs.Invisible)) 
-                {
-                    actor = obj;
-                    dist = distance;
-                }
-            }
-        }
-
-        return actor;
-    }
-
-    public bool InRange(Actor target, int range) {
-        GridPlane targetPlane = Stage.StageBuilder.GetGridPlane(target.transform.position);
-        GridPlane myPlane = Stage.StageBuilder.GetGridPlane(transform.position);
-        return Stage.StageBuilder.GetGridDistanceBetween(myPlane, targetPlane) <= range;
-    }
-
-
     public override void BeginTurn() {
         base.BeginTurn();
 
-        _target = FindNearest();
+        _target = Stage.StageManager.FindNearestPlayers(transform);
 
     }
 

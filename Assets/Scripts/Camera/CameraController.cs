@@ -41,6 +41,32 @@ public class CameraController : MonoBehaviour {
     [SerializeField] float cameraMoveChangeTargetSpeed;
     float cameraSpeed;
 
+
+    [SerializeField] float mouseSens = 3f;
+
+    float rotX;
+    float rotY;
+
+    [SerializeField] Transform targetRotate;
+    float distanceFromTarget;
+
+    Vector3 currentRot;
+    Vector3 smoothVel = Vector3.zero;
+
+    [SerializeField] float smoothTime;
+
+    bool firstTimeRotate = true;
+
+    [SerializeField] Camera cam;
+
+    [SerializeField] float maxFov;
+    [SerializeField] float minFov;
+
+    [SerializeField] float zoomMultiplier;
+    float zoom;
+    [SerializeField] float velocityZoom;
+    [SerializeField] float smoothZoom;
+
     [SerializeField]
     public Grid2D grid {
         get {
@@ -53,6 +79,12 @@ public class CameraController : MonoBehaviour {
     float xAnterior, yAnterior;
 
     bool changeTarget = false;
+    private void Awake()
+    {
+        zoom = cam.fieldOfView;
+        rotX = transform.localEulerAngles.x;
+        rotY = transform.localEulerAngles.y;
+    }
 
     private void Start() {
         StartCoroutine(StartAnim());
@@ -74,7 +106,6 @@ public class CameraController : MonoBehaviour {
 
         if (!animating) {
 
-            float rotationSpeed = 0;
             if (uCore.Action.GetKeyDown(KeyCode.Z)) {
                 StartCoroutine(EndAnim());
             }
@@ -85,38 +116,64 @@ public class CameraController : MonoBehaviour {
                 _animator.SetBool("zoom", false);
             }
 
+            CameraTargetMove();
+            CameraMouseMove();
+            CameraZoom();
 
-
-
-            if (_target.gameObject.GetComponent<GridMovement>()._canMove) {
-                if (xAnterior != _target.GetComponent<GridMovement>().GetLastNode().x || yAnterior != _target.GetComponent<GridMovement>().GetLastNode().y) {
-                    xAnterior = _target.GetComponent<GridMovement>().GetLastNode().x;
-                    yAnterior = _target.GetComponent<GridMovement>().GetLastNode().y;
-                    targetPos = new Vector3(_target.GetComponent<GridMovement>().GetLastNode().x - grid.Rows / 2.5f, _target.GetComponent<GridMovement>().GetLastNode().y - grid.Columns / 2.5f);
-                    targetPos *= 3;
-                    cameraSpeed = cameraMoveMovementSpeed;
-                }
-
-            } else {
-                if (uCore.Action.GetKeyDown(KeyCode.U)) {
-                    targetPos = Vector3.zero;
-                    cameraSpeed = cameraMoveChangeTargetSpeed;
-                }
-            }
-            cameraPos.localPosition = Vector3.Lerp(cameraPos.localPosition, targetPos, cameraSpeed * Time.deltaTime);
-            //cameraPos.localPosition = targetPos;
-
-            if (uCore.Action.GetKey(KeyCode.G))
-            {
-                rotationSpeed = 20;
-            }
-            if (uCore.Action.GetKey(KeyCode.H))
-            {
-                rotationSpeed = -20;
-            }
-            transform.RotateAround(_target.transform.position, transform.forward, rotationSpeed * Time.deltaTime);
         }
 
+    }
+    private void CameraTargetMove()
+    {
+        if (_target.gameObject.GetComponent<GridMovement>()._canMove)
+        {
+            if (xAnterior != _target.GetComponent<GridMovement>().GetLastNode().x || yAnterior != _target.GetComponent<GridMovement>().GetLastNode().y)
+            {
+                xAnterior = _target.GetComponent<GridMovement>().GetLastNode().x;
+                yAnterior = _target.GetComponent<GridMovement>().GetLastNode().y;
+                targetPos = new Vector3(_target.GetComponent<GridMovement>().GetLastNode().x - grid.Rows / 2.5f, _target.GetComponent<GridMovement>().GetLastNode().y - grid.Columns / 2.5f);
+                targetPos *= 3;
+                cameraSpeed = cameraMoveMovementSpeed;
+            }
+
+        }
+        else
+        {
+            if (uCore.Action.GetKeyDown(KeyCode.U))
+            {
+                targetPos = Vector3.zero;
+                cameraSpeed = cameraMoveChangeTargetSpeed;
+            }
+        }
+        cameraPos.localPosition = Vector3.Lerp(cameraPos.localPosition, targetPos, cameraSpeed * Time.deltaTime);
+    }
+    private void CameraMouseMove()
+    {
+        if (Input.GetMouseButton(1))
+        {
+            distanceFromTarget = Vector3.Distance(targetRotate.position, transform.position);
+            float mouseX = Input.GetAxis("Mouse X") * mouseSens;
+            float mouseY = Input.GetAxis("Mouse Y") * mouseSens;
+    
+            rotX -= mouseY;
+            rotY += mouseX;
+
+            rotX = Mathf.Clamp(rotX, 20, 85);
+
+            Vector3 nextRot = new Vector3(rotX, rotY);
+            currentRot = Vector3.SmoothDamp(currentRot, nextRot, ref smoothVel, smoothTime);
+            transform.localEulerAngles = currentRot;
+
+            transform.position = targetRotate.position - transform.forward * distanceFromTarget;
+        }
+    }
+
+    private void CameraZoom()
+    {
+        float scroll = Input.GetAxis("Mouse ScrollWheel");
+        zoom -= scroll * zoomMultiplier;
+        zoom = Mathf.Clamp(zoom, minFov, maxFov);
+        cam.fieldOfView = Mathf.SmoothDamp(cam.fieldOfView, zoom, ref velocityZoom, smoothZoom);
     }
 
     IEnumerator StartAnim() {

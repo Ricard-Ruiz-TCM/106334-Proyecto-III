@@ -74,7 +74,7 @@ public class CameraController : MonoBehaviour {
 
         if (!animating) {
 
-
+            float rotationSpeed = 0;
             if (uCore.Action.GetKeyDown(KeyCode.Z)) {
                 StartCoroutine(EndAnim());
             }
@@ -105,6 +105,16 @@ public class CameraController : MonoBehaviour {
             }
             cameraPos.localPosition = Vector3.Lerp(cameraPos.localPosition, targetPos, cameraSpeed * Time.deltaTime);
             //cameraPos.localPosition = targetPos;
+
+            if (uCore.Action.GetKey(KeyCode.G))
+            {
+                rotationSpeed = 20;
+            }
+            if (uCore.Action.GetKey(KeyCode.H))
+            {
+                rotationSpeed = -20;
+            }
+            transform.RotateAround(_target.transform.position, transform.forward, rotationSpeed * Time.deltaTime);
         }
 
     }

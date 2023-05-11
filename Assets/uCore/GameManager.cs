@@ -164,7 +164,7 @@ public class GameManager : MonoBehaviour {
 
     public Status GetStatus(buffsnDebuffs name) {
         if (_status == null) {
-            LoadPerkData();
+            LoadStatusData();
         }
         return _status[name];
     }

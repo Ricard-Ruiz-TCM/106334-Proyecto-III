@@ -304,6 +304,7 @@ public abstract class Actor : ActorManager {
         hasTurnEnded = true;
         /** Update the duration of the Status */
         _status.UpdateStatus();
+        _skills.UpdateSkillCooldown();
     }
 
     /** Método de control de Acción */

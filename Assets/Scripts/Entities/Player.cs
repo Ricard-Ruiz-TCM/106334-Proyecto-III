@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.VFX;
 
 [RequireComponent(typeof(GridMovement)), RequireComponent(typeof(ActorPerks))]
 [RequireComponent(typeof(ActorSkills)), RequireComponent(typeof(ActorStatus))]
@@ -6,6 +7,10 @@ using UnityEngine;
 public class Player : Actor {
 
     bool moveController = true;
+
+    [SerializeField] SkinnedMeshRenderer skinnedMesh;
+    [SerializeField] Material shaderMat;
+    [SerializeField] VisualEffect effect;
 
     // Unity Awake
     protected override void Awake() {
@@ -20,6 +25,14 @@ public class Player : Actor {
 
         BuildSkills();
 
+    }
+    private void Update()
+    {
+        if (uCore.Action.GetKeyDown(KeyCode.Q))
+        {
+            skinnedMesh.material = shaderMat;
+            effect.Play();
+        }
     }
 
     public void Placing() {

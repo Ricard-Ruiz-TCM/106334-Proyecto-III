@@ -21,6 +21,10 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _causicTexture:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _foamTexture:
         m_Texture: {fileID: 2800000, guid: af42ab2049c36e84d8bcc76e1564af21, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -43,12 +47,14 @@ Material:
     - _QueueOffset: 0
     - _anchoOrilla: 0.05
     - _depth: 2
-    - _depthFallof: 2
-    - _foamDepth: 4.77
-    - _foamFallof: 1.34
-    - _foamTiling: 0
+    - _depthFallof: 1.62
+    - _foamAmount: 1.3
+    - _foamDepth: 3
+    - _foamFallof: 1.08
+    - _foamTiling: 5
     m_Colors:
     - _foamColor: {r: 1, g: 1, b: 1, a: 1}
+    - _foamSpeed: {r: 0, g: 1, b: 0, a: 0}
     - _mainColor: {r: 0, g: 0.68195224, b: 1, a: 0}
     - _orillaColor: {r: 1, g: 1, b: 1, a: 0}
   m_BuildTextureStacks: []

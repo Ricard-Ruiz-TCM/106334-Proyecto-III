@@ -23,6 +23,8 @@ public class StageLoader : MonoBehaviour {
         }
     }
 
+    // TESTING
+    [Header("TESTING:")]
     public GameObject player, stage;
 
     /** Método para consturi todo el stage */
@@ -30,9 +32,11 @@ public class StageLoader : MonoBehaviour {
         //BuildLevel(data);
         //BuildPlayer();
 
+        // TESTING
         player.SetActive(true);
         stage.SetActive(true);
 
+        // TESTING
         _stage = stage.GetComponent<Stage>();
         GameObject.FindObjectOfType<CameraController>()._target = player.transform;
     }

@@ -65,7 +65,7 @@ public enum items {
 public enum skills {
     NONE,
 
-    ArrowRain, Attack, Cleave, Defense, DoubleLunge, MoralizingShout, Vanish, TalonDeAquiles, FormacionTortuga, CaballoDeTroya,Disarm,SedDeSangre,
+    ArrowRain, Attack, Cleave, Defense, DoubleLunge, MoralizingShout, Vanish, TalonDeAquiles, FormacionTortuga, CaballoDeTroya, Disarm, SedDeSangre,
 
     MAX
 }
@@ -95,14 +95,12 @@ public enum enemyCombatStyle {
 }
 
 // Tipo de estados
-public enum buffsnDebuffs 
-{
+public enum buffsnDebuffs {
     Stunned, Bleed, Poisoned, Invisible, DamageBuffx3, DefenseBuffx3, ArrowInmune, NormalDefense, MoralizingShoutBuff, Disarmed, Invencibility, Movementx2, HealPerHit
 }
 
-public enum modificationOperations
-{
-    Suma,Resta,Multiplicacion,Division
+public enum modificationOperations {
+    Suma, Resta, Multiplicacion, Division
 }
 
 // Dificultad del stage
@@ -113,6 +111,16 @@ public enum stageDifficulty {
 // Tipo de stage
 public enum stageType {
     combat, comrade, blacksmith, campfire
+}
+
+// Dirección de entrada
+public enum stageEntrance {
+    north, south, east, west
+}
+
+// Objetivo del stage
+public enum stageObjetive {
+    killAll, protectNPC, clearPath
 }
 
 // Tipo de terreno del stage

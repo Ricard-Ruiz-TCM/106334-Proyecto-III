@@ -5,6 +5,7 @@ public class Stage : MonoBehaviour {
 
     [SerializeField, Header("Info:")]
     private StageData _data;
+    public StageData Data => _data;
 
     [SerializeField, Header("Enemies on Stage:")]
     private List<GameObject> _enemies;

@@ -25,7 +25,10 @@ public class Player : Actor {
 
         BuildSkills();
 
+        transform.position = Stage.StageManager.RandomInnitialPosition();
+
     }
+
     private void Update()
     {
         if (uCore.Action.GetKeyDown(KeyCode.Q))

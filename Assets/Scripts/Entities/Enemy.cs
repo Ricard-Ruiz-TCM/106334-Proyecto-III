@@ -21,6 +21,8 @@ public class Enemy : Actor {
     void Start() {
         SubscribeManager();
         BuildSkills();
+
+        transform.position = Stage.StageManager.RandomPosition();
     }
 
     public override bool CanAct() {

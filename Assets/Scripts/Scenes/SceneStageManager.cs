@@ -9,10 +9,11 @@ public class SceneStageManager : MonoBehaviour {
     [SerializeField]
     private GameObject _perksUI;
     [SerializeField, Header("Combat:")]
-    private GameObject _combatUI;
-
-    [SerializeField, Header("testing loading stage:")]
-    private StageData _testing;
+    private GameObject _turnUI;
+    [SerializeField]
+    private GameObject _playerUI;
+    [SerializeField, Header("Stage:")]
+    private StageObjetiveUI _objetiveUI;
 
     // Unity OnEnable
     void OnEnable() {
@@ -30,11 +31,16 @@ public class SceneStageManager : MonoBehaviour {
         OnOpenUpgradePanel.onTrigger -= OpenUpgradePanel;
     }
 
+    // TESTING
+    [Header("TESTING:")]
+    public Stage stageTest;
+
     // Unity Start
     void Start() {
         StageData stage = uCore.GameManager.NextStage;
 
-        stage = _testing;
+        // TESTING
+        stage = stageTest.Data;
 
         switch (stage.type) {
             case stageType.combat:
@@ -56,7 +62,10 @@ public class SceneStageManager : MonoBehaviour {
         DialogManager.instance.startDialog(data.innitialDialog);
     }
     private void EnableCombat(StageData data) {
-        _combatUI.SetActive(true);
+        _objetiveUI.gameObject.SetActive(true);
+        _objetiveUI.SetObjetive(data);
+        _playerUI.SetActive(true);
+        _turnUI.SetActive(true);
         // Innit del stageLoader
         StageLoader.instance.buildStage(data);
         // Innit del turnManager

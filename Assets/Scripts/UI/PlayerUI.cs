@@ -1,17 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CombatUI : MonoBehaviour {
-
-    [SerializeField]
-    private UIText _txtName;
-
-    [SerializeField]
-    private UIText _txtHealth;
-    [SerializeField]
-    private UIText _txtDefense;
-    [SerializeField]
-    private UIText _txtMovement;
+public class PlayerUI : MonoBehaviour {
 
     [SerializeField]
     private Button _btnEndTurn;
@@ -37,20 +27,19 @@ public class CombatUI : MonoBehaviour {
     // Unity Update
     void Update() {
         // SetButton
-        _btnEndTurn.onClick.AddListener(() => { TurnManager.instance.Current().EndTurn(); });
-
-        if (_currentActor is Player) {
-            _txtMovement.UpdateText(_currentActor.Movement());
-            _txtHealth.UpdateText(_currentActor.GetHealth());
-            _txtDefense.UpdateText(_currentActor.Defense());
-        }
+        _btnEndTurn.onClick.AddListener(() => {
+            Actor player = TurnManager.instance.Current();
+            if (player is Player) {
+                if (!player.hasTurnEnded) { 
+                    player.EndTurn();
+                }
+            }
+        });
     }
 
     private void UpdatePanel() {
 
         _currentActor = TurnManager.instance.Current();
-
-        _txtName.UpdateText(_currentActor.gameObject.name);
 
         if (_currentActor is Player) {
             ClearSkills();

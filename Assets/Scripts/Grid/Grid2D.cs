@@ -1,8 +1,11 @@
+using System;
 using Array2DEditor;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Grid2D : MonoBehaviour {
+
+    public static event Action OnMapCompleted;
 
     // Filas & Columnas de Nuestro Grid
     public int Rows {
@@ -18,6 +21,7 @@ public class Grid2D : MonoBehaviour {
 
     // Mapa de nodos
     private Node[,] _nodeMap;
+    public Node[,] NodeMap => _nodeMap;
 
     [SerializeField, Header("(z Right, x Down)")]
     private Array2DNodeEnum _gridMap;
@@ -30,6 +34,7 @@ public class Grid2D : MonoBehaviour {
                 _nodeMap[x, y] = new Node(_gridMap.GetCell(x, y), x, y);
             }
         }
+        OnMapCompleted?.Invoke();
     }
 
     /** Get del NodeMap */
@@ -64,6 +69,11 @@ public class Grid2D : MonoBehaviour {
     /** Comprueba si la cordenada está dentro del Grid*/
     public bool insideGrid(int x, int y) {
         return ((x >= 0) && (x < Rows) && (y >= 0) && (y < Columns));
+    }
+
+    /** Métood que comprueba si un nodo es de cierto typo */
+    public bool isType(int x, int y, nodeType type) {
+        return GetNode(x, y).type.Equals(type);
     }
 
 }

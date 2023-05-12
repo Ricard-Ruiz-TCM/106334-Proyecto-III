@@ -26,4 +26,22 @@ public class GridManager : MonoBehaviour {
         return Stage.StageBuilder.GetGridDistanceBetween(myPlane, targetPlane) <= range;
     }
 
+    public Vector3 RandomInnitialPosition() {
+        Vector3 pos = Vector3.zero;
+        do {
+            for (int x = 0; x < Stage.StageGrid.Columns; x++) {
+                for (int y = 0; y < Stage.StageGrid.Rows; y++) {
+                    if (Stage.StageGrid.isType(x, y, Array2DEditor.nodeType.P)) {
+                        return Stage.StageBuilder.GetGridPlane(x, y).position;
+                    }
+                }
+            }
+        } while (pos == Vector3.zero);
+        return pos;
+    }
+
+    public Vector3 RandomPosition() {
+        return Stage.StageBuilder.GetGridPlane(Random.Range(0, Stage.StageGrid.Columns), Random.Range(0, Stage.StageGrid.Rows)).position;
+    }
+
 }

@@ -12,4 +12,8 @@ public struct StageData {
 
     public DialogNode innitialDialog;
 
+    public stageEntrance entrance;
+    public stageObjetive objetive;
+
+
 }

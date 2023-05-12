@@ -99,10 +99,26 @@ public class TurnManager : ActorsListController {
 
     /** Método para indicar que ya hemos hecho el posicionamiento */
     public void positioningDone() {
+        if (!_roundType.Equals(rounds.positioningRound))
+            return;
+
         _roundType = rounds.combatRound;
+        StartTurn();
+    }
+
+    /** Método para iniciar el turno */
+    private void StartTurn() {
         _turnProgress = progress.doing;
         _actors[_current].BeginTurn();
         onStartTurn?.Invoke();
+    }
+
+    /** Método para indicara que ya hemos leído el objetivo y pasamos al posicionamiento */
+    public void ObjetiveRead() {
+        if (!_roundType.Equals(rounds.waitingRound))
+            return;
+
+        _roundType = rounds.positioningRound;
     }
 
     /** Método para indicar que se acabo el combate dentro del stage */
@@ -112,7 +128,7 @@ public class TurnManager : ActorsListController {
 
     /** Método para iniciar el sistema desde fuera */
     public void startManager() {
-        _roundType = rounds.positioningRound;
+        _roundType = rounds.waitingRound;
     }
 
     /** Control para el siguiente turno, añade delays y hace callbacks, plus control */
@@ -133,7 +149,7 @@ public class TurnManager : ActorsListController {
 
         // Entrando al turno
         yield return new WaitForSeconds(_startTurnDelay);
-        positioningDone();
+        StartTurn();
     }
 
 }

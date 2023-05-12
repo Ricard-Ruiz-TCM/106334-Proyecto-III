@@ -39,6 +39,7 @@ public abstract class Actor : ActorManager {
 
     [SerializeField, Header("Core:")]
     protected int _health;
+    protected int totalHealth;
     [SerializeField]
     protected bool _isAlive;
     public bool IsAlive() {
@@ -90,6 +91,7 @@ public abstract class Actor : ActorManager {
             }
         };
         materialDefault = gameObject.GetComponentInChildren<SkinnedMeshRenderer>().material;
+        totalHealth = _health;
     }
 
     protected void BuildSkills() {
@@ -159,6 +161,10 @@ public abstract class Actor : ActorManager {
     public void SetHealth(int value)
     {
         _health = value;
+    }
+    public int GetTotalHealthPercentage()
+    {
+        return ((_health/totalHealth) * 100);
     }
 
     public int Defense() {

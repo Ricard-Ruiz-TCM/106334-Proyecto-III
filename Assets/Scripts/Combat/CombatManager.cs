@@ -102,8 +102,10 @@ public class CombatManager : MonoBehaviour {
                 }
                 yield return null;
             }
-        } else {
-            Actor player = FindNearest();
+        } 
+        else 
+        {
+            Actor player = FindNearest(actor);
             node = Stage.StageBuilder.GetGridPlane(Mathf.RoundToInt(player.transform.position.x / 10), Mathf.RoundToInt(player.transform.position.z / 10)).node;
             Stage.StageBuilder.GetGridPlane(node.x, node.y).SetMaterial(Stage.StageBuilder._rangeMath);
             if (node != null) {
@@ -114,13 +116,13 @@ public class CombatManager : MonoBehaviour {
 
         StartCoroutine(EndAttack(actor));
     }
-    public Actor FindNearest() {
+    public Actor FindNearest(Actor from) {
 
         Actor actor = null;
         float dist = Mathf.Infinity;
 
         foreach (Actor obj in FindPlayers()) {
-            float distance = Vector3.Distance(obj.transform.position, transform.position);
+            float distance = Vector3.Distance(obj.transform.position, from.transform.position);
             if (distance < dist) {
                 if (!obj.Status.isStatusActive(buffsnDebuffs.Invisible))
                 {                    
@@ -184,7 +186,7 @@ public class CombatManager : MonoBehaviour {
                 yield return null;
             }
         } else {
-            Actor player = FindNearest();
+            Actor player = FindNearest(actor);
             node = Stage.StageBuilder.GetGridPlane(Mathf.RoundToInt(player.transform.position.x / 10), Mathf.RoundToInt(player.transform.position.z / 10)).node;
             Stage.StageBuilder.GetGridPlane(node.x, node.y).SetMaterial(Stage.StageBuilder._rangeMath);
             if (node != null) {
@@ -227,7 +229,7 @@ public class CombatManager : MonoBehaviour {
                 yield return null;
             }
         } else {
-            Actor player = FindNearest();
+            Actor player = FindNearest(actor);
             node = Stage.StageBuilder.GetGridPlane(Mathf.RoundToInt(player.transform.position.x / 10), Mathf.RoundToInt(player.transform.position.z / 10)).node;
             Stage.StageBuilder.GetGridPlane(node.x, node.y).SetMaterial(Stage.StageBuilder._rangeMath);
             if (node != null) {

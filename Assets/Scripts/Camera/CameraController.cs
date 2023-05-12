@@ -90,7 +90,7 @@ public class CameraController : MonoBehaviour {
         StartCoroutine(StartAnim());
         xAnterior = 111111;
         xAnterior = 111111;
-        TurnManager.instance.onEndTurn += () => { changeTarget = true; };
+        TurnManager.instance.onStartTurn += () => { changeTarget = true; };
     }
 
 

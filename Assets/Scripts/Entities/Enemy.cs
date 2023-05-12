@@ -70,8 +70,8 @@ public class Enemy : Actor {
                     }*/
                 }
             }
-            EndAction();
         }
+            EndAction();
     }
 
     public override bool CanMove() {
@@ -80,6 +80,7 @@ public class Enemy : Actor {
 
     public override void Move() {
         base.Move();
+        EndMovement();
         if (_target == null) {
             EndMovement();
             return;

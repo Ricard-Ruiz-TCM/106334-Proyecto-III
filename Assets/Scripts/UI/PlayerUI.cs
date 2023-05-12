@@ -16,12 +16,12 @@ public class PlayerUI : MonoBehaviour {
 
     // Unity OnEnable
     void OnEnable() {
-        TurnManager.instance.onEndTurn += UpdatePanel;
+        TurnManager.instance.onStartTurn += UpdatePanel;
     }
 
     // Unity OnDisable
     void OnDisable() {
-        TurnManager.instance.onEndTurn -= UpdatePanel;
+        TurnManager.instance.onStartTurn -= UpdatePanel;
     }
 
     // Unity Update

@@ -2012,8 +2012,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[1]
       value: 
-      objectReference: {fileID: -6478536213147159724, guid: 6d350cb5c06bcb644a7094e799cd8167,
-        type: 3}
+      objectReference: {fileID: 2100000, guid: cca16c313233395418897f5f320256ab, type: 2}
     - target: {fileID: 3653818821575470896, guid: 922bc215d6e89984482066dc76248f6f,
         type: 3}
       propertyPath: effect
@@ -3421,6 +3420,23 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1090117660}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1243971018
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1243971017}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c689c9846f8b1c4280a4380ab4928f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skinnedMesh: {fileID: 693163635}
+  refreshRate: 0.1
+  mat: {fileID: 2100000, guid: cca16c313233395418897f5f320256ab, type: 2}
+  destroyDelay: 1
+  alphaRef: _alphaController
 --- !u!1 &1351433917
 GameObject:
   m_ObjectHideFlags: 0
@@ -3733,7 +3749,7 @@ GameObject:
   m_IsActive: 1
 --- !u!114 &1410923772
 MonoBehaviour:
-  m_ObjectHideFlags: 2
+  m_ObjectHideFlags: 10
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}

@@ -67,6 +67,8 @@ public class CameraController : MonoBehaviour {
     [SerializeField] float velocityZoom;
     [SerializeField] float smoothZoom;
 
+    [SerializeField] float cameraMoveMultiplier;
+    [SerializeField] float cameraMoveSum;
     [SerializeField]
     public Grid2D grid {
         get {
@@ -99,8 +101,7 @@ public class CameraController : MonoBehaviour {
         if (changeTarget) {
             _target = TurnManager.instance.Current().transform;
             changeTarget = false;
-            targetPos = new Vector3(Mathf.RoundToInt(_target.position.x / 10) - grid.Rows / 2.5f, Mathf.RoundToInt(_target.position.z / 10) - grid.Columns / 2.5f);
-            targetPos *= 3;
+            targetPos = new Vector3((_target.GetComponent<GridMovement>().GetLastNode().x - grid.Rows / 2.5f + cameraMoveSum) * cameraMoveMultiplier, 0, (_target.GetComponent<GridMovement>().GetLastNode().y - grid.Columns / 2.5f + cameraMoveSum) * cameraMoveMultiplier);
             cameraSpeed = cameraMoveChangeTargetSpeed;
         }
 
@@ -131,8 +132,7 @@ public class CameraController : MonoBehaviour {
             {
                 xAnterior = _target.GetComponent<GridMovement>().GetLastNode().x;
                 yAnterior = _target.GetComponent<GridMovement>().GetLastNode().y;
-                targetPos = new Vector3(_target.GetComponent<GridMovement>().GetLastNode().x - grid.Rows / 2.5f, _target.GetComponent<GridMovement>().GetLastNode().y - grid.Columns / 2.5f);
-                targetPos *= 3;
+                targetPos = new Vector3((_target.GetComponent<GridMovement>().GetLastNode().x - grid.Rows / 2.5f  + cameraMoveSum) * cameraMoveMultiplier, 0, (_target.GetComponent<GridMovement>().GetLastNode().y - grid.Columns / 2.5f + cameraMoveSum) * cameraMoveMultiplier);
                 cameraSpeed = cameraMoveMovementSpeed;
             }
 
@@ -145,6 +145,7 @@ public class CameraController : MonoBehaviour {
                 cameraSpeed = cameraMoveChangeTargetSpeed;
             }
         }
+        Debug.Log(targetPos);
         cameraPos.localPosition = Vector3.Lerp(cameraPos.localPosition, targetPos, cameraSpeed * Time.deltaTime);
     }
     private void CameraMouseMove()

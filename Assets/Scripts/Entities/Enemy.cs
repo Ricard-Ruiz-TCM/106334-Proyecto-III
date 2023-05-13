@@ -27,7 +27,6 @@ public class Enemy : Actor {
             normalSkillOrder.Add(value);
         }
         for (int i = normalSkillOrder.Count - 1; i > 0; i--) {
-            Debug.Log(normalSkillOrder[i]);
             lowHpSkillOrder.Add(normalSkillOrder[i]);
         }
     }

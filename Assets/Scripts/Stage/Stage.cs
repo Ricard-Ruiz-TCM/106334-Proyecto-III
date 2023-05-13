@@ -10,6 +10,8 @@ public class Stage : MonoBehaviour {
     [SerializeField, Header("Enemies on Stage:")]
     private List<GameObject> _enemies;
 
+    private Player _player;
+
     public static Grid2D StageGrid = null;
     public static GridBuilder StageBuilder = null;
     public static GridManager StageManager = null;
@@ -31,8 +33,8 @@ public class Stage : MonoBehaviour {
     }
 
     /** Método set d ela informaicón */
-    public void SetData(StageData data) {
-        _data = data;
+    public void SetData(StageData data, Player player) {
+        _data = data; _player = player;
     }
 
 }

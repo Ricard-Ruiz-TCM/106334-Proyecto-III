@@ -102,9 +102,7 @@ public class CombatManager : MonoBehaviour {
                 }
                 yield return null;
             }
-        } 
-        else 
-        {
+        } else {
             Actor player = FindNearest(actor);
             node = Stage.StageBuilder.GetGridPlane(Mathf.RoundToInt(player.transform.position.x / 10), Mathf.RoundToInt(player.transform.position.z / 10)).node;
             Stage.StageBuilder.GetGridPlane(node.x, node.y).SetMaterial(Stage.StageBuilder._rangeMath);
@@ -124,8 +122,7 @@ public class CombatManager : MonoBehaviour {
         foreach (Actor obj in FindPlayers()) {
             float distance = Vector3.Distance(obj.transform.position, from.transform.position);
             if (distance < dist) {
-                if (!obj.Status.isStatusActive(buffsnDebuffs.Invisible))
-                {                    
+                if (!obj.Status.isStatusActive(buffsnDebuffs.Invisible)) {
                     actor = obj;
                     dist = distance;
                 }
@@ -296,12 +293,10 @@ public class CombatManager : MonoBehaviour {
             if (node.x == Mathf.RoundToInt(_actors[i].transform.position.x / 10) && node.y == Mathf.RoundToInt(_actors[i].transform.position.z / 10)) {
                 switch (skillType) {
                     default:
-                        _actors[i].TakeDamage(from.Damage(), from.Weapon.item);
-                        HealPerHitBuffActive(from, _actors[i]);
+                        HealPerHitBuffActive(from, _actors[i].TakeDamage(from.Damage(), from.Weapon.item));
                         break;
                     case skills.DoubleLunge:
-                        _actors[i].TakeDamage(from.Damage() * 2, from.Weapon.item);
-                        HealPerHitBuffActive(from, _actors[i]);
+                        HealPerHitBuffActive(from, _actors[i].TakeDamage(from.Damage() * 2, from.Weapon.item));
                         break;
                     case skills.Cleave:
                         //_actors[i].Stun();
@@ -329,16 +324,13 @@ public class CombatManager : MonoBehaviour {
         from.EndAction();
 
     }
-    void HealPerHitBuffActive(Actor from,Actor to)
-    {
-        foreach (StatusItem sitem in from.GetComponent<ActorStatus>().ActiveStatus)
-        {
-            if (((ModStatus)sitem.status).type.Equals(buffsnDebuffs.Invencibility))  //puede estar mal
-            {
-                from.SetHealth(to.DamageTaken());
-            }
+
+    void HealPerHitBuffActive(Actor from, int amount) {
+        if (from.Status.isStatusActive(buffsnDebuffs.HealPerHit)) {
+            from.SetHealth(amount);
         }
     }
+
     //pasa de cordenadas de mundo a grid
     bool ChechIfPositionIsInGrid(int i, int j) {
         return (!(i < 0 || j < 0 || i >= Stage.StageBuilder._grid.Rows || j >= Stage.StageBuilder._grid.Columns));

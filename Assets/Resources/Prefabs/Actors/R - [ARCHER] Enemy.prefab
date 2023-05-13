@@ -1373,9 +1373,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a186b17bd001074484e394ce89bc7c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _armor: {fileID: 11400000, guid: 2c7a872f400063d4687c694524f19b61, type: 2}
+  _armor: {fileID: 11400000, guid: d89531ab99de4df47a81aff5e10e1430, type: 2}
   _weapon: {fileID: 11400000, guid: 1a5f1b970c05cac4294dccb3a29b76ac, type: 2}
-  _shield: {fileID: 0}
+  _shield: {fileID: 11400000, guid: a5e19b5569345be46a5b4f5917b26ec1, type: 2}
 --- !u!114 &7993983531151728125
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1389,9 +1389,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CanBePlaced: 0
-  _health: 0
+  _health: 5
   _isAlive: 0
-  _movement: 0
+  _movement: 3
   canMove: 1
   canInteract: 1
   _isStuned: 0

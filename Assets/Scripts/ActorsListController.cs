@@ -12,6 +12,7 @@ public class ActorsListController : MonoBehaviour {
     protected int _current = 0;
     [SerializeField]
     protected List<Actor> _actors = new List<Actor>();
+    public List<Actor> Actors => _actors;
 
     /** Subscribe to manager */
     public void Subscribe(Actor element) {

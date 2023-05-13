@@ -10,7 +10,11 @@ public class TurnManager : ActorsListController {
     /** Callbacks */
     public Action onStartTurn;
     public Action onEndTurn;
+
     public Action onNewRound;
+
+    public Action onStartRounds;
+    public Action onEndRounds;
 
     [SerializeField, Header("Rondas:")]
     private rounds _roundType = rounds.waitingRound;
@@ -38,9 +42,6 @@ public class TurnManager : ActorsListController {
     // Unity Update
     void Update() {
         switch (_roundType) {
-            case rounds.waitingRound:
-                Debug.Log("WAITING");
-                break;
             case rounds.positioningRound:
                 foreach (Actor a in _actors) {
                     if (a.CanBePlaced) {
@@ -74,9 +75,6 @@ public class TurnManager : ActorsListController {
                     _actors[_current].EndTurn();
                 }
                 break;
-            case rounds.endRound:
-                Debug.Log("END ROUND");
-                break;
             default:
                 break;
         }
@@ -103,6 +101,7 @@ public class TurnManager : ActorsListController {
             return;
 
         _roundType = rounds.combatRound;
+        onStartRounds?.Invoke();
         StartTurn();
     }
 
@@ -124,6 +123,7 @@ public class TurnManager : ActorsListController {
     /** Método para indicar que se acabo el combate dentro del stage */
     public void stageEnds() {
         _roundType = rounds.endRound;
+        onEndRounds?.Invoke();
     }
 
     /** Método para iniciar el sistema desde fuera */

@@ -118,6 +118,11 @@ public enum stageEntrance {
     north, south, east, west
 }
 
+// Resolución del stage
+public enum stageResolution {
+    victory, defeat
+}
+
 // Objetivo del stage
 public enum stageObjetive {
     killAll, protectNPC, clearPath

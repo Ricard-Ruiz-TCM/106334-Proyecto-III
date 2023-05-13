@@ -15,22 +15,18 @@ public class Enemy : Actor {
     private List<skills> lowHpSkillOrder;
 
     // Unity Awake
-    protected override void Awake()
-    {
+    protected override void Awake() {
         base.Awake();
         normalSkillOrder = new List<skills>();
         lowHpSkillOrder = new List<skills>();
 
-        foreach (skills value in skills.GetValues(typeof(skills)))
-        {
-            if(value.Equals(skills.NONE) || value.Equals(skills.MAX))
-            {
+        foreach (skills value in skills.GetValues(typeof(skills))) {
+            if (value.Equals(skills.NONE) || value.Equals(skills.MAX)) {
                 continue;
             }
             normalSkillOrder.Add(value);
         }
-        for (int i = normalSkillOrder.Count -1; i > 0; i--)
-        {
+        for (int i = normalSkillOrder.Count - 1; i > 0; i--) {
             Debug.Log(normalSkillOrder[i]);
             lowHpSkillOrder.Add(normalSkillOrder[i]);
         }
@@ -40,6 +36,8 @@ public class Enemy : Actor {
     void Start() {
         SubscribeManager();
         BuildSkills();
+
+        transform.position = Stage.StageManager.RandomPosition();
     }
 
     public override bool CanAct() {
@@ -50,28 +48,12 @@ public class Enemy : Actor {
 
         if (_target != null) {
             if (_inventory.Weapon() != null) {
-                // Weapon Básica, el ataque
-                if(GetTotalHealthPercentage() > 20)
-                {
-
-                }
                 if (Stage.StageManager.InRange(transform, _target, _inventory.Weapon().range)) {
-                    //_target.TakeDamage(Damage());
-
-
-                    //if (InRange(_target, _weapon._range)) {
-                    //    _target.TakeDamage(Damage());
-                    //}
-                    /*if (InRange(_target, Skills()[1].skill._range))
-                    {
-                        Debug.Log("hola");
-                        UseSkill(Skills()[1].skill._skill);
-                        //_target.TakeDamage(Damage());
-                    }*/
+                    _target.TakeDamage(Damage());
                 }
             }
         }
-            EndAction();
+        EndAction();
     }
 
     public override bool CanMove() {
@@ -80,16 +62,15 @@ public class Enemy : Actor {
 
     public override void Move() {
         base.Move();
-        EndMovement();
         if (_target == null) {
             EndMovement();
             return;
         }
+
         GridPlane targetPlane = Stage.StageBuilder.GetGridPlane(_target.transform.position);
         GridPlane myPlane = Stage.StageBuilder.GetGridPlane(transform.position);
         GridPlane destiny = myPlane;
-        if (_combatStyle.Equals(enemyCombatStyle.melee)) 
-        {
+        if (_combatStyle.Equals(enemyCombatStyle.melee)) {
             destiny = Stage.StageBuilder.FindClosesGridPlaneTo(targetPlane, myPlane);
         } else {
             List<Node> route = _gridMovement.CalcRoute(transform.position, targetPlane);
@@ -105,10 +86,10 @@ public class Enemy : Actor {
 
     public override void BeginTurn() {
         base.BeginTurn();
-
         _target = Stage.StageManager.FindNearestPlayers(transform);
-
     }
 
-
+    public override void Die() {
+        transform.position = new Vector3(10000, 10000, 10000);
+    }
 }

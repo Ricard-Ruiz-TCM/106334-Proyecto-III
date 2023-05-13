@@ -41,7 +41,7 @@ public class GridManager : MonoBehaviour {
     }
 
     public Vector3 RandomPosition() {
-        return Stage.StageBuilder.GetGridPlane(Random.Range(0, Stage.StageGrid.Columns), Random.Range(0, Stage.StageGrid.Rows)).position;
+        return Stage.StageBuilder.GetGridPlane(Random.Range(0, Stage.StageGrid.Columns - 1), Random.Range(0, Stage.StageGrid.Rows - 1)).position;
     }
 
 }

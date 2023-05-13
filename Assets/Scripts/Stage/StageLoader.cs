@@ -45,7 +45,7 @@ public class StageLoader : MonoBehaviour {
     private void BuildLevel(StageData data) {
         GameObject g = Resources.Load<GameObject>(_stagePath + _stageName + data.ID.ToString());
         _stage = GameObject.Instantiate(g).GetComponent<Stage>();
-        _stage.SetData(data);
+        _stage.SetData(data, player.GetComponent<Player>());
     }
 
     /** Método para instanciar al player con todas sus costias dentro del nivel */

@@ -1,6 +1,10 @@
+using System;
 using UnityEngine;
 
 public class SceneStageManager : MonoBehaviour {
+
+    /** Observer para completation del stage */
+    public static event Action OnCompleteStage;
 
     [SerializeField, Header("Dialog:")]
     private GameObject _dialogUI;
@@ -14,6 +18,11 @@ public class SceneStageManager : MonoBehaviour {
     private GameObject _playerUI;
     [SerializeField, Header("Stage:")]
     private StageObjetiveUI _objetiveUI;
+    [SerializeField]
+    private StageResolutionUI _stageResolution;
+
+    [SerializeField, Header("Stage: Data")]
+    private StageData _data;
 
     // Unity OnEnable
     void OnEnable() {
@@ -21,6 +30,8 @@ public class SceneStageManager : MonoBehaviour {
         OnEndDialog.onTrigger += StageSuccess;
         OnOpenPerkPanel.onTrigger += OpenPerkPanel;
         OnOpenUpgradePanel.onTrigger += OpenUpgradePanel;
+
+        Player.onPlayerDie += () => { CompleteStage(stageResolution.defeat); };
     }
 
     // Unity OnDisable
@@ -29,6 +40,8 @@ public class SceneStageManager : MonoBehaviour {
         OnEndDialog.onTrigger -= StageSuccess;
         OnOpenPerkPanel.onTrigger -= OpenPerkPanel;
         OnOpenUpgradePanel.onTrigger -= OpenUpgradePanel;
+
+        Player.onPlayerDie -= () => { CompleteStage(stageResolution.defeat); };
     }
 
     // TESTING
@@ -37,22 +50,25 @@ public class SceneStageManager : MonoBehaviour {
 
     // Unity Start
     void Start() {
-        StageData stage = uCore.GameManager.NextStage;
+        _data = uCore.GameManager.NextStage;
 
         // TESTING
-        stage = stageTest.Data;
+        _data = stageTest.Data;
 
-        switch (stage.type) {
+        switch (_data.type) {
             case stageType.combat:
-                EnableCombat(stage);
+                EnableCombat(_data);
                 break;
             case stageType.comrade:
             case stageType.blacksmith:
             case stageType.campfire:
-                EnableDialog(stage);
+                EnableDialog(_data);
                 break;
         }
 
+        TurnManager.instance.onStartRounds += () => {
+            TurnManager.instance.onModifyList += CheckCompletation;
+        };
     }
 
     /** Métodos para habilitar los managers necesarios del stage */
@@ -102,5 +118,37 @@ public class SceneStageManager : MonoBehaviour {
         StageSuccess();
     }
     /** ------- */
+
+    /** Método para la resolución del stage */
+    public void CompleteStage(stageResolution res) {
+        _playerUI.SetActive(false);
+        _stageResolution.SetResolution(res, StageSuccess, StageFailed);
+        _stageResolution.gameObject.SetActive(true);
+
+        OnCompleteStage?.Invoke();
+    }
+
+    public void CheckCompletation() {
+        bool completed = true;
+        switch (_data.objetive) {
+            case stageObjetive.killAll:
+                foreach (Actor actor in TurnManager.instance.Actors) {
+                    if (actor is Enemy) {
+                        completed = false;
+                    }
+                }
+                break;
+            case stageObjetive.protectNPC:
+                Debug.Log("TAMOS JODIDOS PERO CON EL NPC");
+                break;
+            case stageObjetive.clearPath:
+                Debug.Log("TAMOS JODIDOS");
+                break;
+        }
+
+        if (completed) {
+            CompleteStage(stageResolution.victory);
+        }
+    }
 
 }

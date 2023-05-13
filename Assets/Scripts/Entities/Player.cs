@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.VFX;
 
@@ -5,6 +6,8 @@ using UnityEngine.VFX;
 [RequireComponent(typeof(ActorSkills)), RequireComponent(typeof(ActorStatus))]
 [RequireComponent(typeof(ActorInventory))]
 public class Player : Actor {
+
+    public static event Action onPlayerDie;
 
     bool moveController = true;
 
@@ -35,6 +38,10 @@ public class Player : Actor {
         {
             skinnedMesh.material = shaderMat;
             effect.Play();
+        }
+
+        if (uCore.Action.GetKeyDown(KeyCode.K)) {
+            TakeDamage(100);
         }
     }
 
@@ -96,5 +103,7 @@ public class Player : Actor {
 
     }
 
-
+    public override void Die() {
+        onPlayerDie?.Invoke();
+    }
 }

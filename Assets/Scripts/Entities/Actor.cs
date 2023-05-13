@@ -1,6 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 
 public abstract class ActorManager : MonoBehaviour {
 
@@ -129,10 +127,8 @@ public abstract class Actor : ActorManager {
         // check Status
         foreach (StatusItem sitem in _status.ActiveStatus) {
             if (sitem.status is ModStatus) {
-                if (((ModStatus)sitem.status).type.Equals(modificationType.damage))
-                {
-                    switch (((ModStatus)sitem.status).operationType)
-                    {
+                if (((ModStatus)sitem.status).type.Equals(modificationType.damage)) {
+                    switch (((ModStatus)sitem.status).operationType) {
                         case modificationOperations.Suma:
                             dmg += ((ModStatus)sitem.status).modification;
                             break;
@@ -146,7 +142,7 @@ public abstract class Actor : ActorManager {
                             dmg /= ((ModStatus)sitem.status).modification;
                             break;
                     }
-                    
+
                 }
             }
         }
@@ -154,17 +150,14 @@ public abstract class Actor : ActorManager {
         return dmg;
     }
 
-    public int GetHealth()
-    {
+    public int GetHealth() {
         return _health;
     }
-    public void SetHealth(int value)
-    {
+    public void SetHealth(int value) {
         _health = value;
     }
-    public int GetTotalHealthPercentage()
-    {
-        return ((_health/totalHealth) * 100);
+    public int GetTotalHealthPercentage() {
+        return ((_health / totalHealth) * 100);
     }
 
     public int Defense() {
@@ -187,8 +180,7 @@ public abstract class Actor : ActorManager {
         foreach (StatusItem sitem in _status.ActiveStatus) {
             if (sitem.status is ModStatus) {
                 if (((ModStatus)sitem.status).type.Equals(modificationType.defense)) {
-                    switch (((ModStatus)sitem.status).operationType)
-                    {
+                    switch (((ModStatus)sitem.status).operationType) {
                         case modificationOperations.Suma:
                             defense += ((ModStatus)sitem.status).modification;
                             break;
@@ -207,7 +199,7 @@ public abstract class Actor : ActorManager {
         }
 
         return defense;
-    }    
+    }
 
     public virtual int Movement() {
         int movement = _movement;
@@ -217,41 +209,36 @@ public abstract class Actor : ActorManager {
         return movement;
     }
 
-    public void TakeDamage(int damage, items weaponItem = items.NONE)
-    {
-        foreach (StatusItem sitem in _status.ActiveStatus)
-        {
-            if (!((ModStatus)sitem.status).type.Equals(buffsnDebuffs.Invencibility))  //puede estar mal
-            {
-                int newH = Mathf.Max(0, _health -= Mathf.Max(0, (damage - Defense())));
+    public int TakeDamage(int damage, items weaponItem = items.NONE) {
+        int newH = Mathf.Max(0, _health - Mathf.Max(0, (damage - Defense())));
 
-
-                if (weaponItem.Equals(items.Bow))
-                {
-                    if (Status.isStatusActive(buffsnDebuffs.ArrowInmune))
-                    {
-                        newH = _health;
-                    }
-                }
-
-                 healtDif = _health - newH;
-                _health = newH;
-
-
-                // Cal Result
-                if (_health == 0)
-                {
-                    _isAlive = false;
-                    UnSubscribeManger();
-                    GameObject.Destroy(this.gameObject);
-                }
+        if (weaponItem.Equals(items.Bow)) {
+            if (Status.isStatusActive(buffsnDebuffs.ArrowInmune)) {
+                newH = _health;
             }
         }
-    }
-    public int DamageTaken()
-    {
+        if (_status.isStatusActive(buffsnDebuffs.Invencibility)) {
+            newH = _health;
+        }
+        
+        healtDif = _health - newH;
+        _health = newH;
+
+
+        // Cal Result
+        if (_health == 0) {
+            _isAlive = false;
+            UnSubscribeManger();
+            Die();
+        }
+
         return healtDif;
     }
+    public int DamageTaken() {
+        return healtDif;
+    }
+
+    public abstract void Die();
 
     public progress moving {
         get; private set;

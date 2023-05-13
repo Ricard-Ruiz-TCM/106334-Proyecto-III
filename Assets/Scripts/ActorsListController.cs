@@ -35,6 +35,11 @@ public class ActorsListController : MonoBehaviour {
         return _actors[_current].actor;
     }
 
+    /** Check if contains */
+    public bool Contains(Actor element) {
+        return _actors.Contains(element);
+    }
+
     /** Método que ordena la lista tomando _current como inicio */
     public List<Actor> SortedByIndex() {
         List<Actor> sorted = new List<Actor>();

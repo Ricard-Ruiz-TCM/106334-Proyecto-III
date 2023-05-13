@@ -9,6 +9,9 @@ public class Enemy : Actor {
     // Actor target de skills y ataques, etc.
     private Actor _target;
 
+    [SerializeField, Header("Clase:")]
+    private enemyClass _class;
+
     [SerializeField, Header("IA:")]
     private enemyCombatStyle _combatStyle;
     private List<skills> normalSkillOrder;

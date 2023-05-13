@@ -980,7 +980,7 @@ GameObject:
   - component: {fileID: 2599177544554542264}
   - component: {fileID: 5511532426031246333}
   m_Layer: 0
-  m_Name: R - [LANCER] Enemy
+  m_Name: '[8] Commander - Bandid'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1063,7 +1063,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29189c5abf87e184389f4937af868ee8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _skills: []
+  _skills:
+  - skill: {fileID: 11400000, guid: 71cfe4ff8ec55584eb91f5ea330b8e01, type: 2}
+    cooldown: 0
 --- !u!114 &5115352332093497383
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1089,9 +1091,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a186b17bd001074484e394ce89bc7c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _armor: {fileID: 11400000, guid: d89531ab99de4df47a81aff5e10e1430, type: 2}
-  _weapon: {fileID: 11400000, guid: c3098fc246eeaf6409e6d259dcb1e29e, type: 2}
-  _shield: {fileID: 11400000, guid: a5e19b5569345be46a5b4f5917b26ec1, type: 2}
+  _armor: {fileID: 0}
+  _weapon: {fileID: 11400000, guid: b50f9e02fe5f89a4db7942f1c13c96b1, type: 2}
+  _shield: {fileID: 0}
 --- !u!114 &5511532426031246333
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1105,14 +1107,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CanBePlaced: 0
-  _health: 5
+  _health: 13
   _isAlive: 0
-  _movement: 3
+  _movement: 14
   canMove: 1
-  canInteract: 0
+  canInteract: 1
   _isStuned: 0
   _isTurtle: 0
   materialInvisible: {fileID: 0}
+  _class: 5
   _combatStyle: 1
 --- !u!1 &5707780158083368676
 GameObject:

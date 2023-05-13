@@ -1137,7 +1137,7 @@ GameObject:
   - component: {fileID: 3676777920411086627}
   - component: {fileID: 6586599904056045670}
   m_Layer: 0
-  m_Name: SR - [SWORDSMAN] Enemy
+  m_Name: '[2] Bandid - Swordsman'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1246,9 +1246,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a186b17bd001074484e394ce89bc7c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _armor: {fileID: 11400000, guid: d89531ab99de4df47a81aff5e10e1430, type: 2}
+  _armor: {fileID: 11400000, guid: 2c7a872f400063d4687c694524f19b61, type: 2}
   _weapon: {fileID: 11400000, guid: 166a475cd6f81744a82dab3d373c4626, type: 2}
-  _shield: {fileID: 11400000, guid: a5e19b5569345be46a5b4f5917b26ec1, type: 2}
+  _shield: {fileID: 0}
 --- !u!114 &6586599904056045670
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1262,7 +1262,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CanBePlaced: 0
-  _health: 5
+  _health: 15
   _isAlive: 0
   _movement: 3
   canMove: 1
@@ -1270,6 +1270,7 @@ MonoBehaviour:
   _isStuned: 0
   _isTurtle: 0
   materialInvisible: {fileID: 0}
+  _class: 1
   _combatStyle: 1
 --- !u!1 &6731814301366938828
 GameObject:

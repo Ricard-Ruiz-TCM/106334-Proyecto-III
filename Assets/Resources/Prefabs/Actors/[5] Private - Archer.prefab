@@ -1264,7 +1264,7 @@ GameObject:
   - component: {fileID: 476979225218564792}
   - component: {fileID: 7993983531151728125}
   m_Layer: 0
-  m_Name: R - [ARCHER] Enemy
+  m_Name: '[5] Private - Archer'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1375,9 +1375,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a186b17bd001074484e394ce89bc7c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _armor: {fileID: 11400000, guid: d89531ab99de4df47a81aff5e10e1430, type: 2}
+  _armor: {fileID: 11400000, guid: d441fbeb3aed9a84797cca64fe4e2f81, type: 2}
   _weapon: {fileID: 11400000, guid: 1a5f1b970c05cac4294dccb3a29b76ac, type: 2}
-  _shield: {fileID: 11400000, guid: a5e19b5569345be46a5b4f5917b26ec1, type: 2}
+  _shield: {fileID: 0}
 --- !u!114 &7993983531151728125
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1393,12 +1393,13 @@ MonoBehaviour:
   CanBePlaced: 0
   _health: 5
   _isAlive: 0
-  _movement: 3
+  _movement: 1
   canMove: 1
   canInteract: 0
   _isStuned: 0
   _isTurtle: 0
   materialInvisible: {fileID: 0}
+  _class: 2
   _combatStyle: 0
 --- !u!1 &8126083482901722704
 GameObject:

@@ -980,7 +980,7 @@ GameObject:
   - component: {fileID: 2599177544554542264}
   - component: {fileID: 5511532426031246333}
   m_Layer: 0
-  m_Name: SSR - [LANCER] Enemy
+  m_Name: '[3] Centurion - Lancer'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1091,7 +1091,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _armor: {fileID: 11400000, guid: d89531ab99de4df47a81aff5e10e1430, type: 2}
   _weapon: {fileID: 11400000, guid: c3098fc246eeaf6409e6d259dcb1e29e, type: 2}
-  _shield: {fileID: 11400000, guid: a5e19b5569345be46a5b4f5917b26ec1, type: 2}
+  _shield: {fileID: 0}
 --- !u!114 &5511532426031246333
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1105,14 +1105,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CanBePlaced: 0
-  _health: 5
+  _health: 12
   _isAlive: 0
-  _movement: 3
+  _movement: 2
   canMove: 1
   canInteract: 0
   _isStuned: 0
   _isTurtle: 0
   materialInvisible: {fileID: 0}
+  _class: 3
   _combatStyle: 1
 --- !u!1 &5707780158083368676
 GameObject:

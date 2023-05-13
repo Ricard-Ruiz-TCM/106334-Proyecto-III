@@ -133,6 +133,11 @@ public enum stageTerrain {
     mountain, swamp, meadow
 }
 
+// Tipo de enemigos
+public enum enemyClass {
+    eBandid = 1, ePrivate = 2, eCenturion = 3, eCommander = 5
+}
+
 // Tipo de dificultad del terreno, Enum especial para el package de Array2DEditor
 namespace Array2DEditor {
     public enum nodeType {

@@ -269,7 +269,7 @@ GameObject:
   - component: {fileID: 5246274987316628097}
   - component: {fileID: 2350954807297938884}
   m_Layer: 0
-  m_Name: SR - [ASSASSIN] Enemy
+  m_Name: '[1] Bandid - Assassin'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -378,9 +378,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a186b17bd001074484e394ce89bc7c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _armor: {fileID: 11400000, guid: d89531ab99de4df47a81aff5e10e1430, type: 2}
-  _weapon: {fileID: 11400000, guid: b50f9e02fe5f89a4db7942f1c13c96b1, type: 2}
-  _shield: {fileID: 11400000, guid: a5e19b5569345be46a5b4f5917b26ec1, type: 2}
+  _armor: {fileID: 11400000, guid: d441fbeb3aed9a84797cca64fe4e2f81, type: 2}
+  _weapon: {fileID: 11400000, guid: 166a475cd6f81744a82dab3d373c4626, type: 2}
+  _shield: {fileID: 0}
 --- !u!114 &2350954807297938884
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -394,14 +394,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CanBePlaced: 0
-  _health: 5
+  _health: 2
   _isAlive: 0
-  _movement: 3
+  _movement: 4
   canMove: 1
   canInteract: 0
   _isStuned: 0
   _isTurtle: 0
   materialInvisible: {fileID: 0}
+  _class: 1
   _combatStyle: 1
 --- !u!1 &2588086178218195165
 GameObject:

@@ -2,49 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CombatManager : MonoBehaviour {
+public class CombatManager : ActorsListController {
 
     public static CombatManager instance = null;
 
     [SerializeField] LayerMask layerActor;
     [SerializeField] Material shootMat;
-    private List<Actor> _actors;
 
+    // Unity Awake
     private void Awake() {
-
         // Singleton
         if ((instance != null) && (instance != this)) {
             GameObject.Destroy(this.gameObject);
         } else {
             instance = this;
         }
-
-        _actors = new List<Actor>();
-    }
-    // Start is called before the first frame update
-    void Start() {
-
     }
 
     public List<Actor> FindPlayers() {
         return _actors.FindAll(x => x is Player);
     }
-
-    //a�adir o remover actores de una lista (lo hacemos para controlar en que posicion se encuentran los actores y aplicarle efectos)
-    public void Subscribe(Actor element) {
-        if (!Contains(element))
-            _actors.Add(element);
-
-    }
-    public void Unsubscribe(Actor element) {
-        if (Contains(element))
-            _actors.Remove(element);
-
-    }
-    private bool Contains(Actor element) {
-        return _actors.Contains(element);
-    }
-
 
     //metodos para hacer las skills
     //los que no estan aqui se hacen desde su scriptableObject, eso es porque la skill se hace sin tener que seleccionar ninguna casilla

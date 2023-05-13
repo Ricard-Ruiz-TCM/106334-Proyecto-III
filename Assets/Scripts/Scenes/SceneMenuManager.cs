@@ -10,8 +10,9 @@ public class SceneMenuManager : MonoBehaviour {
 
     // Unity Awake
     void Awake() {
-        if (!uCore.GameManager.ExistGameData())
+        if (!uCore.GameManager.ExistGameData()) {
             _continue.SetActive(false);
+        }
     }
 
     /** Buttons */

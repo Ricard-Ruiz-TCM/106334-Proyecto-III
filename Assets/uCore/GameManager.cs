@@ -171,25 +171,43 @@ public class GameManager : MonoBehaviour {
 
     #endregion
 
+    #region Player
+
+    public Player Player;
+
+    public void RestorePlayer(Player player) {
+        Player = player;
+    }
+
+    public void SavePlayer(Player player) {
+        Player = null;
+    }
+
+    #endregion
+
     #region GameData
 
     public bool ExistGameData() {
+        // TODO
         Debug.Log("CHECKING SI EXISTE GAME DATA, TODO");
         return false;
     }
 
     /** LOAD */
     public void LoadGameData() {
+        // TODO
         Debug.Log("CARGANDO GAME DATA, TODO");
     }
 
     /** SAVE */
     public void SaveGameData() {
+        // TODO
         Debug.Log("GUARDANDO GAME DATA, TODO");
     }
 
     /** CLEAR */
     public void ClearGameData() {
+        // TODO
         Debug.Log("CLEAR GAME DATA, TODO");
     }
 

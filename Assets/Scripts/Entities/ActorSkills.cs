@@ -59,6 +59,15 @@ public class ActorSkills : ActorManager {
         }
         return false;
     }
+    public Skill ReturnSkill(skills skill)
+    {
+        foreach (SkillItem skillItem in _skills)
+        {
+            if (skillItem.skill.skill.Equals(skill))
+                return skillItem.skill;
+        }
+        return null;
+    }
 
     public List<SkillItem> Skills() {
         return _skills;

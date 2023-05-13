@@ -10,7 +10,7 @@ public class GridManager : MonoBehaviour {
         foreach (Actor obj in CombatManager.instance.FindPlayers()) {
             float distance = Vector3.Distance(obj.transform.position, me.position);
             if (distance < dist) {
-                if (obj.Status.isStatusActive(buffsnDebuffs.Invisible)) {
+                if (!obj.Status.isStatusActive(buffsnDebuffs.Invisible)) {
                     actor = obj;
                     dist = distance;
                 }
@@ -20,7 +20,7 @@ public class GridManager : MonoBehaviour {
         return actor;
     }
 
-    public bool InRange(Transform me, Actor target, int range) {
+    public bool InRange(Transform me, Actor target, int range, bool needRangeToUse) {
         GridPlane targetPlane = Stage.StageBuilder.GetGridPlane(target.transform.position);
         GridPlane myPlane = Stage.StageBuilder.GetGridPlane(me.position);
         return Stage.StageBuilder.GetGridDistanceBetween(myPlane, targetPlane) <= range;

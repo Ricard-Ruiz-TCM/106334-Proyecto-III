@@ -46,9 +46,33 @@ public class Enemy : Actor {
         base.Act();
 
         if (_target != null) {
-            if (_inventory.Weapon() != null) {
-                if (Stage.StageManager.InRange(transform, _target, _inventory.Weapon().range)) {
-                    _target.TakeDamage(Damage());
+            if (_inventory.Weapon() != null) 
+            {
+                if (GetTotalHealthPercentage() > 20)
+                {
+                    for (int i = 0; i < normalSkillOrder.Count; i++)
+                    {
+                        Skill usingSkill = _skills.ReturnSkill(normalSkillOrder[i]);
+                        if(usingSkill != null)
+                        {
+                            if (Stage.StageManager.InRange(transform, _target, usingSkill.range, usingSkill.needRangeToUse))
+                            {                                
+                                _skills.UseSkill(normalSkillOrder[i]);
+                            }
+                        }
+
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < lowHpSkillOrder.Count; i++)
+                    {
+                        Skill usingSkill = _skills.ReturnSkill(normalSkillOrder[i]);
+                        if (Stage.StageManager.InRange(transform, _target, usingSkill.range, usingSkill.needRangeToUse))
+                        {
+                            _skills.UseSkill(normalSkillOrder[i]);
+                        }
+                    }
                 }
             }
         }
@@ -61,7 +85,9 @@ public class Enemy : Actor {
 
     public override void Move() {
         base.Move();
-        if (_target == null) {
+        if (_target == null) 
+        {
+            Debug.Log("DASD");
             EndMovement();
             return;
         }
@@ -69,16 +95,23 @@ public class Enemy : Actor {
         GridPlane targetPlane = Stage.StageBuilder.GetGridPlane(_target.transform.position);
         GridPlane myPlane = Stage.StageBuilder.GetGridPlane(transform.position);
         GridPlane destiny = myPlane;
-        if (_combatStyle.Equals(enemyCombatStyle.melee)) {
-            destiny = Stage.StageBuilder.FindClosesGridPlaneTo(targetPlane, myPlane);
-        } else {
-            List<Node> route = _gridMovement.CalcRoute(transform.position, targetPlane);
-            route.Reverse();
-            if (route.Count > _inventory.Weapon().range) {
-                destiny = Stage.StageBuilder.GetGridPlane(route[_inventory.Weapon().range]);
+        if (GetTotalHealthPercentage() > 20)
+        {
+            if (_combatStyle.Equals(enemyCombatStyle.melee))
+            {
+                destiny = Stage.StageBuilder.FindClosesGridPlaneTo(targetPlane, myPlane);
             }
-
+            else
+            {
+                List<Node> route = _gridMovement.CalcRoute(transform.position, targetPlane);
+                route.Reverse();
+                if (route.Count > _inventory.Weapon().range)
+                {
+                    destiny = Stage.StageBuilder.GetGridPlane(route[_inventory.Weapon().range]);
+                }
+            }
         }
+        
         _gridMovement.SetDestination(transform.position, destiny, Movement());
         _gridMovement.onDestinationReached += EndMovement;
     }

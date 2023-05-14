@@ -66,14 +66,14 @@ public class Enemy : Actor {
                 }
                 else
                 {
-                    for (int i = 0; i < lowHpSkillOrder.Count; i++)
-                    {
-                        Skill usingSkill = _skills.ReturnSkill(normalSkillOrder[i]);
-                        if (Stage.StageManager.InRange(transform, _target, usingSkill.range))
-                        {
-                            _skills.UseSkill(normalSkillOrder[i]);
-                        }
-                    }
+                    //for (int i = 0; i < lowHpSkillOrder.Count; i++)
+                    //{
+                    //    Skill usingSkill = _skills.ReturnSkill(normalSkillOrder[i]);
+                    //    if (Stage.StageManager.InRange(transform, _target, usingSkill.range))
+                    //    {
+                    //        _skills.UseSkill(normalSkillOrder[i]);
+                    //    }
+                    //}
                 }
             }
         }

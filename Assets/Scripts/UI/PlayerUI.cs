@@ -80,7 +80,7 @@ public class PlayerUI : MonoBehaviour {
     private void UpdateHP() {
 
         if (_currentActor is Player) {
-            _imgHealth.fillAmount = _currentActor.GetHealth() / _currentActor.MaxHealth();
+            _imgHealth.fillAmount = ((float)_currentActor.GetHealth() / (float)_currentActor.MaxHealth());
         }
     }
 

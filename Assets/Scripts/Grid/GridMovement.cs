@@ -47,7 +47,7 @@ public class GridMovement : MonoBehaviour {
         _index = -1;
         _destionationRoute = new List<Node>();
         List<Node> tmp = _pathfinder.FindPath(_builder.GetGridPlane(origin).node, plane.node);
-        for (int i = 0; i < Mathf.Min(tmp.Count, amount); i++) {
+        for (int i = 0; i < Mathf.Min((tmp != null ? tmp.Count : 0), amount); i++) {
             if (tmp[i].type.Equals(Array2DEditor.nodeType.M)) {
                 amount--;
             }

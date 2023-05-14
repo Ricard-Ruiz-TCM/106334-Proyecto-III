@@ -19,12 +19,10 @@ public class CombatManager : ActorsListController {
         }
     }
 
-    public List<Actor> FindPlayers()
-    {
+    public List<Actor> FindPlayers() {
         return _actors.FindAll(x => x is Player);
     }
-    public List<Actor> FindEnemys()
-    {
+    public List<Actor> FindEnemys() {
         return _actors.FindAll(x => x is Enemy);
     }
 
@@ -83,8 +81,7 @@ public class CombatManager : ActorsListController {
                 }
                 yield return null;
             }
-        } else 
-        {
+        } else {
             GetPosToEnemyAttack(actor, out node);
             if (node != null) {
                 GetActorInNode(node, actor, skillType);
@@ -181,8 +178,7 @@ public class CombatManager : ActorsListController {
                 }
                 yield return null;
             }
-        } else 
-        {
+        } else {
             GetPosToEnemyAttack(actor, out node);
             if (node != null) {
                 GetActorInNode(node, actor, skillType);
@@ -202,7 +198,7 @@ public class CombatManager : ActorsListController {
 
                 Stage.StageBuilder.ClearGrid();
 
-                GetPosToAttack(actor, range, out node,node);
+                GetPosToAttack(actor, range, out node, node);
 
                 if (uCore.Action.GetKeyDown(KeyCode.J)) {
                     GetActorInNode(node, actor, skillType);
@@ -223,9 +219,7 @@ public class CombatManager : ActorsListController {
                 }
                 yield return null;
             }
-        } 
-        else 
-        {
+        } else {
             GetPosToEnemyAttack(actor, out node);
             if (node != null) {
                 GetActorInNode(node, actor, skillType);
@@ -278,8 +272,7 @@ public class CombatManager : ActorsListController {
     private void ExtendAttack(int i, int j, Actor actor, bool canEnd, skills skillType) {
         if (ChechIfPositionIsInGrid(i, j)) {
             Stage.StageBuilder.UpdateMaterial(i, j, shootMat);
-            if (canEnd) 
-            {
+            if (canEnd) {
                 GetActorInNode(Stage.StageBuilder.GetGridPlane(i, j).node, actor, skillType);
             }
 
@@ -334,32 +327,30 @@ public class CombatManager : ActorsListController {
     bool ChechIfPositionIsInGrid(int i, int j) {
         return (!(i < 0 || j < 0 || i >= Stage.StageBuilder._grid.Rows || j >= Stage.StageBuilder._grid.Columns));
     }
-    void GetPosToAttack(Actor actor, int range,out Node node, Node lastNode) 
-    {
+    void GetPosToAttack(Actor actor, int range, out Node node, Node lastNode) {
         node = lastNode;
-        if (Stage.StageBuilder.MosueOverGrid())
-        {
+        if (Stage.StageBuilder.MosueOverGrid()) {
 
             GridPlane target = Stage.StageBuilder.GetMouseGridPlane();
             GridPlane origin = Stage.StageBuilder.GetGridPlane(actor.transform.position);
 
-            if (Stage.StageBuilder.GetGridDistanceBetween(target, origin) <= range)
-            {
+            if (Stage.StageBuilder.GetGridDistanceBetween(target, origin) <= range) {
                 node = target.node;
             }
-            Stage.StageBuilder.UpdateMaterial(node.x, node.y, shootMat);
+            if (node != null) {
+                Stage.StageBuilder.UpdateMaterial(node.x, node.y, shootMat);
+            }
 
             //actor.GridM().CalcRoute(actor.transform.position, Stage.StageBuilder.GetMouseGridPlane(), range);
             //node = Stage.StageBuilder.DisplayLastNodePath(actor.GridM().VisualRouteValid, range);
 
         }
     }
-    void GetPosToEnemyAttack(Actor actor, out Node node)
-    {
+    void GetPosToEnemyAttack(Actor actor, out Node node) {
         //Actor player = FindNearestPlayer(actor);
         Actor player = Stage.StageManager.FindNearestPlayer(actor.transform);
         node = Stage.StageBuilder.GetGridPlane(Mathf.RoundToInt(player.transform.position.x / 10), Mathf.RoundToInt(player.transform.position.z / 10)).node;
-        Stage.StageBuilder.GetGridPlane(node.x, node.y).SetMaterial(Stage.StageBuilder._rangeMath);    
+        Stage.StageBuilder.GetGridPlane(node.x, node.y).SetMaterial(Stage.StageBuilder._rangeMath);
     }
 
 }

@@ -8,6 +8,7 @@ using UnityEngine.VFX;
 public class Player : Actor {
 
     public static event Action onPlayerDie;
+    public static event Action onPlayerstep;
 
     bool moveController = true;
 
@@ -35,6 +36,7 @@ public class Player : Actor {
 
         transform.position = Stage.StageManager.RandomInnitialPosition();
 
+        _gridMovement.onStepReached += (Array2DEditor.nodeType t) => { onPlayerstep?.Invoke(); };
     }
 
     private void Update()

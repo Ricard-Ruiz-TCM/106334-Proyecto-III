@@ -15,18 +15,24 @@ public class PlayerUI : MonoBehaviour {
     [SerializeField]
     private Image _imgHealth;
 
+    [SerializeField]
+    private UIText _steps, _defense;
+
+    [SerializeField]
+    private PlayerTurnInfoUI _playerTurnInfo;
+
     private Actor _currentActor;
 
     // Unity OnEnable
     void OnEnable() {
-        TurnManager.instance.onStartTurn += UpdateSkills;
-        TurnManager.instance.onStartTurn += UpdateHP;
+        TurnManager.instance.onStartTurn += UpdateUI;
+        Player.onPlayerstep += UpdateSteps;
     }
 
     // Unity OnDisable
     void OnDisable() {
-        TurnManager.instance.onStartTurn -= UpdateSkills;
-        TurnManager.instance.onStartTurn -= UpdateHP;
+        TurnManager.instance.onStartTurn -= UpdateUI;
+        Player.onPlayerstep -= UpdateSteps;
     }
 
     // Unity Update
@@ -42,8 +48,36 @@ public class PlayerUI : MonoBehaviour {
         });
     }
 
-    private void UpdateHP() {
+    public void UpdateUI() {
+
         _currentActor = TurnManager.instance.Current();
+
+        UpdateHP();
+        UpdateSkills();
+        UpdateStats();
+        UpdateSteps();
+        UpdateDefense();
+    }
+
+    private void UpdateDefense() {
+        if (_currentActor is Player) {
+            _defense.UpdateText(_currentActor.Defense());
+        }
+    }
+
+    private void UpdateStats() {
+        if (_currentActor is Player) {
+            _playerTurnInfo.UpdatePanel(_currentActor);
+        }
+    }
+
+    private void UpdateSteps() {
+        if (_currentActor is Player) {
+            _steps.UpdateText(_currentActor.Movement());
+        }
+    }
+
+    private void UpdateHP() {
 
         if (_currentActor is Player) {
             _imgHealth.fillAmount = _currentActor.GetHealth() / _currentActor.MaxHealth();
@@ -51,8 +85,6 @@ public class PlayerUI : MonoBehaviour {
     }
 
     private void UpdateSkills() {
-
-        _currentActor = TurnManager.instance.Current();
 
         int i = 1;
         if (_currentActor is Player) {

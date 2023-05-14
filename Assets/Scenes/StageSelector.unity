@@ -1440,7 +1440,19 @@ MonoBehaviour:
     exit: 0
     entrance: 0
     objetive: 0
-    enemies: []
+    enemies:
+    - enemy: {fileID: 5563068455053583158, guid: dfc1c5477c97c424bb5e693d73c4b1f1,
+        type: 3}
+      position: {x: 0, y: 0}
+    - enemy: {fileID: 2445274499666959631, guid: 49c77b4ffe3d87140bd4765635b6af99,
+        type: 3}
+      position: {x: 0, y: 0}
+    - enemy: {fileID: 6496254946221242541, guid: 204b097fc721c484b9ba94277539feeb,
+        type: 3}
+      position: {x: 0, y: 0}
+    - enemy: {fileID: 6496254946221242541, guid: 204b097fc721c484b9ba94277539feeb,
+        type: 3}
+      position: {x: 0, y: 0}
   _panelInfo: {fileID: 2134909803}
   _visible: 0
   _panelPreview: {fileID: 21300000, guid: bab919364f3dcdb48a1539693f5faf67, type: 3}
@@ -2206,7 +2218,7 @@ GameObject:
   m_IsActive: 1
 --- !u!114 &882839398
 MonoBehaviour:
-  m_ObjectHideFlags: 2
+  m_ObjectHideFlags: 10
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}

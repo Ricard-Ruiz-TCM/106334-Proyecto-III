@@ -62,8 +62,8 @@ public class Enemy : Actor {
 
     public override void Move() {
         base.Move();
-        if (_target == null) 
-        {
+
+        if (_target == null) {
             EndMovement();
             return;
         }
@@ -72,37 +72,28 @@ public class Enemy : Actor {
         GridPlane myPlane = Stage.StageBuilder.GetGridPlane(transform.position);
         GridPlane destiny = myPlane;
 
-        if (_combatStyle.Equals(enemyCombatStyle.melee))
-        {
+        if (_combatStyle.Equals(enemyCombatStyle.melee)) {
             destiny = Stage.StageBuilder.FindClosesGridPlaneTo(targetPlane, myPlane);
-        }
-        else
-        {
+        } else {
             List<Node> route = _gridMovement.CalcRoute(transform.position, targetPlane);
             route.Reverse();
-            if (route.Count > _inventory.Weapon().range)
-            {
+            if (route.Count > _inventory.Weapon().range) {
                 destiny = Stage.StageBuilder.GetGridPlane(route[_inventory.Weapon().range]);
             }
         }
-        
+
         _gridMovement.SetDestination(transform.position, destiny, Movement());
         _gridMovement.onDestinationReached += EndMovement;
     }
 
     public override void BeginTurn() {
         base.BeginTurn();
-        if(GetTotalHealthPercentage() > 20)
-        {
-            _target = Stage.StageManager.FindNearestPlayer(transform);
-        }
-        else
-        {
-            _target = Stage.StageManager.FindNearestEnemy(transform);
-        }
+
+        _target = Stage.StageManager.FindNearestPlayer(transform);
     }
 
     public override void Die() {
         transform.position = new Vector3(10000, 10000, 10000);
     }
+
 }

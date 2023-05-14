@@ -281,29 +281,8 @@ public abstract class Actor : ActorManager {
         /** Effects of the Status */
         _status.StatusEffect();
 
-        _isTurtle = false;
-
-        if (_isStuned > 0) {
-            moving = progress.done;
-            acting = progress.done;
-        }
-
-        if (damageModRounds != 0) {
-            damageModRounds--;
-            if (damageModRounds == 0) {
-                //Expertise ex = _upgrades.Find(x => x._item.Equals(_weapon._item));
-                //_weapon._damage[(ex != null ? ex._level : 0)] = anteriorDamage;
-            }
-        }
-        if (defenseModRounds != 0) {
-            defenseModRounds--;
-            if (defenseModRounds == 0) {
-                //Expertise ex = _upgrades.Find(x => x._item.Equals(_armor._item));
-                //_armor._defense[(ex != null ? ex._level : 0)] = anteriorDefense;
-            }
-        }
-
     }
+
     public void EndTurn() {
         hasTurnEnded = true;
         /** Update the duration of the Status */

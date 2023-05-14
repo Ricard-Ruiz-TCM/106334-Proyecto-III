@@ -153,6 +153,9 @@ public abstract class Actor : ActorManager {
     public int GetHealth() {
         return _health;
     }
+    public int MaxHealth() {
+        return totalHealth;
+    }
     public void SetHealth(int value) {
         _health = value;
     }

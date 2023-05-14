@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class Grid2D : MonoBehaviour {
 
-    public static event Action OnMapCompleted;
-
     // Filas & Columnas de Nuestro Grid
     public int Rows {
         get {
@@ -34,7 +32,7 @@ public class Grid2D : MonoBehaviour {
                 _nodeMap[x, y] = new Node(_gridMap.GetCell(x, y), x, y);
             }
         }
-        OnMapCompleted?.Invoke();
+        Stage.StageBuilder.InstantiatePlanes();
     }
 
     /** Get del NodeMap */

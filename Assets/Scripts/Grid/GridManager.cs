@@ -32,7 +32,7 @@ public class GridManager : MonoBehaviour {
             for (int x = 0; x < Stage.StageGrid.Columns; x++) {
                 for (int y = 0; y < Stage.StageGrid.Rows; y++) {
                     if (Stage.StageGrid.isType(x, y, Array2DEditor.nodeType.P)) {
-                        return Stage.StageBuilder.GetGridPlane(x, y).position;
+                        return Stage.StageBuilder.GetGridPlane(x, y).transform.position;
                     }
                 }
             }

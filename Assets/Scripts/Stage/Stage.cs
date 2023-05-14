@@ -37,7 +37,7 @@ public class Stage : MonoBehaviour {
 
     /** Método Coroutine Para posicionar enemigos */
     private IEnumerator C_PlaceEnemy(Vector2Int position, GameObject enemy) {
-        yield return null;
+        yield return new WaitForSeconds(2f);
         enemy.transform.position = Stage.StageBuilder.GetGridPlane(position.x, position.y).transform.position;
     }
 

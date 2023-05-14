@@ -15,9 +15,14 @@ public class Player : Actor {
     [SerializeField] Material shaderMat;
     [SerializeField] VisualEffect effect;
 
+    /** Animator Controller */
+    private Animator _animator;
+
     // Unity Awake
     protected override void Awake() {
         base.Awake();
+
+        _animator = GetComponent<Animator>();
 
         CanBePlaced = true;
     }
@@ -54,7 +59,7 @@ public class Player : Actor {
                 }
             }
         }
-
+        _animator.SetBool("moving", false);
     }
 
     public override bool CanMove() {
@@ -83,8 +88,14 @@ public class Player : Actor {
         if ((gr != null) && (gr.node.walkable)) {
             _gridMovement.SetDestination(transform.position, gr, Movement());
             _gridMovement.onDestinationReached += EndMovement;
+            _animator.SetBool("moving", true);
         }
 
+    }
+
+    public override void EndMovement() {
+        base.EndMovement();
+        _animator.SetBool("moving", false);
     }
 
     public override bool CanAct() {

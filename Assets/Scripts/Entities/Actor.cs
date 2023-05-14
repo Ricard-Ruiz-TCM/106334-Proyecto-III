@@ -320,7 +320,7 @@ public abstract class Actor : ActorManager {
     protected void StartMove() {
         moving = progress.doing;
     }
-    public void EndMovement() {
+    public virtual void EndMovement() {
         moving = progress.done;
     }
 

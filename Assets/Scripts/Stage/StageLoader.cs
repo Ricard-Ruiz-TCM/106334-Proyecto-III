@@ -43,6 +43,8 @@ public class StageLoader : MonoBehaviour {
     private void BuildPlayer() {
         _player = GameObject.Instantiate(_playerPrfb).GetComponent<Player>();
         uCore.GameManager.RestorePlayer(_player);
+
+        FindObjectOfType<CameraController>()._target = _player.transform;
     }
 
     /** Método para recuperar el stage actual */

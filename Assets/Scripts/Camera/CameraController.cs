@@ -93,11 +93,13 @@ public class CameraController : MonoBehaviour {
         xAnterior = 111111;
         xAnterior = 111111;
         TurnManager.instance.onStartTurn += () => { changeTarget = true; };
+
     }
 
 
     // Unity LateUpdate
     void LateUpdate() {
+
         if (changeTarget) {
             _target = TurnManager.instance.Current().transform;
             changeTarget = false;

@@ -21,25 +21,15 @@ public class GridBuilder : MonoBehaviour {
     public Material _badPathMat;
     public Material _rangeMath;
 
-    // Unity OnEnable
-    void OnEnable() {
-        Grid2D.OnMapCompleted += InstantiatePlanes;
-    }
-
-    // Unity OnDisable
-    void OnDisable() {
-        Grid2D.OnMapCompleted -= InstantiatePlanes;
-    }
-
     // Unity Awake
     void Awake() {
-        _grid = GetComponent<Grid2D>();
-        _planeMap = new GridPlane[_grid.Rows, _grid.Columns];
         TurnManager.instance.onEndTurn += ClearGrid;
     }
 
     /** Método para instanciar los planos */
     public void InstantiatePlanes() {
+        _grid = GetComponent<Grid2D>();
+        _planeMap = new GridPlane[_grid.Rows, _grid.Columns];
         // Instanciación de los paneles
         for (int x = 0; x < _grid.Rows; x++) {
             for (int y = 0; y < _grid.Columns; y++) {

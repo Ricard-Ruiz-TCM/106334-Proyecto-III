@@ -56,7 +56,7 @@ public class Enemy : Actor {
                         Skill usingSkill = _skills.ReturnSkill(normalSkillOrder[i]);
                         if(usingSkill != null)
                         {
-                            if (Stage.StageManager.InRange(transform, _target, usingSkill.range, usingSkill.needRangeToUse))
+                            if (Stage.StageManager.InRange(transform, _target, usingSkill.range))
                             {                                
                                 _skills.UseSkill(normalSkillOrder[i]);
                             }
@@ -69,7 +69,7 @@ public class Enemy : Actor {
                     for (int i = 0; i < lowHpSkillOrder.Count; i++)
                     {
                         Skill usingSkill = _skills.ReturnSkill(normalSkillOrder[i]);
-                        if (Stage.StageManager.InRange(transform, _target, usingSkill.range, usingSkill.needRangeToUse))
+                        if (Stage.StageManager.InRange(transform, _target, usingSkill.range))
                         {
                             _skills.UseSkill(normalSkillOrder[i]);
                         }
@@ -88,7 +88,6 @@ public class Enemy : Actor {
         base.Move();
         if (_target == null) 
         {
-            Debug.Log("DASD");
             EndMovement();
             return;
         }
@@ -96,20 +95,18 @@ public class Enemy : Actor {
         GridPlane targetPlane = Stage.StageBuilder.GetGridPlane(_target.transform.position);
         GridPlane myPlane = Stage.StageBuilder.GetGridPlane(transform.position);
         GridPlane destiny = myPlane;
-        if (GetTotalHealthPercentage() > 20)
+
+        if (_combatStyle.Equals(enemyCombatStyle.melee))
         {
-            if (_combatStyle.Equals(enemyCombatStyle.melee))
+            destiny = Stage.StageBuilder.FindClosesGridPlaneTo(targetPlane, myPlane);
+        }
+        else
+        {
+            List<Node> route = _gridMovement.CalcRoute(transform.position, targetPlane);
+            route.Reverse();
+            if (route.Count > _inventory.Weapon().range)
             {
-                destiny = Stage.StageBuilder.FindClosesGridPlaneTo(targetPlane, myPlane);
-            }
-            else
-            {
-                List<Node> route = _gridMovement.CalcRoute(transform.position, targetPlane);
-                route.Reverse();
-                if (route.Count > _inventory.Weapon().range)
-                {
-                    destiny = Stage.StageBuilder.GetGridPlane(route[_inventory.Weapon().range]);
-                }
+                destiny = Stage.StageBuilder.GetGridPlane(route[_inventory.Weapon().range]);
             }
         }
         
@@ -119,7 +116,14 @@ public class Enemy : Actor {
 
     public override void BeginTurn() {
         base.BeginTurn();
-        _target = Stage.StageManager.FindNearestPlayers(transform);
+        if(GetTotalHealthPercentage() > 20)
+        {
+            _target = Stage.StageManager.FindNearestPlayer(transform);
+        }
+        else
+        {
+            _target = Stage.StageManager.FindNearestEnemy(transform);
+        }
     }
 
     public override void Die() {

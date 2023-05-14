@@ -19,8 +19,13 @@ public class CombatManager : ActorsListController {
         }
     }
 
-    public List<Actor> FindPlayers() {
+    public List<Actor> FindPlayers()
+    {
         return _actors.FindAll(x => x is Player);
+    }
+    public List<Actor> FindEnemys()
+    {
+        return _actors.FindAll(x => x is Enemy);
     }
 
     //metodos para hacer las skills
@@ -62,10 +67,9 @@ public class CombatManager : ActorsListController {
 
         if (canInteract) {
             while (!canEnd) {
-                if (Stage.StageBuilder.MosueOverGrid()) {
-                    actor.GridM().CalcRoute(actor.transform.position, Stage.StageBuilder.GetMouseGridPlane(), range);
-                    node = Stage.StageBuilder.DisplayLastNodePath(actor.GridM().VisualRouteValid, range);
-                }
+
+                GetPosToAttack(actor, range, out node, node);
+
                 if (uCore.Action.GetKeyDown(KeyCode.J)) {
                     canEnd = true;
                     GetActorInNode(node, actor, skillType);
@@ -79,10 +83,9 @@ public class CombatManager : ActorsListController {
                 }
                 yield return null;
             }
-        } else {
-            Actor player = FindNearest(actor);
-            node = Stage.StageBuilder.GetGridPlane(Mathf.RoundToInt(player.transform.position.x / 10), Mathf.RoundToInt(player.transform.position.z / 10)).node;
-            Stage.StageBuilder.GetGridPlane(node.x, node.y).SetMaterial(Stage.StageBuilder._rangeMath);
+        } else 
+        {
+            GetPosToEnemyAttack(actor, out node);
             if (node != null) {
                 GetActorInNode(node, actor, skillType);
                 ExtendGolpeDemoledor(actor, range, skillType, node, false);
@@ -91,23 +94,44 @@ public class CombatManager : ActorsListController {
 
         StartCoroutine(EndAttack(actor));
     }
-    public Actor FindNearest(Actor from) {
+    //public Actor FindNearestPlayer(Actor from) {
 
-        Actor actor = null;
-        float dist = Mathf.Infinity;
+    //    Actor actor = null;
+    //    float dist = Mathf.Infinity;
 
-        foreach (Actor obj in FindPlayers()) {
-            float distance = Vector3.Distance(obj.transform.position, from.transform.position);
-            if (distance < dist) {
-                if (!obj.Status.isStatusActive(buffsnDebuffs.Invisible)) {
-                    actor = obj;
-                    dist = distance;
-                }
-            }
-        }
+    //    foreach (Actor obj in FindPlayers()) {
+    //        float distance = Vector3.Distance(obj.transform.position, from.transform.position);
+    //        if (distance < dist) {
+    //            if (!obj.Status.isStatusActive(buffsnDebuffs.Invisible)) {
+    //                actor = obj;
+    //                dist = distance;
+    //            }
+    //        }
+    //    }
 
-        return actor;
-    }
+    //    return actor;
+    //}
+    //public Actor FindNearestEnemy(Actor from)
+    //{
+
+    //    Actor actor = null;
+    //    float dist = Mathf.Infinity;
+
+    //    foreach (Actor obj in FindEnemys())
+    //    {
+    //        float distance = Vector3.Distance(obj.transform.position, from.transform.position);
+    //        if (distance < dist)
+    //        {
+    //            if (!obj.Status.isStatusActive(buffsnDebuffs.Invisible))
+    //            {
+    //                actor = obj;
+    //                dist = distance;
+    //            }
+    //        }
+    //    }
+
+    //    return actor;
+    //}
     private void ExtendGolpeDemoledor(Actor actor, int range, skills skillType, Node node, bool canEnd) {
         if (Mathf.RoundToInt(actor.transform.position.x / 10) == node.x) {
             ExtendAttack(node.x + 1, node.y, actor, canEnd, skillType);
@@ -144,11 +168,9 @@ public class CombatManager : ActorsListController {
 
         if (canInteract) {
             while (!canEnd) {
-                if (Stage.StageBuilder.MosueOverGrid()) {
-                    actor.GridM().CalcRoute(actor.transform.position, Stage.StageBuilder.GetMouseGridPlane(), range);
-                    node = Stage.StageBuilder.DisplayLastNodePath(actor.GridM().VisualRouteValid, range);
-                    Debug.Log(node);
-                }
+
+                GetPosToAttack(actor, range, out node, node);
+
                 if (uCore.Action.GetKeyDown(KeyCode.J)) {
                     canEnd = true;
                     GetActorInNode(node, actor, skillType);
@@ -159,10 +181,9 @@ public class CombatManager : ActorsListController {
                 }
                 yield return null;
             }
-        } else {
-            Actor player = FindNearest(actor);
-            node = Stage.StageBuilder.GetGridPlane(Mathf.RoundToInt(player.transform.position.x / 10), Mathf.RoundToInt(player.transform.position.z / 10)).node;
-            Stage.StageBuilder.GetGridPlane(node.x, node.y).SetMaterial(Stage.StageBuilder._rangeMath);
+        } else 
+        {
+            GetPosToEnemyAttack(actor, out node);
             if (node != null) {
                 GetActorInNode(node, actor, skillType);
             }
@@ -181,19 +202,8 @@ public class CombatManager : ActorsListController {
 
                 Stage.StageBuilder.ClearGrid();
 
-                if (Stage.StageBuilder.MosueOverGrid()) {
+                GetPosToAttack(actor, range, out node,node);
 
-                    GridPlane target = Stage.StageBuilder.GetMouseGridPlane();
-                    GridPlane origin = Stage.StageBuilder.GetGridPlane(actor.transform.position);
-
-                    if (Stage.StageBuilder.GetGridDistanceBetween(target, origin) <= range) {
-                        node = target.node;
-                    }
-
-                    //actor.GridM().CalcRoute(actor.transform.position, Stage.StageBuilder.GetMouseGridPlane(), range);
-                    //node = Stage.StageBuilder.DisplayLastNodePath(actor.GridM().VisualRouteValid, range);
-
-                }
                 if (uCore.Action.GetKeyDown(KeyCode.J)) {
                     GetActorInNode(node, actor, skillType);
                     canEnd = true;
@@ -213,10 +223,10 @@ public class CombatManager : ActorsListController {
                 }
                 yield return null;
             }
-        } else {
-            Actor player = FindNearest(actor);
-            node = Stage.StageBuilder.GetGridPlane(Mathf.RoundToInt(player.transform.position.x / 10), Mathf.RoundToInt(player.transform.position.z / 10)).node;
-            Stage.StageBuilder.GetGridPlane(node.x, node.y).SetMaterial(Stage.StageBuilder._rangeMath);
+        } 
+        else 
+        {
+            GetPosToEnemyAttack(actor, out node);
             if (node != null) {
                 GetActorInNode(node, actor, skillType);
                 ExtendAttack(node.x + 1, node.y, actor, canEnd, skillType);
@@ -268,7 +278,8 @@ public class CombatManager : ActorsListController {
     private void ExtendAttack(int i, int j, Actor actor, bool canEnd, skills skillType) {
         if (ChechIfPositionIsInGrid(i, j)) {
             Stage.StageBuilder.UpdateMaterial(i, j, shootMat);
-            if (canEnd) {
+            if (canEnd) 
+            {
                 GetActorInNode(Stage.StageBuilder.GetGridPlane(i, j).node, actor, skillType);
             }
 
@@ -323,4 +334,33 @@ public class CombatManager : ActorsListController {
     bool ChechIfPositionIsInGrid(int i, int j) {
         return (!(i < 0 || j < 0 || i >= Stage.StageBuilder._grid.Rows || j >= Stage.StageBuilder._grid.Columns));
     }
+    void GetPosToAttack(Actor actor, int range,out Node node, Node lastNode) 
+    {
+        node = lastNode;
+        if (Stage.StageBuilder.MosueOverGrid())
+        {
+
+            GridPlane target = Stage.StageBuilder.GetMouseGridPlane();
+            GridPlane origin = Stage.StageBuilder.GetGridPlane(actor.transform.position);
+
+            if (Stage.StageBuilder.GetGridDistanceBetween(target, origin) <= range)
+            {
+                node = target.node;
+                Stage.StageBuilder.GetGridPlane(node.x, node.y).SetMaterial(Stage.StageBuilder._rangeMath);
+            }
+
+
+            //actor.GridM().CalcRoute(actor.transform.position, Stage.StageBuilder.GetMouseGridPlane(), range);
+            //node = Stage.StageBuilder.DisplayLastNodePath(actor.GridM().VisualRouteValid, range);
+
+        }
+    }
+    void GetPosToEnemyAttack(Actor actor, out Node node)
+    {
+        //Actor player = FindNearestPlayer(actor);
+        Actor player = Stage.StageManager.FindNearestPlayer(actor.transform);
+        node = Stage.StageBuilder.GetGridPlane(Mathf.RoundToInt(player.transform.position.x / 10), Mathf.RoundToInt(player.transform.position.z / 10)).node;
+        Stage.StageBuilder.GetGridPlane(node.x, node.y).SetMaterial(Stage.StageBuilder._rangeMath);    
+    }
+
 }

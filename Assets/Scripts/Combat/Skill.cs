@@ -16,8 +16,6 @@ public abstract class Skill : ScriptableObject {
 
     public int range;
 
-    public bool needRangeToUse;
-
     public abstract void Special(Actor from);
 
 }

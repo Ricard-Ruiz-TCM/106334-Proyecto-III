@@ -62,14 +62,19 @@ public class Player : Actor {
         _animator.SetBool("moving", false);
     }
 
+    GridPlane plane = null;
+
     public override bool CanMove() {
         if (hasTurnEnded)
             return false;
 
-        if (Stage.StageBuilder.MosueOverGrid() && canMove) {
+        GridPlane currentPlane = Stage.StageBuilder.GetMouseGridPlane();
+
+        if ((plane != currentPlane) && canMove && (currentPlane != null)) {
+            plane = currentPlane;
             moveController = true;
-            if (Stage.StageBuilder.GetMouseGridPlane().node.walkable) {
-                _gridMovement.CalcRoute(transform.position, Stage.StageBuilder.GetMouseGridPlane(), Movement());
+            if (plane.node.walkable) {
+                GridM().CalcRoute(transform.position, plane, Movement());
                 Stage.StageBuilder.DisplayValidPath(_gridMovement.VisualRouteValid, Movement());
                 Stage.StageBuilder.DisplayInValidPath(_gridMovement.VisualRouteInvaild);
             }

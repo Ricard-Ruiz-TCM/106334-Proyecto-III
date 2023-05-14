@@ -123,6 +123,8 @@ public class GridMovement : MonoBehaviour {
     }
 
     public Vector2 GetLastNode() {
+        if (_destionationRoute == null)
+            return Vector2.zero;
         return new Vector2(_destionationRoute[_destionationRoute.Count - 1].x, _destionationRoute[_destionationRoute.Count - 1].y);
     }
 

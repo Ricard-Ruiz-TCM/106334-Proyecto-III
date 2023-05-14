@@ -118,6 +118,7 @@ public class GridBuilder : MonoBehaviour {
 
     // Update del material del Plane
     public void UpdateMaterial(int x, int y, Material mat = null) {
+        GetGridPlane(x, y).gameObject.layer = LayerMask.NameToLayer("InvisibleGrid");
         if (mat == null) {
             Node data = GetGridPlane(x, y).node;
             Material m = new Material(Shader.Find("Universal Render Pipeline/Lit"));
@@ -127,10 +128,14 @@ public class GridBuilder : MonoBehaviour {
             m.SetColor("_BaseColor", new Color(c, c, c));
 
             // Verde para posicion inicial
-            if (data.type.Equals(Array2DEditor.nodeType.P))
+            if (data.type.Equals(Array2DEditor.nodeType.P)) {
                 m.SetColor("_BaseColor", Color.green);
+                GetGridPlane(x, y).gameObject.layer = LayerMask.NameToLayer("VisibleGrid");
+            }
 
             mat = m;
+        } else {
+            GetGridPlane(x, y).gameObject.layer = LayerMask.NameToLayer("VisibleGrid");
         }
 
         GetGridPlane(x, y).SetMaterial(mat);
@@ -171,6 +176,7 @@ public class GridBuilder : MonoBehaviour {
         for (int x = 0; x < _grid.Rows; x++) {
             for (int y = 0; y < _grid.Columns; y++) {
                 UpdateMaterial(x, y);
+                GetGridPlane(x, y).gameObject.layer = LayerMask.NameToLayer("InvisibleGrid");
             }
         }
     }

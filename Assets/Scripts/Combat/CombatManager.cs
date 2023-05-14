@@ -200,7 +200,9 @@ public class CombatManager : ActorsListController {
 
                 GetPosToAttack(actor, range, out node, node);
 
-                if (uCore.Action.GetKeyDown(KeyCode.J)) {
+                if (uCore.Action.GetKeyDown(KeyCode.J)) 
+                {
+                    uCore.Particles.PlayParticles("ParticulasFlechas", new Vector3(node.x * 10, 19, node.y * 10)).destroyAtEnd();
                     GetActorInNode(node, actor, skillType);
                     canEnd = true;
                 }
@@ -285,6 +287,9 @@ public class CombatManager : ActorsListController {
             if (node.x == Mathf.RoundToInt(_actors[i].transform.position.x / 10) && node.y == Mathf.RoundToInt(_actors[i].transform.position.z / 10)) {
                 switch (skillType) {
                     default:
+                        HealPerHitBuffActive(from, _actors[i].TakeDamage(from.Damage(), from.Weapon.item));
+                        break;
+                    case skills.ArrowRain:
                         HealPerHitBuffActive(from, _actors[i].TakeDamage(from.Damage(), from.Weapon.item));
                         break;
                     case skills.DoubleLunge:

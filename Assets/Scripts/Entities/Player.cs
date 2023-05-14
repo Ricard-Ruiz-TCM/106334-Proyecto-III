@@ -34,6 +34,8 @@ public class Player : Actor {
 
         BuildSkills();
 
+        AddWeaponToCharacter();
+
         transform.position = Stage.StageManager.RandomInnitialPosition();
 
         _gridMovement.onStepReached += (Array2DEditor.nodeType t) => { onPlayerstep?.Invoke(); };

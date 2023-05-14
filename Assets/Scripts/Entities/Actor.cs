@@ -61,6 +61,9 @@ public abstract class Actor : ActorManager {
     [SerializeField, Header("Turtle:")]
     protected bool _isTurtle = false;
 
+    [SerializeField, Header("WeaponPoint:")]
+    protected Transform weaponHolder;
+
     int damageModRounds = 0;
     int defenseModRounds = 0;
     int anteriorDefense = 0;
@@ -107,6 +110,11 @@ public abstract class Actor : ActorManager {
                 _skills.AddSkill(((SkillPerk)pk).skill.skill);
             }
         }
+    }
+    protected void AddWeaponToCharacter()
+    {
+        //GameObject weaponGameOject = GameObject.Instantiate(_inventory.Weapon().weaponPrefab);
+        //weaponGameOject.transform.parent = weaponHolder;
     }
 
     public int Damage() {

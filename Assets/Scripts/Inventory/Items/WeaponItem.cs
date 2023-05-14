@@ -9,4 +9,6 @@ public class WeaponItem : Item {
 
     public Skill skill;
 
+    public GameObject weaponPrefab;
+
 }

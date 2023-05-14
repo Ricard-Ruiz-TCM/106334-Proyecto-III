@@ -38,6 +38,7 @@ public class Enemy : Actor {
     void Start() {
         SubscribeManager();
         BuildSkills();
+        AddWeaponToCharacter();
     }
 
     public override bool CanAct() {

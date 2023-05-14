@@ -346,9 +346,8 @@ public class CombatManager : ActorsListController {
             if (Stage.StageBuilder.GetGridDistanceBetween(target, origin) <= range)
             {
                 node = target.node;
-                Stage.StageBuilder.GetGridPlane(node.x, node.y).SetMaterial(Stage.StageBuilder._rangeMath);
             }
-
+            Stage.StageBuilder.UpdateMaterial(node.x, node.y, shootMat);
 
             //actor.GridM().CalcRoute(actor.transform.position, Stage.StageBuilder.GetMouseGridPlane(), range);
             //node = Stage.StageBuilder.DisplayLastNodePath(actor.GridM().VisualRouteValid, range);

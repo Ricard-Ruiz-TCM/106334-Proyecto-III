@@ -809,7 +809,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &840864105
 MonoBehaviour:
-  m_ObjectHideFlags: 2
+  m_ObjectHideFlags: 10
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -1229,6 +1229,22 @@ MonoBehaviour:
     terrain: 2
     diff: 2
     innitialDialog: {fileID: 0}
+    exit: 2
+    entrance: 3
+    objetive: 0
+    enemies:
+    - enemy: {fileID: 8052239775276127542, guid: e8c4836b1b130c0449f4b5c9ec920cba,
+        type: 3}
+      position: {x: 12, y: 3}
+    - enemy: {fileID: 5563068455053583158, guid: f145a59737dee954a8cda5317325e3c1,
+        type: 3}
+      position: {x: 10, y: 4}
+    - enemy: {fileID: 8052239775276127542, guid: e8c4836b1b130c0449f4b5c9ec920cba,
+        type: 3}
+      position: {x: 11, y: 6}
+    - enemy: {fileID: 5563068455053583158, guid: f145a59737dee954a8cda5317325e3c1,
+        type: 3}
+      position: {x: 13, y: 8}
   _continue: {fileID: 1070099843}
 --- !u!1 &1158226074
 GameObject:
@@ -1978,7 +1994,7 @@ GameObject:
   m_IsActive: 1
 --- !u!114 &1457894384
 MonoBehaviour:
-  m_ObjectHideFlags: 2
+  m_ObjectHideFlags: 10
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}

@@ -369,16 +369,6 @@ MonoBehaviour:
   _playerUI: {fileID: 753524713}
   _objetiveUI: {fileID: 495370680}
   _stageResolution: {fileID: 1266459925}
-  _data:
-    ID: 0
-    keyName: 
-    type: 0
-    terrain: 0
-    diff: 0
-    innitialDialog: {fileID: 0}
-    entrance: 0
-    objetive: 0
-  stageTest: {fileID: 0}
 --- !u!1 &397742270
 GameObject:
   m_ObjectHideFlags: 0
@@ -3253,6 +3243,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cc970d69c1b16f45814006b729fb8af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _current: 0
+  _actors: []
   layerActor:
     serializedVersion: 2
     m_Bits: 512
@@ -6569,8 +6561,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _stagePath: Prefabs/Stage/
   _stageName: Stage
-  player: {fileID: 0}
-  stage: {fileID: 0}
+  _playerPrfb: {fileID: 4500662891433251454, guid: 922bc215d6e89984482066dc76248f6f,
+    type: 3}
 --- !u!1 &1999509573
 GameObject:
   m_ObjectHideFlags: 0

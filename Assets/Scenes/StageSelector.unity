@@ -285,6 +285,10 @@ MonoBehaviour:
     terrain: 0
     diff: 0
     innitialDialog: {fileID: 11400000, guid: d760f299ff4a109429bac6b1eb49aba5, type: 2}
+    exit: 0
+    entrance: 0
+    objetive: 0
+    enemies: []
   _panelInfo: {fileID: 2134909803}
   _visible: 0
   _panelPreview: {fileID: 21300000, guid: e80c1b1ad484e664694e0c31a4a0a7e6, type: 3}
@@ -443,6 +447,10 @@ MonoBehaviour:
     terrain: 2
     diff: 0
     innitialDialog: {fileID: 11400000, guid: c6f5bc89c010e29459081e19ea5c1134, type: 2}
+    exit: 0
+    entrance: 0
+    objetive: 0
+    enemies: []
   _panelInfo: {fileID: 2134909803}
   _visible: 0
   _panelPreview: {fileID: 21300000, guid: f0b0cb75d70ea3244b449de1ab1fe5f4, type: 3}
@@ -603,6 +611,10 @@ MonoBehaviour:
     terrain: 2
     diff: 2
     innitialDialog: {fileID: 0}
+    exit: 0
+    entrance: 0
+    objetive: 0
+    enemies: []
   _panelInfo: {fileID: 2134909803}
   _visible: 1
   _panelPreview: {fileID: 21300000, guid: bab919364f3dcdb48a1539693f5faf67, type: 3}
@@ -806,6 +818,10 @@ MonoBehaviour:
     terrain: 2
     diff: 0
     innitialDialog: {fileID: 11400000, guid: 390f0eb469ae6f347b0a555f46ec5d44, type: 2}
+    exit: 0
+    entrance: 0
+    objetive: 0
+    enemies: []
   _panelInfo: {fileID: 2134909803}
   _visible: 0
   _panelPreview: {fileID: 21300000, guid: f0b0cb75d70ea3244b449de1ab1fe5f4, type: 3}
@@ -964,8 +980,24 @@ MonoBehaviour:
     keyName: SCENE.SS.NAME.STAGE_0
     type: 0
     terrain: 2
-    diff: 2
+    diff: 0
     innitialDialog: {fileID: 0}
+    exit: 2
+    entrance: 3
+    objetive: 0
+    enemies:
+    - enemy: {fileID: 8052239775276127542, guid: e8c4836b1b130c0449f4b5c9ec920cba,
+        type: 3}
+      position: {x: 12, y: 3}
+    - enemy: {fileID: 5563068455053583158, guid: f145a59737dee954a8cda5317325e3c1,
+        type: 3}
+      position: {x: 10, y: 4}
+    - enemy: {fileID: 8052239775276127542, guid: e8c4836b1b130c0449f4b5c9ec920cba,
+        type: 3}
+      position: {x: 11, y: 6}
+    - enemy: {fileID: 5563068455053583158, guid: f145a59737dee954a8cda5317325e3c1,
+        type: 3}
+      position: {x: 13, y: 8}
   _panelInfo: {fileID: 2134909803}
   _visible: 1
   _panelPreview: {fileID: 21300000, guid: bab919364f3dcdb48a1539693f5faf67, type: 3}
@@ -1405,6 +1437,10 @@ MonoBehaviour:
     terrain: 1
     diff: 1
     innitialDialog: {fileID: 0}
+    exit: 0
+    entrance: 0
+    objetive: 0
+    enemies: []
   _panelInfo: {fileID: 2134909803}
   _visible: 0
   _panelPreview: {fileID: 21300000, guid: bab919364f3dcdb48a1539693f5faf67, type: 3}
@@ -1563,6 +1599,10 @@ MonoBehaviour:
     terrain: 2
     diff: 1
     innitialDialog: {fileID: 0}
+    exit: 0
+    entrance: 0
+    objetive: 0
+    enemies: []
   _panelInfo: {fileID: 2134909803}
   _visible: 0
   _panelPreview: {fileID: 21300000, guid: bab919364f3dcdb48a1539693f5faf67, type: 3}
@@ -1721,6 +1761,10 @@ MonoBehaviour:
     terrain: 0
     diff: 0
     innitialDialog: {fileID: 11400000, guid: f6f6f6666738aae48b362577bd4e8fc7, type: 2}
+    exit: 0
+    entrance: 0
+    objetive: 0
+    enemies: []
   _panelInfo: {fileID: 2134909803}
   _visible: 0
   _panelPreview: {fileID: 734416942, guid: 692efb561ed53554a83352ca5872ecc2, type: 3}
@@ -1879,6 +1923,10 @@ MonoBehaviour:
     terrain: 2
     diff: 2
     innitialDialog: {fileID: 0}
+    exit: 0
+    entrance: 0
+    objetive: 0
+    enemies: []
   _panelInfo: {fileID: 2134909803}
   _visible: 1
   _panelPreview: {fileID: 21300000, guid: bab919364f3dcdb48a1539693f5faf67, type: 3}
@@ -2037,6 +2085,10 @@ MonoBehaviour:
     terrain: 2
     diff: 2
     innitialDialog: {fileID: 0}
+    exit: 0
+    entrance: 0
+    objetive: 0
+    enemies: []
   _panelInfo: {fileID: 2134909803}
   _visible: 1
   _panelPreview: {fileID: 21300000, guid: bab919364f3dcdb48a1539693f5faf67, type: 3}
@@ -2245,6 +2297,10 @@ MonoBehaviour:
     terrain: 1
     diff: 0
     innitialDialog: {fileID: 11400000, guid: 364764401a383bc4680d1433d4717a26, type: 2}
+    exit: 0
+    entrance: 0
+    objetive: 0
+    enemies: []
   _panelInfo: {fileID: 2134909803}
   _visible: 0
   _panelPreview: {fileID: 21300000, guid: bab919364f3dcdb48a1539693f5faf67, type: 3}
@@ -2398,11 +2454,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _data:
     ID: 2
-    keyName: 
+    keyName: SCENE.SS.NAME.STAGE_UK
     type: 0
     terrain: 0
     diff: 0
     innitialDialog: {fileID: 0}
+    exit: 0
+    entrance: 3
+    objetive: 2
+    enemies:
+    - enemy: {fileID: 2445274499666959631, guid: 49c77b4ffe3d87140bd4765635b6af99,
+        type: 3}
+      position: {x: 14, y: 11}
+    - enemy: {fileID: 6496254946221242541, guid: 204b097fc721c484b9ba94277539feeb,
+        type: 3}
+      position: {x: 14, y: 9}
+    - enemy: {fileID: 8052239775276127542, guid: e8c4836b1b130c0449f4b5c9ec920cba,
+        type: 3}
+      position: {x: 13, y: 6}
+    - enemy: {fileID: 5563068455053583158, guid: f145a59737dee954a8cda5317325e3c1,
+        type: 3}
+      position: {x: 12, y: 8}
   _panelInfo: {fileID: 2134909803}
   _visible: 0
   _panelPreview: {fileID: 21300000, guid: bab919364f3dcdb48a1539693f5faf67, type: 3}
@@ -2696,6 +2768,10 @@ MonoBehaviour:
     terrain: 1
     diff: 2
     innitialDialog: {fileID: 0}
+    exit: 0
+    entrance: 0
+    objetive: 0
+    enemies: []
   _panelInfo: {fileID: 2134909803}
   _visible: 0
   _panelPreview: {fileID: 21300000, guid: bab919364f3dcdb48a1539693f5faf67, type: 3}
@@ -2854,6 +2930,10 @@ MonoBehaviour:
     terrain: 0
     diff: 0
     innitialDialog: {fileID: 11400000, guid: d760f299ff4a109429bac6b1eb49aba5, type: 2}
+    exit: 0
+    entrance: 0
+    objetive: 0
+    enemies: []
   _panelInfo: {fileID: 2134909803}
   _visible: 0
   _panelPreview: {fileID: 21300000, guid: e80c1b1ad484e664694e0c31a4a0a7e6, type: 3}
@@ -3318,6 +3398,10 @@ MonoBehaviour:
     terrain: 1
     diff: 0
     innitialDialog: {fileID: 11400000, guid: d7649fe7fe7ffce46a0ee01bdc5745ad, type: 2}
+    exit: 0
+    entrance: 0
+    objetive: 0
+    enemies: []
   _panelInfo: {fileID: 2134909803}
   _visible: 0
   _panelPreview: {fileID: 734416942, guid: 692efb561ed53554a83352ca5872ecc2, type: 3}
@@ -3476,6 +3560,10 @@ MonoBehaviour:
     terrain: 0
     diff: 1
     innitialDialog: {fileID: 0}
+    exit: 0
+    entrance: 0
+    objetive: 0
+    enemies: []
   _panelInfo: {fileID: 2134909803}
   _visible: 0
   _panelPreview: {fileID: 21300000, guid: bab919364f3dcdb48a1539693f5faf67, type: 3}
@@ -3634,6 +3722,10 @@ MonoBehaviour:
     terrain: 1
     diff: 0
     innitialDialog: {fileID: 11400000, guid: d760f299ff4a109429bac6b1eb49aba5, type: 2}
+    exit: 0
+    entrance: 0
+    objetive: 0
+    enemies: []
   _panelInfo: {fileID: 2134909803}
   _visible: 0
   _panelPreview: {fileID: 21300000, guid: e80c1b1ad484e664694e0c31a4a0a7e6, type: 3}
@@ -3792,6 +3884,10 @@ MonoBehaviour:
     terrain: 2
     diff: 0
     innitialDialog: {fileID: 11400000, guid: 07dcf5c7a9c03e942a48b4f280f8ee7c, type: 2}
+    exit: 0
+    entrance: 0
+    objetive: 0
+    enemies: []
   _panelInfo: {fileID: 2134909803}
   _visible: 0
   _panelPreview: {fileID: 734416942, guid: 692efb561ed53554a83352ca5872ecc2, type: 3}
@@ -3950,6 +4046,10 @@ MonoBehaviour:
     terrain: 2
     diff: 1
     innitialDialog: {fileID: 0}
+    exit: 0
+    entrance: 0
+    objetive: 0
+    enemies: []
   _panelInfo: {fileID: 2134909803}
   _visible: 0
   _panelPreview: {fileID: 21300000, guid: bab919364f3dcdb48a1539693f5faf67, type: 3}
@@ -4226,6 +4326,10 @@ MonoBehaviour:
     terrain: 0
     diff: 0
     innitialDialog: {fileID: 0}
+    exit: 0
+    entrance: 0
+    objetive: 0
+    enemies: []
   _panelInfo: {fileID: 2134909803}
   _visible: 0
   _panelPreview: {fileID: 21300000, guid: bab919364f3dcdb48a1539693f5faf67, type: 3}

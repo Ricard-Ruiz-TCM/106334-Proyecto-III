@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Stage : MonoBehaviour {
@@ -29,9 +31,14 @@ public class Stage : MonoBehaviour {
     // Unity StartStart
     void Start() {
         foreach (EnemyPositionPair epp in _data.enemies) {
-            GameObject e = GameObject.Instantiate(epp.enemy);
-            e.transform.position = Stage.StageBuilder.GetGridPlane(epp.position.x, epp.position.y).transform.position;
+            StartCoroutine(C_PlaceEnemy(epp.position, GameObject.Instantiate(epp.enemy)));
         }
+    }
+
+    /** Método Coroutine Para posicionar enemigos */
+    private IEnumerator C_PlaceEnemy(Vector2Int position, GameObject enemy) {
+        yield return null;
+        enemy.transform.position = Stage.StageBuilder.GetGridPlane(position.x, position.y).transform.position;
     }
 
     /** Método set d ela informaicón */

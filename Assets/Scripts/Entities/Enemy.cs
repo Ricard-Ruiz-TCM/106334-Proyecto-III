@@ -46,35 +46,10 @@ public class Enemy : Actor {
     }
     public override void Act() {
         base.Act();
-
         if (_target != null) {
-            if (_inventory.Weapon() != null) 
-            {
-                if (GetTotalHealthPercentage() > 20)
-                {
-                    for (int i = 0; i < normalSkillOrder.Count; i++)
-                    {
-                        Skill usingSkill = _skills.ReturnSkill(normalSkillOrder[i]);
-                        if(usingSkill != null)
-                        {
-                            if (Stage.StageManager.InRange(transform, _target, usingSkill.range))
-                            {                                
-                                _skills.UseSkill(normalSkillOrder[i]);
-                            }
-                        }
-
-                    }
-                }
-                else
-                {
-                    //for (int i = 0; i < lowHpSkillOrder.Count; i++)
-                    //{
-                    //    Skill usingSkill = _skills.ReturnSkill(normalSkillOrder[i]);
-                    //    if (Stage.StageManager.InRange(transform, _target, usingSkill.range))
-                    //    {
-                    //        _skills.UseSkill(normalSkillOrder[i]);
-                    //    }
-                    //}
+            if (_inventory.Weapon() != null) {
+                if (Stage.StageManager.InRange(transform, _target, _inventory.Weapon().range)) {
+                    _target.TakeDamage(Damage());
                 }
             }
         }

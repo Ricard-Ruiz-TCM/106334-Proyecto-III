@@ -8,6 +8,9 @@ class TurnManagerUI : MonoBehaviour {
     [SerializeField]
     private GameObject _sTurnableUI;
 
+    [SerializeField]
+    private CurrentTurnInfoUI _turnInfo;
+
     // Unity Start
     void Start() {
         TurnManager.instance.onModifyList += UpdateTurnList;
@@ -19,8 +22,9 @@ class TurnManagerUI : MonoBehaviour {
         ClearList();
 
         List<Actor> turnables = TurnManager.instance.SortedByIndex();
-        // Instant the bigOne
+        // Instant the bigOne + Info
         if (turnables.Count > 1) {
+            _turnInfo.UpdatePanel(turnables[0]);
             InstantiateUI(_bTurnableUI).SetTurnable(turnables[0]);
             for (int i = 1; i < turnables.Count; i++) {
                 // Instant the smallOnes

@@ -7,9 +7,9 @@ public class LongStatusPanelUI : MonoBehaviour {
     public UIText _name;
     public UIText _duration;
 
-    public void UpdateStatus(StatusItem si) {
-        _icon.sprite = si.status.icon;
-        _name.SetKey(si.status.keyName);
+    public void UpdateStatus(BuffItem si) {
+        _icon.sprite = si.buff.icon;
+        _name.SetKey(si.buff.keyName);
         _duration.UpdateText(si.duration);
     }
 

@@ -17,7 +17,7 @@ public class TurnManager : ActorsListController {
     public Action onEndRounds;
 
     [SerializeField, Header("Rondas:")]
-    private rounds _roundType = rounds.waitingRound;
+    private roundType _roundType = roundType.thinking;
     [SerializeField]
     private int _rounds = 0;
 
@@ -42,14 +42,14 @@ public class TurnManager : ActorsListController {
     // Unity Update
     void Update() {
         switch (_roundType) {
-            case rounds.positioningRound:
+            case roundType.positioning:
                 foreach (Actor a in _actors) {
                     if (a.CanBePlaced) {
                         a.GetComponent<Player>().Placing();
                     }
                 }
                 break;
-            case rounds.combatRound:
+            case roundType.combat:
                 // DelayTime para el efectivo del turno
                 if (_turnProgress.Equals(progress.done) || (_turnProgress.Equals(progress.ready)))
                     return;
@@ -87,20 +87,20 @@ public class TurnManager : ActorsListController {
 
     /** Método para indicar si estoy en la ronda de posicionamiento */
     public bool isPositioningRound() {
-        return _roundType.Equals(rounds.positioningRound);
+        return _roundType.Equals(roundType.positioning);
     }
 
     /** Método para indicar si estoy en ronda de combate */
     public bool isCombatRound() {
-        return _roundType.Equals(rounds.combatRound);
+        return _roundType.Equals(roundType.combat);
     }
 
     /** Método para indicar que ya hemos hecho el posicionamiento */
     public void positioningDone() {
-        if (!_roundType.Equals(rounds.positioningRound))
+        if (!_roundType.Equals(roundType.positioning))
             return;
 
-        _roundType = rounds.combatRound;
+        _roundType = roundType.combat;
         onStartRounds?.Invoke();
         StartTurn();
     }
@@ -114,21 +114,21 @@ public class TurnManager : ActorsListController {
 
     /** Método para indicara que ya hemos leído el objetivo y pasamos al posicionamiento */
     public void ObjetiveRead() {
-        if (!_roundType.Equals(rounds.waitingRound))
+        if (!_roundType.Equals(roundType.thinking))
             return;
 
-        _roundType = rounds.positioningRound;
+        _roundType = roundType.positioning;
     }
 
     /** Método para indicar que se acabo el combate dentro del stage */
     public void stageEnds() {
-        _roundType = rounds.endRound;
+        _roundType = roundType.waiting;
         onEndRounds?.Invoke();
     }
 
     /** Método para iniciar el sistema desde fuera */
     public void startManager() {
-        _roundType = rounds.waitingRound;
+        _roundType = roundType.thinking;
     }
 
     /** Control para el siguiente turno, añade delays y hace callbacks, plus control */

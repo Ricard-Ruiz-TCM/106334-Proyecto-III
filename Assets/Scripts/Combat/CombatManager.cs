@@ -29,29 +29,31 @@ public class CombatManager : ActorsListController {
     //metodos para hacer las skills
     //los que no estan aqui se hacen desde su scriptableObject, eso es porque la skill se hace sin tener que seleccionar ninguna casilla
 
-    public void UseSkill(Actor actor, int range, skills skillType, bool canInteract) {
+    public void UseSkill(Actor actor, skillID skillType, bool canInteract) {
         actor.canMove = false;
 
+        int range = actor.Weapon.range;
+
         switch (skillType) {
-            case skills.Attack:
+            case skillID.Attack:
                 StartCoroutine(NormalAttack(actor, range, skillType, canInteract));
                 break;
-            case skills.DoubleLunge:
+            case skillID.DoubleLunge:
                 StartCoroutine(NormalAttack(actor, range, skillType, canInteract));
                 break;
-            case skills.Cleave:
+            case skillID.Cleave:
                 StartCoroutine(ShowGolpeDemoledor(actor, range, skillType, canInteract));
                 break;
-            case skills.ArrowRain:
+            case skillID.ArrowRain:
                 StartCoroutine(ShowArrows(actor, range, skillType, canInteract));
                 break;
-            case skills.MoralizingShout:
+            case skillID.ImperialCry:
                 StartCoroutine(ShowMoralizingShout(actor, range, skillType));
                 break;
-            case skills.Disarm:
+            case skillID.Disarm:
                 StartCoroutine(NormalAttack(actor, range, skillType, canInteract));
                 break;
-            case skills.SedDeSangre:
+            case skillID.Bloodlust:
                 StartCoroutine(NormalAttack(actor, range, skillType, canInteract));
                 break;
         }
@@ -59,7 +61,7 @@ public class CombatManager : ActorsListController {
     }
 
     //enumerators que funcionan como "updates" para hacer las funciones de las skills
-    IEnumerator ShowGolpeDemoledor(Actor actor, int range, skills skillType, bool canInteract) {
+    IEnumerator ShowGolpeDemoledor(Actor actor, int range, skillID skillType, bool canInteract) {
         bool canEnd = false;
         Node node = null;
 
@@ -129,7 +131,7 @@ public class CombatManager : ActorsListController {
 
     //    return actor;
     //}
-    private void ExtendGolpeDemoledor(Actor actor, int range, skills skillType, Node node, bool canEnd) {
+    private void ExtendGolpeDemoledor(Actor actor, int range, skillID skillType, Node node, bool canEnd) {
         if (Mathf.RoundToInt(actor.transform.position.x / 10) == node.x) {
             ExtendAttack(node.x + 1, node.y, actor, canEnd, skillType);
 
@@ -159,7 +161,7 @@ public class CombatManager : ActorsListController {
         }
     }
 
-    IEnumerator NormalAttack(Actor actor, int range, skills skillType, bool canInteract) {
+    IEnumerator NormalAttack(Actor actor, int range, skillID skillType, bool canInteract) {
         bool canEnd = false;
         Node node = null;
 
@@ -188,7 +190,7 @@ public class CombatManager : ActorsListController {
 
     }
 
-    IEnumerator ShowArrows(Actor actor, int range, skills skillType, bool canInteract) {
+    IEnumerator ShowArrows(Actor actor, int range, skillID skillType, bool canInteract) {
         bool canEnd = false;
         Node node = null;
         //List<Node> nodes = new List<Node>();
@@ -237,7 +239,7 @@ public class CombatManager : ActorsListController {
         StartCoroutine(EndAttack(actor));
 
     }
-    IEnumerator ShowMoralizingShout(Actor actor, int range, skills skillType) {
+    IEnumerator ShowMoralizingShout(Actor actor, int range, skillID skillType) {
         Node node = null;
         //List<Node> nodes = new List<Node>();
 
@@ -271,7 +273,7 @@ public class CombatManager : ActorsListController {
     }
 
     //metodo para los ataques que tienen da�o en area (comprueba si esta dentro de la grid - cambia el material - y si hay un enemigo hace efecto)
-    private void ExtendAttack(int i, int j, Actor actor, bool canEnd, skills skillType) {
+    private void ExtendAttack(int i, int j, Actor actor, bool canEnd, skillID skillType) {
         if (ChechIfPositionIsInGrid(i, j)) {
             Stage.StageBuilder.UpdateMaterial(i, j, shootMat);
             if (canEnd) {
@@ -282,35 +284,35 @@ public class CombatManager : ActorsListController {
     }
 
     //metodo para checkear si hay un actor en un nodo y aplica la skill en el actor
-    private void GetActorInNode(Node node, Actor from, skills skillType) {
+    private void GetActorInNode(Node node, Actor from, skillID skillType) {
         for (int i = 0; i < _actors.Count; i++) {
             if (node.x == Mathf.RoundToInt(_actors[i].transform.position.x / 10) && node.y == Mathf.RoundToInt(_actors[i].transform.position.z / 10)) {
                 switch (skillType) {
                     default:
                         HealPerHitBuffActive(from, _actors[i].TakeDamage(from.Damage(), from.Weapon.item));
                         break;
-                    case skills.ArrowRain:
+                    case skillID.ArrowRain:
                         HealPerHitBuffActive(from, _actors[i].TakeDamage(from.Damage(), from.Weapon.item));
                         break;
-                    case skills.DoubleLunge:
+                    case skillID.DoubleLunge:
                         HealPerHitBuffActive(from, _actors[i].TakeDamage(from.Damage() * 2, from.Weapon.item));
                         break;
-                    case skills.Cleave:
+                    case skillID.Cleave:
                         //_actors[i].Stun();
-                        _actors[i].Status.ApplyStatus(buffsnDebuffs.Stunned);
+                        _actors[i].Status.ApplyStatus(buffsID.Stunned);
                         break;
-                    case skills.MoralizingShout:
+                    case skillID.ImperialCry:
                         if (_actors[i].transform.CompareTag("Player")) {
-                            _actors[i].Status.ApplyStatus(buffsnDebuffs.MoralizingShoutBuff);
+                            _actors[i].Status.ApplyStatus(buffsID.Motivated);
                         }
                         break;
-                    case skills.Disarm:
+                    case skillID.Disarm:
                         //_actors[i].Stun();
-                        _actors[i].Status.ApplyStatus(buffsnDebuffs.Disarmed);
+                        _actors[i].Status.ApplyStatus(buffsID.Disarmed);
                         break;
-                    case skills.SedDeSangre:
+                    case skillID.Bloodlust:
                         //_actors[i].Stun();
-                        _actors[i].Status.ApplyStatus(buffsnDebuffs.Bleed);
+                        _actors[i].Status.ApplyStatus(buffsID.Bleeding);
                         break;
                 }
 
@@ -323,9 +325,9 @@ public class CombatManager : ActorsListController {
     }
 
     void HealPerHitBuffActive(Actor from, int amount) {
-        if (from.Status.isStatusActive(buffsnDebuffs.HealPerHit)) {
+        //if (from.Status.isStatusActive(buffsID.HealPerHit)) {
             from.SetHealth(amount);
-        }
+        //}
     }
 
     //pasa de cordenadas de mundo a grid

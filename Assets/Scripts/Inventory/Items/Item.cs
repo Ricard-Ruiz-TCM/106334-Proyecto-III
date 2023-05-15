@@ -3,7 +3,7 @@ using UnityEngine;
 public abstract class Item : ScriptableObject {
 
     [Header("Core:")]
-    public items item;
+    public itemID item;
     public Sprite icon;
 
     public float weight;

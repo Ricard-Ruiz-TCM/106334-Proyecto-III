@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(fileName = "new Cleave", menuName = "Combat/Skills/Cleave")]
+[CreateAssetMenu(fileName = "Cleave", menuName = "Combat/Skills/Cleave")]
 public class Cleave : Skill {
 
-    public override void Special(Actor from) {
-        CombatManager.instance.UseSkill(from, range, skill, from.canInteract);
-        Debug.Log("Cleave special attack");
+    public override void Action(Actor from) {
+        base.Action(from);
+        Actor to = null; // TODO // find the target
+        to.Status.ApplyStatus(buffsID.Stunned);
     }
 
 }

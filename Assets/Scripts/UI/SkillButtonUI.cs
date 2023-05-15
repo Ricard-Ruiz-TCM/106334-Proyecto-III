@@ -33,7 +33,7 @@ public class SkillButtonUI : MonoBehaviour {
         _btn.image.sprite = _skill.icon;
         _txtShortcut.UpdateText(pos.ToString());
         _txtCooldown.UpdateText(skill.cooldown > 0 ? skill.cooldown.ToString() : "");
-        _action = () => { actor.GetComponent<ActorSkills>().UseSkill(skill.skill.skill); };
+        _action = () => { actor.GetComponent<ActorSkills>().UseSkill(skill.skill.ID); };
         _btn.onClick.AddListener(() => { _action(); });
     }
 

@@ -69,13 +69,13 @@ public class GameManager : MonoBehaviour {
 
     #region Items
 
-    private Dictionary<items, Item> _items;
+    private Dictionary<itemID, Item> _items;
 
     public void LoadItemData() {
-        _items = new Dictionary<items, Item>();
+        _items = new Dictionary<itemID, Item>();
         Item[] allItems = Resources.LoadAll<Item>("ScriptableObjects/Items");
         foreach (Item it in allItems) {
-            items itE;
+            itemID itE;
             if (Enum.TryParse(it.name, out itE)) {
                 _items.Add(itE, it);
             } else {
@@ -84,7 +84,7 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    public Item GetItem(items name) {
+    public Item GetItem(itemID name) {
         if (_items == null) {
             LoadItemData();
         }
@@ -95,13 +95,13 @@ public class GameManager : MonoBehaviour {
 
     #region Skills
 
-    private Dictionary<skills, Skill> _skills;
+    private Dictionary<skillID, Skill> _skills;
 
     public void LoadSkillData() {
-        _skills = new Dictionary<skills, Skill>();
+        _skills = new Dictionary<skillID, Skill>();
         Skill[] allSkills = Resources.LoadAll<Skill>("ScriptableObjects/Skills");
         foreach (Skill sk in allSkills) {
-            skills skl;
+            skillID skl;
             if (Enum.TryParse(sk.name, out skl)) {
                 _skills.Add(skl, sk);
             } else {
@@ -110,7 +110,7 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    public Skill GetSkill(skills name) {
+    public Skill GetSkill(skillID name) {
         if (_skills == null) {
             LoadSkillData();
         }
@@ -121,13 +121,13 @@ public class GameManager : MonoBehaviour {
 
     #region Perks
 
-    private Dictionary<perks, Perk> _perks;
+    private Dictionary<perkID, Perk> _perks;
 
     public void LoadPerkData() {
-        _perks = new Dictionary<perks, Perk>();
+        _perks = new Dictionary<perkID, Perk>();
         Perk[] allPerks = Resources.LoadAll<Perk>("ScriptableObjects/Perks");
         foreach (Perk perk in allPerks) {
-            perks skl;
+            perkID skl;
             if (Enum.TryParse(perk.name, out skl)) {
                 _perks.Add(skl, perk);
             } else {
@@ -136,7 +136,7 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    public Perk GetPerk(perks name) {
+    public Perk GetPerk(perkID name) {
         if (_perks == null) {
             LoadPerkData();
         }
@@ -147,13 +147,13 @@ public class GameManager : MonoBehaviour {
 
     #region Status
 
-    private Dictionary<buffsnDebuffs, Status> _status;
+    private Dictionary<buffsID, Buff> _status;
 
     public void LoadStatusData() {
-        _status = new Dictionary<buffsnDebuffs, Status>();
-        Status[] allStatus = Resources.LoadAll<Status>("ScriptableObjects/Status");
-        foreach (Status astatus in allStatus) {
-            buffsnDebuffs sts;
+        _status = new Dictionary<buffsID, Buff>();
+        Buff[] allStatus = Resources.LoadAll<Buff>("ScriptableObjects/Status");
+        foreach (Buff astatus in allStatus) {
+            buffsID sts;
             if (Enum.TryParse(astatus.name, out sts)) {
                 _status.Add(sts, astatus);
             } else {
@@ -162,7 +162,7 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    public Status GetStatus(buffsnDebuffs name) {
+    public Buff GetStatus(buffsID name) {
         if (_status == null) {
             LoadStatusData();
         }

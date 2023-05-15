@@ -14,17 +14,17 @@ public class Enemy : Actor {
 
     [SerializeField, Header("IA:")]
     private enemyCombatStyle _combatStyle;
-    private List<skills> normalSkillOrder;
-    private List<skills> lowHpSkillOrder;
+    private List<skillID> normalSkillOrder;
+    private List<skillID> lowHpSkillOrder;
 
     // Unity Awake
     protected override void Awake() {
         base.Awake();
-        normalSkillOrder = new List<skills>();
-        lowHpSkillOrder = new List<skills>();
+        normalSkillOrder = new List<skillID>();
+        lowHpSkillOrder = new List<skillID>();
 
-        foreach (skills value in skills.GetValues(typeof(skills))) {
-            if (value.Equals(skills.NONE) || value.Equals(skills.MAX)) {
+        foreach (skillID value in skillID.GetValues(typeof(skillID))) {
+            if (value.Equals(skillID.NONE) || value.Equals(skillID.MAX)) {
                 continue;
             }
             normalSkillOrder.Add(value);

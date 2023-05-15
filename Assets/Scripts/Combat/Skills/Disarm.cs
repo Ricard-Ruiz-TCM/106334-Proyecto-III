@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(fileName = "new Disarm", menuName = "Combat/Skills/Disarm")]
+[CreateAssetMenu(fileName = "Disarm", menuName = "Combat/Skills/Disarm")]
 public class Disarm : Skill {
 
-    public override void Special(Actor from) {
-        CombatManager.instance.UseSkill(from, range, skill, from.canInteract);
-        Debug.Log("Disarm special attack");
+    public override void Action(Actor from) {
+        base.Action(from);
+        Actor to = null; // TODO // find the target
+        to.Status.ApplyStatus(buffsID.Disarmed);
     }
 
 }

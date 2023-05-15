@@ -13,15 +13,15 @@ public class Inventory {
     public List<InventoryItem> Items => _items;
 
     /** Constructor */
-    public Inventory(params items[] itemsList) {
+    public Inventory(params itemID[] itemsList) {
         _items = new List<InventoryItem>();
-        foreach (items item in itemsList) {
+        foreach (itemID item in itemsList) {
             _items.Add(new InventoryItem() { item = uCore.GameManager.GetItem(item) });
         }
     }
 
     /** Añadir un item al inventario o aumenta su cantidad */
-    public void AddItem(items item, int amount = 1) {
+    public void AddItem(itemID item, int amount = 1) {
         Item itemData = uCore.GameManager.GetItem(item);
         if (Contains(item)) {
             _items[Find(itemData)].amount += amount;
@@ -32,7 +32,7 @@ public class Inventory {
     }
 
     /** Elimina un item del inventario o disminute su cantidad */
-    public void RemoveItem(items item) {
+    public void RemoveItem(itemID item) {
         if (Contains(item)) {
             int pos = Find(uCore.GameManager.GetItem(item));
             if (_items[pos].amount > 1) {
@@ -45,7 +45,7 @@ public class Inventory {
     }
 
     /** Check si tenemos este item en el iventario */
-    public bool Contains(items item) {
+    public bool Contains(itemID item) {
         return (Find(uCore.GameManager.GetItem(item)) != -1);
     }
 

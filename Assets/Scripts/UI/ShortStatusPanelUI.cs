@@ -6,8 +6,8 @@ public class ShortStatusPanelUI : MonoBehaviour {
     public Image _icon;
     public UIText _duration;
 
-    public void UpdateStatus(StatusItem si) {
-        _icon.sprite = si.status.icon;
+    public void UpdateStatus(BuffItem si) {
+        _icon.sprite = si.buff.icon;
         _duration.UpdateText(si.duration);
     }
 

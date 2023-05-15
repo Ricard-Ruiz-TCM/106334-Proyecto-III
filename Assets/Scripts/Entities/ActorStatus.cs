@@ -4,12 +4,12 @@ using UnityEngine;
 public class ActorStatus : ActorManager {
 
     [SerializeField, Header("Stats:")]
-    protected List<StatusItem> _status;
-    public List<StatusItem> ActiveStatus => _status;
+    protected List<BuffItem> _status;
+    public List<BuffItem> ActiveStatus => _status;
 
-    public bool isStatusActive(buffsnDebuffs status) {
-        foreach (StatusItem statusItem in _status) {
-            if (statusItem.status.status.Equals(status)) {
+    public bool isStatusActive(buffsID status) {
+        foreach (BuffItem statusItem in _status) {
+            if (statusItem.buff.ID.Equals(status)) {
                 return true;
             }
         }
@@ -17,24 +17,24 @@ public class ActorStatus : ActorManager {
         return false;
     }
 
-    public void ApplyStatus(buffsnDebuffs status) {
+    public void ApplyStatus(buffsID status) {
         bool already = false;
 
-        foreach (StatusItem statusItem in _status) {
-            if (statusItem.status.status.Equals(status)) {
+        foreach (BuffItem statusItem in _status) {
+            if (statusItem.buff.ID.Equals(status)) {
                 already = true;
                 statusItem.duration = uCore.GameManager.GetStatus(status).duration;
             }
         }
 
         if (!already) {
-            Status st = uCore.GameManager.GetStatus(status);
-            _status.Add(new StatusItem() { status = st, duration = st.duration });
+            Buff st = uCore.GameManager.GetStatus(status);
+            _status.Add(new BuffItem() { buff = st, duration = st.duration });
         }
     }
 
     public void UpdateStatus() {
-        foreach (StatusItem status in _status) {
+        foreach (BuffItem status in _status) {
             if (status.duration <= 0) {
                 _status.Remove(status);
             }
@@ -42,8 +42,8 @@ public class ActorStatus : ActorManager {
     }
 
     public void StatusEffect() {
-        foreach (StatusItem effect in _status) {
-            effect.status.Effect(actor);
+        foreach (BuffItem effect in _status) {
+            effect.buff.endTurnEffect(actor);
             effect.duration--;
         }
     }

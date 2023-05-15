@@ -7,11 +7,11 @@ public class ActorSkills : ActorManager {
     [SerializeField, Header("Skills avaliable:")]
     protected List<SkillItem> _skills;
 
-    public void AddSkill(skills skill) {
+    public void AddSkill(skillID skill) {
         bool already = false;
 
         foreach (SkillItem skillItem in _skills) {
-            if (skillItem.skill.skill.Equals(skill))
+            if (skillItem.skill.ID.Equals(skill))
                 already = true;
         }
 
@@ -21,7 +21,7 @@ public class ActorSkills : ActorManager {
             ;
         }
     }
-    public void RemoveSkill(skills skill) {
+    public void RemoveSkill(skillID skill) {
         if (HaveSkill(skill)) {
             int pos = -1;
             for (int i = 0; i < _skills.Count; i++) {
@@ -35,11 +35,11 @@ public class ActorSkills : ActorManager {
             }
         }
     }
-    public void UseSkill(skills skill) {
+    public void UseSkill(skillID skill) {
         foreach (SkillItem skillItem in _skills) {
-            if (skillItem.skill.skill.Equals(skill)) {
+            if (skillItem.skill.ID.Equals(skill)) {
                 if (skillItem.cooldown <= 0) {
-                    skillItem.skill.Special(actor);
+                    skillItem.skill.Action(actor);
                     skillItem.cooldown = skillItem.skill.cooldown;
                 }
             }
@@ -52,18 +52,18 @@ public class ActorSkills : ActorManager {
             }
         }
     }
-    public bool HaveSkill(skills skill) {
+    public bool HaveSkill(skillID skill) {
         foreach (SkillItem skillItem in _skills) {
-            if (skillItem.skill.skill.Equals(skill))
+            if (skillItem.skill.ID.Equals(skill))
                 return true;
         }
         return false;
     }
-    public Skill ReturnSkill(skills skill)
+    public Skill ReturnSkill(skillID skill)
     {
         foreach (SkillItem skillItem in _skills)
         {
-            if (skillItem.skill.skill.Equals(skill))
+            if (skillItem.skill.ID.Equals(skill))
                 return skillItem.skill;
         }
         return null;

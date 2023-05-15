@@ -19,7 +19,7 @@ public class CurrentTurnInfoUI : MonoBehaviour
         _defense.UpdateText(actor.Defense());
 
         ClearLongStatus();
-        foreach (StatusItem si in actor.Status.ActiveStatus) {
+        foreach (BuffItem si in actor.Status.ActiveStatus) {
             GameObject.Instantiate(_longStatusUIpfb, _longStatusContainer).GetComponent<LongStatusPanelUI>().UpdateStatus(si);
         }
 

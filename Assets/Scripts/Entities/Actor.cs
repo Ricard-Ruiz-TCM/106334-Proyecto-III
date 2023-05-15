@@ -75,6 +75,7 @@ public abstract class Actor : ActorManager {
 
     int healtDif = 0;
 
+
     protected virtual void Awake() {
 
         _perks = GetComponent<ActorPerks>();
@@ -97,17 +98,17 @@ public abstract class Actor : ActorManager {
 
     protected void BuildSkills() {
         if (_inventory.Weapon() != null) {
-            _skills.AddSkill(skills.Attack);
+            _skills.AddSkill(skillID.Attack);
         }
         if (_inventory.Shield() != null) {
-            _skills.AddSkill(skills.Defense);
+            _skills.AddSkill(skillID.Defense);
         }
         if (_inventory.Weapon() != null) {
-            _skills.AddSkill(_inventory.Weapon().skill.skill);
+            _skills.AddSkill(_inventory.Weapon().skill.ID);
         }
         foreach (Perk pk in _perks.Perks()) {
             if (pk is SkillPerk) {
-                _skills.AddSkill(((SkillPerk)pk).skill.skill);
+                _skills.AddSkill(((SkillPerk)pk).skill);
             }
         }
     }
@@ -126,28 +127,28 @@ public abstract class Actor : ActorManager {
         // Apply Modifiers
         foreach (Perk pk in _perks.Perks()) {
             if (pk is ModPerk) {
-                if (pk.modificationType.Equals(modificationType.damage)) {
-                    dmg += (int)((ModPerk)pk).modifier;
+                if (pk.modType.Equals(modType.damage)) {
+                    dmg += (int)((ModPerk)pk).value;
                 }
             }
         }
 
         // check Status
-        foreach (StatusItem sitem in _status.ActiveStatus) {
-            if (sitem.status is ModStatus) {
-                if (((ModStatus)sitem.status).type.Equals(modificationType.damage)) {
-                    switch (((ModStatus)sitem.status).operationType) {
-                        case modificationOperations.Suma:
-                            dmg += ((ModStatus)sitem.status).modification;
+        foreach (BuffItem sitem in _status.ActiveStatus) {
+            if (sitem.buff is ModBuff) {
+                if (((ModBuff)sitem.buff).type.Equals(modType.damage)) {
+                    switch (((ModBuff)sitem.buff).operation) {
+                        case modOperation.add:
+                            dmg += ((ModBuff)sitem.buff).value;
                             break;
-                        case modificationOperations.Resta:
-                            dmg -= ((ModStatus)sitem.status).modification;
+                        case modOperation.sub:
+                            dmg -= ((ModBuff)sitem.buff).value;
                             break;
-                        case modificationOperations.Multiplicacion:
-                            dmg *= ((ModStatus)sitem.status).modification;
+                        case modOperation.mult:
+                            dmg *= ((ModBuff)sitem.buff).value;
                             break;
-                        case modificationOperations.Division:
-                            dmg /= ((ModStatus)sitem.status).modification;
+                        case modOperation.div:
+                            dmg /= ((ModBuff)sitem.buff).value;
                             break;
                     }
 
@@ -181,28 +182,28 @@ public abstract class Actor : ActorManager {
         // Apply Modifiers
         foreach (Perk pk in _perks.Perks()) {
             if (pk is ModPerk) {
-                if (pk.modificationType.Equals(modificationType.defense)) {
-                    defense += (int)((ModPerk)pk).modifier;
+                if (pk.modType.Equals(modType.defense)) {
+                    defense += (int)((ModPerk)pk).value;
                 }
             }
         }
 
         // check Status
-        foreach (StatusItem sitem in _status.ActiveStatus) {
-            if (sitem.status is ModStatus) {
-                if (((ModStatus)sitem.status).type.Equals(modificationType.defense)) {
-                    switch (((ModStatus)sitem.status).operationType) {
-                        case modificationOperations.Suma:
-                            defense += ((ModStatus)sitem.status).modification;
+        foreach (BuffItem sitem in _status.ActiveStatus) {
+            if (sitem.buff is ModBuff) {
+                if (((ModBuff)sitem.buff).type.Equals(modType.defense)) {
+                    switch (((ModBuff)sitem.buff).operation) {
+                        case modOperation.add:
+                            defense += ((ModBuff)sitem.buff).value;
                             break;
-                        case modificationOperations.Resta:
-                            defense -= ((ModStatus)sitem.status).modification;
+                        case modOperation.sub:
+                            defense -= ((ModBuff)sitem.buff).value;
                             break;
-                        case modificationOperations.Multiplicacion:
-                            defense *= ((ModStatus)sitem.status).modification;
+                        case modOperation.mult:
+                            defense *= ((ModBuff)sitem.buff).value;
                             break;
-                        case modificationOperations.Division:
-                            defense /= ((ModStatus)sitem.status).modification;
+                        case modOperation.div:
+                            defense /= ((ModBuff)sitem.buff).value;
                             break;
                     }
                 }
@@ -210,6 +211,10 @@ public abstract class Actor : ActorManager {
         }
 
         return defense;
+    }
+
+    public void ModMoves(int amount) {
+        _movementsDone += amount;
     }
 
     public virtual int Movement() {
@@ -220,15 +225,15 @@ public abstract class Actor : ActorManager {
         return movement;
     }
 
-    public int TakeDamage(int damage, items weaponItem = items.NONE) {
+    public int TakeDamage(int damage, itemID weaponItem = itemID.NONE) {
         int newH = Mathf.Max(0, _health - Mathf.Max(0, (damage - Defense())));
 
-        if (weaponItem.Equals(items.Bow)) {
-            if (Status.isStatusActive(buffsnDebuffs.ArrowInmune)) {
+        if (weaponItem.Equals(itemID.Bow)) {
+            if (Status.isStatusActive(buffsID.ArrowProof)) {
                 newH = _health;
             }
         }
-        if (_status.isStatusActive(buffsnDebuffs.Invencibility)) {
+        if (_status.isStatusActive(buffsID.Invencible)) {
             newH = _health;
         }
         

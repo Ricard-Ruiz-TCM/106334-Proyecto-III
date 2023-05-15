@@ -1,21 +1,22 @@
 using UnityEngine;
 
-public abstract class Skill : ScriptableObject {
+[CreateAssetMenu(fileName = "new Skill", menuName = "Combat/Skills/Skill")]
+public class Skill : ScriptableObject {
 
+    [Header("Sprite Icon:")]
     public Sprite icon;
 
     [Header("Localization Keys:")]
     public string keyName;
     public string keyDesc;
 
-    [Header("Skill:")]
-    public skills skill;
+    [Header("Data:")]
+    public skillID ID;
     public int cooldown;
 
-    public int duration;
-
-    public int range;
-
-    public abstract void Special(Actor from);
+    public virtual void Action(Actor from) {
+        CombatManager.instance.UseSkill(from, ID, from.canInteract);
+        from.EndAction();
+    }
 
 }

@@ -6,11 +6,14 @@ using UnityEngine;
 public class Stage : MonoBehaviour {
 
     /** Callback para indicar como se completa el stage */
-    public static event Action<stageResolution> OnCompleteStage;
+    public static event Action<stageResolution> onCompleteStage;
 
     [SerializeField, Header("Info:")]
     private StageData _data;
     public StageData Data => _data;
+
+    [SerializeField, Header("Tiempos:")]
+    private float _placeDelay = 2f;
 
     /** Static "Unique" access to GridManager and extras, works like Singletons */
     public static Grid2D StageGrid = null;
@@ -28,8 +31,9 @@ public class Stage : MonoBehaviour {
         Stage.Pathfinder = transform.GetComponentInChildren<Pathfinding>();
     }
 
-    // Unity StartStart
+    // Unity Start
     void Start() {
+        // Instantiate de los enemigos
         foreach (EnemyPositionPair epp in _data.enemies) {
             StartCoroutine(C_PlaceEnemy(epp.position, GameObject.Instantiate(epp.enemy)));
         }
@@ -37,7 +41,7 @@ public class Stage : MonoBehaviour {
 
     /** Método Coroutine Para posicionar enemigos */
     private IEnumerator C_PlaceEnemy(Vector2Int position, GameObject enemy) {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(_placeDelay);
         enemy.transform.position = Stage.StageBuilder.GetGridPlane(position.x, position.y).transform.position;
     }
 
@@ -49,6 +53,7 @@ public class Stage : MonoBehaviour {
     /** Método para comprobar si el stage ha sido completado, depende del objetivo */
     public void CheckCompletation() {
         bool completed = true;
+
         switch (_data.objetive) {
             case stageObjetive.killAll:
                 foreach (Actor actor in TurnManager.instance.Actors) {
@@ -58,15 +63,12 @@ public class Stage : MonoBehaviour {
                 }
                 break;
             case stageObjetive.protectNPC:
-                Debug.Log("TAMOS JODIDOS PERO CON EL NPC");
-                break;
-            case stageObjetive.clearPath:
-                Debug.Log("TAMOS JODIDOS");
+                // TODO // Check si esta el NPC a salvo
                 break;
         }
 
         if (completed) {
-            OnCompleteStage?.Invoke(stageResolution.victory);
+            onCompleteStage?.Invoke(stageResolution.victory);
         }
     }
 

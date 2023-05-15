@@ -26,4 +26,6 @@ public class ActorPerks : ActorManager {
         return false;
     }
 
+    SOBox<perkID> _perkss;
+
 }

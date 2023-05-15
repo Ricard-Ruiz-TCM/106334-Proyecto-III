@@ -13,7 +13,7 @@ public abstract class Perk : ScriptableObject {
     public perkID ID;
     public modType modType;
 
-    [Header("Dependency:")]
-    public perkID dependency;
+    [Header("Coste:")]
+    public int expertiseCost;
 
 }

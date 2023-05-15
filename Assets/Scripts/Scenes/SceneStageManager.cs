@@ -28,8 +28,10 @@ public class SceneStageManager : MonoBehaviour {
         OnOpenUpgradePanel.onTrigger += OpenUpgradePanel;
         // Player Die
         Player.onPlayerDie += () => { CompleteStage(stageResolution.defeat); };
+        // Player Reach Destinty
+        Player.onPlayerReachObjetive += () => { CompleteStage(stageResolution.victory); };
         // Completation
-        Stage.OnCompleteStage += CompleteStage;
+        Stage.onCompleteStage += CompleteStage;
     }
 
     // Unity OnDisable
@@ -40,8 +42,10 @@ public class SceneStageManager : MonoBehaviour {
         OnOpenUpgradePanel.onTrigger -= OpenUpgradePanel;
         // Player Die
         Player.onPlayerDie -= () => { CompleteStage(stageResolution.defeat); };
+        // Player Reach Destinty
+        Player.onPlayerReachObjetive -= () => { CompleteStage(stageResolution.victory); };
         // Completation
-        Stage.OnCompleteStage -= CompleteStage;
+        Stage.onCompleteStage -= CompleteStage;
     }
 
     // Unity Start
@@ -61,7 +65,7 @@ public class SceneStageManager : MonoBehaviour {
         }
 
         // Check si hay modificación de la lista de actores cuando empiezan las rondas
-        TurnManager.instance.onStartRounds += () => {
+        TurnManager.instance.onStartRound += () => {
             TurnManager.instance.onModifyList += Stage.CheckStage;
         };
     }
@@ -72,6 +76,7 @@ public class SceneStageManager : MonoBehaviour {
         // Innit del dialogManager
         DialogManager.instance.startDialog(data.innitialDialog);
     }
+
     private void EnableCombat(StageData data) {
         _objetiveUI.gameObject.SetActive(true);
         _objetiveUI.SetObjetive(data);

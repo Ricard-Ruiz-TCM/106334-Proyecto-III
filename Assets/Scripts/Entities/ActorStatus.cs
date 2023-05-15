@@ -23,12 +23,12 @@ public class ActorStatus : ActorManager {
         foreach (BuffItem statusItem in _status) {
             if (statusItem.buff.ID.Equals(status)) {
                 already = true;
-                statusItem.duration = uCore.GameManager.GetStatus(status).duration;
+                statusItem.duration = uCore.GameManager.GetBuff(status).duration;
             }
         }
 
         if (!already) {
-            Buff st = uCore.GameManager.GetStatus(status);
+            Buff st = uCore.GameManager.GetBuff(status);
             _status.Add(new BuffItem() { buff = st, duration = st.duration });
         }
     }

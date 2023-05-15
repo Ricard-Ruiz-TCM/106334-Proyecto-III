@@ -6,7 +6,7 @@ public enum roundType {
 
 // Estado del turno 
 public enum turnState {
-    thinking, acting, moving, waiting
+    thinking, ready, acting, moving, waiting
 }
 
 // Objetos del juego
@@ -51,7 +51,7 @@ public enum perkID {
 
 // Modifiación aplicable
 public enum modType {
-    damage, defense, health, skill, movement
+    damage, defense, health, skill, movement, special
 }
 
 // Tipo de operador de modificación

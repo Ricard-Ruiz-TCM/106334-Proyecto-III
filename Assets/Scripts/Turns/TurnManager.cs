@@ -10,24 +10,25 @@ public class TurnManager : ActorsListController {
     /** Callbacks */
     public Action onStartTurn;
     public Action onEndTurn;
-
+    /** --------- */
     public Action onNewRound;
-
-    public Action onStartRounds;
-    public Action onEndRounds;
+    /** --------- */
+    public Action onStartRound;
+    /** --------- */
+    public Action onEndSystem;
 
     [SerializeField, Header("Rondas:")]
     private roundType _roundType = roundType.thinking;
     [SerializeField]
     private int _rounds = 0;
 
-    [SerializeField, Header("Turnos:")] // ready -> Turno comenzado, "entando" al turno | doing -> Haciendo el turno | done -> Turno acabado, "cambiando" de turno
-    private progress _turnProgress = progress.done;
+    [SerializeField, Header("Turno:")]
+    private turnState _turnState = turnState.thinking;
 
     [SerializeField, Header("Tiempos:")]
-    private float _endTurnDelay = 2f;
+    private float _endTurnDelaySecs = 2f;
     [SerializeField]
-    private float _startTurnDelay = 1f;
+    private float _startTurnDelaySecs = 1f;
 
     // Unity Awake
     void Awake() {
@@ -43,6 +44,7 @@ public class TurnManager : ActorsListController {
     void Update() {
         switch (_roundType) {
             case roundType.positioning:
+                // TODO // REFACTOR
                 foreach (Actor a in _actors) {
                     if (a.CanBePlaced) {
                         a.GetComponent<Player>().Placing();
@@ -50,39 +52,33 @@ public class TurnManager : ActorsListController {
                 }
                 break;
             case roundType.combat:
-                // DelayTime para el efectivo del turno
-                if (_turnProgress.Equals(progress.done) || (_turnProgress.Equals(progress.ready)))
-                    return;
-
-                // Hemos terminado nuestro turno, go next
-                if (_actors[_current].hasTurnEnded) {
-                    StartCoroutine(NextTurn());
-                    return;
-                }
-
-                // Move Action
-                if (_actors[_current].CanMove()) {
-                    _actors[_current].Move();
-                }
-
-                // Standart Action
-                if (_actors[_current].CanAct()) {
-                    _actors[_current].Act();
-                }
-
-                // End Turn Check
-                if ((_actors[_current].moving.Equals(progress.done)) && (_actors[_current].acting.Equals(progress.done))) {
-                    _actors[_current].EndTurn();
+                switch (_turnState) {
+                    case turnState.ready:
+                        // TODO // Decide what to do, acting or moving;
+                        break;
+                    case turnState.acting:
+                        if (Current().CanAct()) {
+                            Current().Act();
+                        }
+                        break;
+                    case turnState.moving:
+                        if (Current().CanMove()) {
+                            Current().Move();
+                        }
+                        break;
+                    case turnState.waiting:
+                        if ((Current().moving.Equals(progress.done)) && (Current().acting.Equals(progress.done))) {
+                            Current().EndTurn();
+                            StartCoroutine(NextTurn());
+                        }
+                        break;
+                    default:
+                        break;
                 }
                 break;
             default:
                 break;
         }
-    }
-
-    /** Método para ordenar la lista según el valor de Movimiento de los actores */
-    public void sort() {
-
     }
 
     /** Método para indicar si estoy en la ronda de posicionamiento */
@@ -101,14 +97,14 @@ public class TurnManager : ActorsListController {
             return;
 
         _roundType = roundType.combat;
-        onStartRounds?.Invoke();
+        onStartRound?.Invoke();
         StartTurn();
     }
 
     /** Método para iniciar el turno */
     private void StartTurn() {
-        _turnProgress = progress.doing;
-        _actors[_current].BeginTurn();
+        _turnState = turnState.ready;
+        Current().BeginTurn();
         onStartTurn?.Invoke();
     }
 
@@ -123,7 +119,7 @@ public class TurnManager : ActorsListController {
     /** Método para indicar que se acabo el combate dentro del stage */
     public void stageEnds() {
         _roundType = roundType.waiting;
-        onEndRounds?.Invoke();
+        onEndSystem?.Invoke();
     }
 
     /** Método para iniciar el sistema desde fuera */
@@ -134,12 +130,11 @@ public class TurnManager : ActorsListController {
     /** Control para el siguiente turno, añade delays y hace callbacks, plus control */
     private IEnumerator NextTurn() {
         // Fin de turno
-        _turnProgress = progress.done;
+        _turnState = turnState.thinking;
         onEndTurn?.Invoke();
 
         // Cambio de turno
-        yield return new WaitForSeconds(_endTurnDelay);
-        _turnProgress = progress.ready;
+        yield return new WaitForSeconds(_endTurnDelaySecs);
         _current++;
         if (_current >= _actors.Count) {
             onNewRound?.Invoke();
@@ -148,7 +143,7 @@ public class TurnManager : ActorsListController {
         }
 
         // Entrando al turno
-        yield return new WaitForSeconds(_startTurnDelay);
+        yield return new WaitForSeconds(_startTurnDelaySecs);
         StartTurn();
     }
 

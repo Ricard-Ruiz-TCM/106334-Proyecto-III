@@ -1,23 +1,5 @@
 ﻿using UnityEngine;
 
-public abstract class ActorManager : MonoBehaviour {
-
-    // Actor getter
-    private Actor _actor = null;
-    [HideInInspector]
-    public Actor actor {
-        get {
-            if (_actor == null)
-                _actor = GetComponent<Actor>();
-
-            return _actor;
-        }
-        set {
-        }
-    }
-
-}
-
 public abstract class Actor : ActorManager {
 
     protected ActorPerks _perks;
@@ -104,7 +86,7 @@ public abstract class Actor : ActorManager {
             _skills.AddSkill(skillID.Defense);
         }
         if (_inventory.Weapon() != null) {
-            _skills.AddSkill(_inventory.Weapon().skill.ID);
+            _skills.AddSkill(_inventory.Weapon().skill);
         }
         foreach (Perk pk in _perks.Perks()) {
             if (pk is SkillPerk) {

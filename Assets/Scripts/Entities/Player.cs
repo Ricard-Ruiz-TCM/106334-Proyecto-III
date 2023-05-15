@@ -9,6 +9,7 @@ public class Player : Actor {
 
     public static event Action onPlayerDie;
     public static event Action onPlayerstep;
+    public static event Action onPlayerReachObjetive;
 
     bool moveController = true;
 

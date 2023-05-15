@@ -37,36 +37,6 @@ public class GameManager : MonoBehaviour {
 
     #endregion
 
-    #region Dialogues
-
-    private DialogNode _comradeNode;
-    public DialogNode ComradeNode {
-        get {
-            if (_comradeNode == null)
-                _comradeNode = Resources.Load<DialogNode>("ScriptableObjects/Dialogue/Comrade/[C, 0] Intro");
-
-            return _comradeNode;
-        }
-        set {
-            _comradeNode = value;
-        }
-    }
-
-    private DialogNode _blacksmithNode;
-    public DialogNode BlacksmithNode {
-        get {
-            if (_blacksmithNode == null)
-                _blacksmithNode = Resources.Load<DialogNode>("ScriptableObjects/Dialogue/Blacksmith/[B, 0] Intro");
-
-            return _blacksmithNode;
-        }
-        set {
-            _blacksmithNode = value;
-        }
-    }
-
-    #endregion
-
     #region Items
 
     private Dictionary<itemID, Item> _items;
@@ -145,26 +115,26 @@ public class GameManager : MonoBehaviour {
 
     #endregion
 
-    #region Status
+    #region Buffs
 
     private Dictionary<buffsID, Buff> _status;
 
-    public void LoadStatusData() {
+    public void LoadBuffData() {
         _status = new Dictionary<buffsID, Buff>();
-        Buff[] allStatus = Resources.LoadAll<Buff>("ScriptableObjects/Status");
-        foreach (Buff astatus in allStatus) {
-            buffsID sts;
-            if (Enum.TryParse(astatus.name, out sts)) {
-                _status.Add(sts, astatus);
+        Buff[] allStatus = Resources.LoadAll<Buff>("ScriptableObjects/Buffs");
+        foreach (Buff buff in allStatus) {
+            buffsID buffID;
+            if (Enum.TryParse(buff.name, out buffID)) {
+                _status.Add(buffID, buff);
             } else {
-                Debug.LogWarning("Missmatch de nombre con el SO y el Enum en: " + astatus.name);
+                Debug.LogWarning("Missmatch de nombre con el SO y el Enum en: " + buff.name);
             }
         }
     }
 
-    public Buff GetStatus(buffsID name) {
+    public Buff GetBuff(buffsID name) {
         if (_status == null) {
-            LoadStatusData();
+            LoadBuffData();
         }
         return _status[name];
     }

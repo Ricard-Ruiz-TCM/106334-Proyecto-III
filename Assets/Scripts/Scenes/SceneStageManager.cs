@@ -48,9 +48,12 @@ public class SceneStageManager : MonoBehaviour {
         Stage.onCompleteStage -= CompleteStage;
     }
 
+    [Header("TESTING:")]
+    public StageData stageData;
+
     // Unity Start
     void Start() {
-        StageData data = uCore.GameManager.NextStage;
+        StageData data = stageData;
 
         // Build the Stage
         switch (data.type) {

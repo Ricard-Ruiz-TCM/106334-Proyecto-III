@@ -21,7 +21,7 @@ public class PlayerUI : MonoBehaviour {
     [SerializeField]
     private PlayerTurnInfoUI _playerTurnInfo;
 
-    private Actor _currentActor;
+    private Turnable _currentActor;
 
     // Unity OnEnable
     void OnEnable() {
@@ -39,7 +39,7 @@ public class PlayerUI : MonoBehaviour {
     void Update() {
         // SetButton
         _btnEndTurn.onClick.AddListener(() => {
-            Actor player = TurnManager.instance.Current();
+            Turnable player = TurnManager.instance.Current();
             if (player is Player) {
                 if (!player.hasTurnEnded) { 
                     player.EndTurn();

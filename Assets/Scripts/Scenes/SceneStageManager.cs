@@ -68,8 +68,8 @@ public class SceneStageManager : MonoBehaviour {
         }
 
         // Check si hay modificación de la lista de actores cuando empiezan las rondas
-        TurnManager.instance.onStartRound += () => {
-            TurnManager.instance.onModifyList += Stage.CheckStage;
+        TurnManager.instance.onEndRound += () => {
+            TurnManager.instance.onModifyAttenders += Stage.CheckStage;
         };
     }
 

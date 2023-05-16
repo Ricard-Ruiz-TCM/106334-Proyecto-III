@@ -103,7 +103,7 @@ public class CameraController : MonoBehaviour {
         if (changeTarget) {
             _target = TurnManager.instance.Current().transform;
             changeTarget = false;
-            targetPos = new Vector3((_target.GetComponent<GridMovement>().GetLastNode().x - grid.Rows / 2.5f + cameraMoveSum) * cameraMoveMultiplier, 0, (_target.GetComponent<GridMovement>().GetLastNode().y - grid.Columns / 2.5f + cameraMoveSum) * cameraMoveMultiplier);
+            targetPos = new Vector3((_target.GetComponent<ActorMovement>().GetLastNode().x - grid.Rows / 2.5f + cameraMoveSum) * cameraMoveMultiplier, 0, (_target.GetComponent<ActorMovement>().GetLastNode().y - grid.Columns / 2.5f + cameraMoveSum) * cameraMoveMultiplier);
             cameraSpeed = cameraMoveChangeTargetSpeed;
         }
 
@@ -112,10 +112,10 @@ public class CameraController : MonoBehaviour {
             if (uCore.Action.GetKeyDown(KeyCode.Z)) {
                 StartCoroutine(EndAnim());
             }
-            if (!_target.GetComponent<Actor>().canMove) {
+            if (!_target.GetComponent<Turnable>().canMove) {
                 _animator.SetBool("zoom", true);
             }
-            if (_target.GetComponent<Actor>().canMove) {
+            if (_target.GetComponent<Turnable>().canMove) {
                 _animator.SetBool("zoom", false);
             }
 
@@ -128,13 +128,13 @@ public class CameraController : MonoBehaviour {
     }
     private void CameraTargetMove()
     {
-        if (_target.gameObject.GetComponent<GridMovement>()._canMove)
+        if (_target.gameObject.GetComponent<ActorMovement>()._canMove)
         {
-            if (xAnterior != _target.GetComponent<GridMovement>().GetLastNode().x || yAnterior != _target.GetComponent<GridMovement>().GetLastNode().y)
+            if (xAnterior != _target.GetComponent<ActorMovement>().GetLastNode().x || yAnterior != _target.GetComponent<ActorMovement>().GetLastNode().y)
             {
-                xAnterior = _target.GetComponent<GridMovement>().GetLastNode().x;
-                yAnterior = _target.GetComponent<GridMovement>().GetLastNode().y;
-                targetPos = new Vector3((_target.GetComponent<GridMovement>().GetLastNode().x - grid.Rows / 2.5f  + cameraMoveSum) * cameraMoveMultiplier, 0, (_target.GetComponent<GridMovement>().GetLastNode().y - grid.Columns / 2.5f + cameraMoveSum) * cameraMoveMultiplier);
+                xAnterior = _target.GetComponent<ActorMovement>().GetLastNode().x;
+                yAnterior = _target.GetComponent<ActorMovement>().GetLastNode().y;
+                targetPos = new Vector3((_target.GetComponent<ActorMovement>().GetLastNode().x - grid.Rows / 2.5f  + cameraMoveSum) * cameraMoveMultiplier, 0, (_target.GetComponent<ActorMovement>().GetLastNode().y - grid.Columns / 2.5f + cameraMoveSum) * cameraMoveMultiplier);
                 cameraSpeed = cameraMoveMovementSpeed;
             }
 

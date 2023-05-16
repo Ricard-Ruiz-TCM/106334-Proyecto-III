@@ -6,7 +6,7 @@ public class TrojanHorse : Skill {
     [Header("Special Mod:")]
     public int extraMovility;
 
-    public override void Action(Actor from) {
+    public override void Action(Turnable from) {
         base.Action(from);
         from.Status.ApplyStatus(buffsID.Invencible);
         from.Status.ApplyStatus(buffsID.MidMovement);

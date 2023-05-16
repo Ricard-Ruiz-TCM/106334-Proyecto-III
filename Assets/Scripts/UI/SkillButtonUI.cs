@@ -26,7 +26,7 @@ public class SkillButtonUI : MonoBehaviour {
         _btn = GetComponent<Button>();
     }
 
-    public void Set(Actor actor, SkillItem skill, KeyCode shortcut, int pos) {
+    public void Set(Turnable actor, SkillItem skill, KeyCode shortcut, int pos) {
         _skillItem = skill;
         _skill = skill.skill;
         _shortcut = shortcut;

@@ -9,10 +9,10 @@ public abstract class ModBuff : Buff {
     [Header("How affect:")]
     public modOperation operation;
 
-    public override void startTurnEffect(Actor me) {
+    public override void startTurnEffect(Turnable me) {
     }
 
-    public override void endTurnEffect(Actor me) {
+    public override void endTurnEffect(Turnable me) {
     }
 
 }

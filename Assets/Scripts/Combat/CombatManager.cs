@@ -19,17 +19,17 @@ public class CombatManager : ActorsListController {
         }
     }
 
-    public List<Actor> FindPlayers() {
+    public List<Turnable> FindPlayers() {
         return _actors.FindAll(x => x is Player);
     }
-    public List<Actor> FindEnemys() {
+    public List<Turnable> FindEnemys() {
         return _actors.FindAll(x => x is Enemy);
     }
 
     //metodos para hacer las skills
     //los que no estan aqui se hacen desde su scriptableObject, eso es porque la skill se hace sin tener que seleccionar ninguna casilla
 
-    public void UseSkill(Actor actor, skillID skillType, bool canInteract) {
+    public void UseSkill(Turnable actor, skillID skillType, bool canInteract) {
         actor.canMove = false;
 
         int range = actor.Weapon.range;
@@ -61,7 +61,7 @@ public class CombatManager : ActorsListController {
     }
 
     //enumerators que funcionan como "updates" para hacer las funciones de las skills
-    IEnumerator ShowGolpeDemoledor(Actor actor, int range, skillID skillType, bool canInteract) {
+    IEnumerator ShowGolpeDemoledor(Turnable actor, int range, skillID skillType, bool canInteract) {
         bool canEnd = false;
         Node node = null;
 
@@ -131,7 +131,7 @@ public class CombatManager : ActorsListController {
 
     //    return actor;
     //}
-    private void ExtendGolpeDemoledor(Actor actor, int range, skillID skillType, Node node, bool canEnd) {
+    private void ExtendGolpeDemoledor(Turnable actor, int range, skillID skillType, Node node, bool canEnd) {
         if (Mathf.RoundToInt(actor.transform.position.x / 10) == node.x) {
             ExtendAttack(node.x + 1, node.y, actor, canEnd, skillType);
 
@@ -161,7 +161,7 @@ public class CombatManager : ActorsListController {
         }
     }
 
-    IEnumerator NormalAttack(Actor actor, int range, skillID skillType, bool canInteract) {
+    IEnumerator NormalAttack(Turnable actor, int range, skillID skillType, bool canInteract) {
         bool canEnd = false;
         Node node = null;
 
@@ -190,7 +190,7 @@ public class CombatManager : ActorsListController {
 
     }
 
-    IEnumerator ShowArrows(Actor actor, int range, skillID skillType, bool canInteract) {
+    IEnumerator ShowArrows(Turnable actor, int range, skillID skillType, bool canInteract) {
         bool canEnd = false;
         Node node = null;
         //List<Node> nodes = new List<Node>();
@@ -239,7 +239,7 @@ public class CombatManager : ActorsListController {
         StartCoroutine(EndAttack(actor));
 
     }
-    IEnumerator ShowMoralizingShout(Actor actor, int range, skillID skillType) {
+    IEnumerator ShowMoralizingShout(Turnable actor, int range, skillID skillType) {
         Node node = null;
         //List<Node> nodes = new List<Node>();
 
@@ -266,14 +266,14 @@ public class CombatManager : ActorsListController {
         yield return null;
         StartCoroutine(EndAttack(actor));
     }
-    IEnumerator EndAttack(Actor actor) {
+    IEnumerator EndAttack(Turnable actor) {
         yield return new WaitForSeconds(1f);
         Stage.StageBuilder.ClearGrid();
         actor.canMove = true;
     }
 
     //metodo para los ataques que tienen da�o en area (comprueba si esta dentro de la grid - cambia el material - y si hay un enemigo hace efecto)
-    private void ExtendAttack(int i, int j, Actor actor, bool canEnd, skillID skillType) {
+    private void ExtendAttack(int i, int j, Turnable actor, bool canEnd, skillID skillType) {
         if (ChechIfPositionIsInGrid(i, j)) {
             Stage.StageBuilder.UpdateMaterial(i, j, shootMat);
             if (canEnd) {
@@ -284,7 +284,7 @@ public class CombatManager : ActorsListController {
     }
 
     //metodo para checkear si hay un actor en un nodo y aplica la skill en el actor
-    private void GetActorInNode(Node node, Actor from, skillID skillType) {
+    private void GetActorInNode(Node node, Turnable from, skillID skillType) {
         for (int i = 0; i < _actors.Count; i++) {
             if (node.x == Mathf.RoundToInt(_actors[i].transform.position.x / 10) && node.y == Mathf.RoundToInt(_actors[i].transform.position.z / 10)) {
                 switch (skillType) {
@@ -324,7 +324,7 @@ public class CombatManager : ActorsListController {
 
     }
 
-    void HealPerHitBuffActive(Actor from, int amount) {
+    void HealPerHitBuffActive(Turnable from, int amount) {
         //if (from.Status.isStatusActive(buffsID.HealPerHit)) {
             from.SetHealth(amount);
         //}
@@ -334,7 +334,7 @@ public class CombatManager : ActorsListController {
     bool ChechIfPositionIsInGrid(int i, int j) {
         return (!(i < 0 || j < 0 || i >= Stage.StageBuilder._grid.Rows || j >= Stage.StageBuilder._grid.Columns));
     }
-    void GetPosToAttack(Actor actor, int range, out Node node, Node lastNode) {
+    void GetPosToAttack(Turnable actor, int range, out Node node, Node lastNode) {
         node = lastNode;
         if (Stage.StageBuilder.MosueOverGrid()) {
 
@@ -353,9 +353,9 @@ public class CombatManager : ActorsListController {
 
         }
     }
-    void GetPosToEnemyAttack(Actor actor, out Node node) {
+    void GetPosToEnemyAttack(Turnable actor, out Node node) {
         //Actor player = FindNearestPlayer(actor);
-        Actor player = Stage.StageManager.FindNearestPlayer(actor.transform);
+        Turnable player = Stage.StageManager.FindNearestPlayer(actor.transform);
         node = Stage.StageBuilder.GetGridPlane(Mathf.RoundToInt(player.transform.position.x / 10), Mathf.RoundToInt(player.transform.position.z / 10)).node;
         Stage.StageBuilder.GetGridPlane(node.x, node.y).SetMaterial(Stage.StageBuilder._rangeMath);
     }

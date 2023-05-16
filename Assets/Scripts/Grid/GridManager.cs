@@ -2,13 +2,13 @@ using UnityEngine;
 
 public class GridManager : MonoBehaviour {
 
-    public Actor FindNearestPlayer(Transform me)
+    public Turnable FindNearestPlayer(Transform me)
     {
 
-        Actor actor = null;
+        Turnable actor = null;
         float dist = Mathf.Infinity;
 
-        foreach (Actor obj in CombatManager.instance.FindPlayers())
+        foreach (Turnable obj in CombatManager.instance.FindPlayers())
         {
             float distance = Vector3.Distance(obj.transform.position, me.position);
             if (distance < dist)
@@ -23,13 +23,13 @@ public class GridManager : MonoBehaviour {
 
         return actor;
     }
-    public Actor FindNearestEnemy(Transform me)
+    public Turnable FindNearestEnemy(Transform me)
     {
 
-        Actor actor = null;
+        Turnable actor = null;
         float dist = Mathf.Infinity;
 
-        foreach (Actor obj in CombatManager.instance.FindEnemys())
+        foreach (Turnable obj in CombatManager.instance.FindEnemys())
         {
             float distance = Vector3.Distance(obj.transform.position, me.position);
             if (distance < dist)
@@ -46,7 +46,7 @@ public class GridManager : MonoBehaviour {
     }
 
 
-    public bool InRange(Transform me, Actor target, int range) {
+    public bool InRange(Transform me, Turnable target, int range) {
         GridPlane targetPlane = Stage.StageBuilder.GetGridPlane(target.transform.position);
         GridPlane myPlane = Stage.StageBuilder.GetGridPlane(me.position);
         return (Stage.StageBuilder.GetGridDistanceBetween(myPlane, targetPlane) <= range || range == 0);

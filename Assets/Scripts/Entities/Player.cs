@@ -2,10 +2,10 @@ using System;
 using UnityEngine;
 using UnityEngine.VFX;
 
-[RequireComponent(typeof(GridMovement)), RequireComponent(typeof(ActorPerks))]
+[RequireComponent(typeof(ActorMovement)), RequireComponent(typeof(ActorPerks))]
 [RequireComponent(typeof(ActorSkills)), RequireComponent(typeof(ActorStatus))]
 [RequireComponent(typeof(ActorInventory))]
-public class Player : Actor {
+public class Player : Turnable {
 
     public static event Action onPlayerDie;
     public static event Action onPlayerstep;

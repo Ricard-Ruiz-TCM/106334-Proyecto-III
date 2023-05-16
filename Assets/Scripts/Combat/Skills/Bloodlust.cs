@@ -3,9 +3,9 @@
 [CreateAssetMenu(fileName = "Bloodlust", menuName = "Combat/Skills/Bloodlust")]
 public class Bloodlust : Skill {
 
-    public override void Action(Actor from) {
+    public override void Action(Turnable from) {
         base.Action(from);
-        Actor to = null; // TODO // find the target
+        Turnable to = null; // TODO // find the target
         to.Status.ApplyStatus(buffsID.Bleeding);
     }
 

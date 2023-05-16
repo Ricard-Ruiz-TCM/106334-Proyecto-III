@@ -56,7 +56,7 @@ public class Stage : MonoBehaviour {
 
         switch (_data.objetive) {
             case stageObjetive.killAll:
-                foreach (Actor actor in TurnManager.instance.Actors) {
+                foreach (Turnable actor in TurnManager.instance.Attenders) {
                     if (actor is Enemy) {
                         completed = false;
                     }

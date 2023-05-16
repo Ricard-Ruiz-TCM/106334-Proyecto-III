@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-
 public class ActorPerks : ActorManager {
 
-    [SerializeField, Header("Acive Perks:")]
+
+    [SerializeField, Header("Perks:")]
     protected List<Perk> _perks;
     public List<Perk> Perks() {
         return _perks;
@@ -25,7 +25,5 @@ public class ActorPerks : ActorManager {
         }
         return false;
     }
-
-    SOBox<perkID> _perkss;
 
 }

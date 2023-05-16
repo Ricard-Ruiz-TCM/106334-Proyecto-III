@@ -39,7 +39,7 @@ public class ActorSkills : ActorManager {
         foreach (SkillItem skillItem in _skills) {
             if (skillItem.skill.ID.Equals(skill)) {
                 if (skillItem.cooldown <= 0) {
-                    skillItem.skill.Action(actor);
+                    skillItem.skill.Action(attender);
                     skillItem.cooldown = skillItem.skill.cooldown;
                 }
             }

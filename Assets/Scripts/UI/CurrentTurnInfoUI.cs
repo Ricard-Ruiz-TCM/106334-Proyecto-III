@@ -14,7 +14,7 @@ public class CurrentTurnInfoUI : MonoBehaviour
     [SerializeField]
     private Transform _longStatusContainer;
 
-    public void UpdatePanel(Actor actor) {
+    public void UpdatePanel(Turnable actor) {
         _health.UpdateText(actor.GetHealth());
         _defense.UpdateText(actor.Defense());
 

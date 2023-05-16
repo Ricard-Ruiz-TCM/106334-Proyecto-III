@@ -43,7 +43,7 @@ public class ActorStatus : ActorManager {
 
     public void StatusEffect() {
         foreach (BuffItem effect in _status) {
-            effect.buff.endTurnEffect(actor);
+            effect.buff.endTurnEffect(attender);
             effect.duration--;
         }
     }

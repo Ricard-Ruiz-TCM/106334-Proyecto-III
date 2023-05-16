@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class DiegHealthBarUI : MonoBehaviour {
 
-    public Actor me;
+    public Turnable me;
     public Image bar;
 
     // Update is called once per frame

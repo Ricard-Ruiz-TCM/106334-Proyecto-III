@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(GridMovement)), RequireComponent(typeof(ActorPerks))]
+[RequireComponent(typeof(ActorMovement)), RequireComponent(typeof(ActorPerks))]
 [RequireComponent(typeof(ActorSkills)), RequireComponent(typeof(ActorStatus))]
 [RequireComponent(typeof(ActorInventory))]
-public class Enemy : Actor {
+public class Enemy : Turnable {
 
     // Actor target de skills y ataques, etc.
-    private Actor _target;
+    private Turnable _target;
 
     [SerializeField, Header("Clase:")]
     private enemyClass _class;

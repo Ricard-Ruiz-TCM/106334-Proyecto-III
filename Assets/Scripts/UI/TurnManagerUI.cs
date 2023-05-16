@@ -13,7 +13,7 @@ class TurnManagerUI : MonoBehaviour {
 
     // Unity Start
     void Start() {
-        TurnManager.instance.onModifyList += UpdateTurnList;
+        TurnManager.instance.onModifyAttenders += UpdateTurnList;
         TurnManager.instance.onStartTurn += UpdateTurnList;
     }
 
@@ -21,7 +21,7 @@ class TurnManagerUI : MonoBehaviour {
     public void UpdateTurnList() {
         ClearList();
 
-        List<Actor> turnables = TurnManager.instance.SortedByIndex();
+        List<Turnable> turnables = TurnManager.instance.SortedByIndex();
         // Instant the bigOne + Info
         if (turnables.Count > 1) {
             _turnInfo.UpdatePanel(turnables[0]);
@@ -44,7 +44,7 @@ class TurnManagerUI : MonoBehaviour {
     }
 
     public void BTN_EndPositioning() {
-        TurnManager.instance.positioningDone();
+        TurnManager.instance.isRoundDone();
     }
 
 }

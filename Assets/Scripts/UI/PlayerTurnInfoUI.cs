@@ -8,7 +8,7 @@ public class PlayerTurnInfoUI : MonoBehaviour {
     [SerializeField]
     private Transform _shortStatusContainer;
 
-    public void UpdatePanel(Actor actor) {
+    public void UpdatePanel(Turnable actor) {
         ClearShortStatus();
         foreach (BuffItem si in actor.Status.ActiveStatus) {
             GameObject.Instantiate(_shortStatusUIpfb, _shortStatusContainer).GetComponent<ShortStatusPanelUI>().UpdateStatus(si);

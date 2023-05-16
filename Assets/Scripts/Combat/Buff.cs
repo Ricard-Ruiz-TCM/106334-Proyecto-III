@@ -14,9 +14,9 @@ public abstract class Buff : ScriptableObject {
     public buffsID ID;
     public int duration;
 
-    public abstract void onApply(Actor me);
+    public abstract void onApply(Turnable me);
 
-    public abstract void startTurnEffect(Actor me);
-    public abstract void endTurnEffect(Actor me);
+    public abstract void startTurnEffect(Turnable me);
+    public abstract void endTurnEffect(Turnable me);
 
 }

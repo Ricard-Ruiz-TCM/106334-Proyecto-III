@@ -3,14 +3,14 @@
 public abstract class ActorManager : MonoBehaviour {
 
     // Actor getter
-    private Actor _actor = null;
+    private Turnable _attender = null;
     [HideInInspector]
-    public Actor actor {
+    public Turnable attender {
         get {
-            if (_actor == null)
-                _actor = GetComponent<Actor>();
+            if (_attender == null)
+                _attender = GetComponent<Turnable>();
 
-            return _actor;
+            return _attender;
         }
         set {
         }

@@ -1,12 +1,12 @@
 ﻿
 // Tipo de rondas
 public enum roundType {
-    thinking, positioning, combat, waiting
+    thinking, positioning, combat, completed
 }
 
 // Estado del turno 
 public enum turnState {
-    thinking, ready, acting, moving, waiting
+    thinking, acting, moving, completed
 }
 
 // Objetos del juego

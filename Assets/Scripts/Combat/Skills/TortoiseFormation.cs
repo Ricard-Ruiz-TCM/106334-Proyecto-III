@@ -5,8 +5,8 @@ public class TortoiseFormation : Skill {
 
     public override void Action(Turnable from) {
         base.Action(from);
-        from.Status.ApplyStatus(buffsID.ArrowProof);
-        from.Status.ApplyStatus(buffsID.MidDefense);
+        //from.Status.ApplyStatus(buffsID.ArrowProof);
+        //from.Status.ApplyStatus(buffsID.MidDefense);
     }
 
 }

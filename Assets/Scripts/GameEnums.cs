@@ -118,8 +118,6 @@ namespace Array2DEditor {
     public enum nodeType {
         __ = 0,
         P = 1,
-        M = 102,
-        H = 153,
         X = 255
     }
 }

@@ -2,7 +2,7 @@
 using UnityEngine;
 
 public class CameraController : MonoBehaviour {
-    [SerializeField] Animator _animator;
+    /*[SerializeField] Animator _animator;
 
     //enter y exit animaciones
     [SerializeField] Vector3 finalPos;
@@ -226,5 +226,5 @@ public class CameraController : MonoBehaviour {
 
     //    }
     //}
-
+    */
 }

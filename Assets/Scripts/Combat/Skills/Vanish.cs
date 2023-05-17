@@ -5,7 +5,7 @@ public class Vanish : Skill {
 
     public override void Action(Turnable from) {
         base.Action(from);
-        from.Status.ApplyStatus(buffsID.Invisible);
+        //from.Status.ApplyStatus(buffsID.Invisible);
     }
 
 }

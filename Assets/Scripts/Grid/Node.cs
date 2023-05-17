@@ -1,5 +1,7 @@
+using System;
 using Array2DEditor;
 
+[Serializable]
 public class Node {
 
     // Cords

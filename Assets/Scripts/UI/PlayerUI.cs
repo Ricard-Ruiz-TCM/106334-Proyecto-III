@@ -22,7 +22,7 @@ public class PlayerUI : MonoBehaviour {
     private PlayerTurnInfoUI _playerTurnInfo;
 
     private Turnable _currentActor;
-
+    /*
     // Unity OnEnable
     void OnEnable() {
         TurnManager.instance.onStartTurn += UpdateUI;
@@ -87,7 +87,7 @@ public class PlayerUI : MonoBehaviour {
     private void UpdateSkills() {
 
         int i = 1;
-        if (_currentActor is Player) {
+        if (_currentActor is Actor) {
             ClearSkills();
             foreach (SkillItem skI in _currentActor.GetComponent<ActorSkills>().Skills()) {
                 GameObject btn = GameObject.Instantiate(_skillButtonUI, _panelSkills);
@@ -119,5 +119,5 @@ public class PlayerUI : MonoBehaviour {
     }
 
 
-
+    */
 }

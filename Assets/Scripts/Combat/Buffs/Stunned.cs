@@ -8,8 +8,8 @@ public class Stunned : Buff {
     }
 
     public override void startTurnEffect(Turnable me) {
-        me.EndAction();
-        me.EndMovement();
+        me.endAction();
+        me.endMovement();
     }
 
     public override void endTurnEffect(Turnable me) {

@@ -27,9 +27,9 @@ public class SceneStageManager : MonoBehaviour {
         OnOpenPerkPanel.onTrigger += OpenPerkPanel;
         OnOpenUpgradePanel.onTrigger += OpenUpgradePanel;
         // Player Die
-        Player.onPlayerDie += () => { CompleteStage(stageResolution.defeat); };
+        //Player.onPlayerDie += () => { CompleteStage(stageResolution.defeat); };
         // Player Reach Destinty
-        Player.onPlayerReachObjetive += () => { CompleteStage(stageResolution.victory); };
+        //Player.onPlayerReachObjetive += () => { CompleteStage(stageResolution.victory); };
         // Completation
         Stage.onCompleteStage += CompleteStage;
     }
@@ -41,9 +41,9 @@ public class SceneStageManager : MonoBehaviour {
         OnOpenPerkPanel.onTrigger -= OpenPerkPanel;
         OnOpenUpgradePanel.onTrigger -= OpenUpgradePanel;
         // Player Die
-        Player.onPlayerDie -= () => { CompleteStage(stageResolution.defeat); };
+        //Player.onPlayerDie -= () => { CompleteStage(stageResolution.defeat); };
         // Player Reach Destinty
-        Player.onPlayerReachObjetive -= () => { CompleteStage(stageResolution.victory); };
+        //Player.onPlayerReachObjetive -= () => { CompleteStage(stageResolution.victory); };
         // Completation
         Stage.onCompleteStage -= CompleteStage;
     }
@@ -68,9 +68,9 @@ public class SceneStageManager : MonoBehaviour {
         }
 
         // Check si hay modificación de la lista de actores cuando empiezan las rondas
-        TurnManager.instance.onEndRound += () => {
+        /*TurnManager.instance.onEndRound += () => {
             TurnManager.instance.onModifyAttenders += Stage.CheckStage;
-        };
+        };*/
     }
 
     /** Métodos para habilitar los managers necesarios del stage */

@@ -20,19 +20,21 @@ public class CombatManager : ActorsListController {
     }
 
     public List<Turnable> FindPlayers() {
-        return _actors.FindAll(x => x is Player);
+        //return _actors.FindAll(x => x is Player);
+        return null;
     }
     public List<Turnable> FindEnemys() {
-        return _actors.FindAll(x => x is Enemy);
+        //return _actors.FindAll(x => x is Enemy);
+        return null;
     }
 
     //metodos para hacer las skills
     //los que no estan aqui se hacen desde su scriptableObject, eso es porque la skill se hace sin tener que seleccionar ninguna casilla
 
     public void UseSkill(Turnable actor, skillID skillType, bool canInteract) {
-        actor.canMove = false;
+        //actor.canMove = false;
 
-        int range = actor.Weapon.range;
+        int range = 0; // actor.Weapon.range;
 
         switch (skillType) {
             case skillID.Attack:
@@ -269,7 +271,7 @@ public class CombatManager : ActorsListController {
     IEnumerator EndAttack(Turnable actor) {
         yield return new WaitForSeconds(1f);
         Stage.StageBuilder.ClearGrid();
-        actor.canMove = true;
+        //actor.canMove = true;
     }
 
     //metodo para los ataques que tienen da�o en area (comprueba si esta dentro de la grid - cambia el material - y si hay un enemigo hace efecto)
@@ -289,30 +291,30 @@ public class CombatManager : ActorsListController {
             if (node.x == Mathf.RoundToInt(_actors[i].transform.position.x / 10) && node.y == Mathf.RoundToInt(_actors[i].transform.position.z / 10)) {
                 switch (skillType) {
                     default:
-                        HealPerHitBuffActive(from, _actors[i].TakeDamage(from.Damage(), from.Weapon.item));
+                       // HealPerHitBuffActive(from, _actors[i].TakeDamage(from.Damage(), from.Weapon.item));
                         break;
                     case skillID.ArrowRain:
-                        HealPerHitBuffActive(from, _actors[i].TakeDamage(from.Damage(), from.Weapon.item));
+                        //HealPerHitBuffActive(from, _actors[i].TakeDamage(from.Damage(), from.Weapon.item));
                         break;
                     case skillID.DoubleLunge:
-                        HealPerHitBuffActive(from, _actors[i].TakeDamage(from.Damage() * 2, from.Weapon.item));
+                        //HealPerHitBuffActive(from, _actors[i].TakeDamage(from.Damage() * 2, from.Weapon.item));
                         break;
                     case skillID.Cleave:
                         //_actors[i].Stun();
-                        _actors[i].Status.ApplyStatus(buffsID.Stunned);
+                        //_actors[i].Status.ApplyStatus(buffsID.Stunned);
                         break;
                     case skillID.ImperialCry:
                         if (_actors[i].transform.CompareTag("Player")) {
-                            _actors[i].Status.ApplyStatus(buffsID.Motivated);
+                           // _actors[i].Status.ApplyStatus(buffsID.Motivated);
                         }
                         break;
                     case skillID.Disarm:
                         //_actors[i].Stun();
-                        _actors[i].Status.ApplyStatus(buffsID.Disarmed);
+                        //_actors[i].Status.ApplyStatus(buffsID.Disarmed);
                         break;
                     case skillID.Bloodlust:
                         //_actors[i].Stun();
-                        _actors[i].Status.ApplyStatus(buffsID.Bleeding);
+                        //_actors[i].Status.ApplyStatus(buffsID.Bleeding);
                         break;
                 }
 
@@ -320,13 +322,13 @@ public class CombatManager : ActorsListController {
             }
         }
 
-        from.EndAction();
+        from.endAction();
 
     }
 
     void HealPerHitBuffActive(Turnable from, int amount) {
         //if (from.Status.isStatusActive(buffsID.HealPerHit)) {
-            from.SetHealth(amount);
+            //from.SetHealth(amount);
         //}
     }
 

@@ -1,150 +1,138 @@
-﻿using UnityEngine;
+﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.AI;
 
-[RequireComponent(typeof(ActorMovement))]
-[RequireComponent(typeof(ActorSkills))]
-[RequireComponent(typeof(ActorStatus))]
+public abstract class Actor : BasicActor {
 
-public class Actor : BasicActor {
+    /** Callback */
+    /** -------- */
+    public Action onDestinationReached;
+    public Action<Node> onStepReached;
+    /** -------- */
 
-    public SOBox<perkID> _perks;
-    protected ActorSkills _skills;
-    protected ActorStatus _status;
+    #region Movement: 
 
+    /** NavMeshAgent */
     [SerializeField, Header("Movimiento:")]
+    protected NavMeshAgent _agent;
+    [SerializeField]
+    protected List<Node> _route = new List<Node>();
+
+    [SerializeField]
     protected int _maxSteps;
     protected int _stepsDone;
 
     /** Getters */
-    public int StepsRemain() {
-        return _maxSteps - _stepsDone;
-    }
-    public int MaxSteps() {
+    public int maxSteps() {
         return _maxSteps;
+    }
+    public int stepsDone() {
+        return _stepsDone;
+    }
+    public int stepsRemain() {
+        return _maxSteps - _stepsDone;
     }
 
     /** Add de Steps */
-    public void AddSteps(int amount) {
+    public void addSteps(int amount) {
         _stepsDone -= amount;
     }
 
-    // Grid Movement
-    protected ActorMovement _gridMovement;
-    public ActorMovement GridM() {
-        return _gridMovement;
+    /** Setters */
+    public void setRoute(List<Node> route) {
+        _route = route;
     }
 
-
-    // callback
-    public Action<Array2DEditor.nodeType> onStepReached;
-    public Action onDestinationReached;
-
-    // NavMesh Agent
-    private NavMeshAgent _agent;
-
-    public bool _canMove;
-
-    // Destination path
-    private int _index;
-    public List<Node> VisualRouteValid;
-    public List<Node> VisualRouteInvaild;
-    private List<Node> _destionationRoute;
-
-    // Unity Awake
-    void Awake() {
-        _agent = GetComponent<NavMeshAgent>();
-        VisualRouteValid = new List<Node>();
-        VisualRouteInvaild = new List<Node>();
+    /** Set Destination, método para habilitar el movimiento */
+    public void setDestination(List<Node> route) {
+        setRoute(route);
+        allowMovement();
     }
 
-    /** Establece el origen y el destino del movimiento */
-    public void SetDestination(Vector3 origin, GridPlane plane, int amount) {
-        _canMove = true;
-        _index = -1;
-        _destionationRoute = new List<Node>();
-        List<Node> tmp = Stage.Pathfinder.FindPath(Stage.StageBuilder.GetGridPlane(origin).node, plane.node);
-        for (int i = 0; i < Mathf.Min((tmp != null ? tmp.Count : 0), amount); i++) {
-            if (tmp[i].type.Equals(Array2DEditor.nodeType.M)) {
-                amount--;
-            }
-            if (tmp[i].type.Equals(Array2DEditor.nodeType.H)) {
-                amount -= 2;
-            }
-            if (i < Mathf.Min(tmp.Count, amount)) {
-                _destionationRoute.Add(tmp[i]);
-            }
+    /** Override CanMove from Turnable */
+    public override bool canMove() {
+        return (base.canMove() && _route.Count > 0);
+    }
+
+    /** Override Move from Turnable */
+    public override void move() {
+        if (stepReached()) {
+            nextStep();
         }
-        NextPoint();
-    }
-
-    public List<Node> CalcRoute(Vector3 origin, GridPlane plane, int amount = -1) {
-        List<Node> route = Stage.Pathfinder.FindPath(Stage.StageBuilder.GetGridPlane(origin).node, plane.node);
-        VisualRouteValid.Clear();
-        VisualRouteInvaild.Clear();
-        if (route == null)
-            return route;
-
-        if (amount != -1) {
-            for (int i = 0; i < MathF.Min(amount, route.Count); i++) {
-                if (route[i].type == Array2DEditor.nodeType.M) {
-                    amount--;
-                }
-                if (route[i].type == Array2DEditor.nodeType.H) {
-                    amount -= 2;
-                }
-                if (i < MathF.Min(amount, route.Count)) {
-                    VisualRouteValid.Add(route[i]);
-                }
-            }
-            for (int i = VisualRouteValid.Count; i < route.Count; i++) {
-                VisualRouteInvaild.Add(route[i]);
-            }
-        } else {
-            VisualRouteValid = route;
-        }
-        return route;
-    }
-
-    public int StepsRemain() {
-        if (_destionationRoute == null)
-            return 0;
-
-        return _destionationRoute.Count - _index;
-    }
-
-    // Unity Update
-    void Update() {
-        if (!_canMove)
-            return;
-
-        if (DestinationReached())
-            NextPoint();
-    }
-
-    /** Comprueba si hemos llegado al punto */
-    public bool DestinationReached() {
-        return !_agent.hasPath && !_agent.pathPending && _agent.pathStatus == NavMeshPathStatus.PathComplete;
     }
 
     /** Método para ir al siguiente nodo */
-    private void NextPoint() {
-        if (_index < _destionationRoute.Count - 1) {
-            _index++;
-            _agent.SetDestination(Stage.StageBuilder.GetGridPlane(_destionationRoute[_index]).position);
-            onStepReached?.Invoke(Stage.StageBuilder.GetGridPlane(_destionationRoute[_index]).node.type);
+    private void nextStep() {
+        if (_stepsDone < _route.Count) {
+            onStepReached?.Invoke(Stage.StageBuilder.GetGridPlane(_route[_stepsDone]).node);
+            _stepsDone++;
+            if (_stepsDone >= _route.Count) {
+                endMovement();
+            } else {
+                _agent.SetDestination(Stage.StageBuilder.GetGridPlane(_route[_stepsDone]).position);
+            }
         } else {
-            _canMove = false;
+            endMovement();
             onDestinationReached?.Invoke();
         }
     }
 
-    public Vector2 GetLastNode() {
-        if (_destionationRoute == null)
-            return Vector2.zero;
-        return new Vector2(_destionationRoute[_destionationRoute.Count - 1].x, _destionationRoute[_destionationRoute.Count - 1].y);
+    /** Comprueba si hemos llegado al punto */
+    public bool stepReached() {
+        return !_agent.hasPath && !_agent.pathPending && _agent.pathStatus == NavMeshPathStatus.PathComplete;
     }
 
+    #endregion
+
+    /** Override del onTurn */
+    public override void onTurn() {
+        
+    }
+
+    /** Override del beginTurn */
+    public override void beginTurn() {
+        _route.Clear();
+        _stepsDone = 0;
+        base.beginTurn();
+    }
+
+    /** Override del endTurn */
+    public override void endTurn() {
+        base.endTurn();
+    }
+
+    /** Override del canAct */
+    public override bool canAct() {
+        return base.canAct();
+    }
+
+    /** Override del act */
+    public override void act() {
+        
+    }
+
+    public override int totalDamage() {
+        return 0;
+    }
+
+    public override int totalDefense() {
+        return 0;
+    }
+
+    public override void onActorDeath() {
+
+    }
+
+    public override void takeDamage(int damage, itemID weapon = itemID.NONE) {
+
+        base.takeDamage(damage, weapon);
+    }
+
+    /**
+    public SOBox<perkID> _perks;
+    public SOBox<skillID> _skills;
+    public SOBox<buffsID> _buffs;
 
     #region Equipment:
 
@@ -155,17 +143,17 @@ public class Actor : BasicActor {
     [SerializeField]
     protected ShieldItem _shield;
 
-    /** Getter de armadura */
+    /** Getter de armadura 
     public ArmorItem Armor() {
         return _armor.armor;
     }
 
-    /** Getter de escudo */
+    /** Getter de escudo 
     public ShieldItem Shield() {
         return _shield;
     }
 
-    /** Getter de arma */
+    /** Getter de arma 
     public WeaponItem Weapon() {
         return _weapon.weapon;
     }
@@ -247,15 +235,8 @@ public class Actor : BasicActor {
         throw new System.NotImplementedException();
     }
 
-    public override void Die() {
-        throw new System.NotImplementedException();
-    }
 
-    public override bool Act() {
-        throw new System.NotImplementedException();
-    }
-
-    public override void Move() {
+    public override void Act() {
         throw new System.NotImplementedException();
     }
 
@@ -341,7 +322,10 @@ public class Actor : BasicActor {
         return defense;
     }
 
-    public override void TakeDamage() {
-        throw new System.NotImplementedException();
+
+    public override void onActorDeath() {
+        throw new NotImplementedException();
     }
+    */
+
 }

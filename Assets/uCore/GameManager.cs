@@ -143,13 +143,13 @@ public class GameManager : MonoBehaviour {
 
     #region Player
 
-    public Player Player;
+    public Actor Player;
 
-    public void RestorePlayer(Player player) {
+    public void RestorePlayer(Actor player) {
         Player = player;
     }
 
-    public void SavePlayer(Player player) {
+    public void SavePlayer(Actor player) {
         Player = null;
     }
 

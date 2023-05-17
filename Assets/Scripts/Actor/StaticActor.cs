@@ -5,23 +5,23 @@ public class StaticActor : BasicActor {
     [SerializeField, Header("Resistencia (a.k.a -> armadura plana):")]
     private int _resistance;
 
-    public override void Act() {
-        EndAction();
-    }
+    public override void act() { }
 
-    public override void Move() {
-        EndMovement();
-    }
+    public override void move() { }
 
     public override void onActorDeath() {
         GameObject.Destroy(gameObject);
     }
 
-    public override int TotalDamage() {
+    public override void onTurn() {
+        endTurn();
+    }
+
+    public override int totalDamage() {
         return 0;
     }
 
-    public override int TotalDefense() {
+    public override int totalDefense() {
         return _resistance;
     }
 

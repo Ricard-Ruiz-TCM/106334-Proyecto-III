@@ -9,7 +9,7 @@ public abstract class DoT : Buff {
     }
 
     public override void endTurnEffect(Turnable me) {
-        me.TakeDamage(damage);
+        //me.TakeDamage(damage);
     }
 
 }

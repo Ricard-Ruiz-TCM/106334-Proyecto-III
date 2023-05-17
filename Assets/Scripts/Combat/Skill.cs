@@ -15,8 +15,8 @@ public class Skill : ScriptableObject {
     public int cooldown;
 
     public virtual void Action(Turnable from) {
-        CombatManager.instance.UseSkill(from, ID, from.canInteract);
-        from.EndAction();
+        /*CombatManager.instance.UseSkill(from, ID, from.canInteract);
+        from.EndAction();*/
     }
 
 }

@@ -24,6 +24,7 @@ public class TurnManager : MonoBehaviour {
 
     [SerializeField, Header("Actores que participan:")]
     protected int _current = 0;
+    public Turnable current => _attenders[_current];
     [SerializeField]
     protected List<Turnable> _attenders = new List<Turnable>();
     public List<Turnable> Attenders => _attenders;
@@ -32,9 +33,6 @@ public class TurnManager : MonoBehaviour {
     private roundType _roundType = roundType.thinking;
     [SerializeField]
     private int _rounds = 0;
-
-    [SerializeField, Header("Turno:")]
-    private turnState _turnState = turnState.thinking;
 
     [SerializeField, Header("Tiempos:")]
     private float _endTurnDelaySecs = 1f;
@@ -57,42 +55,34 @@ public class TurnManager : MonoBehaviour {
             case roundType.positioning:
                 // TODO // REFACTOR
                 foreach (Turnable a in _attenders) {
-                    if (a.CanBePlaced) {
-                        a.GetComponent<Player>().Placing();
+                    if (a is ManualActor) {
+                        Debug.Log("ACTOR MANUAL PERRO");
                     }
                 }
                 break;
             case roundType.combat:
-                switch (_turnState) {
+                switch (current.state) {
                     case turnState.thinking:
-                        // TODO // COMPUTE IA
-                        break;
-                    case turnState.acting:
-                        if (Current().CanAct()) {
-                            Current().Act();
+                        if (!current.isTurnDone()) {
+                            current.onTurn();
                         }
+                    break;
+                    case turnState.acting:
+                        current.act();
                         break;
                     case turnState.moving:
-                        if (Current().CanMove()) {
-                            Current().Move();
-                        }
+                        current.move();
                         break;
                     case turnState.completed:
-                        if ((Current().isActingDone()) && (Current().isMovementDone())) {
-                            NextTurn();
-                        }
-                        break;
-                    default:
+                        nextTurn();
                         break;
                 }
-                break;
-            default:
                 break;
         }
     }
 
     /** Subscribe to manager */
-    public void Subscribe(Turnable element) {
+    public void subscribe(Turnable element) {
         if (!_attenders.Contains(element))
             _attenders.Add(element);
 
@@ -100,25 +90,20 @@ public class TurnManager : MonoBehaviour {
     }
 
     /** UnSubscribe to manager */
-    public void Unsubscribe(Turnable element) {
+    public void unsubscribe(Turnable element) {
         if (_attenders.Contains(element))
             _attenders.Remove(element);
 
         onModifyAttenders?.Invoke();
     }
 
-    /** Current Actor */
-    public Turnable Current() {
-        return _attenders[_current].attender;
-    }
-
     /** Check if contains */
-    public bool Contains(Turnable element) {
+    public bool contains(Turnable element) {
         return _attenders.Contains(element);
     }
 
     /** Método que ordena la lista tomando _current como inicio */
-    public List<Turnable> SortedByIndex() {
+    public List<Turnable> sortedByIndex() {
         List<Turnable> sorted = new List<Turnable>();
         for (int i = _current; sorted.Count != _attenders.Count; i++) {
             i %= _attenders.Count;
@@ -130,6 +115,11 @@ public class TurnManager : MonoBehaviour {
     /** método para indicar si esta en una ronda concreta */
     public bool isRoundType(roundType type) {
         return _roundType.Equals(type);
+    }
+
+    /** Método para compeltar la ronda */
+    public void completeRound() {
+        completeRoundType(_roundType);
     }
 
     /** Método para indicar que ya hemos hecho el posicionamiento */
@@ -166,14 +156,14 @@ public class TurnManager : MonoBehaviour {
     }
 
     /** Control para el siguiente turno, añade delays y hace callbacks, plus control */
-    private void NextTurn() {
-        EndTurn();
-        StartCoroutine(C_ChangeTurn());
-        StartTurn();
+    private void nextTurn() {
+        endTurn();
+        StartCoroutine(changeTurn());
+        startTurn();
     }
 
     /** Método para cambiar el turno del actor, añade delay al asunto */
-    private IEnumerator C_ChangeTurn() {
+    private IEnumerator changeTurn() {
         yield return new WaitForSeconds(_endTurnDelaySecs);
         _current++;
         if (_current >= _attenders.Count) {
@@ -185,16 +175,14 @@ public class TurnManager : MonoBehaviour {
     }
 
     /** Método para acbar el turno */
-    private void EndTurn() {
-        _turnState = turnState.thinking;
-        Current().EndTurn();
+    private void endTurn() {
+        current.endTurn();
         onEndTurn?.Invoke();
     }
 
     /** Método para iniciar el turno */
-    private void StartTurn() {
-        _turnState = turnState.thinking;
-        Current().BeginTurn();
+    private void startTurn() {
+        current.beginTurn();
         onStartTurn?.Invoke();
     }
 

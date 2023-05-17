@@ -6,7 +6,7 @@ public class Cleave : Skill {
     public override void Action(Turnable from) {
         base.Action(from);
         Turnable to = null; // TODO // find the target
-        to.Status.ApplyStatus(buffsID.Stunned);
+        //to.Status.ApplyStatus(buffsID.Stunned);
     }
 
 }

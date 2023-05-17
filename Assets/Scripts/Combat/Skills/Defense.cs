@@ -5,7 +5,7 @@ public class Defense : Skill {
 
     public override void Action(Turnable from) {
         base.Action(from);
-        from.Status.ApplyStatus(buffsID.LowDefense);
+        //from.Status.ApplyStatus(buffsID.LowDefense);
     }
 
 }

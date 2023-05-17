@@ -8,8 +8,8 @@ public class TrojanHorse : Skill {
 
     public override void Action(Turnable from) {
         base.Action(from);
-        from.Status.ApplyStatus(buffsID.Invencible);
-        from.Status.ApplyStatus(buffsID.MidMovement);
+        //from.Status.ApplyStatus(buffsID.Invencible);
+        //from.Status.ApplyStatus(buffsID.MidMovement);
     }
 
 }

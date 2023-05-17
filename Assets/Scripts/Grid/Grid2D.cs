@@ -32,6 +32,9 @@ public class Grid2D : MonoBehaviour {
                 _nodeMap[x, y] = new Node(_gridMap.GetCell(x, y), x, y);
             }
         }
+    }
+
+    void Start() {
         Stage.StageBuilder.InstantiatePlanes();
     }
 

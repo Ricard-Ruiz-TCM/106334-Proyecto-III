@@ -20,34 +20,34 @@ public abstract class BasicActor : Turnable {
     public bool isAlive() {
         return _alive;
     }
-    public int Health() {
+    public int health() {
         return _health;
     }
-    public int MaxHealth() {
+    public int maxHealth() {
         return _maxHealth;
     }
-    public int DamageTaken() {
+    public int damageTaken() {
         return _damageTaken;
     }
-    public int HealthPercent() {
+    public int healthPercent() {
         return (int)((_health / _maxHealth) * 100f);
     }
 
     /** Setters */
     /** Health [0 .. max] */
-    public void SetHealth(int value) {
+    public void setHealth(int value) {
         _health = Mathf.Clamp(_health + value, 0, _maxHealth);
         onHealthChanged?.Invoke();
     }
 
     /** Abstracts para calculo del Daño total */
-    public abstract int TotalDamage();
+    public abstract int totalDamage();
     /** Abstracts para calculo de la Defensa total */
-    public abstract int TotalDefense();
+    public abstract int totalDefense();
 
     /** Abstract para calcular recibir daño */
-    public virtual void TakeDamage(int damage, itemID weapon = itemID.NONE) {
-        _damageTaken = Mathf.Clamp(TotalDefense() - damage, 0, _maxHealth);
+    public virtual void takeDamage(int damage, itemID weapon = itemID.NONE) {
+        _damageTaken = Mathf.Clamp(totalDefense() - damage, 0, _maxHealth);
         _health -= _damageTaken;
 
         onHealthChanged?.Invoke();

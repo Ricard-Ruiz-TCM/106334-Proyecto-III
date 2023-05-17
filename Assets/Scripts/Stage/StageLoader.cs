@@ -15,7 +15,7 @@ public class StageLoader : MonoBehaviour {
 
     [SerializeField, Header("Player:")]
     private GameObject _playerPrfb;
-    private Player _player;
+    private Actor _player;
 
     // Unity Awake
     void Awake() {
@@ -41,10 +41,10 @@ public class StageLoader : MonoBehaviour {
 
     /** Método para instanciar al player con todas sus costias dentro del nivel */
     private void BuildPlayer() {
-        _player = GameObject.Instantiate(_playerPrfb).GetComponent<Player>();
-        uCore.GameManager.RestorePlayer(_player);
+        //_player = GameObject.Instantiate(_playerPrfb).GetComponent<Player>();
+        //uCore.GameManager.RestorePlayer(_player);
 
-        FindObjectOfType<CameraController>()._target = _player.transform;
+        //FindObjectOfType<CameraController>()._target = _player.transform;
     }
 
     /** Método para recuperar el stage actual */

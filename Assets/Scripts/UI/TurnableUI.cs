@@ -12,8 +12,9 @@ class TurnableUI : MonoBehaviour {
 
     public void SetTurnable(Turnable turnable) {
         _text.UpdateText(turnable.gameObject.name);
-        if (_slider != null)
-            _slider.value = ((float)turnable.GetHealth() / (float)turnable.MaxHealth());
+        if (_slider != null) {
+        }
+            //_slider.value = ((float)turnable.GetHealth() / (float)turnable.MaxHealth());
 
 
     }

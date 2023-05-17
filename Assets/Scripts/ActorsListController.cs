@@ -32,7 +32,7 @@ public class ActorsListController : MonoBehaviour {
 
     /** Current Actor */
     public Turnable Current() {
-        return _actors[_current].attender;
+        return _actors[_current];
     }
 
     /** Check if contains */

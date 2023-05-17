@@ -9,7 +9,7 @@ public class DiegHealthBarUI : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         transform.LookAt(Camera.main.transform);
-        bar.fillAmount = ((float)me.GetHealth() / (float)me.MaxHealth());
+        //bar.fillAmount = ((float)me.GetHealth() / (float)me.MaxHealth());
     }
 
 }

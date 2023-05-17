@@ -13,11 +13,11 @@ public class GridManager : MonoBehaviour {
             float distance = Vector3.Distance(obj.transform.position, me.position);
             if (distance < dist)
             {
-                if (!obj.Status.isStatusActive(buffsID.Invisible))
+                /*if (!obj.Status.isStatusActive(buffsID.Invisible))
                 {
                     actor = obj;
                     dist = distance;
-                }
+                }*/
             }
         }
 
@@ -34,11 +34,11 @@ public class GridManager : MonoBehaviour {
             float distance = Vector3.Distance(obj.transform.position, me.position);
             if (distance < dist)
             {
-                if (!obj.Status.isStatusActive(buffsID.Invisible))
+                /*if (!obj.Status.isStatusActive(buffsID.Invisible))
                 {
                     actor = obj;
                     dist = distance;
-                }
+                }*/
             }
         }
 

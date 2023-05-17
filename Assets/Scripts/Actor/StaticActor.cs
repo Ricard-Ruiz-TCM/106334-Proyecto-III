@@ -6,7 +6,6 @@ public class StaticActor : BasicActor {
     private int _resistance;
 
     public override void act() { }
-
     public override void move() { }
 
     public override void onActorDeath() {

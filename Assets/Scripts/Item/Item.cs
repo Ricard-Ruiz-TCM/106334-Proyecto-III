@@ -10,6 +10,6 @@ public abstract class Item : ScriptableObject {
     public string keyDescription;
 
     [Header("Data:")]
-    public itemID item;
+    public itemID ID;
 
 }

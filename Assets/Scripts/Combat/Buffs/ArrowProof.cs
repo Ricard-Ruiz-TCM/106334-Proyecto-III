@@ -3,14 +3,14 @@
 [CreateAssetMenu(fileName = "ArrowProof", menuName = "Combat/Buffs/ArrowProof")]
 public class ArrowProof : Buff {
 
-    public override void onApply(Turnable me) {
+    public override void onApply(BasicActor me) {
         Debug.Log("TODO: Apply Stunned Feedback");
     }
 
-    public override void startTurnEffect(Turnable me) {
+    public override void startTurnEffect(BasicActor me) {
     }
 
-    public override void endTurnEffect(Turnable me) {
+    public override void endTurnEffect(BasicActor me) {
     }
 
 }

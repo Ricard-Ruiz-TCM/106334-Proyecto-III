@@ -7,7 +7,7 @@ public class ImperialCry : Skill {
     // Observer para avisar del ImperialCry
     public static event Action<buffsID> onImperialCry;
 
-    public override void Action(Turnable from) {
+    public override void Action(BasicActor from) {
         base.Action(from);
         onImperialCry?.Invoke(buffsID.Motivated);
     }

@@ -6,5 +6,7 @@ public class ArmorInventoryItem {
     public ArmorItem armor;
     public int upgrade;
 
+    public int defense => armor.defense[upgrade];
+
 }
 

@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+[RequireComponent(typeof(BuffManager))]
+[RequireComponent(typeof(PerkManager))]
+[RequireComponent(typeof(SkillManager))]
+[RequireComponent(typeof(EquipmentManager))]
 public abstract class Actor : BasicActor {
 
     /** Callback */
@@ -15,12 +19,12 @@ public abstract class Actor : BasicActor {
 
     /** NavMeshAgent */
     [SerializeField, Header("Movimiento:")]
-    protected NavMeshAgent _agent;
+    protected int _maxSteps;
     [SerializeField]
-    protected List<Node> _route = new List<Node>();
+    protected NavMeshAgent _agent;
 
     [SerializeField]
-    protected int _maxSteps;
+    protected List<Node> _route = new List<Node>();
     protected int _stepsDone;
 
     /** Getters */
@@ -85,11 +89,6 @@ public abstract class Actor : BasicActor {
 
     #endregion
 
-    /** Override del onTurn */
-    public override void onTurn() {
-        
-    }
-
     /** Override del beginTurn */
     public override void beginTurn() {
         _route.Clear();
@@ -107,172 +106,26 @@ public abstract class Actor : BasicActor {
         return base.canAct();
     }
 
-    /** Override del act */
-    public override void act() {
-        
-    }
+    /** Buffs, Perks & Skill Managers */
+    protected BuffManager _buffs;
+    protected PerkManager _perks;
+    protected SkillManager _skills;
+    protected EquipmentManager _equip;
 
+    [SerializeField, Header("Damage & Defense (Calculado Runtime):")]
+    protected int _baseDamage;
+    [SerializeField]
+    protected int _baseDefense;
+
+    /** Override para calcular el daño total que podemos hacer */
     public override int totalDamage() {
-        return 0;
-    }
+        int dmg = _baseDamage;
 
-    public override int totalDefense() {
-        return 0;
-    }
-
-    public override void onActorDeath() {
-
-    }
-
-    public override void takeDamage(int damage, itemID weapon = itemID.NONE) {
-
-        base.takeDamage(damage, weapon);
-    }
-
-    /**
-    public SOBox<perkID> _perks;
-    public SOBox<skillID> _skills;
-    public SOBox<buffsID> _buffs;
-
-    #region Equipment:
-
-    [SerializeField, Header("Equipo:")]
-    protected ArmorInventoryItem _armor;
-    [SerializeField]
-    protected WeaponInventoryItem _weapon;
-    [SerializeField]
-    protected ShieldItem _shield;
-
-    /** Getter de armadura 
-    public ArmorItem Armor() {
-        return _armor.armor;
-    }
-
-    /** Getter de escudo 
-    public ShieldItem Shield() {
-        return _shield;
-    }
-
-    /** Getter de arma 
-    public WeaponItem Weapon() {
-        return _weapon.weapon;
-    }
-
-    #endregion
-
-    protected virtual void Awake() {
-
-        _perks = GetComponent<ActorPerks>();
-        _skills = GetComponent<ActorSkills>();
-        _status = GetComponent<ActorStatus>();
-        _inventory = GetComponent<ActorInventory>();
-
-        _gridMovement = GetComponent<ActorMovement>();
-        _gridMovement.onStepReached += (Array2DEditor.nodeType t) => {
-            _stepsDone++;
-            if (t.Equals(Array2DEditor.nodeType.M)) {
-                _stepsDone++;
-            } else if (t.Equals(Array2DEditor.nodeType.H)) {
-                _stepsDone += 2;
-            }
-        };
-        materialDefault = gameObject.GetComponentInChildren<SkinnedMeshRenderer>().material;
-        totalHealth = _health;
-    }
-
-    protected void BuildSkills() {
-        if (_inventory.Weapon() != null) {
-            _skills.AddSkill(skillID.Attack);
-        }
-        if (_inventory.Shield() != null) {
-            _skills.AddSkill(skillID.Defense);
-        }
-        if (_inventory.Weapon() != null) {
-            _skills.AddSkill(_inventory.Weapon().skill);
-        }
-        foreach (Perk pk in _perks.Perks()) {
-            if (pk is SkillPerk) {
-                _skills.AddSkill(((SkillPerk)pk).skill);
-            }
-        }
-    }
-    protected void AddWeaponToCharacter() {
-        //GameObject weaponGameOject = GameObject.Instantiate(_inventory.Weapon().weaponPrefab);
-        //weaponGameOject.transform.parent = weaponHolder;
-    }
-
-    public int TakeDamage(int damage, itemID weaponItem = itemID.NONE) {
-        int newH = Mathf.Max(0, _health - Mathf.Max(0, (damage - Defense())));
-
-        if (weaponItem.Equals(itemID.Bow)) {
-            if (Status.isStatusActive(buffsID.ArrowProof)) {
-                newH = _health;
-            }
-        }
-        if (_status.isStatusActive(buffsID.Invencible)) {
-            newH = _health;
-        }
-
-        healtDif = _health - newH;
-        _health = newH;
-
-
-        // Cal Result
-        if (_health == 0) {
-            _alive = false;
-            UnSubscribeManger();
-            Die();
-        }
-
-        return healtDif;
-    }
-
-    public override int TotalDamage() {
-        throw new System.NotImplementedException();
-    }
-
-    public override int TotalDefense() {
-        throw new System.NotImplementedException();
-    }
-
-
-    public override void Act() {
-        throw new System.NotImplementedException();
-    }
-
-    public int Damage() {
-        int dmg = 0;
-
-        // Get Values
-        dmg += _inventory.Weapon().damage[0];
-
-        // Apply Modifiers
-        foreach (Perk pk in _perks.Perks()) {
-            if (pk is ModPerk) {
-                if (pk.modType.Equals(modType.damage)) {
-                    dmg += (int)((ModPerk)pk).value;
-                }
-            }
-        }
-
-        // check Status
-        foreach (BuffItem sitem in _status.ActiveStatus) {
-            if (sitem.buff is ModBuff) {
-                if (((ModBuff)sitem.buff).type.Equals(modType.damage)) {
-                    switch (((ModBuff)sitem.buff).operation) {
-                        case modOperation.add:
-                            dmg += ((ModBuff)sitem.buff).value;
-                            break;
-                        case modOperation.sub:
-                            dmg -= ((ModBuff)sitem.buff).value;
-                            break;
-                        case modOperation.mult:
-                            dmg *= ((ModBuff)sitem.buff).value;
-                            break;
-                        case modOperation.div:
-                            dmg /= ((ModBuff)sitem.buff).value;
-                            break;
-                    }
+        // BuffModifiers
+        foreach (BuffItem bi in _buffs.activeBuffs) {
+            if (bi.buff is ModBuff) {
+                if (((ModBuff)bi.buff).type.Equals(modType.damage)) {
+                    dmg = ((ModBuff)bi.buff).apply(dmg);
 
                 }
             }
@@ -281,51 +134,78 @@ public abstract class Actor : BasicActor {
         return dmg;
     }
 
-    public int Defense() {
-        int defense = 0;
+    /** Override para calcular la defensa total que podemos hacer */
+    public override int totalDefense() {
+        int defense = _baseDefense;
 
-        // Get Values
-        if (_inventory.Armor() != null)
-            defense = _inventory.Armor().defense[0];
+        // BuffModifiers
+        foreach (BuffItem bi in _buffs.activeBuffs) {
+            if (bi.buff is ModBuff) {
+                if (((ModBuff)bi.buff).type.Equals(modType.defense)) {
+                    defense = ((ModBuff)bi.buff).apply(defense);
 
-        // Apply Modifiers
-        foreach (Perk pk in _perks.Perks()) {
-            if (pk is ModPerk) {
-                if (pk.modType.Equals(modType.defense)) {
-                    defense += (int)((ModPerk)pk).value;
-                }
-            }
-        }
-
-        // check Status
-        foreach (BuffItem sitem in _status.ActiveStatus) {
-            if (sitem.buff is ModBuff) {
-                if (((ModBuff)sitem.buff).type.Equals(modType.defense)) {
-                    switch (((ModBuff)sitem.buff).operation) {
-                        case modOperation.add:
-                            defense += ((ModBuff)sitem.buff).value;
-                            break;
-                        case modOperation.sub:
-                            defense -= ((ModBuff)sitem.buff).value;
-                            break;
-                        case modOperation.mult:
-                            defense *= ((ModBuff)sitem.buff).value;
-                            break;
-                        case modOperation.div:
-                            defense /= ((ModBuff)sitem.buff).value;
-                            break;
-                    }
                 }
             }
         }
 
         return defense;
     }
+    
+    /** Override para recibir daño, se tienen en cuenta cositas */
+    public override void takeDamage(int damage, itemID weapon = itemID.NONE) {
+        // Invencible, kekw
+        if (_buffs.isBuffActive(buffsID.Invencible)) {
+            return;
+        }
+        // Arrow Proof y me atacan con arco, kekw
+        if ((_equip.weapon.ID.Equals(itemID.Bow)) && (_buffs.isBuffActive(buffsID.ArrowProof))) {
+            return;
+        }
 
-
-    public override void onActorDeath() {
-        throw new NotImplementedException();
+        base.takeDamage(damage, weapon);
     }
-    */
+
+    // Unity Awake
+    protected virtual void Awake() {
+        _buffs = GetComponent<BuffManager>();
+        _perks = GetComponent<PerkManager>();
+        _skills = GetComponent<SkillManager>();
+    }
+
+    // Unity Start
+    protected override void Start() {
+        base.Start();
+        build();
+    }
+
+    /** Método para construir las skills según las perks y equipamiento */
+    protected virtual void build() {
+        if (_equip.weapon != null) {
+            _skills.addSkill(skillID.Attack);
+            _baseDamage = _equip.damage;
+        }
+        if (_equip.shield != null) {
+            _skills.addSkill(skillID.Defense);
+            _baseDefense += _equip.shieldDefense;
+        }
+        if (_equip.armor != null) {
+            _baseDefense += _equip.armorDefense;
+        }
+        foreach (PerkItem pi in _perks.perks) {
+            if (pi.perk is SkillPerk) {
+                _skills.addSkill(((SkillPerk)pi.perk).skill);
+            }
+            if (pi.perk is ModPerk) {
+                if (pi.perk.modType.Equals(modType.damage)) {
+                    _baseDamage = ((ModPerk)pi.perk).apply(_baseDamage);
+                }
+            }
+            if (pi.perk is ModPerk) {
+                if (pi.perk.modType.Equals(modType.defense)) {
+                    _baseDefense = ((ModPerk)pi.perk).apply(_baseDefense);
+                }
+            }
+        }
+    }
 
 }

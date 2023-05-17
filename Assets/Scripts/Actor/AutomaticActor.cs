@@ -4,8 +4,7 @@ public class AutomaticActor : Actor {
 
     /** Override del onTurn */
     public override void onTurn() {
-        base.onTurn();
-
+        
         if (canAct()) {
             allowAct();
         }
@@ -18,8 +17,10 @@ public class AutomaticActor : Actor {
 
     /** Override del act */
     public override void act() {
-        base.act();
         endAction();
     }
 
+    public override void onActorDeath() {
+        
+    }
 }

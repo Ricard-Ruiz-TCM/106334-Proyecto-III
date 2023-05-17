@@ -4,6 +4,7 @@ public class ManualActor : Actor {
 
     /** Override del onTurn */
     public override void onTurn() {
+
         if (uCore.Action.GetKeyDown(KeyCode.M)) {
             setDestination(Stage.Pathfinder.FindPath(Stage.StageBuilder.GetGridPlane(transform.position).node, Stage.StageBuilder.GetMouseGridPlane().node));
         }
@@ -11,6 +12,7 @@ public class ManualActor : Actor {
         if (uCore.Action.GetKeyDown(KeyCode.J)) {
             allowAct();
         }
+
     }
 
     /** Override del beginTurn */

@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+[RequireComponent(typeof(NavMeshAgent))]
 [RequireComponent(typeof(BuffManager))]
 [RequireComponent(typeof(PerkManager))]
 [RequireComponent(typeof(SkillManager))]
 [RequireComponent(typeof(EquipmentManager))]
+
 public abstract class Actor : BasicActor {
 
     /** Callback */
@@ -20,7 +22,6 @@ public abstract class Actor : BasicActor {
     /** NavMeshAgent */
     [SerializeField, Header("Movimiento:")]
     protected int _maxSteps;
-    [SerializeField]
     protected NavMeshAgent _agent;
 
     [SerializeField]
@@ -167,9 +168,13 @@ public abstract class Actor : BasicActor {
 
     // Unity Awake
     protected virtual void Awake() {
+        // NavMeshAgent
+        _agent = GetComponent<NavMeshAgent>();
+        // Managers
         _buffs = GetComponent<BuffManager>();
         _perks = GetComponent<PerkManager>();
         _skills = GetComponent<SkillManager>();
+        _equip = GetComponent<EquipmentManager>();
     }
 
     // Unity Start

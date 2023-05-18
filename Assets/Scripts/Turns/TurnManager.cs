@@ -61,6 +61,10 @@ public class TurnManager : MonoBehaviour {
                 }
                 break;
             case roundType.combat:
+                if (current is StaticActor) {
+                    nextTurn();
+                    return;
+                }
                 switch (current.state) {
                     case turnState.thinking:
                         if (!current.isTurnDone()) {
@@ -112,6 +116,10 @@ public class TurnManager : MonoBehaviour {
         return sorted;
     }
 
+    public roundType getRoundType() {
+        return _roundType;
+    }
+
     /** método para indicar si esta en una ronda concreta */
     public bool isRoundType(roundType type) {
         return _roundType.Equals(type);
@@ -158,12 +166,12 @@ public class TurnManager : MonoBehaviour {
     /** Control para el siguiente turno, añade delays y hace callbacks, plus control */
     private void nextTurn() {
         endTurn();
-        StartCoroutine(changeTurn());
-        startTurn();
+        StartCoroutine(changeTurn(_roundType));
     }
 
     /** Método para cambiar el turno del actor, añade delay al asunto */
-    private IEnumerator changeTurn() {
+    private IEnumerator changeTurn(roundType type) {
+        _roundType = roundType.thinking;
         yield return new WaitForSeconds(_endTurnDelaySecs);
         _current++;
         if (_current >= _attenders.Count) {
@@ -172,6 +180,8 @@ public class TurnManager : MonoBehaviour {
             _rounds++;
         }
         yield return new WaitForSeconds(_startTurnDelaySecs);
+        _roundType = type;
+        startTurn();
     }
 
     /** Método para acbar el turno */

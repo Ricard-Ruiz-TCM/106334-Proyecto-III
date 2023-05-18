@@ -34,7 +34,7 @@ public class GridBuilder : MonoBehaviour {
         for (int x = 0; x < _grid.Rows; x++) {
             for (int y = 0; y < _grid.Columns; y++) {
                 // Posición donde será isntanciado
-                Vector3 position = new Vector3(x * _planeSize * _planePfb.transform.localScale.x, 50f, y * _planeSize * _planePfb.transform.localScale.y);
+                Vector3 position = new Vector3(x * _planeSize * _planePfb.transform.localScale.x + 5f, 50f, y * _planeSize * _planePfb.transform.localScale.y + 5f);
                 // Instant del prefab
                 GridPlane obj = GameObject.Instantiate(_planePfb, position, Quaternion.identity, transform).GetComponent<GridPlane>();
                 obj.gameObject.name = "M[" + x + "," + y + "]-" + "W:" + _grid.GetNode(x, y).walkable;

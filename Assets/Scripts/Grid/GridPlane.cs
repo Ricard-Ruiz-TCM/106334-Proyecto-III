@@ -10,6 +10,7 @@ public class GridPlane : MonoBehaviour {
     // Node & Grid
     public Node node;
     public Grid2D grid2D;
+    public GameObject pathGameObject;
 
     // Fast position access
     public Vector3 position {
@@ -37,6 +38,10 @@ public class GridPlane : MonoBehaviour {
     public Material GetMaterial()
     {
         return _meshRenderer.material;
+    }
+    public bool CompareMaterial(Material mat)
+    {
+        return _meshRenderer.material == mat;
     }
     public GameObject GetAttackIndicator()
     {

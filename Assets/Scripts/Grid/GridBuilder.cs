@@ -148,8 +148,27 @@ public class GridBuilder : MonoBehaviour {
     public void DisplayValidPath(List<Node> path, int range) {
         ClearPath();
         for (int i = 0; i < path.Count; i++) {
-            if (i < range) {
-                UpdateMaterial(path[i].x, path[i].y, _pathMath);
+            if (i < range - 1) 
+            {
+                GameObject pathObject = GetGridPlane(path[i].x, path[i].y).pathGameObject;
+                pathObject.SetActive(true);
+                if (path[i + 1].x > path[i].x)
+                {
+                    pathObject.transform.rotation = Quaternion.Euler(0, 0, 0);
+                }
+                if (path[i + 1].x < path[i].x)
+                {
+                    pathObject.transform.rotation = Quaternion.Euler(0, 180, 0);
+                }
+                if (path[i + 1].y > path[i].y)
+                {
+                    pathObject.transform.rotation = Quaternion.Euler(0, -90, 0);
+                }
+                if (path[i + 1].y < path[i].y)
+                {
+                    pathObject.transform.rotation = Quaternion.Euler(0, 90, 0);
+                }
+                //UpdateMaterial(path[i].x, path[i].y, _pathMath);
             }
         }
     }
@@ -220,7 +239,8 @@ public class GridBuilder : MonoBehaviour {
     //}
 
     public void DisplayInValidPath(List<Node> path) {
-        for (int i = 0; i < path.Count; i++) {
+        for (int i = 0; i < path.Count; i++) 
+        {
             UpdateMaterial(path[i].x, path[i].y, _badPathMat);
         }
     }
@@ -279,12 +299,10 @@ public class GridBuilder : MonoBehaviour {
         {
             for (int y = 0; y < _grid.Columns; y++)
             {
-                if(GetGridPlane(x,y).GetMaterial() == _pathMath)
+                if (GetGridPlane(x, y).pathGameObject.activeSelf)
                 {
-                    Debug.Log(GetGridPlane(x, y).GetMaterial() + " " + _pathMath);
-                    UpdateMaterial(x, y);
-                }               
-                //GetGridPlane(x, y).gameObject.layer = LayerMask.NameToLayer("VisibleGrid");
+                    GetGridPlane(x, y).pathGameObject.SetActive(false);
+                }
             }
         }
     }

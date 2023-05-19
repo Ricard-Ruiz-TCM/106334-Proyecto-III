@@ -202,6 +202,34 @@ public class GridBuilder : MonoBehaviour {
     public void hideNode(int x, int y) {
         getGridPlane(x, y).setLayer(_invisibleLayer);
     }
+    public void DisplaySkillRange(int range, Actor actor)
+    {
+        Node node = null;
+        //List<Node> nodes = new List<Node>();
+
+
+        node = Stage.StageBuilder.GetGridPlane(Mathf.RoundToInt(actor.transform.position.x / 10), Mathf.RoundToInt(actor.transform.position.z / 10)).node;
+
+        int count = 1;
+        int totalCount = 1;
+        for (int i = node.x - range; i <= node.x + range; i++)
+        {
+            for (int j = node.y; j < count + node.y; j++)
+            {
+                if (CheckIfInGrid(i, j))
+                {
+                    UpdateMaterial(i, j, _rangeMath);
+                }
+            }
+            for (int z = node.y - 1; z > node.y - count; z--)
+            {
+                if (CheckIfInGrid(i, z))
+                {
+                    UpdateMaterial(i, z, _rangeMath);
+                }
+            }
+        }
+    }
 
     /** Método para limpiar el grid y hacerlo invisible */
     public void clearGrid() {

@@ -27,9 +27,11 @@ public class SceneStageManager : MonoBehaviour {
         OnOpenPerkPanel.onTrigger += OpenPerkPanel;
         OnOpenUpgradePanel.onTrigger += OpenUpgradePanel;
         // Player Die
-        Player.onPlayerDie += () => { CompleteStage(stageResolution.defeat); };
+        //Player.onPlayerDie += () => { CompleteStage(stageResolution.defeat); };
+        // Player Reach Destinty
+        //Player.onPlayerReachObjetive += () => { CompleteStage(stageResolution.victory); };
         // Completation
-        Stage.OnCompleteStage += CompleteStage;
+        Stage.onCompleteStage += CompleteStage;
     }
 
     // Unity OnDisable
@@ -39,14 +41,19 @@ public class SceneStageManager : MonoBehaviour {
         OnOpenPerkPanel.onTrigger -= OpenPerkPanel;
         OnOpenUpgradePanel.onTrigger -= OpenUpgradePanel;
         // Player Die
-        Player.onPlayerDie -= () => { CompleteStage(stageResolution.defeat); };
+        //Player.onPlayerDie -= () => { CompleteStage(stageResolution.defeat); };
+        // Player Reach Destinty
+        //Player.onPlayerReachObjetive -= () => { CompleteStage(stageResolution.victory); };
         // Completation
-        Stage.OnCompleteStage -= CompleteStage;
+        Stage.onCompleteStage -= CompleteStage;
     }
+
+    [Header("TESTING:")]
+    public StageData stageData;
 
     // Unity Start
     void Start() {
-        StageData data = uCore.GameManager.NextStage;
+        StageData data = stageData;
 
         // Build the Stage
         switch (data.type) {
@@ -61,9 +68,9 @@ public class SceneStageManager : MonoBehaviour {
         }
 
         // Check si hay modificación de la lista de actores cuando empiezan las rondas
-        TurnManager.instance.onStartRounds += () => {
-            TurnManager.instance.onModifyList += Stage.CheckStage;
-        };
+        /*TurnManager.instance.onEndRound += () => {
+            TurnManager.instance.onModifyAttenders += Stage.CheckStage;
+        };*/
     }
 
     /** Métodos para habilitar los managers necesarios del stage */
@@ -72,13 +79,14 @@ public class SceneStageManager : MonoBehaviour {
         // Innit del dialogManager
         DialogManager.instance.startDialog(data.innitialDialog);
     }
+
     private void EnableCombat(StageData data) {
         _objetiveUI.gameObject.SetActive(true);
         _objetiveUI.SetObjetive(data);
         _playerUI.SetActive(true);
         _turnUI.SetActive(true);
         // Innit del stageLoader
-        StageLoader.instance.buildStage(data);
+        // TODO // StageLoader.instance.buildStage(data);
         // Innit del turnManager
         TurnManager.instance.startManager();
     }

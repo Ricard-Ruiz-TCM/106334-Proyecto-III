@@ -2,11 +2,18 @@
 
 public abstract class Perk : ScriptableObject {
 
-    public perks perk;
-    public perkCategory category;
-    public modificationType modificationType;
+    [Header("Sprite Icon:")]
+    public Sprite icon;
 
-    [Header("Dependency:")]
-    public perks dependency;
+    [Header("Localization Keys:")]
+    public string keyName;
+    public string keyDesc;
+
+    [Header("Data:")]
+    public perkID ID;
+    public modType modType;
+
+    [Header("Coste:")]
+    public int expertiseCost;
 
 }

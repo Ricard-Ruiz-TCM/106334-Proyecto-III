@@ -40,7 +40,7 @@ public class Pathfinding : MonoBehaviour {
             }
 
             // Revisamos los vecinos al nodo en cuestión 
-            foreach (Node neighbour in Stage.StageGrid.GetNeighbours(node)) {
+            foreach (Node neighbour in Stage.Grid.getNeighbours(node)) {
                 if (!neighbour.walkable || closedList.Contains(neighbour)) {
                     continue;
                 }

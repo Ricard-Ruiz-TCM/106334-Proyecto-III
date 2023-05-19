@@ -37,45 +37,15 @@ public class GameManager : MonoBehaviour {
 
     #endregion
 
-    #region Dialogues
-
-    private DialogNode _comradeNode;
-    public DialogNode ComradeNode {
-        get {
-            if (_comradeNode == null)
-                _comradeNode = Resources.Load<DialogNode>("ScriptableObjects/Dialogue/Comrade/[C, 0] Intro");
-
-            return _comradeNode;
-        }
-        set {
-            _comradeNode = value;
-        }
-    }
-
-    private DialogNode _blacksmithNode;
-    public DialogNode BlacksmithNode {
-        get {
-            if (_blacksmithNode == null)
-                _blacksmithNode = Resources.Load<DialogNode>("ScriptableObjects/Dialogue/Blacksmith/[B, 0] Intro");
-
-            return _blacksmithNode;
-        }
-        set {
-            _blacksmithNode = value;
-        }
-    }
-
-    #endregion
-
     #region Items
 
-    private Dictionary<items, Item> _items;
+    private Dictionary<itemID, Item> _items;
 
     public void LoadItemData() {
-        _items = new Dictionary<items, Item>();
+        _items = new Dictionary<itemID, Item>();
         Item[] allItems = Resources.LoadAll<Item>("ScriptableObjects/Items");
         foreach (Item it in allItems) {
-            items itE;
+            itemID itE;
             if (Enum.TryParse(it.name, out itE)) {
                 _items.Add(itE, it);
             } else {
@@ -84,7 +54,7 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    public Item GetItem(items name) {
+    public Item GetItem(itemID name) {
         if (_items == null) {
             LoadItemData();
         }
@@ -95,13 +65,13 @@ public class GameManager : MonoBehaviour {
 
     #region Skills
 
-    private Dictionary<skills, Skill> _skills;
+    private Dictionary<skillID, Skill> _skills;
 
     public void LoadSkillData() {
-        _skills = new Dictionary<skills, Skill>();
+        _skills = new Dictionary<skillID, Skill>();
         Skill[] allSkills = Resources.LoadAll<Skill>("ScriptableObjects/Skills");
         foreach (Skill sk in allSkills) {
-            skills skl;
+            skillID skl;
             if (Enum.TryParse(sk.name, out skl)) {
                 _skills.Add(skl, sk);
             } else {
@@ -110,7 +80,7 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    public Skill GetSkill(skills name) {
+    public Skill GetSkill(skillID name) {
         if (_skills == null) {
             LoadSkillData();
         }
@@ -121,13 +91,13 @@ public class GameManager : MonoBehaviour {
 
     #region Perks
 
-    private Dictionary<perks, Perk> _perks;
+    private Dictionary<perkID, Perk> _perks;
 
     public void LoadPerkData() {
-        _perks = new Dictionary<perks, Perk>();
+        _perks = new Dictionary<perkID, Perk>();
         Perk[] allPerks = Resources.LoadAll<Perk>("ScriptableObjects/Perks");
         foreach (Perk perk in allPerks) {
-            perks skl;
+            perkID skl;
             if (Enum.TryParse(perk.name, out skl)) {
                 _perks.Add(skl, perk);
             } else {
@@ -136,7 +106,7 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    public Perk GetPerk(perks name) {
+    public Perk GetPerk(perkID name) {
         if (_perks == null) {
             LoadPerkData();
         }
@@ -145,26 +115,26 @@ public class GameManager : MonoBehaviour {
 
     #endregion
 
-    #region Status
+    #region Buffs
 
-    private Dictionary<buffsnDebuffs, Status> _status;
+    private Dictionary<buffsID, Buff> _status;
 
-    public void LoadStatusData() {
-        _status = new Dictionary<buffsnDebuffs, Status>();
-        Status[] allStatus = Resources.LoadAll<Status>("ScriptableObjects/Status");
-        foreach (Status astatus in allStatus) {
-            buffsnDebuffs sts;
-            if (Enum.TryParse(astatus.name, out sts)) {
-                _status.Add(sts, astatus);
+    public void LoadBuffData() {
+        _status = new Dictionary<buffsID, Buff>();
+        Buff[] allStatus = Resources.LoadAll<Buff>("ScriptableObjects/Buffs");
+        foreach (Buff buff in allStatus) {
+            buffsID buffID;
+            if (Enum.TryParse(buff.name, out buffID)) {
+                _status.Add(buffID, buff);
             } else {
-                Debug.LogWarning("Missmatch de nombre con el SO y el Enum en: " + astatus.name);
+                Debug.LogWarning("Missmatch de nombre con el SO y el Enum en: " + buff.name);
             }
         }
     }
 
-    public Status GetStatus(buffsnDebuffs name) {
+    public Buff GetBuff(buffsID name) {
         if (_status == null) {
-            LoadStatusData();
+            LoadBuffData();
         }
         return _status[name];
     }
@@ -173,13 +143,13 @@ public class GameManager : MonoBehaviour {
 
     #region Player
 
-    public Player Player;
+    public Actor Player;
 
-    public void RestorePlayer(Player player) {
+    public void RestorePlayer(Actor player) {
         Player = player;
     }
 
-    public void SavePlayer(Player player) {
+    public void SavePlayer(Actor player) {
         Player = null;
     }
 

@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[RequireComponent(typeof(MeshRenderer))]
 public class GridPlane : MonoBehaviour {
 
     // MeshRenderer para cambiar el mat
@@ -26,13 +27,19 @@ public class GridPlane : MonoBehaviour {
     }
 
     /** Método set de Grid y Nodo */
-    public void SetGrid(Grid2D grid, Node node) {
+    public void setGrid(Grid2D grid, Node node) {
         grid2D = grid;
         this.node = node;
     }
 
+    /** Método para establecer el material y layer */
+    public void setRendering(Material mat, string layer) {
+        setLayer(layer);
+        setMaterial(mat);
+    }
+
     /** Método para setear el material */
-    public void SetMaterial(Material mat) {
+    public void setMaterial(Material mat) {
         _meshRenderer.material = mat;
     }
     public Material GetMaterial()
@@ -46,6 +53,11 @@ public class GridPlane : MonoBehaviour {
     public GameObject GetAttackIndicator()
     {
         return attackShow;
+    }
+
+    /** Método para establecer el layer */
+    public void setLayer(string layer) {
+        gameObject.layer = LayerMask.NameToLayer(layer);
     }
 
 }

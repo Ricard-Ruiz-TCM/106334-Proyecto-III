@@ -1,10 +1,10 @@
-using UnityEngine;
+﻿using UnityEngine;
 
-[CreateAssetMenu(fileName = "new ArrowRain", menuName = "Combat/Skills/Arrow Rain")]
+[CreateAssetMenu(fileName = "ArrowRain", menuName = "Combat/Skills/ArrowRain")]
 public class ArrowRain : Skill {
 
-    public override void Special(Actor from) {
-        CombatManager.instance.UseSkill(from, range, skill, from.canInteract);
+    public override void action(BasicActor from, BasicActor to) {
+        Debug.Log("APPLY ARROW");
     }
 
 }

@@ -17,7 +17,7 @@ public class SkillButtonUI : MonoBehaviour {
     private KeyCode _shortcut;
 
     /** Skill Action */
-    private Action _action; 
+    private Action _action = null;
 
     /** Skill Button */
     private Button _btn;
@@ -26,21 +26,35 @@ public class SkillButtonUI : MonoBehaviour {
         _btn = GetComponent<Button>();
     }
 
-    public void Set(Actor actor, SkillItem skill, KeyCode shortcut, int pos) {
+    public void UpdateCooldown() {
+        _txtCooldown.UpdateText(_skillItem.cooldown >= 0 ? _skillItem.cooldown.ToString() : "");
+        _btn.interactable = (_skill.cooldown < 0);
+    }
+
+    public void Set(Turnable actor, SkillItem skill, KeyCode shortcut, int pos) {
         _skillItem = skill;
         _skill = skill.skill;
         _shortcut = shortcut;
         _btn.image.sprite = _skill.icon;
         _txtShortcut.UpdateText(pos.ToString());
-        _txtCooldown.UpdateText(skill.cooldown > 0 ? skill.cooldown.ToString() : "");
-        _action = () => { actor.GetComponent<ActorSkills>().UseSkill(skill.skill.skill); };
+        UpdateCooldown();
+        if (skill.skill.personal) {
+            _action = () => {
+                ((Actor)actor).skills.useSkill(_skill.ID, (Actor)actor, (Actor)actor);
+            };
+        } else {
+            _action = () => {
+                ((ManualActor)TurnManager.instance.current).setSkillToUse(_skill.ID);
+                TurnManager.instance.current.startAct();
+            };
+        }
         _btn.onClick.AddListener(() => { _action(); });
     }
 
     // Unity Update
     void Update() {
         if (_btn.interactable) {
-            if (uCore.Action.GetKeyDown(_shortcut)) {
+            if (Input.GetKeyDown(_shortcut)) {
                 _action();
             }
         }

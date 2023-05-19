@@ -1,8 +1,9 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class TurnManager : ActorsListController {
+public class TurnManager : MonoBehaviour {
 
     /** Singleton Instance */
     public static TurnManager instance = null;
@@ -10,24 +11,33 @@ public class TurnManager : ActorsListController {
     /** Callbacks */
     public Action onStartTurn;
     public Action onEndTurn;
+    /** --------- */
+    public Action<roundType> onNewRound;
+    /** --------- */
+    public Action<roundType> onEndRound;
+    /** --------- */
+    public Action onEndSystem;
+    public Action onStartSystem;
+    /** --------- */
+    public Action onModifyAttenders;
+    /** --------- */
 
-    public Action onNewRound;
-
-    public Action onStartRounds;
-    public Action onEndRounds;
+    [SerializeField, Header("Actores que participan:")]
+    protected int _current = 0;
+    public Turnable current => _attenders[_current];
+    [SerializeField]
+    protected List<Turnable> _attenders = new List<Turnable>();
+    public List<Turnable> attenders => _attenders;
 
     [SerializeField, Header("Rondas:")]
-    private rounds _roundType = rounds.waitingRound;
+    private roundType _roundType = roundType.thinking;
     [SerializeField]
     private int _rounds = 0;
 
-    [SerializeField, Header("Turnos:")] // ready -> Turno comenzado, "entando" al turno | doing -> Haciendo el turno | done -> Turno acabado, "cambiando" de turno
-    private progress _turnProgress = progress.done;
-
     [SerializeField, Header("Tiempos:")]
-    private float _endTurnDelay = 2f;
+    private float _endTurnDelaySecs = 1f;
     [SerializeField]
-    private float _startTurnDelay = 1f;
+    private float _startTurnDelaySecs = 1f;
 
     // Unity Awake
     void Awake() {
@@ -42,114 +52,163 @@ public class TurnManager : ActorsListController {
     // Unity Update
     void Update() {
         switch (_roundType) {
-            case rounds.positioningRound:
-                foreach (Actor a in _actors) {
-                    if (a.CanBePlaced) {
-                        a.GetComponent<Player>().Placing();
-                    }
-                }
+            case roundType.positioning:
+                positioningRound();
                 break;
-            case rounds.combatRound:
-                // DelayTime para el efectivo del turno
-                if (_turnProgress.Equals(progress.done) || (_turnProgress.Equals(progress.ready)))
-                    return;
-
-                // Hemos terminado nuestro turno, go next
-                if (_actors[_current].hasTurnEnded) {
-                    StartCoroutine(NextTurn());
-                    return;
-                }
-
-                // Move Action
-                if (_actors[_current].CanMove()) {
-                    _actors[_current].Move();
-                }
-
-                // Standart Action
-                if (_actors[_current].CanAct()) {
-                    _actors[_current].Act();
-                }
-
-                // End Turn Check
-                if ((_actors[_current].moving.Equals(progress.done)) && (_actors[_current].acting.Equals(progress.done))) {
-                    _actors[_current].EndTurn();
-                }
-                break;
-            default:
+            case roundType.combat:
+                combatRounds();
                 break;
         }
     }
 
-    /** Método para ordenar la lista según el valor de Movimiento de los actores */
-    public void sort() {
-
+    /** Método para el roundType.positioning */
+    private void positioningRound() {
+        foreach (Turnable attender in _attenders) {
+            if (attender is ManualActor) {
+                Debug.Log("ACTOR MANUAL PERRO");
+                // TODO: Implementar la lógica de la ronda de posicionamiento
+            }
+        }
     }
 
-    /** Método para indicar si estoy en la ronda de posicionamiento */
-    public bool isPositioningRound() {
-        return _roundType.Equals(rounds.positioningRound);
+    /** Método para el roundType.combat */
+    private void combatRounds() {
+        if (current is StaticActor) {
+            nextTurn(true);
+            return;
+        }
+
+        switch (current.state) {
+            case turnState.thinking:
+                if (!current.isTurnDone()) {
+                    current.thinking();
+                }
+                break;
+            case turnState.acting:
+                current.act();
+                break;
+            case turnState.moving:
+                current.move();
+                break;
+            case turnState.completed:
+                nextTurn();
+                break;
+        }
     }
 
-    /** Método para indicar si estoy en ronda de combate */
-    public bool isCombatRound() {
-        return _roundType.Equals(rounds.combatRound);
+    /** Subscribe to manager */
+    public void subscribe(Turnable element) {
+        if (!_attenders.Contains(element))
+            _attenders.Add(element);
+
+        onModifyAttenders?.Invoke();
+    }
+
+    /** UnSubscribe to manager */
+    public void unsubscribe(Turnable element) {
+        if (_attenders.Contains(element))
+            _attenders.Remove(element);
+
+        onModifyAttenders?.Invoke();
+    }
+
+    /** Check if contains */
+    public bool contains(Turnable element) {
+        return _attenders.Contains(element);
+    }
+
+    /** Método que ordena la lista tomando _current como inicio */
+    public List<Turnable> sortedByIndex() {
+        List<Turnable> sorted = new List<Turnable>();
+        for (int i = _current; sorted.Count != _attenders.Count; i++) {
+            i %= _attenders.Count;
+            sorted.Add(_attenders[i]);
+        }
+        return sorted;
+    }
+
+    public roundType getRoundType() {
+        return _roundType;
+    }
+
+    /** método para indicar si esta en una ronda concreta */
+    public bool isRoundType(roundType type) {
+        return _roundType.Equals(type);
+    }
+
+    /** Método para compeltar la ronda */
+    public void completeRound() {
+        completeRoundType(_roundType);
     }
 
     /** Método para indicar que ya hemos hecho el posicionamiento */
-    public void positioningDone() {
-        if (!_roundType.Equals(rounds.positioningRound))
+    public void completeRoundType(roundType type) {
+        if (!isRoundType(type))
             return;
 
-        _roundType = rounds.combatRound;
-        onStartRounds?.Invoke();
-        StartTurn();
-    }
-
-    /** Método para iniciar el turno */
-    private void StartTurn() {
-        _turnProgress = progress.doing;
-        _actors[_current].BeginTurn();
-        onStartTurn?.Invoke();
-    }
-
-    /** Método para indicara que ya hemos leído el objetivo y pasamos al posicionamiento */
-    public void ObjetiveRead() {
-        if (!_roundType.Equals(rounds.waitingRound))
-            return;
-
-        _roundType = rounds.positioningRound;
+        switch (type) {
+            case roundType.thinking:
+                startManager();
+                break;
+            case roundType.positioning:
+                _roundType = roundType.combat;
+                onEndRound?.Invoke(_roundType);
+                break;
+            case roundType.combat:
+                // TODO // Check IA de victorya/derrota
+                break;
+            case roundType.completed:
+                break;
+        }
     }
 
     /** Método para indicar que se acabo el combate dentro del stage */
-    public void stageEnds() {
-        _roundType = rounds.endRound;
-        onEndRounds?.Invoke();
+    public void endManager() {
+        _roundType = roundType.completed;
+        onEndSystem?.Invoke();
     }
 
     /** Método para iniciar el sistema desde fuera */
     public void startManager() {
-        _roundType = rounds.waitingRound;
+        _roundType = roundType.positioning;
+        onStartSystem?.Invoke();
     }
 
     /** Control para el siguiente turno, añade delays y hace callbacks, plus control */
-    private IEnumerator NextTurn() {
-        // Fin de turno
-        _turnProgress = progress.done;
-        onEndTurn?.Invoke();
+    private void nextTurn(bool skip = false) {
+        StartCoroutine(changeTurn(_roundType, skip));
+    }
 
-        // Cambio de turno
-        yield return new WaitForSeconds(_endTurnDelay);
-        _turnProgress = progress.ready;
+    /** Método para cambiar el turno del actor, añade delay al asunto */
+    private IEnumerator changeTurn(roundType type, bool skip) {
+        endTurn();
+        _roundType = roundType.thinking;
+        if (!skip) {
+            yield return new WaitForSeconds(_endTurnDelaySecs);
+        }
         _current++;
-        if (_current >= _actors.Count) {
-            onNewRound?.Invoke();
+        if (_current >= _attenders.Count) {
+            onNewRound?.Invoke(_roundType);
             _current = 0;
             _rounds++;
         }
+        if (!skip) {
+            yield return new WaitForSeconds(_startTurnDelaySecs);
+        }
+        _roundType = type;
+        startTurn();
+    }
 
-        // Entrando al turno
-        yield return new WaitForSeconds(_startTurnDelay);
-        StartTurn();
+    /** Método para acbar el turno */
+    private void endTurn() {
+        current.endTurn();
+        onEndTurn?.Invoke();
+    }
+
+    /** Método para iniciar el turno */
+    private void startTurn() {
+        current.beginTurn();
+        onStartTurn?.Invoke();
     }
 
 }

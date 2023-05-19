@@ -23,7 +23,4 @@ public struct StageData {
     [Header("Objetive:")]
     public stageObjetive objetive;
 
-    [Header("Enemies:")]
-    public EnemyPositionPair[] enemies;
-
 }

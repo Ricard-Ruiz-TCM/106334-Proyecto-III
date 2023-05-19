@@ -13,13 +13,13 @@ public class CurrentTurnInfoUI : MonoBehaviour
 
     [SerializeField]
     private Transform _longStatusContainer;
-
-    public void UpdatePanel(Actor actor) {
+    /*
+    public void UpdatePanel(Turnable actor) {
         _health.UpdateText(actor.GetHealth());
         _defense.UpdateText(actor.Defense());
 
         ClearLongStatus();
-        foreach (StatusItem si in actor.Status.ActiveStatus) {
+        foreach (BuffItem si in actor.Status.ActiveStatus) {
             GameObject.Instantiate(_longStatusUIpfb, _longStatusContainer).GetComponent<LongStatusPanelUI>().UpdateStatus(si);
         }
 
@@ -30,5 +30,5 @@ public class CurrentTurnInfoUI : MonoBehaviour
             GameObject.Destroy(child.gameObject);
         }
     }
-
+    */
 }

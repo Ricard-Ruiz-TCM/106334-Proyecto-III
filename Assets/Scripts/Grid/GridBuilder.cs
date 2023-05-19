@@ -202,13 +202,8 @@ public class GridBuilder : MonoBehaviour {
     public void hideNode(int x, int y) {
         getGridPlane(x, y).setLayer(_invisibleLayer);
     }
-    public void DisplaySkillRange(int range, Actor actor)
+    public void displaySkillRange(int range, Node node,pathMaterial mat = pathMaterial.skill)
     {
-        Node node = null;
-        //List<Node> nodes = new List<Node>();
-
-
-        node = Stage.StageBuilder.GetGridPlane(Mathf.RoundToInt(actor.transform.position.x / 10), Mathf.RoundToInt(actor.transform.position.z / 10)).node;
 
         int count = 1;
         int totalCount = 1;
@@ -216,18 +211,28 @@ public class GridBuilder : MonoBehaviour {
         {
             for (int j = node.y; j < count + node.y; j++)
             {
-                if (CheckIfInGrid(i, j))
+                if (Stage.Grid.insideGrid(i, j))
                 {
-                    UpdateMaterial(i, j, _rangeMath);
+                    getGridPlane(i, j).setMaterial(_materials[(int)mat]);
                 }
             }
             for (int z = node.y - 1; z > node.y - count; z--)
             {
-                if (CheckIfInGrid(i, z))
+                if (Stage.Grid.insideGrid(i, z))
                 {
-                    UpdateMaterial(i, z, _rangeMath);
+                    getGridPlane(i, z).setMaterial(_materials[(int)mat]);
                 }
             }
+
+            if (totalCount > range)
+            {
+                count--;
+            }
+            else
+            {
+                count++;
+            }
+            totalCount++;
         }
     }
 

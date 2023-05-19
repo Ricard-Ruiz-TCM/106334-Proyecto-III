@@ -281,7 +281,7 @@ Transform:
   m_GameObject: {fileID: 3826263984375952515}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.95611256, y: 0.95611256, z: 0.95611256}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1506859934016934011}
@@ -366,6 +366,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e433652fdba7c464e83cf71827e1a11e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  node:
+    x: 0
+    y: 0
+    g: 0
+    h: 0
+    type: 0
   grid2D: {fileID: 0}
   pathGameObject: {fileID: 5808738633474350865}
 --- !u!1 &5808738633474350865

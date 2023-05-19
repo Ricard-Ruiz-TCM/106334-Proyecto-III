@@ -109,6 +109,9 @@ public class TurnManager : MonoBehaviour {
         if (_attenders.Contains(element))
             _attenders.Remove(element);
 
+        // Eliminar los elementos null de la lista
+        _attenders.RemoveAll(item => item == null);
+
         onModifyAttenders?.Invoke();
     }
 

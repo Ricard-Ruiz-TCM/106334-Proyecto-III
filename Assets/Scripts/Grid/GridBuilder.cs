@@ -11,9 +11,9 @@ public class GridBuilder : MonoBehaviour {
     [SerializeField, Header("Plane Prefab for Grid:")]
     private GameObject _planePfb;
     [SerializeField, Tooltip("gpl = GridPanelSize => Lo que mide el mesh del panel, pues scale 1 => 10")]
-    private float _planeSize = 10f;
+    private float _planeSize;
     [SerializeField]
-    private float _offset = 5f;
+    private float _offset;
 
     [SerializeField, Header("Terrain Layer:")]
     private LayerMask _layer;
@@ -40,7 +40,7 @@ public class GridBuilder : MonoBehaviour {
         for (int x = 0; x < _grid.rows; x++) {
             for (int y = 0; y < _grid.columns; y++) {
                 // Posición donde será isntanciado
-                Vector3 position = new Vector3(x * _planeSize * _planePfb.transform.localScale.x + _offset, 50f, y * _planeSize * _planePfb.transform.localScale.y + _offset);
+                Vector3 position = new Vector3(x * _planeSize * _planePfb.transform.localScale.x + _offset, _offset, y * _planeSize * _planePfb.transform.localScale.y + _offset);
                 // Instant del prefab
                 GridPlane obj = GameObject.Instantiate(_planePfb, position, Quaternion.identity, transform).GetComponent<GridPlane>();
                 obj.gameObject.name = "M[" + x + "," + y + "]-" + "W:" + _grid.getNode(x, y).walkable;
@@ -87,7 +87,7 @@ public class GridBuilder : MonoBehaviour {
         return _planeMap[x, y];
     }
     public GridPlane getGridPlane(Vector3 worldPos) {
-        return getGridPlane(Mathf.RoundToInt((worldPos.x - _offset) / _planeSize), Mathf.RoundToInt((worldPos.z - _offset) / _planeSize));
+        return getGridPlane(Mathf.RoundToInt(worldPos.x - _offset), Mathf.RoundToInt(worldPos.z - _offset));
     }
     public GridPlane getMouseGridPlane() {
         RaycastHit raycastHit;

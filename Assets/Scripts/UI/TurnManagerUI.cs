@@ -13,8 +13,8 @@ class TurnManagerUI : MonoBehaviour {
 
     // Unity Start
     void Start() {
-        TurnManager.instance.onModifyAttenders += UpdateTurnList;
         TurnManager.instance.onStartTurn += UpdateTurnList;
+        TurnManager.instance.onModifyAttenders += UpdateTurnList;
     }
 
     /** Añade los elementos a los turnos */

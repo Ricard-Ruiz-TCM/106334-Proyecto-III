@@ -15,8 +15,6 @@ class TurnableUI : MonoBehaviour {
         if (_slider != null) {
         }
             //_slider.value = ((float)turnable.GetHealth() / (float)turnable.MaxHealth());
-
-
     }
 
 }

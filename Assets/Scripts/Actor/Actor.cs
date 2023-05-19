@@ -224,4 +224,9 @@ public abstract class Actor : BasicActor {
         GameObject.Destroy(gameObject);
     }
 
+    // Unity OnDestroy
+    void OnDestroy() {
+        TurnManager.instance.unsubscribe(this);    
+    }
+
 }

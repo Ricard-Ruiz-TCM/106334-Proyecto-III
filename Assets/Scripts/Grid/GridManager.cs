@@ -1,73 +1,56 @@
+using System;
 using UnityEngine;
 
 public class GridManager : MonoBehaviour {
 
-    public Actor FindNearestPlayer(Transform me)
-    {
+    [SerializeField, Header("TAGS:")]
+    private string _enemyTag = "Enemy";
+    [SerializeField]
+    private string _playerTag = "Player";
 
-        Actor actor = null;
-        float dist = Mathf.Infinity;
+    /** Método para buscar al player más cercano */
+    public Actor findPlayer(Transform origin) {
+        return (Actor)findSomeOne(origin, _playerTag);
+    }
 
-        foreach (Actor obj in CombatManager.instance.FindPlayers())
-        {
-            float distance = Vector3.Distance(obj.transform.position, me.position);
-            if (distance < dist)
-            {
-                if (!obj.Status.isStatusActive(buffsID.Invisible))
-                {
-                    actor = obj;
-                    dist = distance;
-                }
+    /** Método para buscar al enemy más cercano */
+    public Turnable findEnemy(Transform origin) {
+        return (Actor)findSomeOne(origin, _enemyTag);
+    }
+
+    /** Método para buscar a alguien, interno */
+    private Turnable findSomeOne(Transform origin, string tag) {
+        Turnable nearest = null;
+        float tmp = float.MaxValue;
+        foreach (Turnable actor in TurnManager.instance.attenders) {
+            // Check es player
+            if (!actor.CompareTag(tag))
+                continue;
+            // Find cercano
+            float dis = Vector3.Distance(origin.position, actor.transform.position);
+            if (dis < tmp) {
+                tmp = dis;
+                nearest = actor;
             }
         }
-
-        return actor;
+        return nearest;
     }
-    public Actor FindNearestEnemy(Transform me)
-    {
 
-        Actor actor = null;
-        float dist = Mathf.Infinity;
-
-        foreach (Actor obj in CombatManager.instance.FindEnemys())
-        {
-            float distance = Vector3.Distance(obj.transform.position, me.position);
-            if (distance < dist)
-            {
-                if (!obj.Status.isStatusActive(buffsID.Invisible))
-                {
-                    actor = obj;
-                    dist = distance;
-                }
+    /** Método que busca y recupera un actor según su nodo */
+    public BasicActor getActor(Node node) {
+        foreach (Turnable actor in TurnManager.instance.attenders) {
+            if (Stage.StageBuilder.getGridNode(actor.transform.position) == node) {
+                return (BasicActor)actor;
             }
         }
-
-        return actor;
+        return null;
     }
 
-
-    public bool InRange(Transform me, Actor target, int range) {
-        GridPlane targetPlane = Stage.StageBuilder.GetGridPlane(target.transform.position);
-        GridPlane myPlane = Stage.StageBuilder.GetGridPlane(me.position);
-        return (Stage.StageBuilder.GetGridDistanceBetween(myPlane, targetPlane) <= range || range == 0);
-    }
-
-    public Vector3 RandomInnitialPosition() {
-        Vector3 pos = Vector3.zero;
-        do {
-            for (int x = 0; x < Stage.StageGrid.Columns; x++) {
-                for (int y = 0; y < Stage.StageGrid.Rows; y++) {
-                    if (Stage.StageGrid.isType(x, y, Array2DEditor.nodeType.P)) {
-                        return Stage.StageBuilder.GetGridPlane(x, y).transform.position;
-                    }
-                }
-            }
-        } while (pos == Vector3.zero);
-        return pos;
-    }
-
-    public Vector3 RandomPosition() {
-        return Stage.StageBuilder.GetGridPlane(Random.Range(0, Stage.StageGrid.Columns - 1), Random.Range(0, Stage.StageGrid.Rows - 1)).position;
+    /** Método que checkea si dos turnables están en rango, de casillas */
+    public bool inRange(Turnable origin, Turnable target, int range) {
+        GridPlane targetPlane = Stage.StageBuilder.getGridPlane(target.transform.position);
+        GridPlane myPlane = Stage.StageBuilder.getGridPlane(origin.transform.position);
+        return (Stage.StageBuilder.getDistance(myPlane, targetPlane) <= range || range == 0);
     }
 
 }

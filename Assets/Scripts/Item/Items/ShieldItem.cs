@@ -4,7 +4,7 @@
 public class ShieldItem : Item {
 
     [Header("Shield Stats:")]
-    public int defense;
+    public int[] defense;
     public int movement;
 
     public Skill skill;

@@ -14,9 +14,13 @@ public class Skill : ScriptableObject {
     public skillID ID;
     public int cooldown;
 
-    public virtual void Action(Actor from) {
-        CombatManager.instance.UseSkill(from, ID, from.canInteract);
-        from.EndAction();
+    public bool personal;
+
+    public int areaRange;
+
+    public virtual void action(BasicActor from, BasicActor to) {
+        to.takeDamage(from.totalDamage());
+        from.endAction();
     }
 
 }

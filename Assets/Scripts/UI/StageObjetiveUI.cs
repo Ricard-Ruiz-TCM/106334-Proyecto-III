@@ -14,7 +14,7 @@ public class StageObjetiveUI : MonoBehaviour {
     }
 
     public void BTN_Read() {
-        TurnManager.instance.ObjetiveRead();
+        TurnManager.instance.completeRoundType(roundType.thinking);
         gameObject.SetActive(false);
     }
 

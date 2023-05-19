@@ -3,13 +3,20 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Disarmed", menuName = "Combat/Buffs/Disarmed")]
 public class Disarmed : Buff {
 
-    public override void onApply(Actor me) {
+    public override void onApply(BasicActor me) {
         Debug.Log("TODO: Apply Disarmed Feedback + extras.");
     }
 
-    public override void endTurnEffect(Actor me) {
+    public override void onRemove(BasicActor me) {
+        Debug.Log("TODO: Remove Disarmed Feedback");
     }
 
-    public override void startTurnEffect(Actor me) {
+    public override void startTurnEffect(BasicActor me) {
+        Debug.Log("TODO: Start Turn Disarmed Feedback");
     }
+
+    public override void endTurnEffect(BasicActor me) {
+        Debug.Log("TODO: End Turn Disarmed Feedback");
+    }
+
 }

@@ -10,4 +10,18 @@ public class ModPerk : Perk {
     [Header("How affect:")]
     public modOperation operation;
 
+    public int apply(int inputValue) {
+        switch (operation) {
+            case modOperation.add:
+                return (inputValue + value);
+            case modOperation.sub:
+                return (inputValue - value);
+            case modOperation.mult:
+                return (inputValue * value);
+            case modOperation.div:
+                return (inputValue * value);
+        }
+        return inputValue;
+    }
+
 }

@@ -202,7 +202,7 @@ public class GridBuilder : MonoBehaviour {
     public void hideNode(int x, int y) {
         getGridPlane(x, y).setLayer(_invisibleLayer);
     }
-    public void DisplaySkillRange(int range,Actor actor)
+    public void DisplaySkillRange(int range, Actor actor)
     {
         Node node = null;
         //List<Node> nodes = new List<Node>();
@@ -216,10 +216,10 @@ public class GridBuilder : MonoBehaviour {
         {
             for (int j = node.y; j < count + node.y; j++)
             {
-                if (CheckIfInGrid(i,j))
+                if (CheckIfInGrid(i, j))
                 {
                     UpdateMaterial(i, j, _rangeMath);
-                }             
+                }
             }
             for (int z = node.y - 1; z > node.y - count; z--)
             {
@@ -228,6 +228,8 @@ public class GridBuilder : MonoBehaviour {
                     UpdateMaterial(i, z, _rangeMath);
                 }
             }
+        }
+    }
 
     /** Método para limpiar el grid y hacerlo invisible */
     public void clearGrid() {

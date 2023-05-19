@@ -9,13 +9,7 @@ public abstract class ModBuff : Buff {
     [Header("How affect:")]
     public modOperation operation;
 
-    public override void startTurnEffect(BasicActor me) {
-    }
-
-    public override void endTurnEffect(BasicActor me) {
-    }
-
-    public int apply(int inputValue) {
+    public int applyMod(int inputValue) {
         switch (operation) {
             case modOperation.add:
                 return (inputValue + value);

@@ -60,7 +60,7 @@ public enum modOperation {
 }
 
 // Tipo de IA de enemigos
-public enum enemyCombatStyle {
+public enum combatAI {
     ranged, melee, flee
 }
 

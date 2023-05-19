@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028334, g: 0.2257134, b: 0.30692226, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1276,7 +1276,6 @@ MonoBehaviour:
     exit: 0
     entrance: 0
     objetive: 0
-    enemies: []
 --- !u!1 &397742270
 GameObject:
   m_ObjectHideFlags: 0
@@ -2854,7 +2853,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 751264107}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 753524717}
+        m_TargetAssemblyTypeName: PlayerUI, Assembly-CSharp
+        m_MethodName: BTN_EndTurn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &751264107
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10392,8 +10403,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _stagePath: Prefabs/Stage/
   _stageName: Stage
-  _playerPrfb: {fileID: 4500662891433251454, guid: 922bc215d6e89984482066dc76248f6f,
-    type: 3}
 --- !u!1 &1999509573
 GameObject:
   m_ObjectHideFlags: 0
@@ -10891,14 +10900,14 @@ GameObject:
   - component: {fileID: 2118448799}
   - component: {fileID: 2118448802}
   - component: {fileID: 2118448801}
+  - component: {fileID: 2118448803}
   - component: {fileID: 2118448807}
   - component: {fileID: 2118448806}
   - component: {fileID: 2118448805}
   - component: {fileID: 2118448804}
-  - component: {fileID: 2118448803}
   m_Layer: 0
   m_Name: AutomaticActor
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10977,13 +10986,15 @@ MonoBehaviour:
   state: 0
   acting: 0
   moving: 0
-  _alive: 0
+  _alive: 1
   _health: 0
-  _maxHealth: 0
-  _maxSteps: 0
+  _maxHealth: 25
+  _maxSteps: 2
   _route: []
   _baseDamage: 0
   _baseDefense: 0
+  _combatAI: 2
+  _fleeThreshold: 20
 --- !u!114 &2118448804
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10996,7 +11007,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77fbec90f92da0e468929004fe5093fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skills: []
+  skills:
+  - skill: {fileID: 11400000, guid: 234758a2c003b0242a05312c2c0838a8, type: 2}
+    cooldown: 0
+  - skill: {fileID: 11400000, guid: f5ebd8c058045db40b49609812e8a509, type: 2}
+    cooldown: 0
+  - skill: {fileID: 11400000, guid: 615e6da6eae19d946b0de64d48869b91, type: 2}
+    cooldown: 0
 --- !u!114 &2118448805
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11036,14 +11053,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _armor:
-    armor: {fileID: 0}
+    armor: {fileID: 11400000, guid: d89531ab99de4df47a81aff5e10e1430, type: 2}
     upgrade: 0
   _weapon:
-    weapon: {fileID: 0}
+    weapon: {fileID: 11400000, guid: 1a5f1b970c05cac4294dccb3a29b76ac, type: 2}
     upgrade: 0
   _shield:
-    shield: {fileID: 0}
-    upgrade: 0
+    shield: {fileID: 11400000, guid: a5e19b5569345be46a5b4f5917b26ec1, type: 2}
+    upgrade: 1
 --- !u!1 &2138672684
 GameObject:
   m_ObjectHideFlags: 0
@@ -12163,6 +12180,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d1bdf164f7ed4748ad871f81c44a3c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enemyTag: Enemy
+  _playerTag: Player
 --- !u!1 &2901974218807650769
 GameObject:
   m_ObjectHideFlags: 0
@@ -12469,12 +12488,15 @@ MonoBehaviour:
   _planePfb: {fileID: 3826263984375952515, guid: 294161b8a70fd124ab6abf3533fe3203,
     type: 3}
   _planeSize: 10
+  _offset: 5
   _layer:
     serializedVersion: 2
     m_Bits: 64
   _pathMath: {fileID: 2100000, guid: 42577e5e43eb3be4280f05908d834b34, type: 2}
   _badPathMat: {fileID: 2100000, guid: de6dcac0d1f709746b71b4a967aec6f0, type: 2}
   _rangeMath: {fileID: 2100000, guid: a1503898bbdd4504f8f0188fa962e25e, type: 2}
+  _visibleLayer: VisibleGrid
+  _invisibleLayer: InvisibleGrid
 --- !u!114 &3384231810004681042
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12610,8 +12632,6 @@ MonoBehaviour:
     exit: 0
     entrance: 0
     objetive: 0
-    enemies: []
-  _placeDelay: 2
 --- !u!1 &3384231810829825825
 GameObject:
   m_ObjectHideFlags: 0
@@ -12889,7 +12909,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4500662890051555674}
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 5, y: 0, z: 5}
+  m_LocalPosition: {x: 32.4, y: 0, z: 60.9}
   m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -13335,7 +13355,7 @@ MonoBehaviour:
   maxPosZ: 100
   minFOV: 10
   maxFOV: 60
-  target: {fileID: 3836576092680752096}
+  target: {fileID: 0}
 --- !u!1 &4500662890051555674
 GameObject:
   m_ObjectHideFlags: 0
@@ -13347,14 +13367,14 @@ GameObject:
   - component: {fileID: 3836576092680752096}
   - component: {fileID: 4500662890051555676}
   - component: {fileID: 969071587346320749}
+  - component: {fileID: 4500662890051555680}
   - component: {fileID: 4500662890051555681}
   - component: {fileID: 4500662890051555679}
   - component: {fileID: 4500662890051555678}
   - component: {fileID: 4500662890051555677}
-  - component: {fileID: 4500662890051555680}
   m_Layer: 0
   m_Name: ManualActor
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13435,10 +13455,10 @@ MonoBehaviour:
   state: 0
   acting: 0
   moving: 0
-  _alive: 0
+  _alive: 1
   _health: 0
-  _maxHealth: 0
-  _maxSteps: 0
+  _maxHealth: 20
+  _maxSteps: 5
   _route: []
   _baseDamage: 0
   _baseDefense: 0
@@ -13455,14 +13475,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _armor:
-    armor: {fileID: 0}
-    upgrade: 0
+    armor: {fileID: 11400000, guid: d89531ab99de4df47a81aff5e10e1430, type: 2}
+    upgrade: 1
   _weapon:
-    weapon: {fileID: 0}
-    upgrade: 0
+    weapon: {fileID: 11400000, guid: 166a475cd6f81744a82dab3d373c4626, type: 2}
+    upgrade: 2
   _shield:
-    shield: {fileID: 0}
-    upgrade: 0
+    shield: {fileID: 11400000, guid: a5e19b5569345be46a5b4f5917b26ec1, type: 2}
+    upgrade: 1
 --- !u!1 &4545620463980712626
 GameObject:
   m_ObjectHideFlags: 0

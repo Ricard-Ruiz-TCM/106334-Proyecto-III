@@ -5,12 +5,26 @@ public class BuffManager : MonoBehaviour {
 
     public List<BuffItem> activeBuffs;
 
-    public void updateBuffs() {
-        foreach (BuffItem bi in activeBuffs) {
-            bi.duration--;
-            if (bi.duration <= 0) {
-                removeBuff(bi.buff.ID);
+    public void updateBuffs(BasicActor actor) {
+        for (int i = 0; i < activeBuffs.Count; i++) {
+            activeBuffs[i].duration--;
+            if (activeBuffs[i].duration <= 0) {
+                activeBuffs[i].buff.onRemove(actor);
+                removeBuff(activeBuffs[i].buff.ID);
+                i--;
             }
+        }
+    }
+
+    public void applyStartTurnEffect(BasicActor actor) {
+        foreach(BuffItem bi in activeBuffs) {
+            bi.buff.startTurnEffect(actor);
+        }
+    }
+
+    public void applyEndTurnEffect(BasicActor actor) {
+        foreach (BuffItem bi in activeBuffs) {
+            bi.buff.endTurnEffect(actor);
         }
     }
 
@@ -22,10 +36,12 @@ public class BuffManager : MonoBehaviour {
         }
     }
 
-    public void applyBuff(Actor actor, buffsID id) {
-        if (findBuff(id) != -1) {
-            activeBuffs.Add(new BuffItem(uCore.GameManager.GetBuff(id)));
-            activeBuffs[activeBuffs.Count - 1].buff.onApply(actor);
+    public void applyBuffs(Actor actor, params buffsID[] ids) {
+        foreach (buffsID id in ids) {
+            if (findBuff(id) == -1) {
+                activeBuffs.Add(new BuffItem(uCore.GameManager.GetBuff(id)));
+                activeBuffs[activeBuffs.Count - 1].buff.onApply(actor);
+            }
         }
     }
 

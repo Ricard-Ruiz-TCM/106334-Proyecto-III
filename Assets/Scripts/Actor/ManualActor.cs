@@ -1,16 +1,18 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 
 public class ManualActor : Actor {
 
     /** Override del onTurn */
-    public override void onTurn() {
+    public override void thinking() {
 
         if (uCore.Action.GetKeyDown(KeyCode.M)) {
-            setDestination(Stage.Pathfinder.FindPath(Stage.StageBuilder.GetGridPlane(transform.position).node, Stage.StageBuilder.GetMouseGridPlane().node));
+            setDestination(Stage.Pathfinder.FindPath(Stage.StageBuilder.getGridNode(transform.position), Stage.StageBuilder.getMouseGridPlane().node));
+            startMove();
         }
 
         if (uCore.Action.GetKeyDown(KeyCode.J)) {
-            allowAct();
+            startAct();
         }
 
     }
@@ -45,7 +47,4 @@ public class ManualActor : Actor {
         base.move();
     }
 
-    public override void onActorDeath() {
-
-    }
 }

@@ -1,14 +1,40 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections.Generic;
 
 public class SkillManager : MonoBehaviour {
+
+    public static event Action<skillID> onSkillUsed;
 
     public List<SkillItem> skills;
 
     public void updateCooldown() {
         foreach (SkillItem si in skills) {
-            si.cooldown = Mathf.Clamp(si.cooldown--, 0, si.skill.cooldown);
+            si.cooldown = Mathf.Clamp(si.cooldown - 1, -1, si.skill.cooldown);
         }
+    }
+
+    public Skill getSkill(skillID id) {
+        int pos = findSkill(id);
+
+        if (pos != -1) {
+            return skills[pos].skill;
+        }
+
+        return null;
+    }
+
+    public void useSkill(skillID id, Actor from, Actor to = null) {
+        int pos = findSkill(id);
+        if (pos == -1)
+            return;
+
+        if (skills[pos].cooldown < 0) {
+            skills[pos].cooldown = skills[pos].skill.cooldown;
+            skills[pos].skill.action(from, to);
+            onSkillUsed?.Invoke(skills[pos].skill.ID);
+        }
+
     }
 
     public void removeSkill(skillID id) {
@@ -20,7 +46,7 @@ public class SkillManager : MonoBehaviour {
     }
 
     public void addSkill(skillID id) {
-        if (findSkill(id) != -1) {
+        if (findSkill(id) == -1) {
             skills.Add(new SkillItem(uCore.GameManager.GetSkill(id)));
         }
     }

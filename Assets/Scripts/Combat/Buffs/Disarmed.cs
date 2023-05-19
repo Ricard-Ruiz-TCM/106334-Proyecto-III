@@ -7,9 +7,16 @@ public class Disarmed : Buff {
         Debug.Log("TODO: Apply Disarmed Feedback + extras.");
     }
 
-    public override void endTurnEffect(BasicActor me) {
+    public override void onRemove(BasicActor me) {
+        Debug.Log("TODO: Remove Disarmed Feedback");
     }
 
     public override void startTurnEffect(BasicActor me) {
+        Debug.Log("TODO: Start Turn Disarmed Feedback");
     }
+
+    public override void endTurnEffect(BasicActor me) {
+        Debug.Log("TODO: End Turn Disarmed Feedback");
+    }
+
 }

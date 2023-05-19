@@ -19,15 +19,6 @@ public class CombatManager : ActorsListController {
         }
     }
 
-    public List<Turnable> FindPlayers() {
-        //return _actors.FindAll(x => x is Player);
-        return null;
-    }
-    public List<Turnable> FindEnemys() {
-        //return _actors.FindAll(x => x is Enemy);
-        return null;
-    }
-
     //metodos para hacer las skills
     //los que no estan aqui se hacen desde su scriptableObject, eso es porque la skill se hace sin tener que seleccionar ninguna casilla
 
@@ -200,7 +191,7 @@ public class CombatManager : ActorsListController {
         if (canInteract) {
             while (!canEnd) {
 
-                Stage.StageBuilder.ClearGrid();
+                Stage.StageBuilder.clearGrid();
 
                 GetPosToAttack(actor, range, out node, node);
 
@@ -246,7 +237,7 @@ public class CombatManager : ActorsListController {
         //List<Node> nodes = new List<Node>();
 
 
-        node = Stage.StageBuilder.GetGridPlane(Mathf.RoundToInt(actor.transform.position.x / 10), Mathf.RoundToInt(actor.transform.position.z / 10)).node;
+        node = Stage.StageBuilder.getGridPlane(Mathf.RoundToInt(actor.transform.position.x / 10), Mathf.RoundToInt(actor.transform.position.z / 10)).node;
 
         int count = 1;
         int totalCount = 1;
@@ -270,16 +261,16 @@ public class CombatManager : ActorsListController {
     }
     IEnumerator EndAttack(Turnable actor) {
         yield return new WaitForSeconds(1f);
-        Stage.StageBuilder.ClearGrid();
+        Stage.StageBuilder.clearGrid();
         //actor.canMove = true;
     }
 
     //metodo para los ataques que tienen da�o en area (comprueba si esta dentro de la grid - cambia el material - y si hay un enemigo hace efecto)
     private void ExtendAttack(int i, int j, Turnable actor, bool canEnd, skillID skillType) {
         if (ChechIfPositionIsInGrid(i, j)) {
-            Stage.StageBuilder.UpdateMaterial(i, j, shootMat);
+            Stage.StageBuilder.displayNode(i, j, shootMat);
             if (canEnd) {
-                GetActorInNode(Stage.StageBuilder.GetGridPlane(i, j).node, actor, skillType);
+                GetActorInNode(Stage.StageBuilder.getGridPlane(i, j).node, actor, skillType);
             }
 
         }
@@ -334,20 +325,20 @@ public class CombatManager : ActorsListController {
 
     //pasa de cordenadas de mundo a grid
     bool ChechIfPositionIsInGrid(int i, int j) {
-        return (!(i < 0 || j < 0 || i >= Stage.StageBuilder._grid.Rows || j >= Stage.StageBuilder._grid.Columns));
+        return (!(i < 0 || j < 0 || i >= Stage.StageBuilder._grid.rows || j >= Stage.StageBuilder._grid.columns));
     }
     void GetPosToAttack(Turnable actor, int range, out Node node, Node lastNode) {
         node = lastNode;
-        if (Stage.StageBuilder.MosueOverGrid()) {
+        if (Stage.StageBuilder.isMouseOverGrid()) {
 
-            GridPlane target = Stage.StageBuilder.GetMouseGridPlane();
-            GridPlane origin = Stage.StageBuilder.GetGridPlane(actor.transform.position);
+            GridPlane target = Stage.StageBuilder.getMouseGridPlane();
+            GridPlane origin = Stage.StageBuilder.getGridPlane(actor.transform.position);
 
-            if (Stage.StageBuilder.GetGridDistanceBetween(target, origin) <= range) {
+            if (Stage.StageBuilder.getDistance(target, origin) <= range) {
                 node = target.node;
             }
             if (node != null) {
-                Stage.StageBuilder.UpdateMaterial(node.x, node.y, shootMat);
+                Stage.StageBuilder.displayNode(node.x, node.y, shootMat);
             }
 
             //actor.GridM().CalcRoute(actor.transform.position, Stage.StageBuilder.GetMouseGridPlane(), range);
@@ -357,9 +348,9 @@ public class CombatManager : ActorsListController {
     }
     void GetPosToEnemyAttack(Turnable actor, out Node node) {
         //Actor player = FindNearestPlayer(actor);
-        Turnable player = Stage.StageManager.FindNearestPlayer(actor.transform);
-        node = Stage.StageBuilder.GetGridPlane(Mathf.RoundToInt(player.transform.position.x / 10), Mathf.RoundToInt(player.transform.position.z / 10)).node;
-        Stage.StageBuilder.GetGridPlane(node.x, node.y).SetMaterial(Stage.StageBuilder._rangeMath);
+        Turnable player = Stage.StageManager.findPlayer(actor.transform);
+        node = Stage.StageBuilder.getGridPlane(Mathf.RoundToInt(player.transform.position.x / 10), Mathf.RoundToInt(player.transform.position.z / 10)).node;
+        Stage.StageBuilder.getGridPlane(node.x, node.y).setMaterial(Stage.StageBuilder._rangeMath);
     }
 
 }

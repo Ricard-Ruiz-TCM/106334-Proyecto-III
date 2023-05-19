@@ -12,7 +12,7 @@ public class StaticActor : BasicActor {
         GameObject.Destroy(gameObject);
     }
 
-    public override void onTurn() {
+    public override void thinking() {
         endTurn();
     }
 

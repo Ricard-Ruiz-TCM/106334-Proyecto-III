@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class PlayerUI : MonoBehaviour {
 
@@ -21,36 +22,29 @@ public class PlayerUI : MonoBehaviour {
     [SerializeField]
     private PlayerTurnInfoUI _playerTurnInfo;
 
-    private Turnable _currentActor;
-    /*
-    // Unity OnEnable
-    void OnEnable() {
+    private Actor _currentTurnable;
+
+    private List<SkillButtonUI> _skillButtons = new List<SkillButtonUI>();
+
+    private void OnEnable() {
+        SkillManager.onSkillUsed += UpdateSingleSkill;
+    }
+
+    private void Start() {
         TurnManager.instance.onStartTurn += UpdateUI;
-        Player.onPlayerstep += UpdateSteps;
     }
 
-    // Unity OnDisable
-    void OnDisable() {
-        TurnManager.instance.onStartTurn -= UpdateUI;
-        Player.onPlayerstep -= UpdateSteps;
-    }
-
-    // Unity Update
-    void Update() {
-        // SetButton
-        _btnEndTurn.onClick.AddListener(() => {
-            Turnable player = TurnManager.instance.Current();
-            if (player is Player) {
-                if (!player.hasTurnEnded) { 
-                    player.EndTurn();
-                }
-            }
-        });
+    public void BTN_EndTurn() {
+        if (_currentTurnable.CompareTag("Player")) {
+            _currentTurnable.endTurn();
+        }
     }
 
     public void UpdateUI() {
-
-        _currentActor = TurnManager.instance.Current();
+        
+        if (!(TurnManager.instance.current is StaticActor)) {
+            _currentTurnable = (Actor)TurnManager.instance.current;
+        }
 
         UpdateHP();
         UpdateSkills();
@@ -60,39 +54,47 @@ public class PlayerUI : MonoBehaviour {
     }
 
     private void UpdateDefense() {
-        if (_currentActor is Player) {
-            _defense.UpdateText(_currentActor.Defense());
+        if (_currentTurnable.CompareTag("Player")) {
+            _defense.UpdateText(_currentTurnable.totalDefense());
         }
     }
 
     private void UpdateStats() {
-        if (_currentActor is Player) {
-            _playerTurnInfo.UpdatePanel(_currentActor);
+        if (_currentTurnable.CompareTag("Player")) {
+            _playerTurnInfo.UpdatePanel(_currentTurnable);
         }
     }
 
     private void UpdateSteps() {
-        if (_currentActor is Player) {
-            _steps.UpdateText(_currentActor.Movement());
+        if (_currentTurnable.CompareTag("Player")) {
+            _defense.UpdateText(_currentTurnable.stepsRemain());
         }
     }
 
     private void UpdateHP() {
+        if (_currentTurnable.CompareTag("Player")) {
+            _imgHealth.fillAmount = (_currentTurnable.healthPercent() / 100);
+        }
+    }
 
-        if (_currentActor is Player) {
-            _imgHealth.fillAmount = ((float)_currentActor.GetHealth() / (float)_currentActor.MaxHealth());
+    private void UpdateSingleSkill(skillID iD) {
+        foreach (SkillButtonUI sbui in _skillButtons) {
+            if (sbui.SkItem.skill.ID.Equals(iD)) {
+                sbui.UpdateCooldown();
+            }
         }
     }
 
     private void UpdateSkills() {
-
+        _skillButtons.Clear();
         int i = 1;
-        if (_currentActor is Actor) {
+        if (_currentTurnable is Actor) {
             ClearSkills();
-            foreach (SkillItem skI in _currentActor.GetComponent<ActorSkills>().Skills()) {
+            foreach (SkillItem skI in _currentTurnable.skills.skills) {
                 GameObject btn = GameObject.Instantiate(_skillButtonUI, _panelSkills);
-                btn.GetComponent<SkillButtonUI>().Set(_currentActor, skI, (KeyCode)(((int)KeyCode.Alpha0) + i), i);
-                btn.GetComponent<Button>().interactable = (skI.cooldown <= 0);
+                _skillButtons.Add(btn.GetComponent<SkillButtonUI>());
+                btn.GetComponent<SkillButtonUI>().Set(_currentTurnable, skI, (KeyCode)(((int)KeyCode.Alpha0) + i), i);
+                btn.GetComponent<Button>().interactable = (skI.cooldown < 0);
                 i++;
             }
         } else {
@@ -108,7 +110,7 @@ public class PlayerUI : MonoBehaviour {
             }
         }
 
-        _btnEndTurn.interactable = (_currentActor is Player);
+        _btnEndTurn.interactable = (_currentTurnable.CompareTag("Player"));
 
     }
 
@@ -119,5 +121,4 @@ public class PlayerUI : MonoBehaviour {
     }
 
 
-    */
 }

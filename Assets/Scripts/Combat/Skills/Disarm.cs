@@ -3,10 +3,8 @@
 [CreateAssetMenu(fileName = "Disarm", menuName = "Combat/Skills/Disarm")]
 public class Disarm : Skill {
 
-    public override void Action(BasicActor from) {
-        base.Action(from);
-        Turnable to = null; // TODO // find the target
-        //to.Status.ApplyStatus(buffsID.Disarmed);
+    public override void action(BasicActor from, BasicActor to) {
+        base.action(from, to);
     }
 
 }

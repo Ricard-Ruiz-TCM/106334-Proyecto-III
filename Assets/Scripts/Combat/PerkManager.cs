@@ -14,7 +14,7 @@ public class PerkManager : MonoBehaviour {
     }
 
     public void addSkill(perkID id) {
-        if (findPerk(id) != -1) {
+        if (findPerk(id) == -1) {
             perks.Add(new PerkItem(uCore.GameManager.GetPerk(id)));
         }
     }

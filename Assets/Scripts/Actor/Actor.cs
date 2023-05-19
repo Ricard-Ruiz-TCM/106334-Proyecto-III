@@ -52,12 +52,11 @@ public abstract class Actor : BasicActor {
     /** Set Destination, método para habilitar el movimiento */
     public void setDestination(List<Node> route) {
         setRoute(route);
-        allowMovement();
     }
 
-    /** Override CanMove from Turnable */
-    public override bool canMove() {
-        return (base.canMove() && _route.Count > 0);
+    /** Override Acto from Turnable */
+    public override void act() {
+        endAction();
     }
 
     /** Override Move from Turnable */
@@ -70,12 +69,12 @@ public abstract class Actor : BasicActor {
     /** Método para ir al siguiente nodo */
     private void nextStep() {
         if (_stepsDone < _route.Count) {
-            onStepReached?.Invoke(Stage.StageBuilder.GetGridPlane(_route[_stepsDone]).node);
+            onStepReached?.Invoke(Stage.StageBuilder.getGridPlane(_route[_stepsDone]).node);
             _stepsDone++;
             if (_stepsDone >= _route.Count) {
                 endMovement();
             } else {
-                _agent.SetDestination(Stage.StageBuilder.GetGridPlane(_route[_stepsDone]).position);
+                _agent.SetDestination(Stage.StageBuilder.getGridPlane(_route[_stepsDone]).position);
             }
         } else {
             endMovement();
@@ -92,13 +91,17 @@ public abstract class Actor : BasicActor {
 
     /** Override del beginTurn */
     public override void beginTurn() {
-        _route.Clear();
         _stepsDone = 0;
+        _route.Clear();
+        buffs.applyStartTurnEffect(this);
+        skills.updateCooldown();
         base.beginTurn();
     }
 
     /** Override del endTurn */
     public override void endTurn() {
+        buffs.applyEndTurnEffect(this);
+        buffs.updateBuffs(this);
         base.endTurn();
     }
 
@@ -109,9 +112,13 @@ public abstract class Actor : BasicActor {
 
     /** Buffs, Perks & Skill Managers */
     protected BuffManager _buffs;
+    public BuffManager buffs => _buffs;
     protected PerkManager _perks;
+    public PerkManager perks => _perks;
     protected SkillManager _skills;
+    public SkillManager skills => _skills;
     protected EquipmentManager _equip;
+    public EquipmentManager equip => _equip;
 
     [SerializeField, Header("Damage & Defense (Calculado Runtime):")]
     protected int _baseDamage;
@@ -126,7 +133,7 @@ public abstract class Actor : BasicActor {
         foreach (BuffItem bi in _buffs.activeBuffs) {
             if (bi.buff is ModBuff) {
                 if (((ModBuff)bi.buff).type.Equals(modType.damage)) {
-                    dmg = ((ModBuff)bi.buff).apply(dmg);
+                    dmg = ((ModBuff)bi.buff).applyMod(dmg);
 
                 }
             }
@@ -143,7 +150,7 @@ public abstract class Actor : BasicActor {
         foreach (BuffItem bi in _buffs.activeBuffs) {
             if (bi.buff is ModBuff) {
                 if (((ModBuff)bi.buff).type.Equals(modType.defense)) {
-                    defense = ((ModBuff)bi.buff).apply(defense);
+                    defense = ((ModBuff)bi.buff).applyMod(defense);
 
                 }
             }
@@ -211,6 +218,11 @@ public abstract class Actor : BasicActor {
                 }
             }
         }
+    }
+
+    /** Override del onActorDeath */
+    public override void onActorDeath() {
+        GameObject.Destroy(gameObject);
     }
 
 }

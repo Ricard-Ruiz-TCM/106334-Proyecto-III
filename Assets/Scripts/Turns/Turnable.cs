@@ -9,7 +9,7 @@ public abstract class Turnable : MonoBehaviour {
 
     /** Métodos de control del turno **/
     public turnState state;
-    public abstract void onTurn();
+    public abstract void thinking();
     public virtual void endTurn() {
         moving = progress.done;
         acting = progress.done;
@@ -32,13 +32,10 @@ public abstract class Turnable : MonoBehaviour {
     public progress acting;
     public abstract void act();
     public virtual bool canAct() {
-        return !isActingDone();
-    }
-    public virtual void allowAct() {
-        if (canAct())
-            state = turnState.acting;
+        return acting.Equals(progress.ready);
     }
     public virtual void startAct() {
+        state = turnState.acting;
         acting = progress.doing;
     }
     public virtual void endAction() {
@@ -54,13 +51,10 @@ public abstract class Turnable : MonoBehaviour {
     public progress moving;
     public abstract void move();
     public virtual bool canMove() {
-        return !isMovementDone();
-    }
-    public virtual void allowMovement() {
-        if (canMove())
-            state = turnState.moving;
+        return moving.Equals(progress.ready);
     }
     public virtual void startMove() {
+        state = turnState.moving;
         moving = progress.doing;
     }
     public virtual void endMovement() {

@@ -86,7 +86,7 @@ public class SceneStageManager : MonoBehaviour {
         _playerUI.SetActive(true);
         _turnUI.SetActive(true);
         // Innit del stageLoader
-        StageLoader.instance.buildStage(data);
+        // TODO // StageLoader.instance.buildStage(data);
         // Innit del turnManager
         TurnManager.instance.startManager();
     }

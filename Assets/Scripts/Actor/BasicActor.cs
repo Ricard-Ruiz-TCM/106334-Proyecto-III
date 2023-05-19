@@ -33,6 +33,7 @@ public abstract class BasicActor : Turnable {
         return (int)((_health / _maxHealth) * 100f);
     }
 
+
     /** Setters */
     /** Health [0 .. max] */
     public void setHealth(int value) {

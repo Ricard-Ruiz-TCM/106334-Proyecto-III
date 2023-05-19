@@ -1,230 +1,93 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class CameraController : MonoBehaviour {
-    [SerializeField] Animator _animator;
 
-    //enter y exit animaciones
-    [SerializeField] Vector3 finalPos;
-    [SerializeField] Vector3 finalRot;
-    float elapsedTime;
-    [SerializeField] float duration;
-    [SerializeField] Vector3 startAnimPos;
-    [SerializeField] Vector3 startAnimRot;
-    [SerializeField] Vector3 startAnimFinalPos;
-    [SerializeField] Vector3 startAnimFinalRot;
+    public float cameraSpeed = 5f;
+    public float zoomSpeed = 5f;
+    public float rotationSpeed = 5f;
 
-    [SerializeField] float _speed;
+    public float minZoom = 1f;
+    public float maxZoom = 10f;
+    public float minPosX = -10f;
+    public float maxPosX = 10f;
+    public float maxPosY = 25f;
+    public float minPosY = 5f;
+    public float minPosZ = -10f;
+    public float maxPosZ = 10f;
+    public float minFOV = 10f;
+    public float maxFOV = 60f;
 
-    // Target que vamos a "seguir"
-    [SerializeField, Header("Target:")]
-    public Transform _target;
+    private float rotationY = 0f;
 
-    [SerializeField, Header("Zoom:")]
-    private float _maxZoom;
-    [SerializeField]
-    private float _minZoom;
+    public Transform target;
 
-    [SerializeField, Header("Position:")]
-    private Vector2 _offset;
-    public void SetOffset(Vector2 offset) {
-        _offset = offset;
-    }
-    [SerializeField]
-    private Vector2 _limits;
-
-    [SerializeField] Transform cameraPos;
-    bool animating = false;
-    Vector3 targetPos;
-
-    [SerializeField] float cameraMoveMovementSpeed;
-    [SerializeField] float cameraMoveChangeTargetSpeed;
-    float cameraSpeed;
-
-
-    [SerializeField] float mouseSens = 3f;
-
-    float rotX;
-    float rotY;
-
-    [SerializeField] Transform targetRotate;
-    float distanceFromTarget;
-
-    Vector3 currentRot;
-    Vector3 smoothVel = Vector3.zero;
-
-    [SerializeField] float smoothTime;
-
-    bool firstTimeRotate = true;
-
-    [SerializeField] Camera cam;
-
-    [SerializeField] float maxFov;
-    [SerializeField] float minFov;
-
-    [SerializeField] float zoomMultiplier;
-    float zoom;
-    [SerializeField] float velocityZoom;
-    [SerializeField] float smoothZoom;
-
-    [SerializeField] float cameraMoveMultiplier;
-    [SerializeField] float cameraMoveSum;
-    [SerializeField]
-    public Grid2D grid {
-        get {
-            return Stage.StageGrid;
-        }
-        set {
-        }
-    }
-
-    float xAnterior, yAnterior;
-
-    bool changeTarget = false;
-    private void Awake()
-    {
-        zoom = cam.fieldOfView;
-        rotX = transform.localEulerAngles.x;
-        rotY = transform.localEulerAngles.y;
-    }
+    private Vector3 targetPosition;
 
     private void Start() {
-        StartCoroutine(StartAnim());
-        xAnterior = 111111;
-        xAnterior = 111111;
-        TurnManager.instance.onStartTurn += () => { changeTarget = true; };
-
+        targetPosition = transform.position;
     }
 
+    // Unity FixedUpdate
+    void FixedUpdate() {
+        if (target == null) {
+            CameraFreeMovement();
+        } else {
+            CameraFollowMovement();
+        }   
 
-    // Unity LateUpdate
-    void LateUpdate() {
+        CameraZoom();
+        CameraRotation();
 
-        if (changeTarget) {
-            _target = TurnManager.instance.Current().transform;
-            changeTarget = false;
-            targetPos = new Vector3((_target.GetComponent<GridMovement>().GetLastNode().x - grid.Rows / 2.5f + cameraMoveSum) * cameraMoveMultiplier, 0, (_target.GetComponent<GridMovement>().GetLastNode().y - grid.Columns / 2.5f + cameraMoveSum) * cameraMoveMultiplier);
-            cameraSpeed = cameraMoveChangeTargetSpeed;
-        }
-
-        if (!animating) {
-
-            if (uCore.Action.GetKeyDown(KeyCode.Z)) {
-                StartCoroutine(EndAnim());
-            }
-            if (!_target.GetComponent<Actor>().canMove) {
-                _animator.SetBool("zoom", true);
-            }
-            if (_target.GetComponent<Actor>().canMove) {
-                _animator.SetBool("zoom", false);
-            }
-
-            CameraTargetMove();
-            CameraMouseMove();
-            CameraZoom();
-
-        }
-
+        // Suavizado del movimiento de la cámara
+        transform.position = Vector3.Lerp(transform.position, targetPosition, cameraSpeed * Time.deltaTime);
     }
-    private void CameraTargetMove()
-    {
-        if (_target.gameObject.GetComponent<GridMovement>()._canMove)
-        {
-            if (xAnterior != _target.GetComponent<GridMovement>().GetLastNode().x || yAnterior != _target.GetComponent<GridMovement>().GetLastNode().y)
-            {
-                xAnterior = _target.GetComponent<GridMovement>().GetLastNode().x;
-                yAnterior = _target.GetComponent<GridMovement>().GetLastNode().y;
-                targetPos = new Vector3((_target.GetComponent<GridMovement>().GetLastNode().x - grid.Rows / 2.5f  + cameraMoveSum) * cameraMoveMultiplier, 0, (_target.GetComponent<GridMovement>().GetLastNode().y - grid.Columns / 2.5f + cameraMoveSum) * cameraMoveMultiplier);
-                cameraSpeed = cameraMoveMovementSpeed;
-            }
 
-        }
-        else
-        {
-            if (uCore.Action.GetKeyDown(KeyCode.U))
-            {
-                targetPos = Vector3.zero;
-                cameraSpeed = cameraMoveChangeTargetSpeed;
-            }
-        }
-        Debug.Log(targetPos);
-        cameraPos.localPosition = Vector3.Lerp(cameraPos.localPosition, targetPos, cameraSpeed * Time.deltaTime);
+    private void CameraZoom() {
+        float scrollAmount = Input.GetAxis("Mouse ScrollWheel");
+        float desiredZoom = scrollAmount * zoomSpeed;
+        desiredZoom = Mathf.Clamp(desiredZoom, -maxZoom, maxZoom);
+        targetPosition += transform.forward * desiredZoom;
+        ClampCameraPosition();
     }
-    private void CameraMouseMove()
-    {
-        if (Input.GetMouseButton(1))
-        {
-            distanceFromTarget = Vector3.Distance(targetRotate.position, transform.position);
-            float mouseX = Input.GetAxis("Mouse X") * mouseSens;
-            float mouseY = Input.GetAxis("Mouse Y") * mouseSens;
-    
-            rotX -= mouseY;
-            rotY += mouseX;
 
-            rotX = Mathf.Clamp(rotX, 20, 85);
-
-            Vector3 nextRot = new Vector3(rotX, rotY);
-            currentRot = Vector3.SmoothDamp(currentRot, nextRot, ref smoothVel, smoothTime);
-            transform.localEulerAngles = currentRot;
-
-            transform.position = targetRotate.position - transform.forward * distanceFromTarget;
+    private void CameraRotation() {
+        if (Input.GetMouseButton(2) && Input.GetKey(KeyCode.LeftAlt)) {
+            float mouseX = Input.GetAxis("Mouse X") * rotationSpeed;
+            rotationY += mouseX;
+            Quaternion rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, rotationY, transform.rotation.eulerAngles.z);
+            transform.rotation = rotation;
         }
     }
 
-    private void CameraZoom()
-    {
-        float scroll = Input.GetAxis("Mouse ScrollWheel");
-        zoom -= scroll * zoomMultiplier;
-        zoom = Mathf.Clamp(zoom, minFov, maxFov);
-        cam.fieldOfView = Mathf.SmoothDamp(cam.fieldOfView, zoom, ref velocityZoom, smoothZoom);
+    private void CameraFollowMovement() {
+        Vector3 targetFollowPosition = target.position;
+        targetFollowPosition.y = transform.position.y;
+        targetPosition = targetFollowPosition;
+        ClampCameraPosition();
     }
 
-    IEnumerator StartAnim() {
-        animating = true;
-        transform.position = startAnimPos;
-        transform.rotation = Quaternion.Euler(startAnimRot);
-        yield return new WaitForSeconds(0.5f);
-        float timer = 0;
-
-        while (timer < duration) {
-            timer += Time.deltaTime;
-            float percentageDuration = timer / duration;
-            transform.position = Vector3.Lerp(startAnimPos, startAnimFinalPos, percentageDuration);
-            transform.rotation = Quaternion.Lerp(Quaternion.Euler(startAnimRot), Quaternion.Euler(startAnimFinalRot), percentageDuration);
-            yield return new WaitForFixedUpdate();
+    private void CameraFreeMovement() {
+        if (Input.GetMouseButton(2) && !Input.GetKey(KeyCode.LeftAlt)) {
+            float mouseX = -Input.GetAxis("Mouse X");
+            float mouseY = -Input.GetAxis("Mouse Y");
+            Vector3 desiredMovement = GetCameraMovement(mouseX, mouseY);
+            targetPosition += desiredMovement;
+            ClampCameraPosition();
         }
-        transform.position = startAnimFinalPos;
-        transform.rotation = Quaternion.Euler(startAnimFinalRot);
-        animating = false;
     }
 
-    IEnumerator EndAnim() {
-        animating = true;
-        Vector3 startEndPos = transform.position;
-        Vector3 startEndRot = transform.eulerAngles;
-        float timer = 0;
-
-        while (timer < duration) {
-            timer += Time.deltaTime;
-            float percentageDuration = timer / duration;
-            transform.position = Vector3.Lerp(startEndPos, finalPos, percentageDuration);
-            transform.rotation = Quaternion.Lerp(Quaternion.Euler(startEndRot), Quaternion.Euler(finalRot), percentageDuration);
-            yield return new WaitForFixedUpdate();
-        }
-        transform.position = finalPos;
-        animating = false;
-        transform.rotation = Quaternion.Euler(finalRot);
-    }
-    public void ChangeTarget() {
-
+    private Vector3 GetCameraMovement(float mouseX, float mouseY) {
+        Quaternion rotation = Quaternion.Euler(0f, rotationY, 0f);
+        Vector3 cameraMovement = new Vector3(mouseX, 0f, mouseY) * cameraSpeed * Time.deltaTime;
+        cameraMovement = rotation * cameraMovement;
+        return cameraMovement;
     }
 
-    //IEnumerator Prova()
-    //{
-    //    while (prova)
-    //    {
-
-    //    }
-    //}
+    private void ClampCameraPosition() {
+        targetPosition.x = Mathf.Clamp(targetPosition.x, minPosX, maxPosX);
+        targetPosition.y = Mathf.Clamp(targetPosition.y, minPosY, maxPosY);
+        targetPosition.z = Mathf.Clamp(targetPosition.z, minPosZ, maxPosZ);
+    }
 
 }
+

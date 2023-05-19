@@ -5,11 +5,8 @@ public abstract class DoT : Buff {
     [Header("Damage Amount:")]
     public int damage;
 
-    public override void startTurnEffect(Actor me) {
-    }
-
-    public override void endTurnEffect(Actor me) {
-        me.TakeDamage(damage);
+    public override void endTurnEffect(BasicActor me) {
+        me.takeDamage(damage);
     }
 
 }

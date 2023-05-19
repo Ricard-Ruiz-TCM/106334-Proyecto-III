@@ -1,12 +1,12 @@
 ﻿
 // Tipo de rondas
 public enum roundType {
-    thinking, positioning, combat, waiting
+    thinking, positioning, combat, completed
 }
 
 // Estado del turno 
 public enum turnState {
-    thinking, ready, acting, moving, waiting
+    thinking, acting, moving, completed
 }
 
 // Objetos del juego
@@ -60,7 +60,7 @@ public enum modOperation {
 }
 
 // Tipo de IA de enemigos
-public enum enemyCombatStyle {
+public enum combatAI {
     ranged, melee, flee
 }
 
@@ -108,6 +108,11 @@ public enum stageTerrain {
     mountain, swamp, road
 }
 
+// Tipo de material para el path
+public enum pathMaterial {
+    NONE, walkable, skill, notWalkable
+}
+
 // Tipo de enemigos
 public enum enemyClass {
     eBandid = 1, ePrivate = 2, eCenturion = 3, eCommander = 5
@@ -118,8 +123,6 @@ namespace Array2DEditor {
     public enum nodeType {
         __ = 0,
         P = 1,
-        M = 102,
-        H = 153,
         X = 255
     }
 }

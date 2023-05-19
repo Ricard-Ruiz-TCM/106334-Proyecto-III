@@ -16,6 +16,8 @@ public class Skill : ScriptableObject {
 
     public bool personal;
 
+    public int areaRange;
+
     public virtual void action(BasicActor from, BasicActor to) {
         to.takeDamage(from.totalDamage());
         from.endAction();

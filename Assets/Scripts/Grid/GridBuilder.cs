@@ -161,6 +161,40 @@ public class GridBuilder : MonoBehaviour {
         getGridPlane(x, y).setRendering(_materials[(int)material], _visibleLayer);
     }
 
+    /** Método para mostar una skill concreta */
+    public void displaySkill(skillID id, Node node, pathMaterial material)
+    {
+        Skill sk = uCore.GameManager.GetSkill(id);
+
+        displayNode(node, material);
+
+        int count = 1;
+        int totalCount = 1;
+        for (int i = node.x - sk.areaRange; i <= node.x + sk.areaRange; i++)
+        {
+            for (int j = node.y; j < count + node.y; j++)
+            {
+                displayNode(i, j, material);
+            }
+            for (int z = node.y - 1; z > node.y - count; z--)
+            {
+                displayNode(i, z, material);
+            }
+
+            if (totalCount > sk.areaRange)
+            {
+                count--;
+            }
+            else
+            {
+                count++;
+            }
+            totalCount++;
+        }
+
+
+    }
+
     /*** Método para ocultar un nodo */
     public void hideNode(Node node) {
         hideNode(node.x, node.y);

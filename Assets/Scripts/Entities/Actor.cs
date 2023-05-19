@@ -272,7 +272,9 @@ public abstract class Actor : ActorManager {
     }
 
     /** Métodos de control del turno **/
-    public virtual void BeginTurn() {
+    public virtual void BeginTurn() 
+    {
+        Stage.StageBuilder.DisplayRange(Movement(), this);
         moving = progress.ready;
         acting = progress.ready;
         _movementsDone = 0;

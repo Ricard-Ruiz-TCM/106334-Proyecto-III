@@ -20,6 +20,7 @@ public class GridBuilder : MonoBehaviour {
     public Material _pathMath;
     public Material _badPathMat;
     public Material _rangeMath;
+    public Material _normalMat;
 
     // Unity Awake
     void Awake() {
@@ -34,7 +35,7 @@ public class GridBuilder : MonoBehaviour {
         for (int x = 0; x < _grid.Rows; x++) {
             for (int y = 0; y < _grid.Columns; y++) {
                 // Posición donde será isntanciado
-                Vector3 position = new Vector3(x * _planeSize * _planePfb.transform.localScale.x, 50f, y * _planeSize * _planePfb.transform.localScale.y);
+                Vector3 position = new Vector3(x * _planeSize , 50f, y * _planeSize); // he quitado * _planePfb.transform.localScale.x
                 // Instant del prefab
                 GridPlane obj = GameObject.Instantiate(_planePfb, position, Quaternion.identity, transform).GetComponent<GridPlane>();
                 obj.gameObject.name = "M[" + x + "," + y + "]-" + "W:" + _grid.GetNode(x, y).walkable;
@@ -117,9 +118,11 @@ public class GridBuilder : MonoBehaviour {
     }
 
     // Update del material del Plane
-    public void UpdateMaterial(int x, int y, Material mat = null) {
-        GetGridPlane(x, y).gameObject.layer = LayerMask.NameToLayer("InvisibleGrid");
-        if (mat == null) {
+    public void UpdateMaterial(int x, int y, Material mat = null) 
+    {
+        GetGridPlane(x, y).gameObject.layer = LayerMask.NameToLayer("VisibleGrid");
+        if (mat == null) 
+        {
             Node data = GetGridPlane(x, y).node;
             Material m = new Material(Shader.Find("Universal Render Pipeline/Lit"));
 
@@ -143,40 +146,158 @@ public class GridBuilder : MonoBehaviour {
 
     /** Método para cambiar el path de colores */
     public void DisplayValidPath(List<Node> path, int range) {
-        ClearGrid();
+        ClearPath();
         for (int i = 0; i < path.Count; i++) {
             if (i < range) {
                 UpdateMaterial(path[i].x, path[i].y, _pathMath);
             }
         }
     }
-    public Node DisplayLastNodePath(List<Node> path, int range) {
-        ClearGrid();
-        if (path.Count != 0) {
-            if (path.Count < range) {
-                UpdateMaterial(path[path.Count - 1].x, path[path.Count - 1].y, _rangeMath);
-                return path[path.Count - 1];
-            } else {
-                UpdateMaterial(path[range - 1].x, path[range - 1].y, _rangeMath);
-                return path[range - 1];
-            }
-        } else {
-            return null;
-        }
+    public void DisplayRange(int range, Actor from)
+    {
+        int count = 1;
+        int totalCount = 1;
+        Node node = Stage.StageBuilder.GetGridPlane(Mathf.RoundToInt(from.transform.position.x / 10), Mathf.RoundToInt(from.transform.position.z / 10)).node;
 
+        for (int i = node.x - range; i <= node.x + range; i++)
+        {
+            for (int j = count + node.y-1; j < count + node.y; j++)
+            {
+                if (CheckIfInGrid(i, j))
+                {
+                    UpdateMaterial(i, j, _rangeMath);
+                    //from.GridM().CalcRoute(from.transform.position, GetGridPlane(i, j), range);
+                    //Stage.StageBuilder.DisplayValidPath(from.GridM().VisualRouteValid, range);
+                }
+
+            }
+            for (int z = node.y - count+1; z > node.y - count; z--)
+            {
+                if (CheckIfInGrid(i, z))
+                {
+                    UpdateMaterial(i, z, _rangeMath);
+                    //from.GridM().CalcRoute(from.transform.position, GetGridPlane(i, z), range);
+                    //Stage.StageBuilder.DisplayValidPath(from.GridM().VisualRouteValid, range);
+                }
+            }
+            if(i == node.x - range || i == node.x + range)
+            {
+                if (CheckIfInGrid(i, node.y))
+                {
+                    UpdateMaterial(i, node.y, _rangeMath);
+                }
+            }
+
+            if (totalCount > range)
+            {
+                count--;
+            }
+            else
+            {
+                count++;
+            }
+            totalCount++;
+        }
     }
+    private bool CheckIfInGrid(int x, int y)
+    {
+        return (x >= 0 && x <= _grid.Rows && y >= 0 && y <= _grid.Columns);
+    }
+    //public Node DisplayLastNodePath(List<Node> path, int range) {
+    //    ClearPath();
+    //    if (path.Count != 0) {
+    //        if (path.Count < range) {
+    //            UpdateMaterial(path[path.Count - 1].x, path[path.Count - 1].y, _rangeMath);
+    //            return path[path.Count - 1];
+    //        } else {
+    //            UpdateMaterial(path[range - 1].x, path[range - 1].y, _rangeMath);
+    //            return path[range - 1];
+    //        }
+    //    } else {
+    //        return null;
+    //    }
+
+    //}
 
     public void DisplayInValidPath(List<Node> path) {
         for (int i = 0; i < path.Count; i++) {
             UpdateMaterial(path[i].x, path[i].y, _badPathMat);
         }
     }
+    public void DisplaySkillRange(int range,Actor actor)
+    {
+        Node node = null;
+        //List<Node> nodes = new List<Node>();
 
-    public void ClearGrid() {
+
+        node = Stage.StageBuilder.GetGridPlane(Mathf.RoundToInt(actor.transform.position.x / 10), Mathf.RoundToInt(actor.transform.position.z / 10)).node;
+
+        int count = 1;
+        int totalCount = 1;
+        for (int i = node.x - range; i <= node.x + range; i++)
+        {
+            for (int j = node.y; j < count + node.y; j++)
+            {
+                if (CheckIfInGrid(i,j))
+                {
+                    UpdateMaterial(i, j, _rangeMath);
+                }             
+            }
+            for (int z = node.y - 1; z > node.y - count; z--)
+            {
+                if (CheckIfInGrid(i, z))
+                {
+                    UpdateMaterial(i, z, _rangeMath);
+                }
+            }
+
+            if (totalCount > range)
+            {
+                count--;
+            }
+            else
+            {
+                count++;
+            }
+            totalCount++;
+        }
+    }
+
+
+    public void ClearGrid() 
+    {
         for (int x = 0; x < _grid.Rows; x++) {
             for (int y = 0; y < _grid.Columns; y++) {
                 UpdateMaterial(x, y);
-                GetGridPlane(x, y).gameObject.layer = LayerMask.NameToLayer("InvisibleGrid");
+                //GetGridPlane(x, y).gameObject.layer = LayerMask.NameToLayer("VisibleGrid");
+            }
+        }
+    }
+    public void ClearPath()
+    {
+        for (int x = 0; x < _grid.Rows; x++)
+        {
+            for (int y = 0; y < _grid.Columns; y++)
+            {
+                if(GetGridPlane(x,y).GetMaterial() == _pathMath)
+                {
+                    Debug.Log(GetGridPlane(x, y).GetMaterial() + " " + _pathMath);
+                    UpdateMaterial(x, y);
+                }               
+                //GetGridPlane(x, y).gameObject.layer = LayerMask.NameToLayer("VisibleGrid");
+            }
+        }
+    }
+    public void ClearAttack()
+    {
+        for (int x = 0; x < _grid.Rows; x++)
+        {
+            for (int y = 0; y < _grid.Columns; y++)
+            {
+                if (GetGridPlane(x, y).GetAttackIndicator().activeSelf)
+                {
+                    GetGridPlane(x, y).GetAttackIndicator().SetActive(false);
+                }
             }
         }
     }

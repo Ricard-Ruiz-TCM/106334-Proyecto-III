@@ -35,21 +35,33 @@ public class CombatManager : ActorsListController {
         switch (skillType) {
             case skills.Attack:
                 StartCoroutine(NormalAttack(actor, range, skillType, canInteract));
+                Stage.StageBuilder.ClearGrid();
+                Stage.StageBuilder.DisplaySkillRange(range, actor);
                 break;
             case skills.DoubleLunge:
                 StartCoroutine(NormalAttack(actor, range, skillType, canInteract));
+                Stage.StageBuilder.ClearGrid();
+                Stage.StageBuilder.DisplaySkillRange(range, actor);
                 break;
             case skills.Cleave:
                 StartCoroutine(ShowGolpeDemoledor(actor, range, skillType, canInteract));
+                Stage.StageBuilder.ClearGrid();
+                Stage.StageBuilder.DisplaySkillRange(range, actor);
                 break;
             case skills.ArrowRain:
                 StartCoroutine(ShowArrows(actor, range, skillType, canInteract));
+                Stage.StageBuilder.ClearGrid();
+                Stage.StageBuilder.DisplaySkillRange(range, actor);
                 break;
             case skills.MoralizingShout:
                 StartCoroutine(ShowMoralizingShout(actor, range, skillType));
+                Stage.StageBuilder.ClearGrid();
+                Stage.StageBuilder.DisplaySkillRange(range, actor);
                 break;
             case skills.Disarm:
                 StartCoroutine(NormalAttack(actor, range, skillType, canInteract));
+                Stage.StageBuilder.ClearGrid();
+                Stage.StageBuilder.DisplaySkillRange(range, actor);
                 break;
             case skills.SedDeSangre:
                 StartCoroutine(NormalAttack(actor, range, skillType, canInteract));
@@ -64,7 +76,9 @@ public class CombatManager : ActorsListController {
         Node node = null;
 
         if (canInteract) {
-            while (!canEnd) {
+            while (!canEnd) 
+            {
+                Stage.StageBuilder.ClearAttack();
 
                 GetPosToAttack(actor, range, out node, node);
 
@@ -81,7 +95,8 @@ public class CombatManager : ActorsListController {
                 }
                 yield return null;
             }
-        } else {
+        } else 
+        {
             GetPosToEnemyAttack(actor, out node);
             if (node != null) {
                 GetActorInNode(node, actor, skillType);
@@ -164,7 +179,9 @@ public class CombatManager : ActorsListController {
         Node node = null;
 
         if (canInteract) {
-            while (!canEnd) {
+            while (!canEnd) 
+            {
+                Stage.StageBuilder.ClearAttack();
 
                 GetPosToAttack(actor, range, out node, node);
 
@@ -196,7 +213,7 @@ public class CombatManager : ActorsListController {
         if (canInteract) {
             while (!canEnd) {
 
-                Stage.StageBuilder.ClearGrid();
+                Stage.StageBuilder.ClearAttack();
 
                 GetPosToAttack(actor, range, out node, node);
 
@@ -266,14 +283,15 @@ public class CombatManager : ActorsListController {
     }
     IEnumerator EndAttack(Actor actor) {
         yield return new WaitForSeconds(1f);
-        Stage.StageBuilder.ClearGrid();
+        Stage.StageBuilder.ClearAttack();
         actor.canMove = true;
     }
 
     //metodo para los ataques que tienen da�o en area (comprueba si esta dentro de la grid - cambia el material - y si hay un enemigo hace efecto)
     private void ExtendAttack(int i, int j, Actor actor, bool canEnd, skills skillType) {
         if (ChechIfPositionIsInGrid(i, j)) {
-            Stage.StageBuilder.UpdateMaterial(i, j, shootMat);
+            //Stage.StageBuilder.UpdateMaterial(i, j, shootMat);
+            Stage.StageBuilder.GetGridPlane(i, j).GetAttackIndicator().SetActive(true);
             if (canEnd) {
                 GetActorInNode(Stage.StageBuilder.GetGridPlane(i, j).node, actor, skillType);
             }
@@ -343,7 +361,7 @@ public class CombatManager : ActorsListController {
                 node = target.node;
             }
             if (node != null) {
-                Stage.StageBuilder.UpdateMaterial(node.x, node.y, shootMat);
+                Stage.StageBuilder.GetGridPlane(node.x,node.y).GetAttackIndicator().SetActive(true);
             }
 
             //actor.GridM().CalcRoute(actor.transform.position, Stage.StageBuilder.GetMouseGridPlane(), range);

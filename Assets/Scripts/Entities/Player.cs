@@ -80,7 +80,7 @@ public class Player : Actor {
             if (plane.node.walkable) {
                 GridM().CalcRoute(transform.position, plane, Movement());
                 Stage.StageBuilder.DisplayValidPath(_gridMovement.VisualRouteValid, Movement());
-                Stage.StageBuilder.DisplayInValidPath(_gridMovement.VisualRouteInvaild);
+                //Stage.StageBuilder.DisplayInValidPath(_gridMovement.VisualRouteInvaild);
             }
         }
         //else if (!canMove && moveController)

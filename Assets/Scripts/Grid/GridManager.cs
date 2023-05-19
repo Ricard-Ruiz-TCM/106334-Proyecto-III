@@ -36,6 +36,16 @@ public class GridManager : MonoBehaviour {
         return nearest;
     }
 
+    /** Método que busca y recupera un actor según su nodo */
+    public BasicActor getActor(Node node) {
+        foreach (Turnable actor in TurnManager.instance.attenders) {
+            if (Stage.StageBuilder.getGridNode(actor.transform.position) == node) {
+                return (BasicActor)actor;
+            }
+        }
+        return null;
+    }
+
     /** Método que checkea si dos turnables están en rango, de casillas */
     public bool inRange(Turnable origin, Turnable target, int range) {
         GridPlane targetPlane = Stage.StageBuilder.getGridPlane(target.transform.position);

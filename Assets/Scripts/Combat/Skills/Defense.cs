@@ -5,7 +5,7 @@ public class Defense : Skill {
 
     public override void action(BasicActor from, BasicActor to) {
         ((Actor)from).buffs.applyBuffs((Actor)from, buffsID.LowDefense);
-        base.action(from, to);
+        from.endAction();
     }
 
 }

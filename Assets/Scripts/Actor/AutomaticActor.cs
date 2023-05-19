@@ -73,7 +73,7 @@ public class AutomaticActor : Actor {
         if (!canMove())
             return;
 
-        near = Stage.StageManager.findEnemy(transform);
+        near = Stage.StageManager.findPlayer(transform);
 
         // Player encontrado
         if (near != null) {

@@ -5,7 +5,7 @@ public class TrojanHorse : Skill {
 
     public override void action(BasicActor from, BasicActor to) {
         ((Actor)from).buffs.applyBuffs((Actor)from, buffsID.Invencible, buffsID.MidMovement);
-        base.action(from, to);
+        from.endAction();
     }
 
 }

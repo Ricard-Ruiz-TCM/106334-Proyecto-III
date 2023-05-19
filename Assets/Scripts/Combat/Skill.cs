@@ -17,7 +17,7 @@ public class Skill : ScriptableObject {
     public bool personal;
 
     public virtual void action(BasicActor from, BasicActor to) {
-        /*CombatManager.instance.UseSkill(from, ID, from.canInteract);*/
+        to.takeDamage(from.totalDamage());
         from.endAction();
     }
 

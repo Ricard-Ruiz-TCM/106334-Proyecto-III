@@ -4,7 +4,7 @@
 public class Bloodlust : Skill {
 
     public override void action(BasicActor from, BasicActor to) {
-        base.action(from, to);
+        from.endAction();
     }
 
 }

@@ -24,7 +24,11 @@ public class SkillManager : MonoBehaviour {
         return null;
     }
 
-    public void useSkill(skillID id, Actor from, Actor to = null) {
+    public bool canUse(skillID id) {
+        return skills[findSkill(id)].cooldown < 0;
+    }
+
+    public void useSkill(skillID id, BasicActor from, BasicActor to = null) {
         int pos = findSkill(id);
         if (pos == -1)
             return;

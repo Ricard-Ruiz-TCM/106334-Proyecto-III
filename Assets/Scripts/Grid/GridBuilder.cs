@@ -18,15 +18,19 @@ public class GridBuilder : MonoBehaviour {
     [SerializeField, Header("Terrain Layer:")]
     private LayerMask _layer;
 
-    [SerializeField, Header("Materials:")]
-    public Material _pathMath;
-    public Material _badPathMat;
-    public Material _rangeMath;
+    [SerializeField, Header("Materials:"), Tooltip("Tiene que coincidir con el enum pathMaterial")]
+    private Material[] _materials;
 
     [SerializeField, Header("Layers:")]
     private string _visibleLayer = "VisibleGrid";
     [SerializeField]
     private string _invisibleLayer = "InvisibleGrid";
+
+    // Unity Start
+    void Start() {
+        // Clear al acabar turnos
+        Actor.onDestinationReached += clearGrid;
+    }
 
     /** Método para instanciar los planos */
     public void instantiateGrid() {
@@ -83,7 +87,7 @@ public class GridBuilder : MonoBehaviour {
         return _planeMap[x, y];
     }
     public GridPlane getGridPlane(Vector3 worldPos) {
-        return getGridPlane(Mathf.RoundToInt(worldPos.x / _planeSize), Mathf.RoundToInt(worldPos.z / _planeSize));
+        return getGridPlane(Mathf.RoundToInt((worldPos.x - _offset) / _planeSize), Mathf.RoundToInt((worldPos.z - _offset) / _planeSize));
     }
     public GridPlane getMouseGridPlane() {
         RaycastHit raycastHit;
@@ -143,18 +147,18 @@ public class GridBuilder : MonoBehaviour {
     }
 
     /** Método para mostar un path concreto */
-    public void displayPath(List<Node> path, Material mat = null) {
+    public void displayPath(List<Node> path, pathMaterial material) {
         for (int i = 0; i < path.Count; i++) {
-            displayNode(path[i], mat);
+            displayNode(path[i], material);
         }
     }
     
     /** Método para mostar un solo nodo */
-    public void displayNode(Node node, Material mat = null) {
-        displayNode(node.x, node.y);
+    public void displayNode(Node node, pathMaterial material) {
+        displayNode(node.x, node.y, material);
     }
-    public void displayNode(int x, int y, Material mat = null) {
-        getGridPlane(x, y).setRendering(mat, _visibleLayer);
+    public void displayNode(int x, int y, pathMaterial material) {
+        getGridPlane(x, y).setRendering(_materials[(int)material], _visibleLayer);
     }
 
     /*** Método para ocultar un nodo */

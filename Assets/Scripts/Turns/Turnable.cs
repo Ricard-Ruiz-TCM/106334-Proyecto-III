@@ -31,6 +31,10 @@ public abstract class Turnable : MonoBehaviour {
     /** Métodos de control de Acción */
     public progress acting;
     public abstract void act();
+    public virtual void reAct() {
+        acting = progress.ready;
+        state = turnState.thinking;
+    }
     public virtual bool canAct() {
         return acting.Equals(progress.ready);
     }

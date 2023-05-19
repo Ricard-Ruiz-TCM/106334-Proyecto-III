@@ -15,7 +15,7 @@ public class ImperialCry : Skill {
                 ((Actor)to).buffs.applyBuffs((Actor)to, buffsID.ArrowProof, buffsID.MidDefense);
             }
         }
-        base.action(from, to);
+        from.endAction();
     }
 
 }

@@ -268,7 +268,7 @@ public class CombatManager : ActorsListController {
     //metodo para los ataques que tienen da�o en area (comprueba si esta dentro de la grid - cambia el material - y si hay un enemigo hace efecto)
     private void ExtendAttack(int i, int j, Turnable actor, bool canEnd, skillID skillType) {
         if (ChechIfPositionIsInGrid(i, j)) {
-            Stage.StageBuilder.displayNode(i, j, shootMat);
+            Stage.StageBuilder.displayNode(i, j, pathMaterial.skill);
             if (canEnd) {
                 GetActorInNode(Stage.StageBuilder.getGridPlane(i, j).node, actor, skillType);
             }
@@ -338,7 +338,7 @@ public class CombatManager : ActorsListController {
                 node = target.node;
             }
             if (node != null) {
-                Stage.StageBuilder.displayNode(node.x, node.y, shootMat);
+                Stage.StageBuilder.displayNode(node.x, node.y, pathMaterial.skill);
             }
 
             //actor.GridM().CalcRoute(actor.transform.position, Stage.StageBuilder.GetMouseGridPlane(), range);
@@ -350,7 +350,7 @@ public class CombatManager : ActorsListController {
         //Actor player = FindNearestPlayer(actor);
         Turnable player = Stage.StageManager.findPlayer(actor.transform);
         node = Stage.StageBuilder.getGridPlane(Mathf.RoundToInt(player.transform.position.x / 10), Mathf.RoundToInt(player.transform.position.z / 10)).node;
-        Stage.StageBuilder.getGridPlane(node.x, node.y).setMaterial(Stage.StageBuilder._rangeMath);
+        Stage.StageBuilder.displayNode(node, pathMaterial.skill);
     }
 
 }

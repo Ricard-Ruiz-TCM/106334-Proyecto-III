@@ -44,7 +44,8 @@ public class SkillButtonUI : MonoBehaviour {
             };
         } else {
             _action = () => {
-                Debug.Log("COMBAT MANAGER, LOOK FOR TARGEEET AND USE THIS SKILLS" + _skill.ID.ToString());
+                ((ManualActor)TurnManager.instance.current).setSkillToUse(_skill.ID);
+                TurnManager.instance.current.startAct();
             };
         }
         _btn.onClick.AddListener(() => { _action(); });

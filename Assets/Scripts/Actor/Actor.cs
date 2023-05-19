@@ -13,8 +13,8 @@ public abstract class Actor : BasicActor {
 
     /** Callback */
     /** -------- */
-    public Action onDestinationReached;
-    public Action<Node> onStepReached;
+    public static event Action onDestinationReached;
+    public static event Action<Node> onStepReached;
     /** -------- */
 
     #region Movement: 
@@ -54,16 +54,15 @@ public abstract class Actor : BasicActor {
         setRoute(route);
     }
 
-    /** Override Acto from Turnable */
-    public override void act() {
-        endAction();
-    }
-
     /** Override Move from Turnable */
     public override void move() {
         if (stepReached()) {
             nextStep();
         }
+    }
+
+    /** Override Act from Turnable */
+    public override void act() {
     }
 
     /** Método para ir al siguiente nodo */

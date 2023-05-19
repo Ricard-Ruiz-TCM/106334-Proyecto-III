@@ -4,8 +4,8 @@ using UnityEngine;
 public class AchillesHeel : Skill {
 
     public override void action(BasicActor from, BasicActor to) {
-        base.action(from, to);
-        //from.Status.ApplyStatus(buffsID.MidDamage);
+        ((Actor)from).buffs.applyBuffs((Actor)from, buffsID.MidDamage);
+        from.endAction();
     }
 
 }

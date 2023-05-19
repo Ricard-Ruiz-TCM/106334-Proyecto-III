@@ -8325,7 +8325,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1648530761}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 30, y: 0, z: 15}
+  m_LocalPosition: {x: 35.2, y: 0, z: 15}
   m_LocalScale: {x: 8, y: 8, z: 8}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10879,7 +10879,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2112911780
 MonoBehaviour:
-  m_ObjectHideFlags: 10
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -10920,7 +10920,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2118448798}
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 86.2, y: 0, z: 60.6}
+  m_LocalPosition: {x: 84.8, y: 0, z: 65.1}
   m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -10987,7 +10987,7 @@ MonoBehaviour:
   acting: 0
   moving: 0
   _alive: 1
-  _health: 0
+  _health: 25
   _maxHealth: 25
   _maxSteps: 2
   _route: []
@@ -12492,9 +12492,11 @@ MonoBehaviour:
   _layer:
     serializedVersion: 2
     m_Bits: 64
-  _pathMath: {fileID: 2100000, guid: 42577e5e43eb3be4280f05908d834b34, type: 2}
-  _badPathMat: {fileID: 2100000, guid: de6dcac0d1f709746b71b4a967aec6f0, type: 2}
-  _rangeMath: {fileID: 2100000, guid: a1503898bbdd4504f8f0188fa962e25e, type: 2}
+  _materials:
+  - {fileID: 2100000, guid: 8979a05920890074ca2718967f033188, type: 2}
+  - {fileID: 2100000, guid: 42577e5e43eb3be4280f05908d834b34, type: 2}
+  - {fileID: 2100000, guid: a1503898bbdd4504f8f0188fa962e25e, type: 2}
+  - {fileID: 2100000, guid: de6dcac0d1f709746b71b4a967aec6f0, type: 2}
   _visibleLayer: VisibleGrid
   _invisibleLayer: InvisibleGrid
 --- !u!114 &3384231810004681042
@@ -12909,7 +12911,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4500662890051555674}
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 32.4, y: 0, z: 60.9}
+  m_LocalPosition: {x: 34.8, y: 0, z: 54.8}
   m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -13290,7 +13292,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 4863
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -13456,12 +13458,24 @@ MonoBehaviour:
   acting: 0
   moving: 0
   _alive: 1
-  _health: 0
+  _health: 20
   _maxHealth: 20
   _maxSteps: 5
   _route: []
   _baseDamage: 0
   _baseDefense: 0
+  _mouseNode:
+    x: 0
+    y: 0
+    g: 0
+    h: 0
+    type: 0
+  _myNode:
+    x: 0
+    y: 0
+    g: 0
+    h: 0
+    type: 0
 --- !u!114 &4500662890051555681
 MonoBehaviour:
   m_ObjectHideFlags: 0

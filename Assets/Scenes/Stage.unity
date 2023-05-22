@@ -166,7 +166,7 @@ Transform:
   m_Children:
   - {fileID: 3384231810822977856}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &122357352
 GameObject:
@@ -554,7 +554,7 @@ RectTransform:
   - {fileID: 1407980441}
   - {fileID: 397742274}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -666,7 +666,7 @@ GameObject:
   m_IsActive: 1
 --- !u!114 &904388578
 MonoBehaviour:
-  m_ObjectHideFlags: 10
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -692,7 +692,7 @@ Transform:
   - {fileID: 2112911779}
   - {fileID: 122357353}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1035843190
 GameObject:
@@ -825,8 +825,69 @@ Transform:
   m_Children:
   - {fileID: 4477324567445985473}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1377626098
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 100000, guid: 1aed844f00281f143afeffed1df20c36, type: 3}
+      propertyPath: m_Name
+      value: Gladius
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 1aed844f00281f143afeffed1df20c36, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 1aed844f00281f143afeffed1df20c36, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 21.146751
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 1aed844f00281f143afeffed1df20c36, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.22
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 1aed844f00281f143afeffed1df20c36, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 3.1427774
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 1aed844f00281f143afeffed1df20c36, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 1aed844f00281f143afeffed1df20c36, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 1aed844f00281f143afeffed1df20c36, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 1aed844f00281f143afeffed1df20c36, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 1aed844f00281f143afeffed1df20c36, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 1aed844f00281f143afeffed1df20c36, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 1aed844f00281f143afeffed1df20c36, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 2300000, guid: 1aed844f00281f143afeffed1df20c36, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 4fad4ae1b4aed0d41beb9c9750dbfe91, type: 2}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 1aed844f00281f143afeffed1df20c36, type: 3}
 --- !u!1 &1407980438
 GameObject:
   m_ObjectHideFlags: 0
@@ -2322,7 +2383,7 @@ MonoBehaviour:
   maxPosZ: 100
   minFOV: 10
   maxFOV: 60
-  target: {fileID: 0}
+  target: {fileID: 3384231810822977856}
 --- !u!1 &4500662890051555674 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2811769205094483191, guid: d646759376c7dc246b32a406c436c32f,

@@ -14,7 +14,7 @@ public class ManualActor : Actor {
     private skillID _tempSkillID;
 
     /** Override del onTurn */
-    public override void thinking() 
+    public override void thinking() //done, falta que no es vegi la grid quan no es pot moure
     {
 
         if (nodePositionChanged()) {

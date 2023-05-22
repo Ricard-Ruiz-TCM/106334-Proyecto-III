@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using System.Collections.Generic;
 
 public class SceneStageManager : MonoBehaviour {
 
@@ -9,7 +10,7 @@ public class SceneStageManager : MonoBehaviour {
     private GameObject _upgradeUI;
     [SerializeField]
     private GameObject _perksUI;
-    
+
     [SerializeField, Header("Combat:")]
     private GameObject _turnUI;
     [SerializeField]
@@ -19,6 +20,12 @@ public class SceneStageManager : MonoBehaviour {
     private StageObjetiveUI _objetiveUI;
     [SerializeField]
     private StageResolutionUI _stageResolution;
+
+    [SerializeField, Header("Información del Nivel:")]
+    private StageData _data;
+
+    [SerializeField, Header("Entidades con turno en la escena:")]
+    private List<GameObject> _actors;
 
     // Unity OnEnable
     void OnEnable() {
@@ -48,29 +55,26 @@ public class SceneStageManager : MonoBehaviour {
         Stage.onCompleteStage -= CompleteStage;
     }
 
-    [Header("TESTING:")]
-    public StageData stageData;
-
     // Unity Start
     void Start() {
-        StageData data = stageData;
 
         // Build the Stage
-        switch (data.type) {
+        switch (_data.type) {
             case stageType.combat:
-                EnableCombat(data);
+                EnableCombat(_data);
                 break;
             case stageType.comrade:
             case stageType.blacksmith:
             case stageType.campfire:
-                EnableDialog(data);
+                EnableDialog(_data);
                 break;
         }
 
-        // Check si hay modificación de la lista de actores cuando empiezan las rondas
-        /*TurnManager.instance.onEndRound += () => {
-            TurnManager.instance.onModifyAttenders += Stage.CheckStage;
-        };*/
+        // Activate the actors
+        foreach (GameObject actors in _actors) {
+            actors.SetActive(true);
+        }
+
     }
 
     /** Métodos para habilitar los managers necesarios del stage */

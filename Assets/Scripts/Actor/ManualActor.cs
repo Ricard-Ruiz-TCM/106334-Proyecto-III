@@ -14,12 +14,15 @@ public class ManualActor : Actor {
     private skillID _tempSkillID;
 
     /** Override del onTurn */
-    public override void thinking() {
+    public override void thinking() 
+    {
 
         if (nodePositionChanged()) {
-            Stage.StageBuilder.clearGrid();
 
-            if (canMove()) {
+            if (canMove()) 
+            {
+                Stage.StageBuilder.DisplayMovementRange(transform, stepsRemain());
+                Stage.StageBuilder.clearPath();
                 // Calcular la ruta nueva
                 List<Node> route = Stage.Pathfinder.FindPath(_myNode, _mouseNode);
                 if ((route != null) && (stepsRemain() > 0)) {
@@ -32,18 +35,23 @@ public class ManualActor : Actor {
         }
 
         // Display de los paths
-        if (_walkablePath.Count > 0) {
+        if (_walkablePath.Count > 0) 
+        {
+            Debug.Log("saddas");
             Stage.StageBuilder.displayPath(_walkablePath, pathMaterial.walkable);
         }
-        // Display de los paths
-        if (_extraPath.Count > 0) {
-            Stage.StageBuilder.displayPath(_extraPath, pathMaterial.notWalkable);
-        }
+        //// Display de los paths
+        //if (_extraPath.Count > 0) {
+        //    Stage.StageBuilder.displayPath(_extraPath, pathMaterial.notWalkable);
+        //}
 
         // Input
         if (Input.GetMouseButtonDown(0) && _walkablePath.Count > 0) {
             if (canMove()) {
                 setDestination(_walkablePath);
+                _walkablePath = null;
+                Stage.StageBuilder.clearGrid();
+                Stage.StageBuilder.clearPath();
                 startMove();
             }
         }
@@ -66,26 +74,34 @@ public class ManualActor : Actor {
     }
 
     /** Override del act */
-    public override void act() {
+    public override void act() 
+    {
         // Reset de la acción si pulsamos escape
-        if (Input.GetKeyDown(KeyCode.Escape)) {
+        if (Input.GetKeyDown(KeyCode.Escape)) 
+        {
+            Stage.StageBuilder.ClearAttack();
+            Stage.StageBuilder.clearGrid();
             reAct();
         }
 
-        if (nodePositionChanged()) {
+        if (nodePositionChanged()) 
+        {
             Stage.StageBuilder.clearGrid();
             Stage.StageBuilder.displaySkillRange(equip.weapon.range, _myNode, pathMaterial.skill);
             // Check si estamos dentro de la distancia
-            if (Stage.StageBuilder.getDistance(_mouseNode, _myNode) <= equip.weapon.range) {
+            if (Stage.StageBuilder.getDistance(_mouseNode, _myNode) <= equip.weapon.range) 
+            {
+                Stage.StageBuilder.ClearAttack();
                 Stage.StageBuilder.displaySkill(_tempSkillID, _mouseNode, pathMaterial.skill);
-            } else {
-                Stage.StageBuilder.displaySkill(_tempSkillID, _mouseNode, pathMaterial.NONE);
-            }
+            } 
         }
 
         // Chck si estamos en rango
         if (Stage.StageBuilder.getDistance(_mouseNode, _myNode) <= equip.weapon.range) {
-            if (Input.GetMouseButtonDown(0)) {
+            if (Input.GetMouseButtonDown(0)) 
+            {
+                Stage.StageBuilder.ClearAttack();
+                Stage.StageBuilder.clearGrid();
                 BasicActor target = Stage.StageManager.getActor(_mouseNode);
                 skills.useSkill(_tempSkillID, this, target);
             }

@@ -96,7 +96,7 @@ public class GridBuilder : MonoBehaviour {
         }
         return null;
     }
-    
+
     /** Getters de Distance */
     public int getDistance(Vector3 a, Vector3 b) {
         return getDistance(getGridPlane(a), getGridPlane(b));
@@ -129,6 +129,11 @@ public class GridBuilder : MonoBehaviour {
         return new Vector2(Mathf.Clamp((x1 - x2), -1, 1), Mathf.Clamp((y1 - y2), -1, 1));
     }
 
+    /** Método para localizar el Node más cercano a un objetivo */
+    public Node findClosestNode(Node origin, Node target) {
+        return findClosestGrid(getGridPlane(origin), getGridPlane(target)).node;
+    }
+
     /** Método para localizar el GridPlane más cercano a un objetivo */
     public GridPlane findClosestGrid(GridPlane origin, GridPlane target) {
         int tmp = 1000;
@@ -152,7 +157,7 @@ public class GridBuilder : MonoBehaviour {
             displayNode(path[i], material);
         }
     }
-    
+
     /** Método para mostar un solo nodo */
     public void displayNode(Node node, pathMaterial material) {
         displayNode(node.x, node.y, material);
@@ -162,31 +167,24 @@ public class GridBuilder : MonoBehaviour {
     }
 
     /** Método para mostar una skill concreta */
-    public void displaySkill(skillID id, Node node, pathMaterial material)
-    {
+    public void displaySkill(skillID id, Node node, pathMaterial material) {
         Skill sk = uCore.GameManager.GetSkill(id);
 
         displayNode(node, material);
 
         int count = 1;
         int totalCount = 1;
-        for (int i = node.x - sk.areaRange; i <= node.x + sk.areaRange; i++)
-        {
-            for (int j = node.y; j < count + node.y; j++)
-            {
+        for (int i = node.x - sk.areaRange; i <= node.x + sk.areaRange; i++) {
+            for (int j = node.y; j < count + node.y; j++) {
                 displayNode(i, j, material);
             }
-            for (int z = node.y - 1; z > node.y - count; z--)
-            {
+            for (int z = node.y - 1; z > node.y - count; z--) {
                 displayNode(i, z, material);
             }
 
-            if (totalCount > sk.areaRange)
-            {
+            if (totalCount > sk.areaRange) {
                 count--;
-            }
-            else
-            {
+            } else {
                 count++;
             }
             totalCount++;
@@ -202,34 +200,25 @@ public class GridBuilder : MonoBehaviour {
     public void hideNode(int x, int y) {
         getGridPlane(x, y).setLayer(_invisibleLayer);
     }
-    public void displaySkillRange(int range, Node node,pathMaterial mat = pathMaterial.skill)
-    {
+    public void displaySkillRange(int range, Node node, pathMaterial mat = pathMaterial.skill) {
 
         int count = 1;
         int totalCount = 1;
-        for (int i = node.x - range; i <= node.x + range; i++)
-        {
-            for (int j = node.y; j < count + node.y; j++)
-            {
-                if (Stage.Grid.insideGrid(i, j))
-                {
+        for (int i = node.x - range; i <= node.x + range; i++) {
+            for (int j = node.y; j < count + node.y; j++) {
+                if (Stage.Grid.insideGrid(i, j)) {
                     getGridPlane(i, j).setMaterial(_materials[(int)mat]);
                 }
             }
-            for (int z = node.y - 1; z > node.y - count; z--)
-            {
-                if (Stage.Grid.insideGrid(i, z))
-                {
+            for (int z = node.y - 1; z > node.y - count; z--) {
+                if (Stage.Grid.insideGrid(i, z)) {
                     getGridPlane(i, z).setMaterial(_materials[(int)mat]);
                 }
             }
 
-            if (totalCount > range)
-            {
+            if (totalCount > range) {
                 count--;
-            }
-            else
-            {
+            } else {
                 count++;
             }
             totalCount++;

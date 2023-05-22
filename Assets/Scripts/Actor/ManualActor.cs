@@ -19,13 +19,15 @@ public class ManualActor : Actor {
         if (nodePositionChanged()) {
             Stage.StageBuilder.clearGrid();
 
-            // Calcular la ruta nueva
-            List<Node> route = Stage.Pathfinder.FindPath(_myNode, _mouseNode);
-            if ((route != null) && (stepsRemain() > 0)) {
-                int steps = Mathf.Min(route.Count, stepsRemain());
-                // Get de los paths
-                _walkablePath = route.GetRange(0, steps);
-                _extraPath = route.GetRange(steps, Mathf.Clamp(route.Count - steps, 0, route.Count));
+            if (canMove()) {
+                // Calcular la ruta nueva
+                List<Node> route = Stage.Pathfinder.FindPath(_myNode, _mouseNode);
+                if ((route != null) && (stepsRemain() > 0)) {
+                    int steps = Mathf.Min(route.Count, stepsRemain());
+                    // Get de los paths
+                    _walkablePath = route.GetRange(0, steps);
+                    _extraPath = route.GetRange(steps, Mathf.Clamp(route.Count - steps, 0, route.Count));
+                }
             }
         }
 

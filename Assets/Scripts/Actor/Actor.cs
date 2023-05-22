@@ -67,6 +67,11 @@ public abstract class Actor : BasicActor {
 
     /** Método para ir al siguiente nodo */
     private void nextStep() {
+        if (_route == null) {
+            endMovement();
+            return;
+        }
+
         if (_stepsDone < _route.Count) {
             onStepReached?.Invoke(Stage.StageBuilder.getGridPlane(_route[_stepsDone]).node);
             _stepsDone++;

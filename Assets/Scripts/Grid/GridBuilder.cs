@@ -152,9 +152,35 @@ public class GridBuilder : MonoBehaviour {
     }
 
     /** Método para mostar un path concreto */
-    public void displayPath(List<Node> path, pathMaterial material) {
-        for (int i = 0; i < path.Count; i++) {
-            displayNode(path[i], material);
+    public void displayPath(List<Node> path, pathMaterial material) 
+    {
+        for (int i = 0; i < path.Count; i++) 
+        {
+            if(i < path.Count - 1)
+            {
+                GameObject pathObj = getGridPlane(path[i].x, path[i].y).pathGameObject;
+                pathObj.SetActive(true);
+
+                if (path[i + 1].x > path[i].x)
+                {
+                    pathObj.transform.rotation = Quaternion.Euler(0, 0, 0);
+                }
+                if (path[i + 1].x < path[i].x)
+                {
+                    pathObj.transform.rotation = Quaternion.Euler(0, 180, 0);
+                }
+                if (path[i + 1].y > path[i].y)
+                {
+                    pathObj.transform.rotation = Quaternion.Euler(0, -90, 0);
+                }
+                if (path[i + 1].y < path[i].y)
+                {
+                    pathObj.transform.rotation = Quaternion.Euler(0, 90, 0);
+                }
+            }
+
+
+            //displayNode(path[i], material);
         }
     }
 
@@ -170,16 +196,24 @@ public class GridBuilder : MonoBehaviour {
     public void displaySkill(skillID id, Node node, pathMaterial material) {
         Skill sk = uCore.GameManager.GetSkill(id);
 
-        displayNode(node, material);
+        getGridPlane(node).GetAttackIndicator().SetActive(true);
 
         int count = 1;
         int totalCount = 1;
         for (int i = node.x - sk.areaRange; i <= node.x + sk.areaRange; i++) {
             for (int j = node.y; j < count + node.y; j++) {
-                displayNode(i, j, material);
+                //displayNode(i, j, material);
+                if (Stage.Grid.insideGrid(i, j))
+                {
+                    getGridPlane(i, j).GetAttackIndicator().SetActive(true);
+                }                   
             }
-            for (int z = node.y - 1; z > node.y - count; z--) {
-                displayNode(i, z, material);
+            for (int z = node.y - 1; z > node.y - count; z--) 
+            {
+                if (Stage.Grid.insideGrid(i, z))
+                {
+                    getGridPlane(i, z).GetAttackIndicator().SetActive(true);
+                }
             }
 
             if (totalCount > sk.areaRange) {
@@ -192,7 +226,55 @@ public class GridBuilder : MonoBehaviour {
 
 
     }
+    public void DisplayMovementRange(Transform from, int range)
+    {
+        {
+            int count = 1;
+            int totalCount = 1;
+            Node node = getGridPlane(from.position).node;
 
+            for (int i = node.x - range; i <= node.x + range; i++)
+            {
+                for (int j = count + node.y - 1; j < count + node.y; j++)
+                {
+                    if (Stage.Grid.insideGrid(i, j))
+                    {
+                        displayNode(i, j, pathMaterial.walkable);
+                        //getGridPlane(i, j).setMaterial(_materials[(int)pathMaterial.walkable]);
+                        //from.GridM().CalcRoute(from.transform.position, GetGridPlane(i, j), range);
+                        //Stage.StageBuilder.DisplayValidPath(from.GridM().VisualRouteValid, range);
+                    }
+
+                }
+                for (int z = node.y - count + 1; z > node.y - count; z--)
+                {
+                    if (Stage.Grid.insideGrid(i, z))
+                    {
+                        displayNode(i, z, pathMaterial.walkable);
+                        //from.GridM().CalcRoute(from.transform.position, GetGridPlane(i, z), range);
+                        //Stage.StageBuilder.DisplayValidPath(from.GridM().VisualRouteValid, range);
+                    }
+                }
+                if (i == node.x - range || i == node.x + range)
+                {
+                    if (Stage.Grid.insideGrid(i, node.y))
+                    {
+                        displayNode(i, node.y, pathMaterial.walkable);
+                    }
+                }
+
+                if (totalCount > range)
+                {
+                    count--;
+                }
+                else
+                {
+                    count++;
+                }
+                totalCount++;
+            }
+        }
+    }
     /*** Método para ocultar un nodo */
     public void hideNode(Node node) {
         hideNode(node.x, node.y);
@@ -207,12 +289,12 @@ public class GridBuilder : MonoBehaviour {
         for (int i = node.x - range; i <= node.x + range; i++) {
             for (int j = node.y; j < count + node.y; j++) {
                 if (Stage.Grid.insideGrid(i, j)) {
-                    getGridPlane(i, j).setMaterial(_materials[(int)mat]);
+                    displayNode(i, j, pathMaterial.walkable);
                 }
             }
             for (int z = node.y - 1; z > node.y - count; z--) {
                 if (Stage.Grid.insideGrid(i, z)) {
-                    getGridPlane(i, z).setMaterial(_materials[(int)mat]);
+                    displayNode(i, z, pathMaterial.walkable);
                 }
             }
 
@@ -224,9 +306,36 @@ public class GridBuilder : MonoBehaviour {
             totalCount++;
         }
     }
+    public void ClearAttack()
+    {
+        for (int x = 0; x < _grid.rows; x++)
+        {
+            for (int y = 0; y < _grid.columns; y++)
+            {
+                if(getGridPlane(x,y).GetAttackIndicator().activeSelf == true)
+                {
+                    getGridPlane(x, y).GetAttackIndicator().SetActive(false);
+                }
+            }
+        }
+    }
+    public void clearPath()
+    {
+        for (int x = 0; x < _grid.rows; x++)
+        {
+            for (int y = 0; y < _grid.columns; y++)
+            {
+                if (getGridPlane(x, y).pathGameObject.activeSelf == true)
+                {
+                    getGridPlane(x, y).pathGameObject.SetActive(false);
+                }
+            }
+        }
+    }
 
     /** Método para limpiar el grid y hacerlo invisible */
-    public void clearGrid() {
+    public void clearGrid() 
+    {
         for (int x = 0; x < _grid.rows; x++) {
             for (int y = 0; y < _grid.columns; y++) {
                 hideNode(x, y);

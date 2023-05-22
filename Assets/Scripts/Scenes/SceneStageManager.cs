@@ -22,6 +22,8 @@ public class SceneStageManager : MonoBehaviour {
     private StageResolutionUI _stageResolution;
 
     [SerializeField, Header("Información del Nivel:")]
+    private Stage _stage;
+    [SerializeField]
     private StageData _data;
 
     [SerializeField, Header("Entidades con turno en la escena:")]
@@ -57,6 +59,8 @@ public class SceneStageManager : MonoBehaviour {
 
     // Unity Start
     void Start() {
+        // Set data to Stage
+        _stage.SetData(_data);
 
         // Build the Stage
         switch (_data.type) {
@@ -89,8 +93,6 @@ public class SceneStageManager : MonoBehaviour {
         _objetiveUI.SetObjetive(data);
         _playerUI.SetActive(true);
         _turnUI.SetActive(true);
-        // Innit del stageLoader
-        // TODO // StageLoader.instance.buildStage(data);
         // Innit del turnManager
         TurnManager.instance.startManager();
     }
@@ -132,6 +134,5 @@ public class SceneStageManager : MonoBehaviour {
         _stageResolution.SetResolution(res, StageSuccess, StageFailed);
         _stageResolution.gameObject.SetActive(true);
     }
-
 
 }

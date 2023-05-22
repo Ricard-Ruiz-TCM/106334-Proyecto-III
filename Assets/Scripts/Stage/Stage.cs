@@ -8,7 +8,7 @@ public class Stage : MonoBehaviour {
     /** Callback para indicar como se completa el stage */
     public static event Action<stageResolution> onCompleteStage;
 
-    [SerializeField, Header("Info:")]
+    /** StageData */
     private StageData _data;
     public StageData Data => _data;
 

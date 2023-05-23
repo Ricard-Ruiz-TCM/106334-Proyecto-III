@@ -35,7 +35,7 @@ public class ManualActor : Actor {
         }
 
         // Display de los paths
-        if (_walkablePath.Count > 0) 
+        if ((_walkablePath != null) && (_walkablePath.Count > 0)) 
         {
             Debug.Log("saddas");
             Stage.StageBuilder.displayPath(_walkablePath, pathMaterial.walkable);
@@ -46,7 +46,7 @@ public class ManualActor : Actor {
         //}
 
         // Input
-        if (Input.GetMouseButtonDown(0) && _walkablePath.Count > 0) {
+        if ((_walkablePath != null) && (Input.GetMouseButtonDown(0)) && (_walkablePath.Count > 0)) {
             if (canMove()) {
                 setDestination(_walkablePath);
                 _walkablePath = null;

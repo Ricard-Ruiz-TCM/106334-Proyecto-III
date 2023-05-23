@@ -1,7 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
+using System.Collections.Generic;
 
 public class BuffManager : MonoBehaviour {
+
+    public static event Action onApplyBuff;
+    public static event Action onRemoveBuff;
 
     public List<BuffItem> activeBuffs;
 
@@ -33,6 +37,7 @@ public class BuffManager : MonoBehaviour {
 
         if (pos != -1) {
             activeBuffs.RemoveAt(pos);
+            onRemoveBuff?.Invoke();
         }
     }
 
@@ -41,6 +46,7 @@ public class BuffManager : MonoBehaviour {
             if (findBuff(id) == -1) {
                 activeBuffs.Add(new BuffItem(uCore.GameManager.GetBuff(id)));
                 activeBuffs[activeBuffs.Count - 1].buff.onApply(actor);
+                onApplyBuff?.Invoke();
             }
         }
     }

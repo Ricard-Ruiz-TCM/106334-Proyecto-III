@@ -16,6 +16,8 @@ public class TurnManager : MonoBehaviour {
     /** --------- */
     public Action<roundType> onEndRound;
     /** --------- */
+    public Action<Turnable> onNewCurrentTurnable;
+    /** --------- */
     public Action onEndSystem;
     public Action onStartSystem;
     /** --------- */
@@ -195,6 +197,7 @@ public class TurnManager : MonoBehaviour {
             _current = 0;
             _rounds++;
         }
+        onNewCurrentTurnable?.Invoke(current);
         if (!skip) {
             yield return new WaitForSeconds(_startTurnDelaySecs);
         }

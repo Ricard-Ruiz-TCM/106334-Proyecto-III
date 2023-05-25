@@ -26,6 +26,9 @@ public class SceneStageManager : MonoBehaviour {
     [SerializeField]
     private StageData _data;
 
+    [SerializeField, Header("Siguiente escena:")]
+    private gameScenes _nextScene;
+
     [SerializeField, Header("Entidades con turno en la escena:")]
     private List<GameObject> _actors;
 
@@ -133,6 +136,8 @@ public class SceneStageManager : MonoBehaviour {
         _playerUI.SetActive(false);
         _stageResolution.SetResolution(res, StageSuccess, StageFailed);
         _stageResolution.gameObject.SetActive(true);
+        // Cargando escena
+        uCore.Director.LoadSceneAsync(_nextScene);
     }
 
 }

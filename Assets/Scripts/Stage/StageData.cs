@@ -18,6 +18,7 @@ public struct StageData {
 
     [Header("Dialog System?:")]
     public DialogNode innitialDialog;
+    public DialogNode lastDialog;
 
     //[Header("Entrance & Exit:")]
     [HideInInspector]

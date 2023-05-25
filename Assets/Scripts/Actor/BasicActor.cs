@@ -47,7 +47,7 @@ public abstract class BasicActor : Turnable {
     public abstract int totalDefense();
 
     /** Abstract para calcular recibir daño */
-    public virtual void takeDamage(Actor from, int damage, itemID weapon = itemID.NONE) {
+    public virtual void takeDamage(BasicActor from, int damage, itemID weapon = itemID.NONE) {
         _damageTaken = Mathf.Clamp(damage - totalDefense(), 0, _maxHealth);
         _health -= _damageTaken;
 

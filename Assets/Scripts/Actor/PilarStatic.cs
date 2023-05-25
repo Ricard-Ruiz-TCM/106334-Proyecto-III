@@ -10,7 +10,7 @@ public class PilarStatic : StaticActor {
         base.onActorDeath();
     }
 
-    public override void takeDamage(Actor from, int damage, itemID weapon = itemID.NONE) {
+    public override void takeDamage(BasicActor from, int damage, itemID weapon = itemID.NONE) {
         damageFrom = from;
         base.takeDamage(from, damage, weapon);
     }

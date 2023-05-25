@@ -22,7 +22,7 @@ public class Skill : ScriptableObject {
     {
         if (to != null)
         {
-            to.takeDamage(from.totalDamage());
+            to.takeDamage((Actor)from, from.totalDamage());
         }
         from.endAction();
     }

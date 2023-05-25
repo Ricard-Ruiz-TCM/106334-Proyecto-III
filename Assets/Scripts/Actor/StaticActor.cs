@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 
+
 public class StaticActor : BasicActor {
 
     [SerializeField, Header("Resistencia (a.k.a -> armadura plana):")]

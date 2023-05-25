@@ -164,7 +164,7 @@ public abstract class Actor : BasicActor {
     }
     
     /** Override para recibir daño, se tienen en cuenta cositas */
-    public override void takeDamage(int damage, itemID weapon = itemID.NONE) {
+    public override void takeDamage(Actor from, int damage, itemID weapon = itemID.NONE) {
         // Invencible, kekw
         if (_buffs.isBuffActive(buffsID.Invencible)) {
             return;
@@ -174,7 +174,7 @@ public abstract class Actor : BasicActor {
             return;
         }
 
-        base.takeDamage(damage, weapon);
+        base.takeDamage(from, damage, weapon);
     }
 
     // Unity Awake

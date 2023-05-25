@@ -3,7 +3,7 @@
 
 public class PilarStatic : StaticActor {
 
-    Actor damageFrom;
+    BasicActor damageFrom;
 
     public override void onActorDeath() {
 

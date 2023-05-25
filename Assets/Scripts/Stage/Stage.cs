@@ -26,25 +26,35 @@ public class Stage : MonoBehaviour {
         Stage.Pathfinder = transform.GetComponentInChildren<Pathfinding>();
     }
 
-    /** Método set d ela informaicón */
+    // Unity Start
+    void Start() {
+        TurnManager.instance.onEndRound += (roundType r) => {
+            if (!r.Equals(roundType.positioning))
+                return;
+
+            TurnManager.instance.onModifyAttenders += checkGameResolution;
+        };
+    }
+
+    /** Método set de la informaicón */
     public void SetData(StageData data) {
         _data = data;
     }
 
     /** Método para comprobar si el stage ha sido completado, depende del objetivo */
-    public void CheckCompletation() {
-        bool completed = true;
+    private void checkGameResolution() {
+        
+        bool completed = false;
+        bool enemies = TurnManager.instance.attenders.Exists(x => x is AutomaticActor);
 
         switch (_data.objetive) {
             case stageObjetive.killAll:
-                foreach (Turnable actor in TurnManager.instance.attenders) {
-                    /*if (actor is Enemy) {
-                        completed = false;
-                    }*/
-                }
+                if (!enemies)
+                    completed = true;
                 break;
             case stageObjetive.protectNPC:
-                // TODO // Check si esta el NPC a salvo
+                if (!enemies)
+                    completed = TurnManager.instance.attenders.Exists(x => x is ProtectedActor);
                 break;
         }
 

@@ -44,7 +44,7 @@ public class ManualActor : Actor {
         //}
 
         // Input
-        if (Input.GetMouseButtonDown(0) && _walkablePath.Count > 0) {
+        if ((_walkablePath != null) && (Input.GetMouseButtonDown(0)) && (_walkablePath.Count > 0)) {
             if (canMove()) {
                 setDestination(_walkablePath);
                 _walkablePath = null;

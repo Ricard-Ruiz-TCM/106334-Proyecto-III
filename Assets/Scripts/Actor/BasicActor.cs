@@ -4,7 +4,7 @@ using UnityEngine;
 public abstract class BasicActor : Turnable {
 
     /** Callbacks */
-    public Action onHealthChanged;
+    public static event Action onChangeHealth;
     /** --------- */
 
     [SerializeField, Header("Vida:")]
@@ -38,7 +38,7 @@ public abstract class BasicActor : Turnable {
     /** Health [0 .. max] */
     public void setHealth(int value) {
         _health = Mathf.Clamp(_health + value, 0, _maxHealth);
-        onHealthChanged?.Invoke();
+        onChangeHealth?.Invoke();
     }
 
     /** Abstracts para calculo del Daño total */
@@ -51,7 +51,7 @@ public abstract class BasicActor : Turnable {
         _damageTaken = Mathf.Clamp(damage - totalDefense(), 0, _maxHealth);
         _health -= _damageTaken;
 
-        onHealthChanged?.Invoke();
+        onChangeHealth?.Invoke();
 
         // Check Death
         if (_health <= 0) {

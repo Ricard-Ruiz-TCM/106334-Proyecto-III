@@ -100,7 +100,7 @@ public enum stageResolution {
 
 // Objetivo del stage
 public enum stageObjetive {
-    killAll, protectNPC, clearPath
+    killAll, protectNPC
 }
 
 // Tipo de terreno del stage

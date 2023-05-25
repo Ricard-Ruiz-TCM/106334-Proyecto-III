@@ -32,11 +32,16 @@ public class PlayerUI : MonoBehaviour {
 
     private void Start() {
         TurnManager.instance.onStartTurn += UpdateUI;
+        TurnManager.instance.onEndRound += (roundType t) => {
+            if (t.Equals(roundType.positioning)) {
+                UpdateUI();
+            }
+        };
     }
 
     public void BTN_EndTurn() {
-        if (_currentTurnable.CompareTag("Player")) {
-            _currentTurnable.endTurn();
+        if (((Actor)TurnManager.instance.current).CompareTag("Player")) {
+            ((Actor)TurnManager.instance.current).endTurn();
         }
     }
 

@@ -154,11 +154,10 @@ public class TurnManager : MonoBehaviour {
                 startManager();
                 break;
             case roundType.positioning:
-                _roundType = roundType.combat;
                 onEndRound?.Invoke(_roundType);
-                break;
-            case roundType.combat:
-                // TODO // Check IA de victorya/derrota
+                _roundType = roundType.combat;
+                onNewRound?.Invoke(_roundType);
+                startTurn();
                 break;
             case roundType.completed:
                 break;

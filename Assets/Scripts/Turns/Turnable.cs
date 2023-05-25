@@ -7,6 +7,11 @@ public abstract class Turnable : MonoBehaviour {
         TurnManager.instance.subscribe(this);
     }
 
+    // Unity OnDestroy
+    protected virtual void OnDestroy() {
+        TurnManager.instance.unsubscribe(this);
+    }
+
     /** Métodos de control del turno **/
     public turnState state;
     public abstract void thinking();

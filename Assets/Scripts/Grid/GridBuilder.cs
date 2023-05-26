@@ -234,17 +234,47 @@ public class GridBuilder : MonoBehaviour {
                         if (Stage.Pathfinder.isAchievable(node, getGridNode(i, j), range)) {
                             displayNode(i, j, pathMaterial.walkable);
                         }
-                        //getGridPlane(i, j).setMaterial(_materials[(int)pathMaterial.walkable]);
-                        //from.GridM().CalcRoute(from.transform.position, GetGridPlane(i, j), range);
-                        //Stage.StageBuilder.DisplayValidPath(from.GridM().VisualRouteValid, range);
+                        else
+                        {
+                            bool hasFindClosed = false;
+                            GridPlane closestPlane = getGridPlane(i, j);
+                            while (!hasFindClosed)
+                            {
+                                closestPlane = findClosestGrid(getGridPlane(node.x, node.y), closestPlane);
+                                if (Stage.Pathfinder.isAchievable(node, closestPlane.node, range))
+                                {
+                                    displayNode(closestPlane.node, pathMaterial.walkable);
+                                    hasFindClosed = true;
+                                }
+                            }
+
+                        }
                     }
 
                 }
                 for (int z = node.y - count + 1; z > node.y - count; z--) {
-                    if (Stage.Grid.insideGrid(i, z)) {
-                        displayNode(i, z, pathMaterial.walkable);
-                        //from.GridM().CalcRoute(from.transform.position, GetGridPlane(i, z), range);
-                        //Stage.StageBuilder.DisplayValidPath(from.GridM().VisualRouteValid, range);
+                    if (Stage.Grid.insideGrid(i, z)) 
+                    {
+                        if (Stage.Pathfinder.isAchievable(node, getGridNode(i, z), range))
+                        {
+                            displayNode(i, z, pathMaterial.walkable);
+                        }
+                        else
+                        {
+                            bool hasFindClosed = false;
+                            GridPlane closestPlane = getGridPlane(i, z);
+                            while (!hasFindClosed)
+                            {
+                                closestPlane = findClosestGrid(getGridPlane(node.x, node.y), closestPlane);
+                                if (Stage.Pathfinder.isAchievable(node, closestPlane.node, range))
+                                {
+                                    displayNode(closestPlane.node, pathMaterial.walkable);
+                                    hasFindClosed = true;
+                                }
+                            }
+                            
+                        }
+
                     }
                 }
                 if (i == node.x - range || i == node.x + range) {

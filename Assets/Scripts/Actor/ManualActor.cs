@@ -44,6 +44,10 @@ public class ManualActor : Actor {
 
         // Input
         if ((_walkablePath != null) && (Input.GetMouseButtonDown(0)) && (_walkablePath.Count > 0)) {
+            Node target = Stage.StageBuilder.getMouseGridNode();
+            if (!target.Equals(_mouseNode))
+                return;
+
             if (canMove()) {
                 setDestination(_walkablePath);
                 _walkablePath = null;

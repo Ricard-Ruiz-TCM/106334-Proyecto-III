@@ -27,8 +27,8 @@ public class SkillButtonUI : MonoBehaviour {
     }
 
     public void UpdateCooldown() {
-        _txtCooldown.UpdateText(_skillItem.cooldown >= 0 ? _skillItem.cooldown.ToString() : "");
-        _btn.interactable = (_skill.cooldown < 0);
+        _txtCooldown.UpdateText(_skillItem.cooldown > 0 ? _skillItem.cooldown.ToString() : "");
+        _btn.interactable = (_skillItem.cooldown <= 0);
     }
 
     public void Set(Turnable actor, SkillItem skill, KeyCode shortcut, int pos) {

@@ -35,7 +35,6 @@ public class ManualActor : Actor {
 
         // Display de los paths
         if ((_walkablePath != null) && (_walkablePath.Count > 0)) {
-            Debug.Log("saddas");
             Stage.StageBuilder.displayPath(_walkablePath, pathMaterial.walkable);
         }
         //// Display de los paths

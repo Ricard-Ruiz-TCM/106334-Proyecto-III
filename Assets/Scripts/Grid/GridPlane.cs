@@ -32,32 +32,21 @@ public class GridPlane : MonoBehaviour {
         this.node = node;
     }
 
-    /** Método para establecer el material y layer */
-    public void setRendering(Material mat, string layer) {
-        setLayer(layer);
-        setMaterial(mat);
-    }
-
     /** Método para setear el material */
     public void setMaterial(Material mat) {
         _meshRenderer.material = mat;
     }
-    public Material GetMaterial()
-    {
+
+    public Material GetMaterial() {
         return _meshRenderer.material;
     }
-    public bool CompareMaterial(Material mat)
-    {
+
+    public bool CompareMaterial(Material mat) {
         return _meshRenderer.material == mat;
     }
-    public GameObject GetAttackIndicator()
-    {
-        return attackShow;
-    }
 
-    /** Método para establecer el layer */
-    public void setLayer(string layer) {
-        gameObject.layer = LayerMask.NameToLayer(layer);
+    public GameObject GetAttackIndicator() {
+        return attackShow;
     }
 
 }

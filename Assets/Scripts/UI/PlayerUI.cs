@@ -52,14 +52,20 @@ public class PlayerUI : MonoBehaviour {
 
     // Unity Start
     private void Start() {
-        TurnManager.instance.onModifyAttenders += getPlayer;    
+        TurnManager.instance.onModifyAttenders += getPlayer;
+
+        TurnManager.instance.onStartTurn += getPlayer;
     }
 
     /** M�todo que asigna el player al sistema, para los posibles jugadores */
     private void getPlayer() {
         Actor actor = (Actor)TurnManager.instance.current;
+
+        disableSkills();
+        _btnEndTurn.interactable = false;
+
         // Set del player
-        if (actor.CompareTag("Player")) {
+        if (actor is ManualActor) {
             _player = actor;
 
             // Update the full HUD
@@ -68,7 +74,7 @@ public class PlayerUI : MonoBehaviour {
             displaySkills();
         }
     }
-   
+
     /** Update de todas las stats */
     private void updateStats() {
         updateSteps();
@@ -78,16 +84,25 @@ public class PlayerUI : MonoBehaviour {
 
     /** M�todo que actualiza la defensa total */
     private void updateDefense() {
+        if (_player == null)
+            return;
+
         _defense.UpdateText(_player.totalDefense());
     }
 
     /** M�todo que actualiz ael hud de vida */
     private void updateHealth() {
+        if (_player == null)
+            return;
+
         _imgHealth.fillAmount = (_player.healthPercent() / 100);
     }
 
     /** M�todo que acutaliza los steps */
     private void updateSteps() {
+        if (_player == null)
+            return;
+
         _steps.UpdateText(_player.stepsRemain());
     }
 
@@ -103,30 +118,22 @@ public class PlayerUI : MonoBehaviour {
     private void displaySkills() {
         _skillButtons.Clear();
         int i = 1;
-        if (_player is Actor) {
-            clearPanel(_panelSkills);
-            foreach (SkillItem skI in _player.skills.skills) {
-                GameObject btn = GameObject.Instantiate(_skillButtonPfb, _panelSkills);
-                _skillButtons.Add(skI.skill.ID, btn.GetComponent<SkillButtonUI>());
-                btn.GetComponent<SkillButtonUI>().Set(_player, skI, (KeyCode)(((int)KeyCode.Alpha0) + i), i);
-                btn.GetComponent<Button>().interactable = (skI.cooldown < 0);
-                i++;
-            }
-        } else {
-            foreach (Transform child in _panelSkills) {
-                child.GetComponent<Button>().interactable = false;
-            }
-        }
-
-        // Instant de las skills vac�as
-        if (i < 9) {
-            for (int a = i; a < 9; a++) {
-                GameObject btn = GameObject.Instantiate(_skillButtonPfb, _panelSkills);
-                btn.GetComponent<Button>().interactable = false;
-            }
+        clearPanel(_panelSkills);
+        foreach (SkillItem skI in _player.skills.skills) {
+            GameObject btn = GameObject.Instantiate(_skillButtonPfb, _panelSkills);
+            _skillButtons.Add(skI.skill.ID, btn.GetComponent<SkillButtonUI>());
+            btn.GetComponent<SkillButtonUI>().Set(_player, skI, (KeyCode)(((int)KeyCode.Alpha0) + i), i);
+            i++;
         }
 
         _btnEndTurn.interactable = (_player.CompareTag("Player"));
+    }
+
+    /** Método para desabilitar los skills icons */
+    private void disableSkills() {
+        foreach (KeyValuePair<skillID, SkillButtonUI> entry in _skillButtons) {
+            entry.Value.gameObject.GetComponent<Button>().interactable = false;
+        }
     }
 
     /** M�todo para mostar los buffos del player */

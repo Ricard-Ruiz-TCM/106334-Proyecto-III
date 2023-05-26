@@ -96,7 +96,8 @@ public abstract class Actor : BasicActor {
     /** Override del beginTurn */
     public override void beginTurn() {
         _stepsDone = 0;
-        _route.Clear();
+        if (_route != null)
+            _route.Clear();
         buffs.applyStartTurnEffect(this);
         skills.updateCooldown();
         base.beginTurn();
@@ -162,7 +163,7 @@ public abstract class Actor : BasicActor {
 
         return defense;
     }
-    
+
     /** Override para recibir daño, se tienen en cuenta cositas */
     public override void takeDamage(BasicActor from, int damage, itemID weapon = itemID.NONE) {
         // Invencible, kekw
@@ -207,6 +208,9 @@ public abstract class Actor : BasicActor {
         if (_equip.armor != null) {
             _baseDefense += _equip.armorDefense;
         }
+        if (_equip.weapon != null) {
+            _skills.addSkill(equip.weapon.skill);
+        }
         foreach (PerkItem pi in _perks.perks) {
             if (pi.perk is SkillPerk) {
                 _skills.addSkill(((SkillPerk)pi.perk).skill);
@@ -231,7 +235,7 @@ public abstract class Actor : BasicActor {
 
     // Unity OnDestroy
     void OnDestroy() {
-        TurnManager.instance.unsubscribe(this);    
+        TurnManager.instance.unsubscribe(this);
     }
 
 }

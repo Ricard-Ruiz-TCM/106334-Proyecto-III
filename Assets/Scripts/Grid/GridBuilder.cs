@@ -40,21 +40,27 @@ public class GridBuilder : MonoBehaviour {
         for (int x = 0; x < _grid.rows; x++) {
             for (int y = 0; y < _grid.columns; y++) {
                 // Posición donde será isntanciado
+                Node node = _grid.getNode(x, y);
                 Vector3 position = new Vector3(x * _planeSize * _planePfb.transform.localScale.x + _offset, _offset, y * _planeSize * _planePfb.transform.localScale.y + _offset);
                 // Instant del prefab
                 GridPlane obj = GameObject.Instantiate(_planePfb, position, Quaternion.identity, transform).GetComponent<GridPlane>();
-                obj.gameObject.name = "M[" + x + "," + y + "]-" + "W:" + _grid.getNode(x, y).walkable;
+                obj.gameObject.name = "M[" + x + "," + y + "]-" + "W:" + node.walkable;
                 RaycastHit raycastHit;
                 if (Physics.Raycast(obj.transform.position, -Vector3.up, out raycastHit, Mathf.Infinity, _layer)) {
                     // RePosition del plane, justo encima del mapeado
                     obj.transform.position = new Vector3(raycastHit.point.x, raycastHit.point.y + 0.1f, raycastHit.point.z);
                 }
                 // initialization
-                obj.setGrid(_grid, _grid.getNode(x, y));
+                obj.setGrid(_grid, node);
                 // Assign en el planeMap
                 _planeMap[x, y] = obj;
-                // Set del material inical
-                hideNode(x, y);
+                if (!node.walkable) {
+                    displayNode(node, pathMaterial.notWalkable);
+                } else if (node.type.Equals(Array2DEditor.nodeType.P)) {
+                    displayNode(node, pathMaterial.skill);
+                } else {
+                    displayNode(node, pathMaterial.invisible);
+                }
             }
         }
     }
@@ -74,7 +80,7 @@ public class GridBuilder : MonoBehaviour {
     public Node getMouseGridNode() {
         RaycastHit raycastHit;
         if (Physics.Raycast(Camera.main.ScreenPointToRay(uCore.Action.mousePosition), out raycastHit)) {
-            return getGridPlane(raycastHit.point).node;
+            return getGridNode(raycastHit.point);
         }
         return null;
     }
@@ -189,7 +195,7 @@ public class GridBuilder : MonoBehaviour {
         displayNode(node.x, node.y, material);
     }
     public void displayNode(int x, int y, pathMaterial material) {
-        getGridPlane(x, y).setRendering(_materials[(int)material], _visibleLayer);
+        getGridPlane(x, y).setMaterial(_materials[(int)material]);
     }
 
     /** Método para mostar una skill concreta */
@@ -277,10 +283,10 @@ public class GridBuilder : MonoBehaviour {
     }
     /*** Método para ocultar un nodo */
     public void hideNode(Node node) {
-        hideNode(node.x, node.y);
+        displayNode(node, pathMaterial.invisible);
     }
     public void hideNode(int x, int y) {
-        getGridPlane(x, y).setLayer(_invisibleLayer);
+        hideNode(getGridNode(x, y));
     }
     public void displaySkillRange(int range, Node node, pathMaterial mat = pathMaterial.skill) {
 

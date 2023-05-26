@@ -21,13 +21,12 @@ class TurnManagerUI : MonoBehaviour {
     public void UpdateTurnList() {
         ClearList();
 
-        List<Turnable> turnables = TurnManager.instance.sortedByIndex();
-        // Instant the bigOne + Info
-        if (turnables.Count > 1) {
-            //_turnInfo.UpdatePanel(turnables[0]);
-            InstantiateUI(_bTurnableUI).SetTurnable(turnables[0]);
-            for (int i = 1; i < turnables.Count; i++) {
-                // Instant the smallOnes
+        List<Turnable> turnables = TurnManager.instance.attenders;
+        turnables.RemoveAll(x => x is StaticActor);
+        for (int i = 0; i < turnables.Count; i++) {
+            if (turnables[i].Equals(TurnManager.instance.current)) {
+                InstantiateUI(_bTurnableUI).SetTurnable(turnables[i]);
+            } else {
                 InstantiateUI(_sTurnableUI).SetTurnable(turnables[i]);
             }
         }

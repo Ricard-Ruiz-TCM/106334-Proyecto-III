@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 1025494422792128432}
   - component: {fileID: 1025494422792128434}
   - component: {fileID: 1025494422792128433}
-  - component: {fileID: 1025494422792128435}
   m_Layer: 5
   m_Name: panel_Info
   m_TagString: Untagged
@@ -83,21 +82,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &1025494422792128435
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1025494422792128439}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd2f4b2793ab2e7489407e9c31adcc8c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _shortStatusUIpfb: {fileID: 1702150423919215130, guid: 1a00ada3a1f51c74a9f4e99da28790c2,
-    type: 3}
-  _shortStatusContainer: {fileID: 1025494424269511741}
 --- !u!1 &1025494422805971271
 GameObject:
   m_ObjectHideFlags: 0
@@ -1358,14 +1342,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20451c69fb703a34ea2ff2dc4d01afee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _btnEndTurn: {fileID: 1025494424148494078}
-  _panelSkills: {fileID: 1025494423041347556}
-  _skillButtonUI: {fileID: 4593170086789612020, guid: c534cb5ef386a1744911b29d855bc7d1,
-    type: 3}
   _imgHealth: {fileID: 1025494424051937355}
   _steps: {fileID: 1025494423940966272}
   _defense: {fileID: 1025494424161273138}
-  _playerTurnInfo: {fileID: 1025494422792128435}
+  _shortBuffPfb: {fileID: 1702150423919215130, guid: 1a00ada3a1f51c74a9f4e99da28790c2,
+    type: 3}
+  _panelBuffs: {fileID: 1025494424269511741}
+  _skillButtonPfb: {fileID: 4593170086789612020, guid: c534cb5ef386a1744911b29d855bc7d1,
+    type: 3}
+  _panelSkills: {fileID: 1025494423041347556}
+  _btnEndTurn: {fileID: 1025494424148494078}
 --- !u!1 &1025494424161273136
 GameObject:
   m_ObjectHideFlags: 0

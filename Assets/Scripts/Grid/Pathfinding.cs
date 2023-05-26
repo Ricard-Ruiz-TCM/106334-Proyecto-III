@@ -61,6 +61,15 @@ public class Pathfinding : MonoBehaviour {
         return null;
     }
 
+    /** Método para comprobar si un node es alcanzable */
+    public bool isAchievable(Node origin, Node target, int steps) {
+        List<Node> route = FindPath(origin, target);
+
+        if (route == null)
+            return false;
+
+        return (route.Count <= steps);
+    }
 
     /** Metodo para tornar el path al rever, utilizando el parent del Node */
     private List<Node> ReversePath(Node origin, Node target) {

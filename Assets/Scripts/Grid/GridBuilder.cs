@@ -216,17 +216,20 @@ public class GridBuilder : MonoBehaviour {
 
 
     }
-    public void DisplayMovementRange(Transform from, int range) {
-        {
+    public void DisplayMovementRange(Transform from, int range) 
+    {
+        
             int count = 1;
             int totalCount = 1;
             Node node = getGridPlane(from.position).node;
+            List<GridPlane> gridList = new List<GridPlane>();
 
             for (int i = node.x - range; i <= node.x + range; i++) {
                 for (int j = count + node.y - 1; j < count + node.y; j++) {
                     if (Stage.Grid.insideGrid(i, j)) {
                         if (Stage.Pathfinder.isAchievable(node, getGridNode(i, j), range)) {
                             displayNode(i, j, pathMaterial.walkable);
+                            gridList.Add(getGridPlane(i, j));
                         }
                         else
                         {
@@ -239,6 +242,7 @@ public class GridBuilder : MonoBehaviour {
                                 {
                                     displayNode(closestPlane.node, pathMaterial.walkable);
                                     hasFindClosed = true;
+                                    gridList.Add(closestPlane);
                                 }
                             }
 
@@ -252,6 +256,7 @@ public class GridBuilder : MonoBehaviour {
                         if (Stage.Pathfinder.isAchievable(node, getGridNode(i, z), range))
                         {
                             displayNode(i, z, pathMaterial.walkable);
+                        gridList.Add(getGridPlane(i, z));
                         }
                         else
                         {
@@ -264,6 +269,7 @@ public class GridBuilder : MonoBehaviour {
                                 {
                                     displayNode(closestPlane.node, pathMaterial.walkable);
                                     hasFindClosed = true;
+                                gridList.Add(closestPlane);
                                 }
                             }
                             
@@ -284,7 +290,33 @@ public class GridBuilder : MonoBehaviour {
                 }
                 totalCount++;
             }
+        foreach(GridPlane plane in gridList)
+        {
+            enableBorders(plane, getDirection(getGridNode(from.position), plane.node),range);
         }
+        
+    }
+    public void enableBorders(GridPlane plane, Vector2 vec, int maxRange)
+    {
+        if (vec.x > 0)
+            plane.limitLeft.SetActive(true);
+
+        else if (vec.x < 0)
+            plane.limitRight.SetActive(true);
+
+        if (vec.y > 0)
+            plane.limitDown.SetActive(true);
+
+        else if (vec.y < 0)
+            plane.limitUp.SetActive(true);
+        //else
+        //{
+        //    foreach (var item in Stage.Grid.getNeighbours(getGridPlane(vec).node))
+        //    {
+
+        //    }
+        //}
+
     }
     /*** Método para ocultar un nodo */
     public void hideNode(Node node) {
@@ -340,14 +372,7 @@ public class GridBuilder : MonoBehaviour {
     public void clearGrid() {
         for (int x = 0; x < _grid.rows; x++) {
             for (int y = 0; y < _grid.columns; y++) {
-                Node node = _grid.getNode(x, y);
-                if (!node.walkable) {
-                    displayNode(node, pathMaterial.notWalkable);
-                } else if (node.type.Equals(Array2DEditor.nodeType.P)) {
-                    displayNode(node, pathMaterial.skill);
-                } else {
-                    displayNode(node, pathMaterial.invisible);
-                }
+                hideNode(x, y);
             }
         }
     }

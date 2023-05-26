@@ -13,6 +13,11 @@ public class GridPlane : MonoBehaviour {
     public Grid2D grid2D;
     public GameObject pathGameObject;
 
+    public GameObject limitLeft;
+    public GameObject limitRight;
+    public GameObject limitUp;
+    public GameObject limitDown;
+
     // Fast position access
     public Vector3 position {
         get {
@@ -49,4 +54,12 @@ public class GridPlane : MonoBehaviour {
         return attackShow;
     }
 
+
+    public void ClearBorders()
+    {
+        limitLeft.SetActive(false);
+        limitRight.SetActive(false);
+        limitUp.SetActive(false);
+        limitDown.SetActive(false);
+    }
 }

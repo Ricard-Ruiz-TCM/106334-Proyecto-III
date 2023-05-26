@@ -54,15 +54,9 @@ public class GridBuilder : MonoBehaviour {
                 obj.setGrid(_grid, node);
                 // Assign en el planeMap
                 _planeMap[x, y] = obj;
-                if (!node.walkable) {
-                    displayNode(node, pathMaterial.notWalkable);
-                } else if (node.type.Equals(Array2DEditor.nodeType.P)) {
-                    displayNode(node, pathMaterial.skill);
-                } else {
-                    displayNode(node, pathMaterial.invisible);
-                }
             }
         }
+        clearGrid();
     }
 
     /** Método que compruba si el ratón está sobre la Grid2D */
@@ -346,7 +340,14 @@ public class GridBuilder : MonoBehaviour {
     public void clearGrid() {
         for (int x = 0; x < _grid.rows; x++) {
             for (int y = 0; y < _grid.columns; y++) {
-                hideNode(x, y);
+                Node node = _grid.getNode(x, y);
+                if (!node.walkable) {
+                    displayNode(node, pathMaterial.notWalkable);
+                } else if (node.type.Equals(Array2DEditor.nodeType.P)) {
+                    displayNode(node, pathMaterial.skill);
+                } else {
+                    displayNode(node, pathMaterial.invisible);
+                }
             }
         }
     }

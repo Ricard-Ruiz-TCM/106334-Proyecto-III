@@ -8,13 +8,13 @@ class TurnableUI : MonoBehaviour {
     [SerializeField]
     private UIText _text;
     [SerializeField]
-    private Slider _slider;
+    private Image _filler;
 
     public void SetTurnable(Turnable turnable) {
         _text.UpdateText(turnable.gameObject.name);
-        if (_slider != null) {
+        if (_filler != null) {
+            _filler.fillAmount = (float)((float)((BasicActor)turnable).health() / (float)((BasicActor)turnable).maxHealth());
         }
-            //_slider.value = ((float)turnable.GetHealth() / (float)turnable.MaxHealth());
     }
 
 }

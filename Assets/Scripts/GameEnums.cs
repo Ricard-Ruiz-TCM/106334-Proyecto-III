@@ -83,6 +83,11 @@ public enum stageDifficulty {
     diff0, diff1, diff2
 }
 
+// Estado del stage
+public enum stageState {
+    innDialog, shiftManaged, endDialog, completed
+}
+
 // Tipo de stage
 public enum stageType {
     combat, comrade, blacksmith, campfire

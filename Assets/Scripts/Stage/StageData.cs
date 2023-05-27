@@ -6,10 +6,10 @@ public struct StageData {
 
     [HideInInspector]
     public int ID;
-    [Header("Stage ID & Name:")]
+    [Header("Name:")]
     public string keyName;
 
-    [Header("Stage Type:")]
+    [HideInInspector, Header("Stage Type:")]
     public stageType type;
     [HideInInspector]
     public stageTerrain terrain;

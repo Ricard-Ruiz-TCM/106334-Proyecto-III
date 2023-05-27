@@ -25,11 +25,11 @@ public class StageResolutionUI : MonoBehaviour {
     }
 
     public void BTN_Defeat() {
-        _success();
+        _failure();
     }
 
     public void BTN_Victory() {
-        _failure();
+        _success();
     }
 
 }

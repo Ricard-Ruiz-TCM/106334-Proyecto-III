@@ -84,7 +84,9 @@ public class GridBuilder : MonoBehaviour {
         return getGridPlane(node.x, node.y);
     }
     public GridPlane getGridPlane(int x, int y) {
-        return _planeMap[x, y];
+        int cX = Mathf.Clamp(x, 0, _grid.rows - 1);
+        int cY = Mathf.Clamp(y, 0, _grid.columns - 1);
+        return _planeMap[cX, cY];
     }
     public GridPlane getGridPlane(Vector3 worldPos) {
         return getGridPlane(Mathf.RoundToInt(worldPos.x - _offset), Mathf.RoundToInt(worldPos.z - _offset));
@@ -187,6 +189,9 @@ public class GridBuilder : MonoBehaviour {
 
     /** Método para mostar una skill concreta */
     public void displaySkill(skillID id, Node node, pathMaterial material) {
+        if (id.Equals(skillID.NONE))
+            return;
+
         Skill sk = uCore.GameManager.GetSkill(id);
 
         getGridPlane(node).GetAttackIndicator().SetActive(true);

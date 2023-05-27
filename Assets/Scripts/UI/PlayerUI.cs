@@ -65,6 +65,11 @@ public class PlayerUI : MonoBehaviour {
     private void getPlayer() {
         Actor actor = (Actor)TurnManager.instance.current;
 
+        // Nos vamos si hemos muertoo, desactivando
+        if (actor == null) {
+            return;
+        }
+
         disableSkills();
         _btnEndTurn.interactable = false;
 

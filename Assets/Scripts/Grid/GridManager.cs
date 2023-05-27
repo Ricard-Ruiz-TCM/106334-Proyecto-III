@@ -8,6 +8,11 @@ public class GridManager : MonoBehaviour {
     [SerializeField]
     private string _playerTag = "Player";
 
+    /** Finding de alguien je, el más cercano */
+    public Actor findByTag(Transform origin, string tag) {
+        return (Actor)findSomeOne(origin, tag);
+    }
+
     /** Método para buscar al player más cercano */
     public Actor findPlayer(Transform origin) {
         return (Actor)findSomeOne(origin, _playerTag);

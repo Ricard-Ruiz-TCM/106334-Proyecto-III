@@ -13,7 +13,6 @@ public abstract class Turnable : MonoBehaviour {
     }
 
     /** Métodos de control del turno **/
-    [HideInInspector]
     public turnState state;
     public abstract void thinking();
     public virtual void endTurn() {
@@ -35,7 +34,6 @@ public abstract class Turnable : MonoBehaviour {
     /** ---------------------------- **/
 
     /** Métodos de control de Acción */
-    [HideInInspector]
     public progress acting;
     public abstract void act();
     public virtual void reAct() {
@@ -60,7 +58,6 @@ public abstract class Turnable : MonoBehaviour {
     /** ---------------------------- */
 
     /** Métodos de control de Movimiento */
-    [HideInInspector]
     public progress moving;
     public abstract void move();
     public virtual bool canMove() {

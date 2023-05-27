@@ -11,10 +11,17 @@ public class AutomaticActor : Actor {
 
     /** Override del onTurn */
     public override void thinking() {
+
+        // Change to flee if low health
+        if ((!_combatAI.Equals(combatAI.flee)) && (healthPercent() < _fleeThreshold)) {
+            _combatAI = combatAI.flee;
+        }
+
+        // AI de combate
         switch (_combatAI) {
             case combatAI.ranged:
             case combatAI.melee:
-                basicCombatAI();
+                mixedCombatAI();
                 break;
             case combatAI.flee:
                 fleeCombatAI();
@@ -22,101 +29,37 @@ public class AutomaticActor : Actor {
             default:
                 break;
         }
+
     }
 
+    #region combatAI.ranged && combatAI.melee
     /** Método para establecer combate a distancia mínima */
-    private void basicCombatAI() {
-        if (healthPercent() < _fleeThreshold) {
-            _combatAI = combatAI.flee;
-            return;
-        }
-
-
-
-        // Moving
-        if (canMove()) {
-
-            Turnable near = Stage.StageManager.findPlayer(transform);
-
-            // Player encontrado
-            if (near != null) {
-                Node mPos = Stage.StageBuilder.getGridNode(transform.position);
-                Node oPos = Stage.StageBuilder.getGridNode(near.transform.position);
-
-                Node destiny = Stage.StageBuilder.findClosestNode(mPos, oPos);
-
-                // FindPath
-                List<Node> path = Stage.Pathfinder.FindPath(mPos, destiny);
-
-                // Cortamos el path aa la distancia mínima del arma
-                if ((path != null) && (path.Count > equip.weapon.range)) {
-                    path.Reverse();
-                    path.RemoveRange(0, equip.weapon.range);
-                    path.Reverse();
-                }
-
-                // Cortamos el path al movimiento mínimo
-                if ((path != null) && (stepsRemain() > 0)) {
-                    int steps = Mathf.Min(path.Count, stepsRemain());
-                    path.RemoveRange(steps, path.Count - steps);
-                }
-
-                setDestination(path);
-                startMove();
-            } else {
-                endMovement();
-            }
-        }
-
+    private void mixedCombatAI() {
+        // Movimiento
+        if (canMove())
+            moveMinWeaponRangeDistance();
         // Acting
-        if (canAct()) {
-
-            // Solo actuamos si ya nos movimos
-            if (!isMovementDone())
-                return;
-
-            Turnable near = Stage.StageManager.findPlayer(transform);
-
-            // Player Encontrado
-            if (near != null) {
-
-                bool inWeaponRange = (Stage.StageBuilder.getDistance(transform.position, near.transform.position) <= _equip.weapon.range);
-
-                // Skills + end with combat
-                if (canAct())
-                    skills.useSkill(skillID.ImperialCry, this);
-                if (canAct() && inWeaponRange)
-                    skills.useSkill(skillID.Bloodlust, this, (BasicActor)near);
-                if (canAct() && inWeaponRange)
-                    skills.useSkill(skillID.Disarm, this, (BasicActor)near);
-                if (canAct() && inWeaponRange)
-                    skills.useSkill(skillID.AchillesHeel, this, (BasicActor)near);
-                if (canAct() && inWeaponRange)
-                    skills.useSkill(equip.weapon.skill, this, (BasicActor)near);
-                if (canAct()) {
-                    // Last Chance para atacar
-                    near = Stage.StageManager.findEnemy(transform);
-                    if (near != null) {
-                        if (inWeaponRange) {
-                            skills.useSkill(skillID.Attack, this, (BasicActor)near);
-                        } else {
-                            // Si no, usamos vanish
-                            if (canAct())
-                                skills.useSkill(skillID.Vanish, this);
-                        }
-                    }
-                }
-            }
-            endAction();
-        }
-
+        if ((canAct()) && (isMovementDone()))
+            attackPriositisingSkills();
     }
+    #endregion
 
-
+    #region combatAI.flee
     /** Método para establecer la IA de combate de huir */
     private void fleeCombatAI() {
+        // Acting
+        if (canAct())
+            attackPriositingMovementNDefensiveSkills();
+        // Moving
+        if (canMove())
+            moveFarAway();
+    }
+    #endregion
 
-        Turnable near = null;
+    #region combatAI's
+    /** Métodos de Acting */
+    private void attackPriositingMovementNDefensiveSkills() {
+        Turnable near;
 
         if (canAct())
             skills.useSkill(skillID.TrojanHorse, this);
@@ -129,22 +72,55 @@ public class AutomaticActor : Actor {
                 skills.useSkill(skillID.Defense, this);
             if (canAct()) {
                 // Last Chance para atacar
-                near = Stage.StageManager.findEnemy(transform);
+                near = Stage.StageManager.findByTag(transform, "Player");
                 if (near != null) {
                     if (Stage.StageBuilder.getDistance(transform.position, near.transform.position) <= _equip.weapon.range) {
-                        Debug.Log("INTENTAMOS PEGAR CON ARMA, POR QUE ESTAMOS CLOSE");
+                        skills.useSkill(skillID.Attack, this, (BasicActor)near);
                     }
                 }
             }
             endAction();
         }
+    }
+    private void attackPriositisingSkills() {
 
+        Turnable near = Stage.StageManager.findByTag(transform, "Player");
 
-        // Moving
-        if (!canMove())
-            return;
+        // Player Encontrado
+        if (near != null) {
 
-        near = Stage.StageManager.findPlayer(transform);
+            bool inWeaponRange = (Stage.StageBuilder.getDistance(transform.position, near.transform.position) <= _equip.weapon.range);
+
+            // Skills + end with combat
+            if (canAct())
+                skills.useSkill(skillID.ImperialCry, this);
+            if (canAct() && inWeaponRange)
+                skills.useSkill(skillID.Bloodlust, this, (BasicActor)near);
+            if (canAct() && inWeaponRange)
+                skills.useSkill(skillID.Disarm, this, (BasicActor)near);
+            if (canAct() && inWeaponRange)
+                skills.useSkill(skillID.AchillesHeel, this, (BasicActor)near);
+            if (canAct() && inWeaponRange)
+                skills.useSkill(equip.weapon.skill, this, (BasicActor)near);
+            if (canAct()) {
+                if (inWeaponRange) {
+                    skills.useSkill(skillID.Attack, this, (BasicActor)near);
+                } else {
+                    // Si no, usamos vanish
+                    if (canAct())
+                        skills.useSkill(skillID.Vanish, this);
+                }
+            }
+        }
+
+        endAction();
+    }
+    private void attackIfImAlone() {
+    }
+
+    /** Métodos de Moving */
+    private void moveFarAway() {
+        Turnable near = Stage.StageManager.findByTag(transform, "Player");
 
         // Player encontrado
         if (near != null) {
@@ -171,7 +147,47 @@ public class AutomaticActor : Actor {
         } else {
             endMovement();
         }
-
     }
+    private void moveMinWeaponRangeDistance() {
+        Turnable near = Stage.StageManager.findByTag(transform, "Player");
+
+        // Player encontrado
+        if (near != null) {
+            Node mPos = Stage.StageBuilder.getGridNode(transform.position);
+            Node oPos = Stage.StageBuilder.getGridNode(near.transform.position);
+
+            Node destiny = Stage.StageBuilder.findClosestNode(mPos, oPos);
+
+            // FindPath
+            List<Node> path = Stage.Pathfinder.FindPath(mPos, destiny);
+            // Salimos si no hay path
+            if (path == null) {
+                endMovement();
+                return;
+            }
+
+            // Cortamos el path aa la distancia mínima del arma
+            if (path.Count > equip.weapon.range) {
+                path.Reverse();
+                path.RemoveRange(0, equip.weapon.range);
+                path.Reverse();
+            }
+
+            // Cortamos el path al movimiento mínimo
+            if (stepsRemain() < path.Count) {
+                int steps = Mathf.Min(path.Count, stepsRemain());
+                path.RemoveRange(steps, path.Count - steps);
+            }
+
+            setDestination(path);
+            startMove();
+        } else {
+            endMovement();
+        }
+    }
+    private void moveCloseToAllies() {
+    }
+    #endregion
+
 
 }

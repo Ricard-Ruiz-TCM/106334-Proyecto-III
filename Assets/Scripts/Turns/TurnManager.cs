@@ -26,7 +26,14 @@ public class TurnManager : MonoBehaviour {
 
     [SerializeField, Header("Actores que participan:")]
     protected int _current = 0;
-    public Turnable current => _attenders[_current];
+    public Turnable current {
+        get {
+            if (_attenders.Count == 0)
+                return null;
+
+            return _attenders[Mathf.Clamp(_current, 0, _attenders.Count - 1)];
+        }
+    }
     [SerializeField]
     protected List<Turnable> _attenders = new List<Turnable>();
     public List<Turnable> attenders => _attenders;

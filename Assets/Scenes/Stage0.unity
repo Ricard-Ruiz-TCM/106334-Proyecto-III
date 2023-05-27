@@ -1179,7 +1179,7 @@ GameObject:
   m_IsActive: 1
 --- !u!114 &904388578
 MonoBehaviour:
-  m_ObjectHideFlags: 10
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -1462,6 +1462,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2112911779}
     m_Modifications:
+    - target: {fileID: 1637757592368967388, guid: bb81d2c8faf150a44ad71d237aaf2e50,
+        type: 3}
+      propertyPath: _steps
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2044030555967109592, guid: bb81d2c8faf150a44ad71d237aaf2e50,
+        type: 3}
+      propertyPath: _weapon.upgrade
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2547220219224158038, guid: bb81d2c8faf150a44ad71d237aaf2e50,
         type: 3}
       propertyPath: m_RootOrder
@@ -1521,6 +1531,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: ArqueroLv1 (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3189005980449815163, guid: bb81d2c8faf150a44ad71d237aaf2e50,
+        type: 3}
+      propertyPath: skills.Array.size
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5482900321449622504, guid: bb81d2c8faf150a44ad71d237aaf2e50,
         type: 3}
@@ -2952,6 +2967,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 904388579}
     m_Modifications:
+    - target: {fileID: 2811769205094483148, guid: d646759376c7dc246b32a406c436c32f,
+        type: 3}
+      propertyPath: _armor.armor
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2811769205094483148, guid: d646759376c7dc246b32a406c436c32f,
+        type: 3}
+      propertyPath: _armor.upgrade
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2811769205094483149, guid: d646759376c7dc246b32a406c436c32f,
+        type: 3}
+      propertyPath: _steps
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2811769205094483149, guid: d646759376c7dc246b32a406c436c32f,
+        type: 3}
+      propertyPath: _health
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2811769205094483184, guid: d646759376c7dc246b32a406c436c32f,
         type: 3}
       propertyPath: skills.Array.size
@@ -2975,7 +3010,7 @@ PrefabInstance:
     - target: {fileID: 3192693271134101069, guid: d646759376c7dc246b32a406c436c32f,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.44
+      value: 11.92
       objectReference: {fileID: 0}
     - target: {fileID: 3192693271134101069, guid: d646759376c7dc246b32a406c436c32f,
         type: 3}
@@ -3320,11 +3355,10 @@ MonoBehaviour:
   _materials:
   - {fileID: 2100000, guid: 8979a05920890074ca2718967f033188, type: 2}
   - {fileID: 2100000, guid: 42577e5e43eb3be4280f05908d834b34, type: 2}
-  - {fileID: 2100000, guid: a1503898bbdd4504f8f0188fa962e25e, type: 2}
+  - {fileID: 2100000, guid: a4d6dec8779dc454995e17bd00905f4d, type: 2}
   - {fileID: 2100000, guid: de6dcac0d1f709746b71b4a967aec6f0, type: 2}
   - {fileID: 2100000, guid: d6264ed2a54c6f34ebf496eb727d1c1a, type: 2}
-  _visibleLayer: VisibleGrid
-  _invisibleLayer: InvisibleGrid
+  - {fileID: 2100000, guid: a4d6dec8779dc454995e17bd00905f4d, type: 2}
 --- !u!114 &3384231810004681042
 MonoBehaviour:
   m_ObjectHideFlags: 0

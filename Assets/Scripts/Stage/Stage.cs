@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Stage : MonoBehaviour {
@@ -43,24 +41,34 @@ public class Stage : MonoBehaviour {
 
     /** Método para comprobar si el stage ha sido completado, depende del objetivo */
     private void checkGameResolution() {
-        
+
         bool completed = false;
+        bool palyer = TurnManager.instance.attenders.Exists(x => x is ManualActor);
         bool enemies = TurnManager.instance.attenders.Exists(x => x is AutomaticActor);
 
-        switch (_data.objetive) {
-            case stageObjetive.killAll:
-                if (!enemies)
-                    completed = true;
-                break;
-            case stageObjetive.protectNPC:
-                if (!enemies)
-                    completed = TurnManager.instance.attenders.Exists(x => x is ProtectedActor);
-                break;
-        }
+        if (!palyer) {
+            endStage(stageResolution.defeat);
+        } else {
+            switch (_data.objetive) {
+                case stageObjetive.killAll:
+                    if (!enemies)
+                        completed = true;
+                    break;
+                case stageObjetive.protectNPC:
+                    if (!enemies)
+                        completed = TurnManager.instance.attenders.Exists(x => x is ProtectedActor);
+                    break;
+            }
 
-        if (completed) {
-            onCompleteStage?.Invoke(stageResolution.victory);
+            if (completed) {
+                endStage(stageResolution.victory);
+            }
         }
+    }
+
+    private void endStage(stageResolution res) {
+        onCompleteStage?.Invoke(res);
+        TurnManager.instance.endManager();
     }
 
 }

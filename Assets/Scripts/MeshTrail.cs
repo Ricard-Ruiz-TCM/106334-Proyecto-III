@@ -5,7 +5,6 @@ using UnityEngine;
 public class MeshTrail : MonoBehaviour
 {
     bool activateTrail = false;
-    bool isTrailActice = false;
     [SerializeField] SkinnedMeshRenderer skinnedMesh;
     [SerializeField] float refreshRate;
     [SerializeField] Material mat;

@@ -21,11 +21,6 @@ public class GridBuilder : MonoBehaviour {
     [SerializeField, Header("Materials:"), Tooltip("Tiene que coincidir con el enum pathMaterial")]
     private Material[] _materials;
 
-    [SerializeField, Header("Layers:")]
-    private string _visibleLayer = "VisibleGrid";
-    [SerializeField]
-    private string _invisibleLayer = "InvisibleGrid";
-
     // Unity Start
     void Start() {
         // Clear al acabar turnos

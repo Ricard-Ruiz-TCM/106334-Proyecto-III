@@ -912,12 +912,12 @@ MonoBehaviour:
   _turnUI: {fileID: 2028008449}
   _playerUI: {fileID: 753524713}
   _objetiveUI: {fileID: 495370680}
-  _stageResolutionUI: {fileID: 0}
+  _stageResolutionUI: {fileID: 1266459925}
   _state: 0
   _stage: {fileID: 3384231810822977857}
   _data:
     ID: 6
-    keyName: SCENE.SS.NAME.STAGE_6
+    keyName: SCENE.SS.NAME.STAGE_11
     type: 0
     terrain: 0
     diff: 1
@@ -925,9 +925,9 @@ MonoBehaviour:
     lastDialog: {fileID: 0}
     exit: 2
     entrance: 3
-    objetive: 1
-  _thisScene: 0
-  _nextScene: 10
+    objetive: 0
+  _thisScene: 8
+  _nextScene: 9
   _actors:
   - {fileID: 4500662890051555674}
   - {fileID: 1568547459}
@@ -3663,7 +3663,7 @@ GameObject:
   m_IsActive: 1
 --- !u!114 &1035843191
 MonoBehaviour:
-  m_ObjectHideFlags: 10
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -4068,6 +4068,18 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 5551156074944862375}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1266459925 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5551156073952165298, guid: f0bedaf31d25791429dee402cc66b15f,
+    type: 3}
+  m_PrefabInstance: {fileID: 5551156074944862375}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1233b048fe3fd944882cbb8e1e9a6a51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1278376146
 PrefabInstance:
   m_ObjectHideFlags: 0

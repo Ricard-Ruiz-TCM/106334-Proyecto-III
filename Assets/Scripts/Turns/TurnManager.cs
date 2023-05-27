@@ -115,6 +115,9 @@ public class TurnManager : MonoBehaviour {
 
     /** UnSubscribe to manager */
     public void unsubscribe(Turnable element) {
+        if (_attenders.Count < 0)
+            return;
+
         if (_attenders.Contains(element))
             _attenders.Remove(element);
 

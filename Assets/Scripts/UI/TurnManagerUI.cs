@@ -11,10 +11,17 @@ class TurnManagerUI : MonoBehaviour {
     [SerializeField]
     private CurrentTurnInfoUI _turnInfo;
 
-    // Unity Start
-    void Start() {
+    // Unity OnEnable
+    void OnEnable() {
         TurnManager.instance.onStartTurn += UpdateTurnList;
         TurnManager.instance.onModifyAttenders += UpdateTurnList;
+
+    }
+
+    // Unity OnDisable
+    void OnDisable() {
+        TurnManager.instance.onStartTurn -= UpdateTurnList;
+        TurnManager.instance.onModifyAttenders -= UpdateTurnList;
     }
 
     /** Añade los elementos a los turnos */

@@ -39,6 +39,9 @@ public class PlayerUI : MonoBehaviour {
         BasicActor.onChangeHealth += updateHealth;
 
         SkillManager.onSkillUsed += updateSingleSkill;
+
+        TurnManager.instance.onStartTurn += getPlayer;
+        TurnManager.instance.onModifyAttenders += getPlayer;
     }
 
     // Unity OnDisable
@@ -46,19 +49,20 @@ public class PlayerUI : MonoBehaviour {
         BuffManager.onApplyBuff -= displayBuffs;
         BuffManager.onRemoveBuff -= displayBuffs;
 
-        ManualActor.onSkillUsed += disableSkills;
+        ManualActor.onSkillUsed -= disableSkills;
 
         Actor.onStepReached -= (Node n) => { updateSteps(); };
         BasicActor.onChangeHealth -= updateHealth;
 
         SkillManager.onSkillUsed -= updateSingleSkill;
+
+        TurnManager.instance.onStartTurn -= getPlayer;
+        TurnManager.instance.onModifyAttenders -= getPlayer;
     }
 
     // Unity Start
     private void Start() {
-        TurnManager.instance.onModifyAttenders += getPlayer;
 
-        TurnManager.instance.onStartTurn += getPlayer;
     }
 
     /** M�todo que asigna el player al sistema, para los posibles jugadores */

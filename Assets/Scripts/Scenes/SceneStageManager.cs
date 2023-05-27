@@ -164,13 +164,13 @@ public class SceneStageManager : MonoBehaviour {
     /** Método para determinar qeu se ha ganado el Stage */
     public void stageSuccess() {
         uCore.GameManager.SaveGameData();
-        uCore.Director.LoadSceneAsync(_nextScene);
+        uCore.Director.LoadScene(_nextScene);
     }
 
     /** Método para determinar que se ha perdido el Stage */
     public void stageFailed() {
         uCore.GameManager.LoadGameData();
-        uCore.Director.LoadSceneAsync(_thisScene);
+        uCore.Director.LoadScene(_thisScene);
     }
 
     /** Botones */

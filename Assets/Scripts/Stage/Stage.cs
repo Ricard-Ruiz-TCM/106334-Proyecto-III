@@ -16,22 +16,32 @@ public class Stage : MonoBehaviour {
     public static GridManager StageManager = null;
     public static Pathfinding Pathfinder = null;
 
-    // Unity Awake
-    void Awake() {
-        Stage.Grid = transform.GetComponentInChildren<Grid2D>();
-        Stage.StageBuilder = transform.GetComponentInChildren<GridBuilder>();
-        Stage.StageManager = transform.GetComponentInChildren<GridManager>();
-        Stage.Pathfinder = transform.GetComponentInChildren<Pathfinding>();
-    }
-
-    // Unity Start
-    void Start() {
+    // Unity OnEnable
+    void OnEnable() {
         TurnManager.instance.onEndRound += (roundType r) => {
             if (!r.Equals(roundType.positioning))
                 return;
 
             TurnManager.instance.onModifyAttenders += checkGameResolution;
         };
+    }
+
+    // Unity OnDisable
+    void OnDisable() {
+        TurnManager.instance.onEndRound -= (roundType r) => {
+            if (!r.Equals(roundType.positioning))
+                return;
+
+            TurnManager.instance.onModifyAttenders += checkGameResolution;
+        };
+    }
+
+    // Unity Awake
+    void Awake() {
+        Stage.Grid = transform.GetComponentInChildren<Grid2D>();
+        Stage.StageBuilder = transform.GetComponentInChildren<GridBuilder>();
+        Stage.StageManager = transform.GetComponentInChildren<GridManager>();
+        Stage.Pathfinder = transform.GetComponentInChildren<Pathfinding>();
     }
 
     /** Método set de la informaicón */

@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class ManualActor : Actor {
 
+    /** Event action callback, observer, para el uso de skills */
     public static event Action onSkillUsed;
 
-    [SerializeField]
+    /** Nodoso de control para trabajar, temporales */
     private Node _mouseNode;
-    [SerializeField]
     private Node _myNode;
 
     List<Node> _walkablePath = new List<Node>();

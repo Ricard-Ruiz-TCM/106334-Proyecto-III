@@ -8,11 +8,9 @@ public abstract class BasicActor : Turnable {
     public static event Action onChangeHealth;
     /** --------- */
 
+    protected bool _alive = true;
     [SerializeField, Header("Vida:")]
-    protected bool _alive;
-    [SerializeField]
     protected int _health;
-    [SerializeField]
     protected int _maxHealth;
     /** Damage taken this turn */
     protected int _damageTaken;
@@ -34,6 +32,11 @@ public abstract class BasicActor : Turnable {
         return (int)((_health / _maxHealth) * 100f);
     }
 
+    /** Override del start */
+    protected override void Start() {
+        _maxHealth = _health;
+        base.Start();
+    }
 
     /** Setters */
     /** Health [0 .. max] */

@@ -21,22 +21,21 @@ public abstract class Actor : BasicActor {
 
     /** NavMeshAgent */
     [SerializeField, Header("Movimiento:")]
-    protected int _maxSteps;
+    protected int _steps;
     protected NavMeshAgent _agent;
 
-    [SerializeField]
     protected List<Node> _route = new List<Node>();
     protected int _stepsDone;
 
     /** Getters */
     public int maxSteps() {
-        return _maxSteps;
+        return _steps;
     }
     public int stepsDone() {
         return _stepsDone;
     }
     public int stepsRemain() {
-        return _maxSteps - _stepsDone;
+        return _steps - _stepsDone;
     }
 
     /** Add de Steps */
@@ -133,9 +132,9 @@ public abstract class Actor : BasicActor {
     protected EquipmentManager _equip;
     public EquipmentManager equip => _equip;
 
-    [SerializeField, Header("Damage & Defense (Calculado Runtime):")]
+    /** Base de defensa y armadura */
+    /** Depende de equipo y perks, se calcula en Start */
     protected int _baseDamage;
-    [SerializeField]
     protected int _baseDefense;
 
     /** Override para calcular el daño total que podemos hacer */

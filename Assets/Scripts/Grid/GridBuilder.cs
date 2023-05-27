@@ -337,12 +337,12 @@ public class GridBuilder : MonoBehaviour {
         for (int i = node.x - range; i <= node.x + range; i++) {
             for (int j = node.y; j < count + node.y; j++) {
                 if (Stage.Grid.insideGrid(i, j)) {
-                    displayNode(i, j, pathMaterial.walkable);
+                    displayNode(i, j, mat);
                 }
             }
             for (int z = node.y - 1; z > node.y - count; z--) {
                 if (Stage.Grid.insideGrid(i, z)) {
-                    displayNode(i, z, pathMaterial.walkable);
+                    displayNode(i, z, mat);
                 }
             }
 
@@ -354,6 +354,7 @@ public class GridBuilder : MonoBehaviour {
             totalCount++;
         }
     }
+
     public void ClearAttack() {
         for (int x = 0; x < _grid.rows; x++) {
             for (int y = 0; y < _grid.columns; y++) {
@@ -377,7 +378,24 @@ public class GridBuilder : MonoBehaviour {
     public void clearGrid() {
         for (int x = 0; x < _grid.rows; x++) {
             for (int y = 0; y < _grid.columns; y++) {
-                hideNode(x, y);
+
+                Material mat;
+                switch (getGridNode(x, y).type) {
+                    case Array2DEditor.nodeType.__:
+                        mat = _materials[(int)pathMaterial.walkable];
+                        break;
+                    case Array2DEditor.nodeType.P:
+                        mat = _materials[(int)pathMaterial.skill];
+                        break;
+                    case Array2DEditor.nodeType.X:
+                        mat = _materials[(int)pathMaterial.notWalkable];
+                        break;
+                    default:
+                        mat = _materials[(int)pathMaterial.NONE];
+                        break;
+                }
+
+                getGridPlane(x, y).clear(mat);
             }
         }
     }

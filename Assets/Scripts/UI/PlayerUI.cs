@@ -33,6 +33,8 @@ public class PlayerUI : MonoBehaviour {
         BuffManager.onApplyBuff += displayBuffs;
         BuffManager.onRemoveBuff += displayBuffs;
 
+        ManualActor.onSkillUsed += disableSkills;
+
         Actor.onStepReached += (Node n) => { updateSteps(); };
         BasicActor.onChangeHealth += updateHealth;
 
@@ -43,6 +45,8 @@ public class PlayerUI : MonoBehaviour {
     private void OnDisable() {
         BuffManager.onApplyBuff -= displayBuffs;
         BuffManager.onRemoveBuff -= displayBuffs;
+
+        ManualActor.onSkillUsed += disableSkills;
 
         Actor.onStepReached -= (Node n) => { updateSteps(); };
         BasicActor.onChangeHealth -= updateHealth;

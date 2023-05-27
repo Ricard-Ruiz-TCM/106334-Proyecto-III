@@ -55,11 +55,25 @@ public class GridPlane : MonoBehaviour {
     }
 
 
-    public void ClearBorders()
-    {
+    public void ClearBorders() {
         limitLeft.SetActive(false);
         limitRight.SetActive(false);
         limitUp.SetActive(false);
         limitDown.SetActive(false);
+    }
+
+    public void clear(Material mat) {
+        clearPath();
+        ClearBorders();
+        setMaterial(mat);
+        clearAttackIndicator();
+    }
+
+    public void clearAttackIndicator() {
+        attackShow.SetActive(false);
+    }
+
+    public void clearPath() {
+        pathGameObject.SetActive(false);
     }
 }

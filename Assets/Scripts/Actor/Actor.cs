@@ -65,6 +65,12 @@ public abstract class Actor : BasicActor {
     public override void act() {
     }
 
+    /** Override del endMovement para limpiar Grid */
+    public override void endMovement() {
+        Stage.StageBuilder.clearGrid();
+        base.endMovement();
+    }
+
     /** Método para ir al siguiente nodo */
     private void nextStep() {
         if (_route == null) {
@@ -100,6 +106,7 @@ public abstract class Actor : BasicActor {
             _route.Clear();
         buffs.applyStartTurnEffect(this);
         skills.updateCooldown();
+        Stage.StageBuilder.clearGrid();
         base.beginTurn();
     }
 
@@ -107,6 +114,7 @@ public abstract class Actor : BasicActor {
     public override void endTurn() {
         buffs.applyEndTurnEffect(this);
         buffs.updateBuffs(this);
+        Stage.StageBuilder.clearGrid();
         base.endTurn();
     }
 

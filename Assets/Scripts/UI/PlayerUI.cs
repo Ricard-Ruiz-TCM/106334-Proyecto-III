@@ -67,7 +67,11 @@ public class PlayerUI : MonoBehaviour {
 
     /** M�todo que asigna el player al sistema, para los posibles jugadores */
     private void getPlayer() {
-        Actor actor = (Actor)TurnManager.instance.current;
+        Turnable turnable = TurnManager.instance.current;
+        if (turnable is StaticActor)
+            return;
+
+        Actor actor = (Actor)turnable;
 
         // Nos vamos si hemos muertoo, desactivando
         if (actor == null) {

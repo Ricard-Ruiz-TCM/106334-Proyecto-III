@@ -1,8 +1,12 @@
+using System;
 using Array2DEditor;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Grid2D : MonoBehaviour {
+
+    // Observr para indicar que un nodo se ha cambiado su tipo
+    public static event Action<Node> onNodeTypeChanged;
 
     // Filas & Columnas de Nuestro Grid
     public int rows {
@@ -48,6 +52,23 @@ public class Grid2D : MonoBehaviour {
         if (insideGrid(x, y))
             return _nodeMap[x, y];
         return null;
+    }
+
+
+    /** Método para cambiar el un nodod concreto de tipo */
+    public void changeNodeType(Vector3 position, nodeType type) {
+        Node n = Stage.StageBuilder.getGridNode(position);
+        changeNodeType(n.x, n.y, type);
+    }
+    public void changeNodeType(int x, int y, nodeType type) {
+        if (!insideGrid(x, y))
+            return;
+
+        if (isType(x, y, type))
+            return;
+
+        _nodeMap[x, y].type = type;
+        onNodeTypeChanged?.Invoke(_nodeMap[x, y]);
     }
 
     /** Get de los nodos adyacientes al Nodo node */

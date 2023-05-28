@@ -77,8 +77,8 @@ public class Stage : MonoBehaviour {
     }
 
     private void endStage(stageResolution res) {
-        onCompleteStage?.Invoke(res);
         TurnManager.instance.endManager();
+        onCompleteStage?.Invoke(res);
     }
 
 }

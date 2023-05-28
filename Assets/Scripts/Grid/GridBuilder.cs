@@ -21,10 +21,18 @@ public class GridBuilder : MonoBehaviour {
     [SerializeField, Header("Materials:"), Tooltip("Tiene que coincidir con el enum pathMaterial")]
     private Material[] _materials;
 
-    // Unity Start
-    void Start() {
-        // Clear al acabar turnos
+    // Unity OnEnable
+    void OnEnable() {
         Actor.onDestinationReached += clearGrid;
+
+        Grid2D.onNodeTypeChanged += clearNode;
+    }
+
+    // Unity OnDisable
+    void OnDisable() {
+        Actor.onDestinationReached -= clearGrid;
+
+        Grid2D.onNodeTypeChanged -= clearNode;
     }
 
     /** Método para instanciar los planos */
@@ -373,26 +381,33 @@ public class GridBuilder : MonoBehaviour {
     public void clearGrid() {
         for (int x = 0; x < _grid.rows; x++) {
             for (int y = 0; y < _grid.columns; y++) {
-
-                Material mat;
-                switch (getGridNode(x, y).type) {
-                    case Array2DEditor.nodeType.__:
-                        mat = _materials[(int)pathMaterial.walkable];
-                        break;
-                    case Array2DEditor.nodeType.P:
-                        mat = _materials[(int)pathMaterial.skill];
-                        break;
-                    case Array2DEditor.nodeType.X:
-                        mat = _materials[(int)pathMaterial.notWalkable];
-                        break;
-                    default:
-                        mat = _materials[(int)pathMaterial.NONE];
-                        break;
-                }
-
-                getGridPlane(x, y).clear(mat);
+                clearNode(x, y);
             }
         }
+    }
+
+    /** Métodos para limpiar un nodo concreto y setearlo por defecto */
+    public void clearNode(Node node) {
+        clearNode(node.x, node.y);
+    }
+    public void clearNode(int x, int y) {
+        Material mat;
+        switch (getGridNode(x, y).type) {
+            case Array2DEditor.nodeType.__:
+                mat = _materials[(int)pathMaterial.walkable];
+                break;
+            case Array2DEditor.nodeType.P:
+                mat = _materials[(int)pathMaterial.skill];
+                break;
+            case Array2DEditor.nodeType.X:
+                mat = _materials[(int)pathMaterial.notWalkable];
+                break;
+            default:
+                mat = _materials[(int)pathMaterial.NONE];
+                break;
+        }
+
+        getGridPlane(x, y).clear(mat);
     }
 
 }

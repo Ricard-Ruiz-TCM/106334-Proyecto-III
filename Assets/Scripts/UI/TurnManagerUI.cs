@@ -28,7 +28,7 @@ class TurnManagerUI : MonoBehaviour {
     public void UpdateTurnList() {
         ClearList();
 
-        List<Turnable> turnables = TurnManager.instance.attenders;
+        List<Turnable> turnables = new List<Turnable>(TurnManager.instance.attenders.ToArray());
         turnables.RemoveAll(x => x is StaticActor);
         for (int i = 0; i < turnables.Count; i++) {
             if (turnables[i].Equals(TurnManager.instance.current)) {

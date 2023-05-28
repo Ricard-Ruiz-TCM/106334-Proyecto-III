@@ -35,6 +35,7 @@ public abstract class BasicActor : Turnable {
     /** Override del start */
     protected override void Start() {
         _maxHealth = _health;
+        Stage.Grid.changeNodeType(transform.position, Array2DEditor.nodeType.X);
         base.Start();
     }
 
@@ -43,6 +44,16 @@ public abstract class BasicActor : Turnable {
     public void setHealth(int value) {
         _health = Mathf.Clamp(_health + value, 0, _maxHealth);
         onChangeHealth?.Invoke();
+    }
+
+    /** Override para los cambios de nodo al movernos */
+    public override void beginTurn() {
+        Stage.Grid.changeNodeType(transform.position, Array2DEditor.nodeType.__);
+        base.beginTurn();
+    }
+    public override void endTurn() {
+        Stage.Grid.changeNodeType(transform.position, Array2DEditor.nodeType.X);
+        base.endTurn();
     }
 
     /** Abstracts para calculo del Daño total */
@@ -73,5 +84,10 @@ public abstract class BasicActor : Turnable {
 
     /** Abstract para indicar que pasa cuando morimos */
     public abstract void onActorDeath();
+
+    protected override void OnDestroy() {
+        Stage.Grid.changeNodeType(transform.position, Array2DEditor.nodeType.__);
+        base.OnDestroy();
+    }
 
 }

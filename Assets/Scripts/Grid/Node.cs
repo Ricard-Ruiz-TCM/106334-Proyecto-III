@@ -30,5 +30,6 @@ public class Node {
         y = yPos;
         type = nType;
     }
+    public bool isRangelimit = false;
 
 }

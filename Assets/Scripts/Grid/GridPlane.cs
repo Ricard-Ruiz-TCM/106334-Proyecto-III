@@ -32,7 +32,8 @@ public class GridPlane : MonoBehaviour {
     }
 
     /** Método set de Grid y Nodo */
-    public void setGrid(Grid2D grid, Node node) {
+    public void setGrid(Grid2D grid, Node node) 
+    {
         grid2D = grid;
         this.node = node;
     }

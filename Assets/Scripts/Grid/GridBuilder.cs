@@ -155,6 +155,32 @@ public class GridBuilder : MonoBehaviour {
         }
         return getGridPlane(node);
     }
+    /** Método para localizar el GridPlane más cercano a un objetivo */
+    public GridPlane findClosestGridRoc(GridPlane origin, GridPlane target)
+    {
+        if (Mathf.Abs(origin.node.x - target.node.x) <= Mathf.Abs(origin.node.y - target.node.y))
+        {
+            if(origin.node.y > target.node.y)
+            {
+                return getGridPlane(origin.node.x, origin.node.y - 1);
+            }
+            else
+            {
+                return getGridPlane(origin.node.x, origin.node.y + 1);
+            }
+        }
+        else
+        {
+            if (origin.node.x > target.node.x)
+            {
+                return getGridPlane(origin.node.x - 1, origin.node.y);
+            }
+            else
+            {
+                return getGridPlane(origin.node.x + 1, origin.node.y);
+            }
+        }
+    }
 
     /** Método para mostar un path concreto */
     public void displayPath(List<Node> path, pathMaterial material) {
@@ -226,83 +252,234 @@ public class GridBuilder : MonoBehaviour {
     }
     public void DisplayMovementRange(Transform from, int range) 
     {
-        
-            int count = 1;
-            int totalCount = 1;
-            Node node = getGridPlane(from.position).node;
-            List<GridPlane> gridList = new List<GridPlane>();
 
-            for (int i = node.x - range; i <= node.x + range; i++) {
-                for (int j = count + node.y - 1; j < count + node.y; j++) {
-                    if (Stage.Grid.insideGrid(i, j)) {
-                        if (Stage.Pathfinder.isAchievable(node, getGridNode(i, j), range)) {
-                            displayNode(i, j, pathMaterial.walkable);
-                            gridList.Add(getGridPlane(i, j));
-                        }
-                        else
-                        {
-                            bool hasFindClosed = false;
-                            GridPlane closestPlane = getGridPlane(i, j);
-                            while (!hasFindClosed)
-                            {
-                                closestPlane = findClosestGrid(getGridPlane(node.x, node.y), closestPlane);
-                                if (Stage.Pathfinder.isAchievable(node, closestPlane.node, range))
-                                {
-                                    displayNode(closestPlane.node, pathMaterial.walkable);
-                                    hasFindClosed = true;
-                                    gridList.Add(closestPlane);
-                                }
-                            }
+        int count = 1;
+        int totalCount = 1;
+        int xCount, jCount, zCount;
+        Node node = getGridPlane(from.position).node;
+        List<Node> gridList = new List<Node>();
 
-                        }
-                    }
-
-                }
-                for (int z = node.y - count + 1; z > node.y - count; z--) {
-                    if (Stage.Grid.insideGrid(i, z)) 
-                    {
-                        if (Stage.Pathfinder.isAchievable(node, getGridNode(i, z), range))
-                        {
-                            displayNode(i, z, pathMaterial.walkable);
-                        gridList.Add(getGridPlane(i, z));
-                        }
-                        else
-                        {
-                            bool hasFindClosed = false;
-                            GridPlane closestPlane = getGridPlane(i, z);
-                            while (!hasFindClosed)
-                            {
-                                closestPlane = findClosestGrid(getGridPlane(node.x, node.y), closestPlane);
-                                if (Stage.Pathfinder.isAchievable(node, closestPlane.node, range))
-                                {
-                                    displayNode(closestPlane.node, pathMaterial.walkable);
-                                    hasFindClosed = true;
-                                gridList.Add(closestPlane);
-                                }
-                            }
-                            
-                        }
-
-                    }
-                }
-                if (i == node.x - range || i == node.x + range) {
-                    if (Stage.Grid.insideGrid(i, node.y)) {
-                        displayNode(i, node.y, pathMaterial.walkable);
-                    }
-                }
-
-                if (totalCount > range) {
-                    count--;
-                } else {
-                    count++;
-                }
-                totalCount++;
-            }
-        foreach(GridPlane plane in gridList)
+        for (int i = node.x - range; i <= node.x + range; i++)
         {
-            enableBorders(plane, getDirection(getGridNode(from.position), plane.node),range);
+            if (i < 0) xCount = 0;
+            else if (i > Stage.Grid.columns) xCount = Stage.Grid.columns;
+            else xCount = i;
+
+            for (int j = count + node.y - 1; j < count + node.y; j++)
+            {
+                if (j < 0) jCount = 0;
+                if (j > Stage.Grid.columns) jCount = Stage.Grid.rows;
+                else jCount = j;
+                if (getGridNode(xCount,jCount).type != Array2DEditor.nodeType.X && Stage.Pathfinder.isAchievable(node, getGridNode(xCount, jCount), range))
+                {
+                    displayNode(xCount, jCount, pathMaterial.walkable);
+                    gridList.Add(getGridNode(xCount, jCount));
+                    getGridNode(xCount, jCount).isRangelimit = true;
+
+                    //GetInsideNodes(getGridPlane(i, j).node, node);
+                }
+                else
+                {
+                    bool hasFindClosed = false;
+                    GridPlane closestPlane = getGridPlane(xCount, jCount);
+                    while (!hasFindClosed)
+                    {
+                        closestPlane = findClosestGridRoc(closestPlane, getGridPlane(node.x, node.y));
+                        if (Stage.Pathfinder.isAchievable(node, closestPlane.node, range))
+                        {
+                            displayNode(closestPlane.node, pathMaterial.walkable);
+                            hasFindClosed = true;
+                            gridList.Add(closestPlane.node);
+                            closestPlane.node.isRangelimit = true;
+
+                            //GetInsideNodes(closestPlane.node, node);
+                        }
+                    }
+
+                }
+
+            }
+            for (int z = node.y - count + 1; z > node.y - count; z--)
+            {
+                if (z < 0) zCount = 0;
+                if (z > Stage.Grid.columns) zCount = Stage.Grid.rows;
+                else zCount = z;
+
+                if (getGridNode(xCount, zCount).type != Array2DEditor.nodeType.X && Stage.Pathfinder.isAchievable(node, getGridNode(xCount, zCount), range))
+                {
+                    displayNode(xCount, zCount, pathMaterial.walkable);
+                    gridList.Add(getGridNode(xCount, zCount));
+                    getGridNode(xCount, zCount).isRangelimit = true;
+
+                    //GetInsideNodes(getGridPlane(i, z).node, node);
+                }
+                else
+                {
+                    bool hasFindClosed = false;
+                    GridPlane closestPlane = getGridPlane(xCount, zCount);
+                    while (!hasFindClosed)
+                    {
+                        closestPlane = findClosestGridRoc(closestPlane,getGridPlane(node.x, node.y));
+                        if (Stage.Pathfinder.isAchievable(node, closestPlane.node, range))
+                        {
+                            displayNode(closestPlane.node, pathMaterial.walkable);
+                            hasFindClosed = true;
+                            gridList.Add(closestPlane.node);
+                            closestPlane.node.isRangelimit = true;
+
+                            //GetInsideNodes(closestPlane.node, node);
+                        }
+                    }
+
+                }
+            }
+            if (xCount == node.x - range || xCount == node.x + range)
+            {
+                if (Stage.Grid.insideGrid(i, node.y))
+                {
+                    displayNode(xCount, node.y, pathMaterial.invisible);
+                }
+            }
+
+            if (totalCount > range)
+            {
+                count--;
+            }
+            else
+            {
+                count++;
+            }
+            totalCount++;
         }
-        
+
+        magic33(node, gridList, range);
+
+        //foreach (GridPlane plane in gridList)
+        //{
+        //    enableBorders(plane, getDirection(getGridNode(from.position), plane.node), range);
+        //}
+
+    }
+    //private void GetInsideNodes(Node planeNode, Node node)
+    //{
+    //    List<Node> neightbourList = new List<Node>(Stage.Grid.getNeighbours(planeNode));
+
+    //    foreach (Node item in neightbourList)
+    //    {
+    //        if (Stage.Grid.insideGrid(item.x, item.y) && item.type != Array2DEditor.nodeType.X)
+    //        {
+    //            if (planeNode.x > node.x)
+    //            {
+    //                if (item.x > node.x && item.x < planeNode.x)
+    //                {
+    //                    getGridPlane(item).isRangelimit = true;
+    //                }
+
+    //            }
+    //            else if (planeNode.x < node.x)
+    //            {
+    //                if (item.x < node.x && item.x > planeNode.x)
+    //                {
+    //                    getGridPlane(item).isRangelimit = true;
+    //                }
+    //            }
+
+    //            if (planeNode.y > node.y)
+    //            {
+    //                if (item.y > node.y && item.y < planeNode.y)
+    //                {
+    //                    getGridPlane(item).isRangelimit = true;
+    //                }
+
+    //            }
+    //            else if (planeNode.y < node.y)
+    //            {
+    //                if (item.y < node.y && item.y > planeNode.y)
+    //                {
+    //                    getGridPlane(item).isRangelimit = true;
+    //                }
+    //            }
+    //        }
+            
+    //    }
+    //}
+    private void magic33(Node node, List<Node> nodeList, int range)
+    {
+        //int count = 1;
+        //int totalCount = 1;
+        //for (int i = node.x - range; i <= node.x + range; i++)
+        //{
+        //    for (int j = node.y; j < count + node.y; j++)
+        //    {
+        //        if (Stage.Grid.insideGrid(i, j))
+        //        {
+        //            if (IsInPolygon(getGridNode(i, j), nodeList)) 
+        //            {
+        //                getGridNode(i, j).isRangelimit = true;
+        //                displayNode(i, node.y, pathMaterial.skill);
+        //            }
+        //            else
+        //            {
+        //                Debug.Log(getGridNode(i,j).x + " " + getGridNode(i,j).y);
+        //            }
+        //        }
+        //    }
+        //    for (int z = node.y - 1; z > node.y - count; z--)
+        //    {
+        //        if (Stage.Grid.insideGrid(i, z))
+        //        {
+        //            if (IsInPolygon(getGridNode(i, z), nodeList))
+        //            {
+        //                getGridNode(i, z).isRangelimit = true;
+        //                displayNode(i, node.y, pathMaterial.skill);
+        //            }
+        //        }
+        //    }
+
+        //    if (totalCount > range)
+        //    {
+        //        count--;
+        //    }
+        //    else
+        //    {
+        //        count++;
+        //    }
+        //    totalCount++;
+        //}
+        foreach (Node item in nodeList)
+        {
+            Debug.Log(item.x + " " + item.y);
+            displayNode(item, pathMaterial.invisible);
+        }
+    }
+    public static bool IsInPolygon(Node testPoint, List<Node> vertices)
+    {
+        if (vertices.Count < 3) return false;
+        bool isInPolygon = false;
+        var lastVertex = vertices[vertices.Count - 1];
+        foreach (var vertex in vertices)
+        {
+            if (IsBetween(testPoint.y,lastVertex.y, vertex.y))
+            {
+                double t = (testPoint.y - lastVertex.y) / (vertex.y - lastVertex.y);
+                double x = t * (vertex.x - lastVertex.x) + lastVertex.x;
+                if (x >= testPoint.x) isInPolygon = !isInPolygon;
+            }
+            else
+            {
+                if (testPoint.y == lastVertex.y && testPoint.x < lastVertex.x && vertex.y > testPoint.y) isInPolygon = !isInPolygon;
+                if (testPoint.y == vertex.y && testPoint.x < vertex.x && lastVertex.y > testPoint.y) isInPolygon = !isInPolygon;
+            }
+
+            lastVertex = vertex;
+        }
+
+        return isInPolygon;
+    }
+
+    public static bool IsBetween(double x, double a, double b)
+    {
+        return (x - a) * (x - b) < 0;
     }
     public void enableBorders(GridPlane plane, Vector2 vec, int maxRange)
     {

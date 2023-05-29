@@ -252,7 +252,7 @@ public class GridBuilder : MonoBehaviour {
     }
     public void DisplayMovementRange(Transform from, int range) 
     {
-
+        Debug.Log(Stage.Grid.rows);
         int count = 1;
         int totalCount = 1;
         int xCount, jCount, zCount;
@@ -262,13 +262,13 @@ public class GridBuilder : MonoBehaviour {
         for (int i = node.x - range; i <= node.x + range; i++)
         {
             if (i < 0) xCount = 0;
-            else if (i > Stage.Grid.columns) xCount = Stage.Grid.columns;
+            else if (i > Stage.Grid.rows) xCount = Stage.Grid.rows;
             else xCount = i;
 
             for (int j = count + node.y - 1; j < count + node.y; j++)
             {
                 if (j < 0) jCount = 0;
-                if (j > Stage.Grid.rows) jCount = Stage.Grid.rows;
+                if (j > Stage.Grid.columns) jCount = Stage.Grid.columns;
                 else jCount = j;
                 if (getGridNode(xCount,jCount).type != Array2DEditor.nodeType.X && Stage.Pathfinder.isAchievable(node, getGridNode(xCount, jCount), range))
                 {
@@ -302,7 +302,7 @@ public class GridBuilder : MonoBehaviour {
             for (int z = node.y - count + 1; z > node.y - count; z--)
             {
                 if (z < 0) zCount = 0;
-                if (z > Stage.Grid.rows) zCount = Stage.Grid.rows;
+                if (z > Stage.Grid.columns) zCount = Stage.Grid.columns;
                 else zCount = z;
 
                 if (getGridNode(xCount, zCount).type != Array2DEditor.nodeType.X && Stage.Pathfinder.isAchievable(node, getGridNode(xCount, zCount), range))

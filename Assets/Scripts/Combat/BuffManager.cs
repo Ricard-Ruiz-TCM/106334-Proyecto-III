@@ -21,8 +21,11 @@ public class BuffManager : MonoBehaviour {
     }
 
     public void applyStartTurnEffect(BasicActor actor) {
-        foreach(BuffItem bi in activeBuffs) {
-            bi.buff.startTurnEffect(actor);
+        for (int i = 0; i < activeBuffs.Count; i++) {
+            if ((activeBuffs[i] != null) && (!activeBuffs[i].Equals(null))) {
+                activeBuffs[i].buff.startTurnEffect(actor);
+            }
+
         }
     }
 

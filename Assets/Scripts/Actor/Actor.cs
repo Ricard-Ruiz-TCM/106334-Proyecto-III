@@ -100,21 +100,21 @@ public abstract class Actor : BasicActor {
 
     /** Override del beginTurn */
     public override void beginTurn() {
+        base.beginTurn();
         _stepsDone = 0;
         if (_route != null)
             _route.Clear();
         buffs.applyStartTurnEffect(this);
         skills.updateCooldown();
         Stage.StageBuilder.clearGrid();
-        base.beginTurn();
     }
 
     /** Override del endTurn */
     public override void endTurn() {
+        base.endTurn();
         buffs.applyEndTurnEffect(this);
         buffs.updateBuffs(this);
         Stage.StageBuilder.clearGrid();
-        base.endTurn();
     }
 
     /** Override del canAct */

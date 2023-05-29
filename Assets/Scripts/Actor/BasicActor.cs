@@ -91,7 +91,7 @@ public abstract class BasicActor : Turnable {
     private void InstantPopUp(int amount) {
         GameObject popUp = Instantiate(Resources.Load<GameObject>("Prefabs/PopUpTextPrefab"), new Vector3(transform.position.x, transform.position.y + 2, transform.position.z), Quaternion.identity);
         popUp.transform.LookAt(FindObjectOfType<Camera>().transform.position, Vector3.up);
-        popUp.transform.GetChild(0).GetComponent<TextMeshPro>().text = (amount > 0 ? "+" : "-") + amount;
+        popUp.transform.GetChild(0).GetComponent<TextMeshPro>().text = (amount > 0 ? "+" : "-") + Mathf.Abs(amount);
         Destroy(popUp, 1f);
     }
 

@@ -89,6 +89,17 @@ public class Grid2D : MonoBehaviour {
 
         return neighbours;
     }
+    public List<Vector2> getNeighboursWithoutCheck(Node node)
+    {
+        List<Vector2> neighbours = new List<Vector2>();
+
+        neighbours.Add(new Vector2(node.x + 1, node.y));
+        neighbours.Add(new Vector2(node.x - 1, node.y));
+        neighbours.Add(new Vector2(node.x, node.y + 1));
+        neighbours.Add(new Vector2(node.x, node.y - 1));
+
+        return neighbours;
+    }
 
     /** Comprueba si la cordenada está dentro del Grid*/
     public bool insideGrid(int x, int y) {

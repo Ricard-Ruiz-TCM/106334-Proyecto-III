@@ -4,7 +4,10 @@
 public class Disarm : Skill {
 
     public override void action(BasicActor from, Node to) {
-        // TODO
+        BasicActor target = Stage.StageManager.getActor(to);
+        if (target != null) {
+            ((Actor)target).buffs.applyBuffs((Actor)target, buffsID.Disarmed);
+        }
         from.endAction();
     }
 

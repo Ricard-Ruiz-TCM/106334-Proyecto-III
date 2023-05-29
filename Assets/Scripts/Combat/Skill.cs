@@ -18,6 +18,8 @@ public class Skill : ScriptableObject {
 
     public int areaRange;
 
+    public bool needWeapon;
+
     public virtual void action(BasicActor from, Node to) {
         BasicActor target = Stage.StageManager.getActor(to);
         if (target != null) {

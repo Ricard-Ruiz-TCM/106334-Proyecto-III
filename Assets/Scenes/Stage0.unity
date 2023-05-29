@@ -1658,6 +1658,17 @@ PrefabInstance:
       propertyPath: skills.Array.size
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3189005980449815163, guid: bb81d2c8faf150a44ad71d237aaf2e50,
+        type: 3}
+      propertyPath: skills.Array.data[0].skill
+      value: 
+      objectReference: {fileID: 11400000, guid: 1e84fc4a7ac721f43b381a44c8bb7e77,
+        type: 2}
+    - target: {fileID: 3189005980449815163, guid: bb81d2c8faf150a44ad71d237aaf2e50,
+        type: 3}
+      propertyPath: skills.Array.data[0].cooldown
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 5482900321449622504, guid: bb81d2c8faf150a44ad71d237aaf2e50,
         type: 3}
       propertyPath: m_IsActive
@@ -4170,18 +4181,34 @@ PrefabInstance:
     - target: {fileID: 2811769205094483184, guid: d646759376c7dc246b32a406c436c32f,
         type: 3}
       propertyPath: skills.Array.size
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2811769205094483184, guid: d646759376c7dc246b32a406c436c32f,
         type: 3}
       propertyPath: skills.Array.data[0].skill
       value: 
-      objectReference: {fileID: 11400000, guid: 098f952a572393646ba3d2c4b2357bf5,
+      objectReference: {fileID: 11400000, guid: 1e84fc4a7ac721f43b381a44c8bb7e77,
         type: 2}
     - target: {fileID: 2811769205094483184, guid: d646759376c7dc246b32a406c436c32f,
         type: 3}
       propertyPath: skills.Array.data[0].cooldown
       value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2811769205094483186, guid: d646759376c7dc246b32a406c436c32f,
+        type: 3}
+      propertyPath: activeBuffs.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2811769205094483186, guid: d646759376c7dc246b32a406c436c32f,
+        type: 3}
+      propertyPath: activeBuffs.Array.data[0].buff
+      value: 
+      objectReference: {fileID: 11400000, guid: 25dab81cb1e047b41bd3e604e93a68c4,
+        type: 2}
+    - target: {fileID: 2811769205094483186, guid: d646759376c7dc246b32a406c436c32f,
+        type: 3}
+      propertyPath: activeBuffs.Array.data[0].duration
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 2811769205094483191, guid: d646759376c7dc246b32a406c436c32f,
         type: 3}
@@ -4201,7 +4228,7 @@ PrefabInstance:
     - target: {fileID: 3192693271134101069, guid: d646759376c7dc246b32a406c436c32f,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3
+      value: 3.51
       objectReference: {fileID: 0}
     - target: {fileID: 3192693271134101069, guid: d646759376c7dc246b32a406c436c32f,
         type: 3}

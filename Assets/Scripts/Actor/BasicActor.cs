@@ -15,6 +15,9 @@ public abstract class BasicActor : Turnable {
     /** Damage taken this turn */
     protected int _damageTaken;
 
+    [SerializeField]
+    private bool _canAttack;
+
     /** Getters */
     public bool isAlive() {
         return _alive;
@@ -28,8 +31,15 @@ public abstract class BasicActor : Turnable {
     public int damageTaken() {
         return _damageTaken;
     }
+    public bool CanAttack() {
+        return _canAttack;
+    }
     public int healthPercent() {
         return (int)((_health / _maxHealth) * 100f);
+    }
+
+    public void disableAttack() {
+        _canAttack = false;
     }
 
     /** Override del start */
@@ -48,6 +58,7 @@ public abstract class BasicActor : Turnable {
 
     /** Override para los cambios de nodo al movernos */
     public override void beginTurn() {
+        _canAttack = true;
         Stage.Grid.changeNodeType(transform.position, Array2DEditor.nodeType.__);
         base.beginTurn();
     }

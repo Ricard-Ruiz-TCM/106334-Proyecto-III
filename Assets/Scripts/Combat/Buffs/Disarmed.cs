@@ -12,6 +12,7 @@ public class Disarmed : Buff {
     }
 
     public override void startTurnEffect(BasicActor me) {
+        me.disableAttack();
         Debug.Log("TODO: Start Turn Disarmed Feedback");
     }
 

@@ -141,6 +141,9 @@ public class PlayerUI : MonoBehaviour {
             _skillButtons.Add(skI.skill.ID, btn.GetComponent<SkillButtonUI>());
             btn.GetComponent<SkillButtonUI>().Set(_player, skI, (KeyCode)(((int)KeyCode.Alpha0) + i), i);
             i++;
+            if (skI.skill.needWeapon && !_player.CanAttack()) {
+                btn.GetComponent<Button>().interactable = false;
+            }
         }
 
         _btnEndTurn.interactable = (_player.CompareTag("Player"));

@@ -94,16 +94,16 @@ public class AutomaticActor : Actor {
             // Skills + end with combat
             if (canAct())
                 skills.useSkill(skillID.ImperialCry, this);
-            if (canAct() && inWeaponRange)
+            if (canAct() && inWeaponRange && CanAttack())
                 skills.useSkill(skillID.Bloodlust, this, Stage.StageBuilder.getGridNode(near.transform.position));
             if (canAct() && inWeaponRange)
                 skills.useSkill(skillID.Disarm, this, Stage.StageBuilder.getGridNode(near.transform.position));
             if (canAct() && inWeaponRange)
                 skills.useSkill(skillID.AchillesHeel, this, Stage.StageBuilder.getGridNode(near.transform.position));
-            if (canAct() && inWeaponRange)
+            if (canAct() && inWeaponRange && CanAttack())
                 skills.useSkill(equip.weapon.skill, this, Stage.StageBuilder.getGridNode(near.transform.position));
             if (canAct()) {
-                if (inWeaponRange) {
+                if (inWeaponRange && CanAttack()) {
                     skills.useSkill(skillID.Attack, this, Stage.StageBuilder.getGridNode(near.transform.position));
                 } else {
                     // Si no, usamos vanish

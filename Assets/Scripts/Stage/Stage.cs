@@ -54,6 +54,7 @@ public class Stage : MonoBehaviour {
 
         bool completed = false;
         bool palyer = TurnManager.instance.attenders.Exists(x => x is ManualActor);
+        bool npc = TurnManager.instance.attenders.Exists(x => x is ProtectedActor);
         bool enemies = TurnManager.instance.attenders.Exists(x => x is AutomaticActor);
 
         if (!palyer) {
@@ -61,12 +62,16 @@ public class Stage : MonoBehaviour {
         } else {
             switch (_data.objetive) {
                 case stageObjetive.killAll:
-                    if (!enemies)
+                    if (!enemies) {
                         completed = true;
+                    }
                     break;
                 case stageObjetive.protectNPC:
-                    if (!enemies)
+                    if (!npc) {
+                        endStage(stageResolution.defeat);
+                    } else if (!enemies) {
                         completed = TurnManager.instance.attenders.Exists(x => x is ProtectedActor);
+                    }
                     break;
             }
 

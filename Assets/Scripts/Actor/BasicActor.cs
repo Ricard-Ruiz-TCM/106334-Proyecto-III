@@ -1,6 +1,6 @@
 ﻿using System;
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 
 public abstract class BasicActor : Turnable {
 
@@ -62,12 +62,9 @@ public abstract class BasicActor : Turnable {
     public abstract int totalDefense();
 
     /** Abstract para calcular recibir daño */
-    public virtual void takeDamage(BasicActor from, int damage, itemID weapon = itemID.NONE) 
-    {
-        GameObject popUp = Instantiate(Resources.Load<GameObject>("Prefabs/PopUpTextPrefab"), new Vector3(transform.position.x,transform.position.y +2, transform.position.z), Quaternion.identity);
-        popUp.transform.LookAt(FindObjectOfType<Camera>().transform.position, Vector3.up);
-        popUp.transform.GetChild(0).GetComponent<TextMeshPro>().text = "-" + damage;
-        Destroy(popUp, 1f);
+    public virtual void takeDamage(BasicActor from, int damage, itemID weapon = itemID.NONE) {
+
+        InstantPopUp(-damage);
 
         _damageTaken = Mathf.Clamp(damage - totalDefense(), 0, _maxHealth);
         _health -= _damageTaken;
@@ -80,6 +77,22 @@ public abstract class BasicActor : Turnable {
             onActorDeath();
         }
 
+    }
+
+    public virtual void heal(int amount) {
+
+        InstantPopUp(amount);
+
+        _health = Mathf.Clamp(_health + amount, 0, _maxHealth);
+        onChangeHealth?.Invoke();
+
+    }
+
+    private void InstantPopUp(int amount) {
+        GameObject popUp = Instantiate(Resources.Load<GameObject>("Prefabs/PopUpTextPrefab"), new Vector3(transform.position.x, transform.position.y + 2, transform.position.z), Quaternion.identity);
+        popUp.transform.LookAt(FindObjectOfType<Camera>().transform.position, Vector3.up);
+        popUp.transform.GetChild(0).GetComponent<TextMeshPro>().text = (amount > 0 ? "+" : "-") + amount;
+        Destroy(popUp, 1f);
     }
 
     /** Abstract para indicar que pasa cuando morimos */

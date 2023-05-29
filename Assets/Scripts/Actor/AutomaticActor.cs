@@ -74,7 +74,7 @@ public class AutomaticActor : Actor {
                 // Last Chance para atacar
                 near = Stage.StageManager.findByTag(transform, "Player");
                 if (near != null) {
-                    if (Stage.StageBuilder.getDistance(transform.position, near.transform.position) <= _equip.weapon.range) {
+                    if (Stage.StageBuilder.getDistance(transform.position, near.transform.position) < _equip.weapon.range) {
                         skills.useSkill(skillID.Attack, this, Stage.StageBuilder.getGridNode(near.transform.position));
                     }
                 }

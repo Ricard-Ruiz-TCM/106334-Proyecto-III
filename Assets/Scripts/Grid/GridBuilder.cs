@@ -433,13 +433,13 @@ public class GridBuilder : MonoBehaviour {
         for (int i = node.x - range; i <= node.x + range; i++) {
             for (int j = node.y; j < count + node.y; j++) {
                 if (Stage.Grid.insideGrid(i, j)) {
-                    displayNode(i, j, mat);
+                    //displayNode(i, j, mat);
                     skillRangeNodeList.Add(getGridNode(i,j));
                 }
             }
             for (int z = node.y - 1; z > node.y - count; z--) {
                 if (Stage.Grid.insideGrid(i, z)) {
-                    displayNode(i, z, mat);
+                    //displayNode(i, z, mat);
                     skillRangeNodeList.Add(getGridNode(i, z));
                 }
             }
@@ -455,11 +455,15 @@ public class GridBuilder : MonoBehaviour {
     }
     private void skillWalkableLimited(List<Node> nodeList, Node origin)
     {
+        List<Node> walkableNodeList = new List<Node>();
+        walkableNodeList = nodeList;
         foreach (Node item in nodeList)
         {
             if (!item.walkable)
             {
                 Vector2 dir = getDirection(item, origin);
+
+
                 if(dir.x > 0)
                 {
                     Node nodeProva = item;
@@ -467,9 +471,9 @@ public class GridBuilder : MonoBehaviour {
                     while (!noMoreNodes)
                     {
                         nodeProva = getGridNode(nodeProva.x + 1, nodeProva.y);
-                        if (nodeList.Contains(nodeProva))
+                        if (walkableNodeList.Contains(nodeProva))
                         {
-                            nodeList.Remove(getGridNode(nodeProva.x, nodeProva.y));
+                            walkableNodeList.Remove(getGridNode(nodeProva.x, nodeProva.y));
                         }
                         else
                         {
@@ -481,13 +485,68 @@ public class GridBuilder : MonoBehaviour {
                 }
                 else if(dir.x < 0)
                 {
+                    Node nodeProva = item;
+                    bool noMoreNodes = false;
+                    while (!noMoreNodes)
+                    {
+                        nodeProva = getGridNode(nodeProva.x - 1, nodeProva.y);
+                        if (walkableNodeList.Contains(nodeProva))
+                        {
+                            walkableNodeList.Remove(getGridNode(nodeProva.x, nodeProva.y));
+                        }
+                        else
+                        {
+                            noMoreNodes = true;
+                        }
 
+                    }
                 }
-                else
+
+
+
+                if (dir.y > 0)
                 {
+                    Node nodeProva = item;
+                    bool noMoreNodes = false;
+                    while (!noMoreNodes)
+                    {
+                        nodeProva = getGridNode(nodeProva.x, nodeProva.y + 1);
+                        if (walkableNodeList.Contains(nodeProva))
+                        {
+                            walkableNodeList.Remove(getGridNode(nodeProva.x, nodeProva.y));
+                        }
+                        else
+                        {
+                            noMoreNodes = true;
+                        }
+
+                    }
 
                 }
+                else if (dir.y < 0)
+                {
+                    Node nodeProva = item;
+                    bool noMoreNodes = false;
+                    while (!noMoreNodes)
+                    {
+                        nodeProva = getGridNode(nodeProva.x, nodeProva.y - 1);
+                        if (walkableNodeList.Contains(nodeProva))
+                        {
+                            walkableNodeList.Remove(getGridNode(nodeProva.x, nodeProva.y));
+                        }
+                        else
+                        {
+                            noMoreNodes = true;
+                        }
+
+                    }
+                }
+                walkableNodeList.Remove(item);
             }
+        }
+        foreach (Node item in walkableNodeList)
+        {
+            displayNode(item, pathMaterial.skill);
         }
     }
 

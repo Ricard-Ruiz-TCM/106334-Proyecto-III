@@ -75,7 +75,7 @@ public class AutomaticActor : Actor {
                 near = Stage.StageManager.findByTag(transform, "Player");
                 if (near != null) {
                     if (Stage.StageBuilder.getDistance(transform.position, near.transform.position) <= _equip.weapon.range) {
-                        skills.useSkill(skillID.Attack, this, (BasicActor)near);
+                        skills.useSkill(skillID.Attack, this, Stage.StageBuilder.getGridNode(near.transform.position));
                     }
                 }
             }
@@ -95,16 +95,16 @@ public class AutomaticActor : Actor {
             if (canAct())
                 skills.useSkill(skillID.ImperialCry, this);
             if (canAct() && inWeaponRange)
-                skills.useSkill(skillID.Bloodlust, this, (BasicActor)near);
+                skills.useSkill(skillID.Bloodlust, this, Stage.StageBuilder.getGridNode(near.transform.position));
             if (canAct() && inWeaponRange)
-                skills.useSkill(skillID.Disarm, this, (BasicActor)near);
+                skills.useSkill(skillID.Disarm, this, Stage.StageBuilder.getGridNode(near.transform.position));
             if (canAct() && inWeaponRange)
-                skills.useSkill(skillID.AchillesHeel, this, (BasicActor)near);
+                skills.useSkill(skillID.AchillesHeel, this, Stage.StageBuilder.getGridNode(near.transform.position));
             if (canAct() && inWeaponRange)
-                skills.useSkill(equip.weapon.skill, this, (BasicActor)near);
+                skills.useSkill(equip.weapon.skill, this, Stage.StageBuilder.getGridNode(near.transform.position));
             if (canAct()) {
                 if (inWeaponRange) {
-                    skills.useSkill(skillID.Attack, this, (BasicActor)near);
+                    skills.useSkill(skillID.Attack, this, Stage.StageBuilder.getGridNode(near.transform.position));
                 } else {
                     // Si no, usamos vanish
                     if (canAct())

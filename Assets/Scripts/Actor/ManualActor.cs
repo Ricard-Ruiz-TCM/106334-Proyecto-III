@@ -89,7 +89,7 @@ public class ManualActor : Actor {
             if (Input.GetMouseButtonDown(0)) {
                 Stage.StageBuilder.clearGrid();
                 BasicActor target = Stage.StageManager.getActor(_mouseNode);
-                skills.useSkill(_tempSkillID, this, target);
+                skills.useSkill(_tempSkillID, this, _mouseNode);
                 onSkillUsed?.Invoke();
             }
         }

@@ -40,7 +40,7 @@ public class SkillButtonUI : MonoBehaviour {
         UpdateCooldown();
         if (skill.skill.personal) {
             _action = () => {
-                ((Actor)actor).skills.useSkill(_skill.ID, (Actor)actor, (Actor)actor);
+                ((Actor)actor).skills.useSkill(_skill.ID, (Actor)actor);
             };
         } else {
             _action = () => {

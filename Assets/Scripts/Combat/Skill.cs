@@ -18,9 +18,10 @@ public class Skill : ScriptableObject {
 
     public int areaRange;
 
-    public virtual void action(BasicActor from, BasicActor to) {
-        if (to != null) {
-            to.takeDamage((Actor)from, from.totalDamage());
+    public virtual void action(BasicActor from, Node to) {
+        BasicActor target = Stage.StageManager.getActor(to);
+        if (target != null) {
+            target.takeDamage((Actor)from, from.totalDamage());
         }
         from.endAction();
     }

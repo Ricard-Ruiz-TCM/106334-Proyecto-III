@@ -28,7 +28,7 @@ public class SkillManager : MonoBehaviour {
         return skills[findSkill(id)].cooldown < 0;
     }
 
-    public void useSkill(skillID id, BasicActor from, BasicActor to = null) {
+    public void useSkill(skillID id, BasicActor from, Node to = null) {
         int pos = findSkill(id);
         if (pos == -1)
             return;

@@ -268,7 +268,7 @@ public class GridBuilder : MonoBehaviour {
             for (int j = count + node.y - 1; j < count + node.y; j++)
             {
                 if (j < 0) jCount = 0;
-                if (j > Stage.Grid.columns) jCount = Stage.Grid.rows;
+                if (j > Stage.Grid.rows) jCount = Stage.Grid.rows;
                 else jCount = j;
                 if (getGridNode(xCount,jCount).type != Array2DEditor.nodeType.X && Stage.Pathfinder.isAchievable(node, getGridNode(xCount, jCount), range))
                 {
@@ -302,7 +302,7 @@ public class GridBuilder : MonoBehaviour {
             for (int z = node.y - count + 1; z > node.y - count; z--)
             {
                 if (z < 0) zCount = 0;
-                if (z > Stage.Grid.columns) zCount = Stage.Grid.rows;
+                if (z > Stage.Grid.rows) zCount = Stage.Grid.rows;
                 else zCount = z;
 
                 if (getGridNode(xCount, zCount).type != Array2DEditor.nodeType.X && Stage.Pathfinder.isAchievable(node, getGridNode(xCount, zCount), range))
@@ -366,26 +366,21 @@ public class GridBuilder : MonoBehaviour {
         foreach (Node item in nodeList)
         {
             bool hasArrivedCenter = false;
-            Node closestPlane = item;
+            GridPlane closestPlane = getGridPlane(item);
             while (!hasArrivedCenter)
             {
-                GridPlane canBeClosest = findClosestGridRoc(getGridPlane(closestPlane), getGridPlane(node)); // si hay algun bug que se pone mal, 100000000000% es por esto uwu
-                if(canBeClosest.node.type != Array2DEditor.nodeType.X)
+                closestPlane = findClosestGridRoc(getGridPlane(closestPlane.node), getGridPlane(node)); // si hay algun bug que se pone mal, 100000000000% es por esto uwu
+                if(closestPlane.node.type != Array2DEditor.nodeType.X)
                 {
-                    closestPlane = canBeClosest.node;
-                    closestPlane.isRangelimit = true;
+                    closestPlane.node.isRangelimit = true;
                     //displayNode(closestPlane, pathMaterial.invisible);
-                    a.Add(closestPlane);
+                    a.Add(closestPlane.node);
 
-                    if ((closestPlane.x == node.x + 1 && closestPlane.y == node.y) || (closestPlane.x == node.x - 1 && closestPlane.y == node.y) || (closestPlane.x == node.x && closestPlane.y == node.y + 1) || (closestPlane.x == node.x && closestPlane.y == node.y - 1))
+                    if ((closestPlane.node.x == node.x + 1 && closestPlane.node.y == node.y) || (closestPlane.node.x == node.x - 1 && closestPlane.node.y == node.y) || (closestPlane.node.x == node.x && closestPlane.node.y == node.y + 1) || (closestPlane.node.x == node.x && closestPlane.node.y == node.y - 1))
                     {
                         hasArrivedCenter = true;
                         
                     }
-                }
-                else
-                {
-                    hasArrivedCenter = true;
                 }
             }
             displayNode(item, pathMaterial.invisible);         

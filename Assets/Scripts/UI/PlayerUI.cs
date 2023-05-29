@@ -112,7 +112,7 @@ public class PlayerUI : MonoBehaviour {
         if (_player == null)
             return;
 
-        _imgHealth.fillAmount = (_player.healthPercent() / 100);
+        _imgHealth.fillAmount = (float)((float)(_player).health() / (float)(_player).maxHealth());
     }
 
     /** M�todo que acutaliza los steps */

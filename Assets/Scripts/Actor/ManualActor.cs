@@ -96,6 +96,15 @@ public class ManualActor : Actor {
 
     }
 
+    /*** Método para hacer el positioning del personaje */
+    public void positioning() {
+        nodePositionChanged();
+
+        if (Input.GetMouseButtonDown(0)) {
+            Debug.Log("PLACING");
+        }
+    }
+
     /** Override del reAct */
     public override void reAct() {
         _tempSkillID = skillID.NONE;

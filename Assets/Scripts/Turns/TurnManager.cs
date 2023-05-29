@@ -74,8 +74,7 @@ public class TurnManager : MonoBehaviour {
     private void positioningRound() {
         foreach (Turnable attender in _attenders) {
             if (attender is ManualActor) {
-                Debug.Log("ACTOR MANUAL PERRO");
-                // TODO: Implementar la lógica de la ronda de posicionamiento
+                ((ManualActor)current).positioning();
             }
         }
     }

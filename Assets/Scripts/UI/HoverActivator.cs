@@ -1,27 +1,16 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class HoverActivator : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler {
 
-    [SerializeField, Header("Info Panel:")]
-    private SkillButtonInfoUI _panelInfo;
+    [SerializeField, Header("GameObject")]
+    protected GameObject _object;
 
-    /** Skill Button */
-    private SkillButtonUI _skillButtonUI;
-
-    // Unity Awake
-    void Awake() {
-        _skillButtonUI = GetComponent<SkillButtonUI>();
+    public virtual void OnPointerEnter(PointerEventData eventData) {
+        _object.SetActive(true);
     }
 
-    // OnPointerEnter
-    public void OnPointerEnter(PointerEventData eventData) {
-        _panelInfo.gameObject.SetActive(true);
-        _panelInfo.Set(_skillButtonUI.SkItem);
-    }
-
-    // OnPointerExit
-    public void OnPointerExit(PointerEventData eventData) {
-        _panelInfo.gameObject.SetActive(false);
+    public virtual void OnPointerExit(PointerEventData eventData) {
+        _object.SetActive(false);
     }
 }

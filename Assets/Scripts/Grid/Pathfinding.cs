@@ -41,12 +41,9 @@ public class Pathfinding : MonoBehaviour {
 
             // Revisamos los vecinos al nodo en cuestión 
             foreach (Node neighbour in Stage.Grid.getNeighbours(node)) {
-                if (closedList.Contains(neighbour)) {
-                    if (walkableMatter) {
-                        if (!neighbour.walkable) {
-                            continue;
-                        }
-                    }
+                if (closedList.Contains(neighbour) || (!neighbour.walkable && walkableMatter)) 
+                {                 
+                    continue;
                 }
                 // Calculamos nuevo coste al neighbour teniendo origen en cuenta
                 int newCostToNeighbour = node.g + Heuristic(node, neighbour);

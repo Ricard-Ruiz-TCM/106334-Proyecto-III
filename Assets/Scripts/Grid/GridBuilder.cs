@@ -425,19 +425,22 @@ public class GridBuilder : MonoBehaviour {
     public void hideNode(int x, int y) {
         hideNode(getGridNode(x, y));
     }
-    public void displaySkillRange(int range, Node node, pathMaterial mat = pathMaterial.skill) {
-
+    public void displaySkillRange(int range, Node node, pathMaterial mat = pathMaterial.skill) 
+    {
+        List<Node> skillRangeNodeList = new List<Node>();
         int count = 1;
         int totalCount = 1;
         for (int i = node.x - range; i <= node.x + range; i++) {
             for (int j = node.y; j < count + node.y; j++) {
                 if (Stage.Grid.insideGrid(i, j)) {
                     displayNode(i, j, mat);
+                    skillRangeNodeList.Add(getGridNode(i,j));
                 }
             }
             for (int z = node.y - 1; z > node.y - count; z--) {
                 if (Stage.Grid.insideGrid(i, z)) {
                     displayNode(i, z, mat);
+                    skillRangeNodeList.Add(getGridNode(i, z));
                 }
             }
 
@@ -447,6 +450,44 @@ public class GridBuilder : MonoBehaviour {
                 count++;
             }
             totalCount++;
+        }
+        skillWalkableLimited(skillRangeNodeList, node);
+    }
+    private void skillWalkableLimited(List<Node> nodeList, Node origin)
+    {
+        foreach (Node item in nodeList)
+        {
+            if (!item.walkable)
+            {
+                Vector2 dir = getDirection(item, origin);
+                if(dir.x > 0)
+                {
+                    Node nodeProva = item;
+                    bool noMoreNodes = false;
+                    while (!noMoreNodes)
+                    {
+                        nodeProva = getGridNode(nodeProva.x + 1, nodeProva.y);
+                        if (nodeList.Contains(nodeProva))
+                        {
+                            nodeList.Remove(getGridNode(nodeProva.x, nodeProva.y));
+                        }
+                        else
+                        {
+                            noMoreNodes = true;
+                        }
+                        
+                    }
+                    
+                }
+                else if(dir.x < 0)
+                {
+
+                }
+                else
+                {
+
+                }
+            }
         }
     }
 

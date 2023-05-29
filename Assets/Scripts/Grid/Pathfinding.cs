@@ -12,7 +12,7 @@ public class Pathfinding : MonoBehaviour {
     private heuristic _heuristic;
 
     /** Método FindPath, busca la mejor ruta entre 2 nodos, devuelve la lista de origin -> target **/
-    public List<Node> FindPath(Node origin, Node target) {
+    public List<Node> FindPath(Node origin, Node target, bool walkableMatter = true) {
 
         // Listas
         List<Node> openList = new List<Node>();
@@ -41,8 +41,12 @@ public class Pathfinding : MonoBehaviour {
 
             // Revisamos los vecinos al nodo en cuestión 
             foreach (Node neighbour in Stage.Grid.getNeighbours(node)) {
-                if (!neighbour.walkable || closedList.Contains(neighbour)) {
-                    continue;
+                if (closedList.Contains(neighbour)) {
+                    if (walkableMatter) {
+                        if (!neighbour.walkable) {
+                            continue;
+                        }
+                    }
                 }
                 // Calculamos nuevo coste al neighbour teniendo origen en cuenta
                 int newCostToNeighbour = node.g + Heuristic(node, neighbour);

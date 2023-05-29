@@ -30,7 +30,7 @@ public class ManualActor : Actor {
             Stage.StageBuilder.clearGrid();
             Stage.StageBuilder.DisplayMovementRange(transform, stepsRemain());
             // Calcular la ruta nueva
-            List<Node> route = Stage.Pathfinder.FindPath(_myNode, _mouseNode);
+            List<Node> route = Stage.Pathfinder.FindPath(_myNode, _mouseNode, false);
             if (route != null) {
                 int steps = Mathf.Min(route.Count, stepsRemain());
                 // Get de los paths

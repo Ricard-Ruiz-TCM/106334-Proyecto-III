@@ -15,6 +15,12 @@ public class ManualActor : Actor {
 
     private skillID _tempSkillID;
 
+    protected override void Start() {
+        base.Start();
+
+        transform.position = Stage.StageManager.findPositionNode().transform.position;
+    }
+
     /** Override del onTurn */
     //done, falta que no es vegi la grid quan no es pot moure
     public override void thinking() {
@@ -101,7 +107,13 @@ public class ManualActor : Actor {
         nodePositionChanged();
 
         if (Input.GetMouseButtonDown(0)) {
-            Debug.Log("PLACING");
+            if (_mouseNode.type.Equals(Array2DEditor.nodeType.P)){
+                BasicActor spot = Stage.StageManager.getActor(_mouseNode);
+                if (spot != null) {
+                    spot.transform.position = transform.position;
+                }
+                transform.position = Stage.StageBuilder.getGridPlane(_mouseNode).transform.position;
+            }
         }
     }
 

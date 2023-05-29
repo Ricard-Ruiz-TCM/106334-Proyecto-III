@@ -4,6 +4,7 @@
 public class Disarm : Skill {
 
     public override void action(BasicActor from, BasicActor to) {
+        // TODO
         from.endAction();
     }
 

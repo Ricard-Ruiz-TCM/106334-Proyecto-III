@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(fileName = "Cleave", menuName = "Combat/Skills/Cleave")]
-public class Cleave : Skill 
-{
+[CreateAssetMenu(fileName = "Double Lungue", menuName = "Combat/Skills/Double Lungue")]
+public class DoubleLungue : Skill {
 
     public override void action(BasicActor from, BasicActor to) {
         // TODO

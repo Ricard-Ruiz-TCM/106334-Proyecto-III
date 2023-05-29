@@ -4,7 +4,8 @@
 public class ArrowRain : Skill {
 
     public override void action(BasicActor from, BasicActor to) {
-        Debug.Log("APPLY ARROW");
+        // TODO
+        from.endAction();
     }
 
 }

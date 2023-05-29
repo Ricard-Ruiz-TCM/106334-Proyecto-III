@@ -156,27 +156,17 @@ public class GridBuilder : MonoBehaviour {
         return getGridPlane(node);
     }
     /** Método para localizar el GridPlane más cercano a un objetivo */
-    public GridPlane findClosestGridRoc(GridPlane origin, GridPlane target)
-    {
-        if (Mathf.Abs(origin.node.x - target.node.x) <= Mathf.Abs(origin.node.y - target.node.y))
-        {
-            if(origin.node.y > target.node.y)
-            {
+    public GridPlane findClosestGridRoc(GridPlane origin, GridPlane target) {
+        if (Mathf.Abs(origin.node.x - target.node.x) <= Mathf.Abs(origin.node.y - target.node.y)) {
+            if (origin.node.y > target.node.y) {
                 return getGridPlane(origin.node.x, origin.node.y - 1);
-            }
-            else
-            {
+            } else {
                 return getGridPlane(origin.node.x, origin.node.y + 1);
             }
-        }
-        else
-        {
-            if (origin.node.x > target.node.x)
-            {
+        } else {
+            if (origin.node.x > target.node.x) {
                 return getGridPlane(origin.node.x - 1, origin.node.y);
-            }
-            else
-            {
+            } else {
                 return getGridPlane(origin.node.x + 1, origin.node.y);
             }
         }
@@ -250,8 +240,7 @@ public class GridBuilder : MonoBehaviour {
 
 
     }
-    public void DisplayMovementRange(Transform from, int range) 
-    {
+    public void DisplayMovementRange(Transform from, int range) {
         Debug.Log(Stage.Grid.rows);
         int count = 1;
         int totalCount = 1;
@@ -259,34 +248,33 @@ public class GridBuilder : MonoBehaviour {
         Node node = getGridPlane(from.position).node;
         List<Node> gridList = new List<Node>();
 
-        for (int i = node.x - range; i <= node.x + range; i++)
-        {
-            if (i < 0) xCount = 0;
-            else if (i > Stage.Grid.rows) xCount = Stage.Grid.rows;
-            else xCount = i;
+        for (int i = node.x - range; i <= node.x + range; i++) {
+            if (i < 0)
+                xCount = 0;
+            else if (i > Stage.Grid.rows)
+                xCount = Stage.Grid.rows;
+            else
+                xCount = i;
 
-            for (int j = count + node.y - 1; j < count + node.y; j++)
-            {
-                if (j < 0) jCount = 0;
-                if (j > Stage.Grid.columns) jCount = Stage.Grid.columns;
-                else jCount = j;
-                if (getGridNode(xCount,jCount).type != Array2DEditor.nodeType.X && Stage.Pathfinder.isAchievable(node, getGridNode(xCount, jCount), range))
-                {
+            for (int j = count + node.y - 1; j < count + node.y; j++) {
+                if (j < 0)
+                    jCount = 0;
+                if (j > Stage.Grid.columns)
+                    jCount = Stage.Grid.columns;
+                else
+                    jCount = j;
+                if (getGridNode(xCount, jCount).type != Array2DEditor.nodeType.X && Stage.Pathfinder.isAchievable(node, getGridNode(xCount, jCount), range)) {
                     displayNode(xCount, jCount, pathMaterial.walkable);
                     gridList.Add(getGridNode(xCount, jCount));
                     getGridNode(xCount, jCount).isRangelimit = true;
 
                     //GetInsideNodes(getGridPlane(i, j).node, node);
-                }
-                else
-                {
+                } else {
                     bool hasFindClosed = false;
                     GridPlane closestPlane = getGridPlane(xCount, jCount);
-                    while (!hasFindClosed)
-                    {
+                    while (!hasFindClosed) {
                         closestPlane = findClosestGridRoc(closestPlane, getGridPlane(node.x, node.y));
-                        if (Stage.Pathfinder.isAchievable(node, closestPlane.node, range))
-                        {
+                        if (Stage.Pathfinder.isAchievable(node, closestPlane.node, range)) {
                             displayNode(closestPlane.node, pathMaterial.walkable);
                             hasFindClosed = true;
                             gridList.Add(closestPlane.node);
@@ -299,29 +287,26 @@ public class GridBuilder : MonoBehaviour {
                 }
 
             }
-            for (int z = node.y - count + 1; z > node.y - count; z--)
-            {
-                if (z < 0) zCount = 0;
-                if (z > Stage.Grid.columns) zCount = Stage.Grid.columns;
-                else zCount = z;
+            for (int z = node.y - count + 1; z > node.y - count; z--) {
+                if (z < 0)
+                    zCount = 0;
+                if (z > Stage.Grid.columns)
+                    zCount = Stage.Grid.columns;
+                else
+                    zCount = z;
 
-                if (getGridNode(xCount, zCount).type != Array2DEditor.nodeType.X && Stage.Pathfinder.isAchievable(node, getGridNode(xCount, zCount), range))
-                {
+                if (getGridNode(xCount, zCount).type != Array2DEditor.nodeType.X && Stage.Pathfinder.isAchievable(node, getGridNode(xCount, zCount), range)) {
                     displayNode(xCount, zCount, pathMaterial.walkable);
                     gridList.Add(getGridNode(xCount, zCount));
                     getGridNode(xCount, zCount).isRangelimit = true;
 
                     //GetInsideNodes(getGridPlane(i, z).node, node);
-                }
-                else
-                {
+                } else {
                     bool hasFindClosed = false;
                     GridPlane closestPlane = getGridPlane(xCount, zCount);
-                    while (!hasFindClosed)
-                    {
-                        closestPlane = findClosestGridRoc(closestPlane,getGridPlane(node.x, node.y));
-                        if (Stage.Pathfinder.isAchievable(node, closestPlane.node, range))
-                        {
+                    while (!hasFindClosed) {
+                        closestPlane = findClosestGridRoc(closestPlane, getGridPlane(node.x, node.y));
+                        if (Stage.Pathfinder.isAchievable(node, closestPlane.node, range)) {
                             displayNode(closestPlane.node, pathMaterial.walkable);
                             hasFindClosed = true;
                             gridList.Add(closestPlane.node);
@@ -333,20 +318,15 @@ public class GridBuilder : MonoBehaviour {
 
                 }
             }
-            if (xCount == node.x - range || xCount == node.x + range)
-            {
-                if (Stage.Grid.insideGrid(i, node.y))
-                {
+            if (xCount == node.x - range || xCount == node.x + range) {
+                if (Stage.Grid.insideGrid(i, node.y)) {
                     displayNode(xCount, node.y, pathMaterial.invisible);
                 }
             }
 
-            if (totalCount > range)
-            {
+            if (totalCount > range) {
                 count--;
-            }
-            else
-            {
+            } else {
                 count++;
             }
             totalCount++;
@@ -354,66 +334,52 @@ public class GridBuilder : MonoBehaviour {
 
         List<Node> movementGrid = new List<Node>(GetInsideNodes(node, gridList, range));
         DisplayBorders(movementGrid);
-        foreach (Node item in movementGrid)
-        {
+        foreach (Node item in movementGrid) {
             item.isRangelimit = false;
         }
 
     }
-    private List<Node> GetInsideNodes(Node node, List<Node> nodeList, int range)
-    {
+    private List<Node> GetInsideNodes(Node node, List<Node> nodeList, int range) {
         List<Node> a = new List<Node>(nodeList);
-        foreach (Node item in nodeList)
-        {
+        foreach (Node item in nodeList) {
             bool hasArrivedCenter = false;
             GridPlane closestPlane = getGridPlane(item);
-            while (!hasArrivedCenter)
-            {
+            while (!hasArrivedCenter) {
                 closestPlane = findClosestGridRoc(getGridPlane(closestPlane.node), getGridPlane(node)); // si hay algun bug que se pone mal, 100000000000% es por esto uwu
-                if(closestPlane.node.type != Array2DEditor.nodeType.X)
-                {
+                if (closestPlane.node.type != Array2DEditor.nodeType.X) {
                     closestPlane.node.isRangelimit = true;
                     //displayNode(closestPlane, pathMaterial.invisible);
                     a.Add(closestPlane.node);
 
-                    if ((closestPlane.node.x == node.x + 1 && closestPlane.node.y == node.y) || (closestPlane.node.x == node.x - 1 && closestPlane.node.y == node.y) || (closestPlane.node.x == node.x && closestPlane.node.y == node.y + 1) || (closestPlane.node.x == node.x && closestPlane.node.y == node.y - 1))
-                    {
+                    if ((closestPlane.node.x == node.x + 1 && closestPlane.node.y == node.y) || (closestPlane.node.x == node.x - 1 && closestPlane.node.y == node.y) || (closestPlane.node.x == node.x && closestPlane.node.y == node.y + 1) || (closestPlane.node.x == node.x && closestPlane.node.y == node.y - 1)) {
                         hasArrivedCenter = true;
-                        
+
                     }
                 }
             }
-            displayNode(item, pathMaterial.invisible);         
+            displayNode(item, pathMaterial.invisible);
         }
         return a;
     }
 
-    public void DisplayBorders(List<Node> nodeList)
-    {
-        foreach (Node item in nodeList)
-        {
+    public void DisplayBorders(List<Node> nodeList) {
+        foreach (Node item in nodeList) {
             List<Vector2> neightbourList = new List<Vector2>(Stage.Grid.getNeighboursWithoutCheck(item));
-            foreach (Vector2 neightbour in neightbourList)
-            {
-                if (!getGridNode((int)neightbour.x,(int)neightbour.y).isRangelimit || !Stage.Grid.insideGrid((int)neightbour.x, (int)neightbour.y))
-                {
-                    if(neightbour.x > item.x)
-                    {
+            foreach (Vector2 neightbour in neightbourList) {
+                if (!getGridNode((int)neightbour.x, (int)neightbour.y).isRangelimit || !Stage.Grid.insideGrid((int)neightbour.x, (int)neightbour.y)) {
+                    if (neightbour.x > item.x) {
                         getGridPlane(item).limitRight.SetActive(true);
                     }
-                    if (neightbour.x < item.x)
-                    {
+                    if (neightbour.x < item.x) {
                         getGridPlane(item).limitLeft.SetActive(true);
                     }
-                    if (neightbour.y > item.y)
-                    {
+                    if (neightbour.y > item.y) {
                         getGridPlane(item).limitUp.SetActive(true);
                     }
-                    if (neightbour.y < item.y)
-                    {
+                    if (neightbour.y < item.y) {
                         getGridPlane(item).limitDown.SetActive(true);
                     }
-                    
+
                 }
             }
         }
@@ -425,16 +391,16 @@ public class GridBuilder : MonoBehaviour {
     public void hideNode(int x, int y) {
         hideNode(getGridNode(x, y));
     }
-    public void displaySkillRange(int range, Node node, pathMaterial mat = pathMaterial.skill) 
-    {
+    public void displaySkillRange(int range, Node node, pathMaterial mat = pathMaterial.skill) {
         List<Node> skillRangeNodeList = new List<Node>();
+
         int count = 1;
         int totalCount = 1;
         for (int i = node.x - range; i <= node.x + range; i++) {
             for (int j = node.y; j < count + node.y; j++) {
                 if (Stage.Grid.insideGrid(i, j)) {
                     //displayNode(i, j, mat);
-                    skillRangeNodeList.Add(getGridNode(i,j));
+                    skillRangeNodeList.Add(getGridNode(i, j));
                 }
             }
             for (int z = node.y - 1; z > node.y - count; z--) {
@@ -451,103 +417,83 @@ public class GridBuilder : MonoBehaviour {
             }
             totalCount++;
         }
-        skillWalkableLimited(skillRangeNodeList, node);
+
+        getSkilleableNodes(skillRangeNodeList, node);
     }
-    private void skillWalkableLimited(List<Node> nodeList, Node origin)
-    {
-        List<Node> walkableNodeList = new List<Node>();
-        walkableNodeList = nodeList;
-        foreach (Node item in nodeList)
-        {
-            if (!item.walkable)
-            {
+    private List<Node> getSkilleableNodes(List<Node> nodeList, Node origin) {
+        List<Node> skilleableNodes = new List<Node>(nodeList.ToArray());
+
+        foreach (Node item in nodeList) {
+            if (!item.walkable) {
+
+
                 Vector2 dir = getDirection(item, origin);
 
-
-                if(dir.x > 0)
-                {
+                if (dir.x > 0) {
                     Node nodeProva = item;
                     bool noMoreNodes = false;
-                    while (!noMoreNodes)
-                    {
+                    while (!noMoreNodes) {
                         nodeProva = getGridNode(nodeProva.x + 1, nodeProva.y);
-                        if (walkableNodeList.Contains(nodeProva))
-                        {
-                            walkableNodeList.Remove(getGridNode(nodeProva.x, nodeProva.y));
-                        }
-                        else
-                        {
+                        if (skilleableNodes.Contains(nodeProva)) {
+                            skilleableNodes.Remove(getGridNode(nodeProva.x, nodeProva.y));
+                        } else {
                             noMoreNodes = true;
                         }
-                        
+
                     }
-                    
-                }
-                else if(dir.x < 0)
-                {
+
+                } else if (dir.x < 0) {
                     Node nodeProva = item;
                     bool noMoreNodes = false;
-                    while (!noMoreNodes)
-                    {
+                    while (!noMoreNodes) {
                         nodeProva = getGridNode(nodeProva.x - 1, nodeProva.y);
-                        if (walkableNodeList.Contains(nodeProva))
-                        {
-                            walkableNodeList.Remove(getGridNode(nodeProva.x, nodeProva.y));
-                        }
-                        else
-                        {
+                        if (skilleableNodes.Contains(nodeProva)) {
+                            skilleableNodes.Remove(getGridNode(nodeProva.x, nodeProva.y));
+                        } else {
                             noMoreNodes = true;
                         }
 
                     }
                 }
 
-
-
-                if (dir.y > 0)
-                {
+                if (dir.y > 0) {
                     Node nodeProva = item;
                     bool noMoreNodes = false;
-                    while (!noMoreNodes)
-                    {
+                    while (!noMoreNodes) {
                         nodeProva = getGridNode(nodeProva.x, nodeProva.y + 1);
-                        if (walkableNodeList.Contains(nodeProva))
-                        {
-                            walkableNodeList.Remove(getGridNode(nodeProva.x, nodeProva.y));
-                        }
-                        else
-                        {
+                        if (skilleableNodes.Contains(nodeProva)) {
+                            skilleableNodes.Remove(getGridNode(nodeProva.x, nodeProva.y));
+                        } else {
                             noMoreNodes = true;
                         }
 
                     }
 
-                }
-                else if (dir.y < 0)
-                {
+                } else if (dir.y < 0) {
                     Node nodeProva = item;
                     bool noMoreNodes = false;
-                    while (!noMoreNodes)
-                    {
+                    while (!noMoreNodes) {
                         nodeProva = getGridNode(nodeProva.x, nodeProva.y - 1);
-                        if (walkableNodeList.Contains(nodeProva))
-                        {
-                            walkableNodeList.Remove(getGridNode(nodeProva.x, nodeProva.y));
-                        }
-                        else
-                        {
+                        if (skilleableNodes.Contains(nodeProva)) {
+                            skilleableNodes.Remove(getGridNode(nodeProva.x, nodeProva.y));
+                        } else {
                             noMoreNodes = true;
                         }
 
                     }
                 }
-                walkableNodeList.Remove(item);
+
+
             }
         }
-        foreach (Node item in walkableNodeList)
-        {
+
+        // muetra lista
+        foreach (Node item in skilleableNodes) {
             displayNode(item, pathMaterial.skill);
+            getGridPlane(item).setValid2Attack();
         }
+
+        return skilleableNodes;
     }
 
     public void ClearAttack() {

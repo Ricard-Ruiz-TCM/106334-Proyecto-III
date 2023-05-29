@@ -18,6 +18,13 @@ public class GridPlane : MonoBehaviour {
     public GameObject limitUp;
     public GameObject limitDown;
 
+    private bool _canBeAttacked = false;
+    public bool CanBeAttacked => _canBeAttacked;
+
+    public void setValid2Attack() {
+        _canBeAttacked = true;
+    }
+
     // Fast position access
     public Vector3 position {
         get {
@@ -64,6 +71,7 @@ public class GridPlane : MonoBehaviour {
     }
 
     public void clear(Material mat) {
+        _canBeAttacked = false;
         clearPath();
         ClearBorders();
         setMaterial(mat);

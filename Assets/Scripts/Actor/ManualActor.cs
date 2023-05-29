@@ -84,7 +84,7 @@ public class ManualActor : Actor {
             Stage.StageBuilder.clearGrid();
             Stage.StageBuilder.displaySkillRange(equip.weapon.range, _myNode);
             // Check si estamos dentro de la distancia
-            if (Stage.StageBuilder.getDistance(_mouseNode, _myNode) <= equip.weapon.range) {
+            if (Stage.StageBuilder.getDistance(_mouseNode, _myNode) <= equip.weapon.range && Stage.StageBuilder.getGridPlane(_mouseNode).CanBeAttacked) {
                 Stage.StageBuilder.displaySkill(_tempSkillID, _mouseNode, pathMaterial.skill);
             }
         }
@@ -92,7 +92,7 @@ public class ManualActor : Actor {
         // Chck si estamos en rango
         if (Stage.StageBuilder.getDistance(_mouseNode, _myNode) <= equip.weapon.range) {
             // Input
-            if (Input.GetMouseButtonDown(0)) {
+            if (Input.GetMouseButtonDown(0) && Stage.StageBuilder.getGridPlane(_mouseNode).CanBeAttacked) {
                 Stage.StageBuilder.clearGrid();
                 BasicActor target = Stage.StageManager.getActor(_mouseNode);
                 skills.useSkill(_tempSkillID, this, _mouseNode);

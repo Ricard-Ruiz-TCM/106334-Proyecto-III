@@ -352,8 +352,12 @@ public class GridBuilder : MonoBehaviour {
             totalCount++;
         }
 
-        GetInsideNodes(node, gridList, range);
-        DisplayBorders(gridList);
+        List<Node> movementGrid = new List<Node>(GetInsideNodes(node, gridList, range));
+        DisplayBorders(movementGrid);
+        foreach (Node item in movementGrid)
+        {
+            item.isRangelimit = false;
+        }
 
     }
     private List<Node> GetInsideNodes(Node node, List<Node> nodeList, int range)
@@ -365,7 +369,7 @@ public class GridBuilder : MonoBehaviour {
             Node closestPlane = item;
             while (!hasArrivedCenter)
             {
-                GridPlane canBeClosest = findClosestGridRoc(getGridPlane(closestPlane), getGridPlane(node));
+                GridPlane canBeClosest = findClosestGridRoc(getGridPlane(closestPlane), getGridPlane(node)); // si hay algun bug que se pone mal, 100000000000% es por esto uwu
                 if(canBeClosest.node.type != Array2DEditor.nodeType.X)
                 {
                     closestPlane = canBeClosest.node;
@@ -393,7 +397,6 @@ public class GridBuilder : MonoBehaviour {
     {
         foreach (Node item in nodeList)
         {
-
             List<Vector2> neightbourList = new List<Vector2>(Stage.Grid.getNeighboursWithoutCheck(item));
             foreach (Vector2 neightbour in neightbourList)
             {

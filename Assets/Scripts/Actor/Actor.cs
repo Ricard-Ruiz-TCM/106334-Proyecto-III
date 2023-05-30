@@ -209,11 +209,27 @@ public abstract class Actor : BasicActor {
         build();
     }
 
+    [SerializeField, Header("Weeapons:")]
+    private Transform _bowObj;
+    [SerializeField]
+    private Transform _gladiusObj, _hastaObj;
+
     /** Método para construir las skills según las perks y equipamiento */
     protected virtual void build() {
         if (_equip.weapon != null) {
             _skills.addSkill(skillID.Attack);
             _baseDamage = _equip.damage;
+
+            // Deactivate the non weapon usages
+            if (!_equip.weapon.ID.Equals(itemID.Bow))
+                _bowObj.gameObject.SetActive(false);
+
+            if (!_equip.weapon.ID.Equals(itemID.Gladius))
+                _gladiusObj.gameObject.SetActive(false);
+
+            if (!_equip.weapon.ID.Equals(itemID.Hasta))
+                _hastaObj.gameObject.SetActive(false);
+
         }
         if (_equip.shield != null) {
             _skills.addSkill(skillID.Defense);

@@ -163,12 +163,12 @@ public class GameManager : MonoBehaviour {
             foreach (perkID id in _playerPerks) {
                 player.perks.addPerk(id);
             }
-        } else {
-            SavePlayer(player);
         }
     }
 
     public void SavePlayer(Actor player) {
+
+        _avaliable = true;
         _armor = player.equip.getArmorInvItem();
         _weapon = player.equip.getWeaponInvItem();
         _shield = player.equip.getShieldInvItem();

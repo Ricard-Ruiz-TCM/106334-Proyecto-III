@@ -19,27 +19,30 @@ public class CameraGPT : MonoBehaviour {
 
     private float rotationY = 0f;
 
-    public Transform target;
+    public Transform _target;
 
     private Vector3 targetPosition;
 
-    private void Start() {
-        targetPosition = transform.position;
-    }
+    [SerializeField, Header("Active:")]
+    private bool _active;
 
     // Unity FixedUpdate
     void FixedUpdate() {
-        if (target == null) {
-            CameraFreeMovement();
-        } else {
-            CameraFollowMovement();
-        }   
+        if (!_active)
+            return;
 
         CameraZoom();
         CameraRotation();
+        CameraFollowMovement();
 
         // Suavizado del movimiento de la cámara
         transform.position = Vector3.Lerp(transform.position, targetPosition, cameraSpeed * Time.deltaTime);
+    }
+
+    /*** Método para activar la cámara y activar el target */
+    public void ActivateCamera(Transform target) {
+        _active = true;
+        _target = target;
     }
 
     private void CameraZoom() {
@@ -60,20 +63,10 @@ public class CameraGPT : MonoBehaviour {
     }
 
     private void CameraFollowMovement() {
-        Vector3 targetFollowPosition = target.position;
+        Vector3 targetFollowPosition = _target.position;
         targetFollowPosition.y = transform.position.y;
         targetPosition = targetFollowPosition;
         ClampCameraPosition();
-    }
-
-    private void CameraFreeMovement() {
-        if (Input.GetMouseButton(2) && !Input.GetKey(KeyCode.LeftAlt)) {
-            float mouseX = -Input.GetAxis("Mouse X");
-            float mouseY = -Input.GetAxis("Mouse Y");
-            Vector3 desiredMovement = GetCameraMovement(mouseX, mouseY);
-            targetPosition += desiredMovement;
-            ClampCameraPosition();
-        }
     }
 
     private Vector3 GetCameraMovement(float mouseX, float mouseY) {

@@ -25,6 +25,6 @@ public class Skill : ScriptableObject {
         if (target != null) {
             target.takeDamage((Actor)from, from.totalDamage());
         }
-        from.endAction();
+        ((Actor)from).endAction();
     }
 }

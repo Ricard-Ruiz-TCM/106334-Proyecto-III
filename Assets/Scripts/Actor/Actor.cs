@@ -13,6 +13,13 @@ public abstract class Actor : BasicActor {
 
     /** Callback */
     /** -------- */
+
+    public static event Action onStartMovement;
+    public static event Action onStartAct;
+
+    public static event Action onEndMovement;
+    public static event Action onEndAct;
+
     public static event Action onDestinationReached;
     public static event Action<Node> onStepReached;
     /** -------- */
@@ -55,6 +62,7 @@ public abstract class Actor : BasicActor {
     /** Set Destination, método para habilitar el movimiento */
     public void setDestination(List<Node> route) {
         setRoute(route);
+        setStep(route[0]);
     }
 
     /** Override Move from Turnable */
@@ -71,6 +79,7 @@ public abstract class Actor : BasicActor {
     /** Override del endMovement para limpiar Grid */
     public override void endMovement() {
         Stage.StageBuilder.clearGrid();
+        onEndMovement?.Invoke();
         base.endMovement();
     }
 
@@ -87,7 +96,7 @@ public abstract class Actor : BasicActor {
             if (_stepsDone >= _route.Count) {
                 endMovement();
             } else {
-                _agent.SetDestination(Stage.StageBuilder.getGridPlane(_route[_stepsDone]).position);
+                setStep(_route[_stepsDone]);
             }
         } else {
             endMovement();
@@ -95,9 +104,32 @@ public abstract class Actor : BasicActor {
         }
     }
 
+    /** Override del endAction */
+    public override void endAction() {
+        base.endAction();
+        onEndAct?.Invoke();
+    }
+
+    /** Override del startAct */
+    public override void startAct() {
+        base.startAct();
+        onStartAct?.Invoke();
+    }
+
+    /** Método para agregar el siguietne step */
+    private void setStep(Node node) {
+        _agent.SetDestination(Stage.StageBuilder.getGridPlane(node).position);
+    }
+
     /** Comprueba si hemos llegado al punto */
     public bool stepReached() {
         return !_agent.hasPath && !_agent.pathPending && _agent.pathStatus == NavMeshPathStatus.PathComplete;
+    }
+
+    /** Override dle startMove para el observer */
+    public override void startMove() {
+        base.startMove();
+        onStartMovement?.Invoke();
     }
 
     #endregion
@@ -202,11 +234,6 @@ public abstract class Actor : BasicActor {
 
         _animator = GetComponentInChildren<Animator>();
     }
-
-    [SerializeField, Header("Weeapons:")]
-    private Transform _bowObj;
-    [SerializeField]
-    private Transform _gladiusObj, _hastaObj;
 
     [SerializeField, Header("Weeapons:")]
     private Transform _bowObj;

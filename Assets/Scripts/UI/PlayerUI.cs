@@ -36,6 +36,14 @@ public class PlayerUI : MonoBehaviour {
         ManualActor.onSkillUsed += disableSkills;
 
         Actor.onStepReached += (Node n) => { updateSteps(); };
+        Actor.onDestinationReached += updateSteps;
+
+        Actor.onStartMovement += disableEndTurnButton;
+        Actor.onStartAct += disableEndTurnButton;
+
+        Actor.onEndMovement += enableEndTurnButton;
+        Actor.onEndAct += disableEndTurnButton;
+
         BasicActor.onChangeHealth += updateHealth;
 
         SkillManager.onSkillUsed += updateSingleSkill;
@@ -52,17 +60,20 @@ public class PlayerUI : MonoBehaviour {
         ManualActor.onSkillUsed -= disableSkills;
 
         Actor.onStepReached -= (Node n) => { updateSteps(); };
+        Actor.onDestinationReached -= updateSteps;
+
+        Actor.onStartMovement += disableEndTurnButton;
+        Actor.onStartAct += disableEndTurnButton;
+
+        Actor.onEndMovement -= enableEndTurnButton;
+        Actor.onEndAct -= enableEndTurnButton;
+
         BasicActor.onChangeHealth -= updateHealth;
 
         SkillManager.onSkillUsed -= updateSingleSkill;
 
         TurnManager.instance.onStartTurn -= getPlayer;
         TurnManager.instance.onModifyAttenders -= getPlayer;
-    }
-
-    // Unity Start
-    private void Start() {
-
     }
 
     /** M�todo que asigna el player al sistema, para los posibles jugadores */
@@ -107,6 +118,14 @@ public class PlayerUI : MonoBehaviour {
         _defense.UpdateText(_player.totalDefense());
     }
 
+    /** Enable and siable EndTurnButton */
+    private void disableEndTurnButton() {
+        _btnEndTurn.interactable = false;
+    }
+    private void enableEndTurnButton() {
+        _btnEndTurn.interactable = true;
+    }
+
     /** M�todo que actualiz ael hud de vida */
     private void updateHealth() {
         if (_player == null)
@@ -120,7 +139,9 @@ public class PlayerUI : MonoBehaviour {
         if (_player == null)
             return;
 
-        _steps.UpdateText(_player.stepsRemain());
+        _steps.UpdateText(0);
+        if (!_player.isMovementDone())
+            _steps.UpdateText(_player.stepsRemain());
     }
 
     /** Update de uan sola skill */

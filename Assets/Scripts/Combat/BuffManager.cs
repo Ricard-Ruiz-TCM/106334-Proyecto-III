@@ -14,7 +14,7 @@ public class BuffManager : MonoBehaviour {
             activeBuffs[i].duration--;
             if (activeBuffs[i].duration <= 0) {
                 activeBuffs[i].buff.onRemove(actor);
-                removeBuff(activeBuffs[i].buff.ID);
+                removeBuff(activeBuffs[i].buff.ID, actor);
                 i--;
             }
         }
@@ -35,20 +35,23 @@ public class BuffManager : MonoBehaviour {
         }
     }
 
-    public void removeBuff(buffsID id) {
+    public void removeBuff(buffsID id, BasicActor actor) {
         int pos = findBuff(id);
 
         if (pos != -1) {
             activeBuffs.RemoveAt(pos);
+            actor.entitieUI.GetComponent<EntitieUI>().RemoveBuff(uCore.GameManager.GetBuff(id).ImageIcon);
             onRemoveBuff?.Invoke();
         }
     }
 
     public void applyBuffs(Actor actor, params buffsID[] ids) {
         foreach (buffsID id in ids) {
-            if (findBuff(id) == -1) {
+            if (findBuff(id) == -1) 
+            {
                 activeBuffs.Add(new BuffItem(uCore.GameManager.GetBuff(id)));
-                activeBuffs[activeBuffs.Count - 1].buff.onApply(actor);
+                activeBuffs[activeBuffs.Count - 1].buff.onApply(actor);               
+                actor.entitieUI.GetComponent<EntitieUI>().AddBuff(uCore.GameManager.GetBuff(id).ImageIcon);
                 onApplyBuff?.Invoke();
             }
         }

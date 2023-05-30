@@ -18,7 +18,6 @@ public class ManualActor : Actor {
     // Unity Start
     protected override void Start() {
         base.Start();
-
         transform.position = Stage.StageManager.findPositionNode().transform.position;
     }
 

@@ -537,8 +537,15 @@ public class GridBuilder : MonoBehaviour {
         foreach (Node item in skilleableNodes) {
             displayNode(item, pathMaterial.skill);
             getGridPlane(item).setValid2Attack();
+            item.isRangelimit = true;
         }
 
+        DisplayBorders(skilleableNodes);
+
+        foreach (Node item in skilleableNodes)
+        {
+            item.isRangelimit = false;
+        }
         return skilleableNodes;
     }
 

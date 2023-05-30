@@ -18,6 +18,10 @@ public abstract class BasicActor : Turnable {
     [SerializeField]
     private bool _canAttack;
 
+    [SerializeField] GameObject entitieUIPrefab;
+    public GameObject entitieUI;
+    [SerializeField] float height;
+
     /** Getters */
     public bool isAlive() {
         return _alive;
@@ -46,6 +50,8 @@ public abstract class BasicActor : Turnable {
     protected override void Start() {
         _maxHealth = _health;
         Stage.Grid.changeNodeType(transform.position, Array2DEditor.nodeType.X);
+        entitieUI = Instantiate(entitieUIPrefab, new Vector3(transform.position.x, transform.position.y + height, transform.position.z), Quaternion.identity);
+        entitieUI.transform.parent = transform;
         base.Start();
     }
 
@@ -79,6 +85,7 @@ public abstract class BasicActor : Turnable {
         _health -= _damageTaken;
 
         InstantPopUp(-_damageTaken);
+        entitieUI.GetComponent<EntitieUI>().SetDamage((float)_damageTaken /(float)_maxHealth);
 
         onChangeHealth?.Invoke();
 

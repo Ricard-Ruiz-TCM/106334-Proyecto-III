@@ -5,6 +5,8 @@ public abstract class Buff : ScriptableObject {
 
     [Header("Sprite Icon:")]
     public Sprite icon;
+    [Header("Image Icon:")]
+    public GameObject ImageIcon;
 
     [Header("Localization Keys:")]
     public string keyName;

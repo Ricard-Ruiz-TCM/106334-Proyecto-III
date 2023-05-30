@@ -75,10 +75,10 @@ public abstract class BasicActor : Turnable {
     /** Abstract para calcular recibir daño */
     public virtual void takeDamage(BasicActor from, int damage, itemID weapon = itemID.NONE) {
 
-        InstantPopUp(-damage);
-
         _damageTaken = Mathf.Clamp(damage - totalDefense(), 0, _maxHealth);
         _health -= _damageTaken;
+
+        InstantPopUp(-_damageTaken);
 
         onChangeHealth?.Invoke();
 

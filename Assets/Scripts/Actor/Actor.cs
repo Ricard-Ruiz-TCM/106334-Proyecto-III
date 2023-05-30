@@ -17,6 +17,10 @@ public abstract class Actor : BasicActor {
     public static event Action<Node> onStepReached;
     /** -------- */
 
+    [SerializeField, Header("Animator")]
+    protected Animator _animator;
+    protected Animator Anim => _animator;
+
     #region Movement: 
 
     /** NavMeshAgent */
@@ -181,7 +185,8 @@ public abstract class Actor : BasicActor {
         if ((_equip.weapon.ID.Equals(itemID.Bow)) && (_buffs.isBuffActive(buffsID.ArrowProof))) {
             return;
         }
-
+        // Animator
+        Anim.SetTrigger("takeDamage");
         base.takeDamage(from, damage, weapon);
     }
 
@@ -194,6 +199,8 @@ public abstract class Actor : BasicActor {
         _perks = GetComponent<PerkManager>();
         _skills = GetComponent<SkillManager>();
         _equip = GetComponent<EquipmentManager>();
+
+        _animator = GetComponentInChildren<Animator>();
     }
 
     // Unity Start
@@ -238,6 +245,15 @@ public abstract class Actor : BasicActor {
     /** Override del onActorDeath */
     public override void onActorDeath() {
         GameObject.Destroy(gameObject);
+    }
+
+    /** Método que recupera el último nodo de la ruta */
+    public Node getLastRouteNode() {
+        if (_route != null) {
+            int last = _route.Count - 1;
+            return _route[last];
+        }
+        return null;
     }
 
 }

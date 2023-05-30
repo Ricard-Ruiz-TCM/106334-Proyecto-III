@@ -15,6 +15,7 @@ public class ManualActor : Actor {
 
     private skillID _tempSkillID;
 
+    // Unity Start
     protected override void Start() {
         base.Start();
 
@@ -51,9 +52,17 @@ public class ManualActor : Actor {
                 setDestination(_walkablePath);
                 startMove();
                 _walkablePath = null;
+                // Animator
+                Anim.SetBool("moving", true);
             }
         }
 
+    }
+
+    /** Override del en movmenet */
+    public override void endMovement() {
+        base.endMovement();
+        Anim.SetBool("moving", false);
     }
 
     /** Override del can move pra cuando tenemos movimientos pendientes todavía */
@@ -97,6 +106,13 @@ public class ManualActor : Actor {
                 BasicActor target = Stage.StageManager.getActor(_mouseNode);
                 skills.useSkill(_tempSkillID, this, _mouseNode);
                 onSkillUsed?.Invoke();
+
+                // Anim
+                if (equip.weapon.ID.Equals(itemID.Bow)) {
+                    Anim.SetTrigger("attackBow");
+                } else {
+                    Anim.SetTrigger("attackWeapon");
+                }
             }
         }
 

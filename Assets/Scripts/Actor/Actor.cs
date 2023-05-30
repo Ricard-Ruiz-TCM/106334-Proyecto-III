@@ -203,11 +203,10 @@ public abstract class Actor : BasicActor {
         _animator = GetComponentInChildren<Animator>();
     }
 
-    // Unity Start
-    protected override void Start() {
-        base.Start();
-        build();
-    }
+    [SerializeField, Header("Weeapons:")]
+    private Transform _bowObj;
+    [SerializeField]
+    private Transform _gladiusObj, _hastaObj;
 
     [SerializeField, Header("Weeapons:")]
     private Transform _bowObj;
@@ -215,7 +214,7 @@ public abstract class Actor : BasicActor {
     private Transform _gladiusObj, _hastaObj;
 
     /** Método para construir las skills según las perks y equipamiento */
-    protected virtual void build() {
+    public virtual void build() {
         if (_equip.weapon != null) {
             _skills.addSkill(skillID.Attack);
             _baseDamage = _equip.damage;

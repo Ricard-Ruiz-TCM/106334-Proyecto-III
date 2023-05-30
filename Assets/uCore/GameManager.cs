@@ -143,16 +143,40 @@ public class GameManager : MonoBehaviour {
 
     #region Player
 
-    public Actor Player;
+   
+    [SerializeField, Header("Player Data:")]
+    private bool _avaliable = false;
+
+    [SerializeField]
+    private ArmorInventoryItem _armor;
+    [SerializeField]
+    private WeaponInventoryItem _weapon;
+    [SerializeField]
+    private ShieldInventoryItem _shield;
+
+    [SerializeField]
+    private List<perkID> _playerPerks = new List<perkID>();
 
     public void RestorePlayer(Actor player) {
-        Player = player;
-        // cargar skills & perks % equipo
+        if (_avaliable) {
+            player.equip.SetEquipment(_armor, _weapon, _shield);
+            foreach (perkID id in _playerPerks) {
+                player.perks.addPerk(id);
+            }
+        } else {
+            SavePlayer(player);
+        }
     }
 
     public void SavePlayer(Actor player) {
-        Player = null;
-        // guardar skills & perks % equipo
+        _armor = player.equip.getArmorInvItem();
+        _weapon = player.equip.getWeaponInvItem();
+        _shield = player.equip.getShieldInvItem();
+
+        _playerPerks.Clear();
+        foreach (PerkItem pkI in player.perks.perks) {
+            _playerPerks.Add(pkI.perk.ID);
+        }
     }
 
     #endregion

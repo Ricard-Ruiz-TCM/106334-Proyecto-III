@@ -13,13 +13,13 @@ public class PerkManager : MonoBehaviour {
         }
     }
 
-    public void addSkill(perkID id) {
+    public void addPerk(perkID id) {
         if (findPerk(id) == -1) {
             perks.Add(new PerkItem(uCore.GameManager.GetPerk(id)));
         }
     }
 
-    public bool haveSkill(perkID id) {
+    public bool havePerk(perkID id) {
         return (findPerk(id) != -1);
     }
 

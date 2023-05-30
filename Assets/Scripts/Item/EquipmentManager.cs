@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections.Generic;
 
 public class EquipmentManager : MonoBehaviour {
 
@@ -18,5 +17,23 @@ public class EquipmentManager : MonoBehaviour {
     public int damage => _weapon.damage;
     public int armorDefense => _armor.defense;
     public int shieldDefense => _shield.defense;
+
+    public void SetEquipment(ArmorInventoryItem ar, WeaponInventoryItem wp, ShieldInventoryItem sh) {
+        _armor = ar;
+        _weapon = wp;
+        _shield = sh;
+    }
+
+    public ArmorInventoryItem getArmorInvItem() {
+        return _armor;
+    }
+
+    public WeaponInventoryItem getWeaponInvItem() {
+        return _weapon;
+    }
+
+    public ShieldInventoryItem getShieldInvItem() {
+        return _shield;
+    }
 
 }

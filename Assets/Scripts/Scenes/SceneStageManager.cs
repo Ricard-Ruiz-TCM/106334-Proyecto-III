@@ -36,6 +36,8 @@ public class SceneStageManager : MonoBehaviour {
     private gameScenes _nextScene;
 
     [SerializeField, Header("Entidades con turno en la escena:")]
+    private GameObject _player;
+    [SerializeField]
     private List<GameObject> _actors;
 
     // Unity OnEnable
@@ -121,13 +123,15 @@ public class SceneStageManager : MonoBehaviour {
         _playerUI.SetActive(true);
         _turnUI.SetActive(true);
 
+        // Restore Player
+        uCore.GameManager.RestorePlayer(_player.GetComponent<Actor>());
+
         // Activate the actors
+        _actors.Add(_player);
         foreach (GameObject actors in _actors) {
             actors.SetActive(true);
+            actors.GetComponent<Actor>().build();
         }
-
-        // TODO 
-        // uCore.GameManager.RestorePlayer();
 
         // Innit del turnManager
         TurnManager.instance.startManager();
@@ -167,6 +171,7 @@ public class SceneStageManager : MonoBehaviour {
     /** Método para determinar qeu se ha ganado el Stage */
     public void stageSuccess() {
         uCore.GameManager.SaveGameData();
+        uCore.GameManager.SavePlayer(_player.GetComponent<Actor>());
         uCore.Director.LoadScene(_nextScene);
     }
 

@@ -425,9 +425,9 @@ public class GridBuilder : MonoBehaviour {
 
         foreach (Node item in nodeList) {
             if (!item.walkable) {
+                List<Node> outNodes = new List<Node>();
 
-
-                Vector2 dir = getDirection(item, origin);
+                Vector2 dir = getDirection(item, origin);              
 
                 if (dir.x > 0) {
                     Node nodeProva = item;
@@ -463,6 +463,7 @@ public class GridBuilder : MonoBehaviour {
                         nodeProva = getGridNode(nodeProva.x, nodeProva.y + 1);
                         if (skilleableNodes.Contains(nodeProva)) {
                             skilleableNodes.Remove(getGridNode(nodeProva.x, nodeProva.y));
+                            outNodes.Add(getGridNode(nodeProva.x, nodeProva.y));
                         } else {
                             noMoreNodes = true;
                         }
@@ -476,14 +477,59 @@ public class GridBuilder : MonoBehaviour {
                         nodeProva = getGridNode(nodeProva.x, nodeProva.y - 1);
                         if (skilleableNodes.Contains(nodeProva)) {
                             skilleableNodes.Remove(getGridNode(nodeProva.x, nodeProva.y));
+                            outNodes.Add(getGridNode(nodeProva.x, nodeProva.y));
                         } else {
                             noMoreNodes = true;
                         }
 
                     }
                 }
+                Debug.Log(outNodes.Count);
+                if (dir.x != 0 && dir.y != 0)
+                {
+                    if (dir.x > 0)
+                    {
+                        foreach (Node outItem in outNodes)
+                        {
+                            Node nodeProva = outItem;
+                            bool noMoreNodes = false;
+                            while (!noMoreNodes)
+                            {
+                                nodeProva = getGridNode(nodeProva.x + 1, nodeProva.y);
+                                if (skilleableNodes.Contains(nodeProva))
+                                {
+                                    skilleableNodes.Remove(getGridNode(nodeProva.x, nodeProva.y));
+                                }
+                                else
+                                {
+                                    noMoreNodes = true;
+                                }
 
+                            }
+                        }
+                    }
+                    else
+                    {
+                        foreach (Node outItem in outNodes)
+                        {
+                            Node nodeProva = outItem;
+                            bool noMoreNodes = false;
+                            while (!noMoreNodes)
+                            {
+                                nodeProva = getGridNode(nodeProva.x - 1, nodeProva.y);
+                                if (skilleableNodes.Contains(nodeProva))
+                                {
+                                    skilleableNodes.Remove(getGridNode(nodeProva.x, nodeProva.y));
+                                }
+                                else
+                                {
+                                    noMoreNodes = true;
+                                }
 
+                            }
+                        }
+                    }
+                }
             }
         }
 

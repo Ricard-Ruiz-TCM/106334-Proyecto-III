@@ -126,6 +126,9 @@ public class SceneStageManager : MonoBehaviour {
             actors.SetActive(true);
         }
 
+        // TODO 
+        // uCore.GameManager.RestorePlayer();
+
         // Innit del turnManager
         TurnManager.instance.startManager();
     }

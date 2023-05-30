@@ -29,7 +29,7 @@ public class EntitieUI : MonoBehaviour
     {
         activeBuffs.Add(buff);
         GameObject buffGO = Instantiate(buff, Vector3.zero, Quaternion.identity);
-        buffGO.transform.parent = transform;
+        buffGO.transform.SetParent(transform);
         buffGO.transform.localScale = new Vector3(5, 5, 5);
         buffGO.transform.localRotation = Quaternion.Euler(Vector3.zero);
         activeBuffsGO.Add(buffGO);

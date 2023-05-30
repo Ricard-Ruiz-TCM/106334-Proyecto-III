@@ -51,7 +51,7 @@ public abstract class BasicActor : Turnable {
         _maxHealth = _health;
         Stage.Grid.changeNodeType(transform.position, Array2DEditor.nodeType.X);
         entitieUI = Instantiate(entitieUIPrefab, new Vector3(transform.position.x, transform.position.y + height, transform.position.z), Quaternion.identity);
-        entitieUI.transform.parent = transform;
+        entitieUI.transform.SetParent(transform);
         base.Start();
     }
 

@@ -5,6 +5,7 @@ public class PilarStatic : StaticActor {
 
     [SerializeField] private int pilarHeight = 0;
     [SerializeField] private GameObject pilar;
+    [SerializeField] private int damageFromPilar = 1;
      
     private BasicActor damageFrom;
     private Node pilarNode;
@@ -27,8 +28,16 @@ public class PilarStatic : StaticActor {
 
         Stage.Grid.changeNodeType(endPoint.x, endPoint.y, Array2DEditor.nodeType.X);
 
+        BasicActor endPointActor = Stage.StageManager.getActor(endPoint);
+        if(endPointActor != null)
+            endPointActor.takeDamage(this, damageFromPilar);
+
         foreach (var node in nodesToSetNotWalkable)
         {
+            BasicActor nodeActor = Stage.StageManager.getActor(node);
+            if (nodeActor != null)
+                nodeActor.takeDamage(this, damageFromPilar);
+
             Stage.Grid.changeNodeType(node.x, node.y, Array2DEditor.nodeType.X);
         }
 

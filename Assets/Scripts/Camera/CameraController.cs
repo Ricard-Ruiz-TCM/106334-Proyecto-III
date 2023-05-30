@@ -2,28 +2,31 @@
 using UnityEngine;
 
 public class CameraController : MonoBehaviour {
-    [SerializeField] Animator _animator;
 
-    //enter y exit animaciones
-    [SerializeField] Vector3 finalPos;
-    [SerializeField] Vector3 finalRot;
-    float elapsedTime;
-    [SerializeField] float duration;
-    [SerializeField] Vector3 startAnimPos;
-    [SerializeField] Vector3 startAnimRot;
-    [SerializeField] Vector3 startAnimFinalPos;
-    [SerializeField] Vector3 startAnimFinalRot;
+    [SerializeField, Header("Canera Animator:")] 
+    Animator _animator;
 
-    private void OnDrawGizmos() {
+    #region EndPosition (C# Animation)
+    [SerializeField] 
+    Vector3 finalPos;
+    [SerializeField] 
+    Vector3 finalRot;
+    #endregion
 
-        Gizmos.color = Color.red;
-        Gizmos.DrawSphere(startAnimPos, 2f);
-        Gizmos.color = Color.white;
-        Gizmos.DrawSphere(startAnimFinalPos, 2f);
+    #region StartMovement (C# Animation) 
+    [SerializeField]
+    private float duration;
+    [SerializeField] 
+    private Vector3 startAnimPos;
+    [SerializeField]
+    private Vector3 startAnimRot;
+    [SerializeField]
+    private Vector3 startAnimFinalPos;
+    [SerializeField]
+    private Vector3 startAnimFinalRot;
+    #endregion
 
-        Gizmos.color = Color.black;
-        Gizmos.DrawSphere(finalPos, 2f);
-    }
+
 
     public bool _active = false;
     public void Activate() {
@@ -85,25 +88,32 @@ public class CameraController : MonoBehaviour {
 
     [SerializeField] float cameraMoveMultiplier;
     [SerializeField] float cameraMoveSum;
-    [SerializeField]
-    public Grid2D grid {
-        get {
-            return Stage.Grid;
-        }
-        set {
-        }
-    }
 
     float xAnterior, yAnterior;
 
     bool changeTarget = false;
-    private void Awake() {
+
+    // Unity Draw Gizmos
+    void OnDrawGizmos() {
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawSphere(startAnimPos, 2f);
+        Gizmos.color = Color.white;
+        Gizmos.DrawSphere(startAnimFinalPos, 2f);
+
+        Gizmos.color = Color.black;
+        Gizmos.DrawSphere(finalPos, 2f);
+    }
+
+    // Unity Awake
+    void Awake() {
         zoom = cam.fieldOfView;
         rotX = transform.localEulerAngles.x;
         rotY = transform.localEulerAngles.y;
     }
 
-    private void Start() {
+    // Unity Start
+    void Start() {
         StartCoroutine(StartAnim());
         xAnterior = 111111;
         xAnterior = 111111;
@@ -125,7 +135,7 @@ public class CameraController : MonoBehaviour {
         if (changeTarget) {
 
             changeTarget = false;
-            targetPos = new Vector3((target.getLastRouteNode().x - grid.rows / 2.5f + cameraMoveSum) * cameraMoveMultiplier, 0, (target.getLastRouteNode().y - grid.columns / 2.5f + cameraMoveSum) * cameraMoveMultiplier);
+            targetPos = new Vector3((target.getLastRouteNode().x - Stage.Grid.rows / 2.5f + cameraMoveSum) * cameraMoveMultiplier, 0, (target.getLastRouteNode().y - Stage.Grid.columns / 2.5f + cameraMoveSum) * cameraMoveMultiplier);
             cameraSpeed = cameraMoveChangeTargetSpeed;
         }
 
@@ -148,6 +158,7 @@ public class CameraController : MonoBehaviour {
         }
 
     }
+
     private void CameraTargetMove() {
 
         Actor target = _target.GetComponent<Actor>();
@@ -156,7 +167,7 @@ public class CameraController : MonoBehaviour {
             if (xAnterior != target.getLastRouteNode().x || yAnterior != target.getLastRouteNode().y) {
                 xAnterior = target.getLastRouteNode().x;
                 yAnterior = target.getLastRouteNode().y;
-                targetPos = new Vector3((target.getLastRouteNode().x - grid.rows / 2.5f + cameraMoveSum) * cameraMoveMultiplier, 0, (target.getLastRouteNode().y - grid.columns / 2.5f + cameraMoveSum) * cameraMoveMultiplier);
+                targetPos = new Vector3((target.getLastRouteNode().x - Stage.Grid.rows / 2.5f + cameraMoveSum) * cameraMoveMultiplier, 0, (target.getLastRouteNode().y - Stage.Grid.columns / 2.5f + cameraMoveSum) * cameraMoveMultiplier);
                 cameraSpeed = cameraMoveMovementSpeed;
             }
 
@@ -169,6 +180,7 @@ public class CameraController : MonoBehaviour {
         Debug.Log(targetPos);
         cameraPos.localPosition = Vector3.Lerp(cameraPos.localPosition, targetPos, cameraSpeed * Time.deltaTime);
     }
+
     private void CameraMouseMove() {
         if (Input.GetMouseButton(1)) {
             distanceFromTarget = Vector3.Distance(targetRotate.position, transform.position);
@@ -209,6 +221,7 @@ public class CameraController : MonoBehaviour {
             transform.rotation = Quaternion.Lerp(Quaternion.Euler(startAnimRot), Quaternion.Euler(startAnimFinalRot), percentageDuration);
             yield return new WaitForFixedUpdate();
         }
+
         transform.position = startAnimFinalPos;
         transform.rotation = Quaternion.Euler(startAnimFinalRot);
         animating = false;
@@ -227,20 +240,14 @@ public class CameraController : MonoBehaviour {
             transform.rotation = Quaternion.Lerp(Quaternion.Euler(startEndRot), Quaternion.Euler(finalRot), percentageDuration);
             yield return new WaitForFixedUpdate();
         }
+
         transform.position = finalPos;
         animating = false;
         transform.rotation = Quaternion.Euler(finalRot);
     }
+
     public void ChangeTarget() {
 
     }
-
-    //IEnumerator Prova()
-    //{
-    //    while (prova)
-    //    {
-
-    //    }
-    //}
 
 }

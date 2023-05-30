@@ -147,10 +147,12 @@ public class GameManager : MonoBehaviour {
 
     public void RestorePlayer(Actor player) {
         Player = player;
+        // cargar skills & perks % equipo
     }
 
     public void SavePlayer(Actor player) {
         Player = null;
+        // guardar skills & perks % equipo
     }
 
     #endregion

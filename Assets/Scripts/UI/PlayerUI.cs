@@ -36,7 +36,6 @@ public class PlayerUI : MonoBehaviour {
         ManualActor.onSkillUsed += disableSkills;
 
         Actor.onStepReached += (Node n) => { updateSteps(); };
-        Actor.onDestinationReached += updateSteps;
 
         Actor.onStartMovement += disableEndTurnButton;
         Actor.onStartAct += disableEndTurnButton;
@@ -60,7 +59,6 @@ public class PlayerUI : MonoBehaviour {
         ManualActor.onSkillUsed -= disableSkills;
 
         Actor.onStepReached -= (Node n) => { updateSteps(); };
-        Actor.onDestinationReached -= updateSteps;
 
         Actor.onStartMovement += disableEndTurnButton;
         Actor.onStartAct += disableEndTurnButton;
@@ -124,6 +122,7 @@ public class PlayerUI : MonoBehaviour {
     }
     private void enableEndTurnButton() {
         _btnEndTurn.interactable = true;
+        updateSteps();
     }
 
     /** M�todo que actualiz ael hud de vida */

@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 3298179745834574043}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -0.2}
-  m_LocalScale: {x: 0.95581, y: 0.95581, z: 0.95581}
+  m_LocalScale: {x: 0.1113034, y: 0.1113034, z: 0.1113034}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3298179747372742814}
@@ -4896,8 +4896,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3298179745874533311}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0, z: 18.49}
-  m_LocalScale: {x: 0.95581, y: 0.95581, z: 0.95581}
+  m_LocalPosition: {x: 0, y: -0, z: 56.7}
+  m_LocalScale: {x: 0.105844595, y: 0.105844595, z: 0.105844595}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3298179747372742814}
@@ -9768,7 +9768,7 @@ Transform:
   m_GameObject: {fileID: 3298179747372742809}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 70.15701, y: 18.65, z: 30.01}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.38, y: 1.38, z: 0.02786}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3298179745874533310}
@@ -9784,7 +9784,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3298179747372742809}
   serializedVersion: 8
-  lengthInSec: 1
+  lengthInSec: 2
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 0
@@ -9912,7 +9912,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 100
+      scalar: 200
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -10028,7 +10028,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 15.36
+      scalar: 1.3
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -10491,7 +10491,7 @@ ParticleSystem:
     sphericalDirectionAmount: 0
     randomPositionAmount: 0
     radius:
-      value: 11.42
+      value: 0.9
       mode: 0
       spread: 0
       speed:
@@ -13525,7 +13525,7 @@ ParticleSystem:
         m_RotationOrder: 4
     minKillSpeed: 0
     maxKillSpeed: 10000
-    radiusScale: 1
+    radiusScale: 0.4
     collidesWith:
       serializedVersion: 2
       m_Bits: 4294967295
@@ -14504,7 +14504,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 4874126678125670354, guid: f62a379114cd0364ca5638b1f1031b7e, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

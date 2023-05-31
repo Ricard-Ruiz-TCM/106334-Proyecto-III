@@ -583,7 +583,7 @@ GameObject:
   m_IsActive: 1
 --- !u!114 &1035843191
 MonoBehaviour:
-  m_ObjectHideFlags: 2
+  m_ObjectHideFlags: 10
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -2914,6 +2914,22 @@ PrefabInstance:
         type: 3}
       propertyPath: _steps
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2811769205094483184, guid: d646759376c7dc246b32a406c436c32f,
+        type: 3}
+      propertyPath: skills.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2811769205094483184, guid: d646759376c7dc246b32a406c436c32f,
+        type: 3}
+      propertyPath: skills.Array.data[1].skill
+      value: 
+      objectReference: {fileID: 11400000, guid: d6e49de7d772a8b4f9860a6da898a4be,
+        type: 2}
+    - target: {fileID: 2811769205094483184, guid: d646759376c7dc246b32a406c436c32f,
+        type: 3}
+      propertyPath: skills.Array.data[1].cooldown
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 2811769205094483191, guid: d646759376c7dc246b32a406c436c32f,
         type: 3}

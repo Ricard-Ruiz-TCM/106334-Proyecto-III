@@ -9,12 +9,11 @@ public class Attack : Skill {
 
     public override void action(BasicActor from, Node to) {
         BasicActor target = Stage.StageManager.getActor(to);
-        Debug.Log("sdadsads");
+        Debug.Log("33333");
+        from.StartCoroutine(StartSlash(from));
         if (target != null)
         {
             target.takeDamage((Actor)from, from.totalDamage());
-            Debug.Log("33333");
-            from.StartCoroutine(StartSlash(from));
         }
         ((Actor)from).endAction();
     }
@@ -26,7 +25,7 @@ public class Attack : Skill {
         {
             go = Instantiate(slashes[i].objSlash, Vector3.zero, Quaternion.identity);
             go.transform.SetParent(from.transform);
-            go.transform.localPosition = new Vector3(0,1.5f,0);
+            go.transform.localPosition = slashes[i].pos;
             go.transform.localRotation = Quaternion.identity;
             go.SetActive(true);
             yield return new WaitForSeconds(slashes[i].delay);
@@ -49,4 +48,5 @@ public class Slash
 {
     public GameObject objSlash;
     public float delay;
+    public Vector3 pos;
 }

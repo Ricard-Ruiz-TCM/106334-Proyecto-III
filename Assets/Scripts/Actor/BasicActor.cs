@@ -70,8 +70,12 @@ public abstract class BasicActor : Turnable {
         }       
         _maxHealth = _health;
         Stage.Grid.changeNodeType(transform.position, Array2DEditor.nodeType.X);
-        entitieUI = Instantiate(entitieUIPrefab, new Vector3(transform.position.x, transform.position.y + height, transform.position.z), Quaternion.identity);
-        entitieUI.transform.SetParent(transform);
+
+        if(entitieUIPrefab != null)
+        {
+            entitieUI = Instantiate(entitieUIPrefab, new Vector3(transform.position.x, transform.position.y + height, transform.position.z), Quaternion.identity);
+            entitieUI.transform.SetParent(transform);
+        }
         base.Start();
     }
 
@@ -105,7 +109,11 @@ public abstract class BasicActor : Turnable {
         _health -= _damageTaken;
 
         InstantPopUp(-_damageTaken);
-        entitieUI.GetComponent<EntitieUI>().SetDamage((float)_damageTaken /(float)_maxHealth);
+
+        if(entitieUI != null)
+        {
+            entitieUI.GetComponent<EntitieUI>().SetDamage((float)_damageTaken / (float)_maxHealth);
+        }      
 
         onChangeHealth?.Invoke();
 

@@ -2,12 +2,19 @@
 
 [CreateAssetMenu(fileName = "LowDefense", menuName = "Combat/Buffs/Low Defense")]
 public class LowDefense : ModBuff {
+    public GameObject shieldPrefab;
+    public GameObject shieldObj;
 
-    public override void onApply(BasicActor me) {
+    public override void onApply(BasicActor me) 
+    {
+        shieldObj = Instantiate(shieldPrefab, Vector3.zero, Quaternion.identity);
+        shieldObj.transform.SetParent(me.transform);
         Debug.Log("TODO: Apply Invisible Feedback + extras.");
     }
 
     public override void onRemove(BasicActor me) {
+        shieldObj.GetComponent<Animator>().SetTrigger("hit");
+        Destroy(shieldObj, 0.7f);
         Debug.Log("TODO: Remove Invisible Feedback");
     }
 

@@ -33,7 +33,7 @@ public abstract class BasicActor : Turnable {
     public GameObject entitieUI;
     [SerializeField] float height;
 
-    [SerializeField] SkinnedMeshRenderer skinnedMesh;
+    public SkinnedMeshRenderer skinnedMesh;
     public List<Material> skinnedMaterials;
 
     /** Getters */

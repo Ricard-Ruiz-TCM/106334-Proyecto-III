@@ -10,7 +10,7 @@ public class ImperialCry : Skill {
     private int range = 2;
     public Material mat;
     public GameObject effectPrefab;
-    List<Material> anteriorMatarial;
+    //List<Material> anteriorMatarial;
 
     public override void action(BasicActor from, Node to) {
         ((Actor)from).buffs.applyBuffs((Actor)from, buffsID.ArrowProof, buffsID.MidDefense);
@@ -32,21 +32,20 @@ public class ImperialCry : Skill {
     }
     IEnumerator PlayEffect(BasicActor from)
     {
-        anteriorMatarial = new List<Material>();
         GameObject effect = Instantiate(effectPrefab, from.transform.position, Quaternion.identity);
         yield return new WaitForSeconds(0.2f);
 
         for (int i = 0; i < from.skinnedMaterials.Count; i++)
         {
-            anteriorMatarial.Add(from.skinnedMaterials[i]);
-            from.skinnedMaterials[i] = mat;
+            //anteriorMatarial.Add(from.skinnedMaterials[i]);
+            from.skinnedMesh.materials[i] = mat;
         }
 
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(1f);
 
         for (int i = 0; i < from.skinnedMaterials.Count; i++)
         {
-            from.skinnedMaterials[i] = anteriorMatarial[i];
+            from.skinnedMesh.materials[i] = from.skinnedMaterials[i];
         }
         Destroy(effect, 1f);
     }

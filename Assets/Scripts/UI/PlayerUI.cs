@@ -42,7 +42,7 @@ public class PlayerUI : MonoBehaviour {
         BasicActor.onReAct += enableEndTurnButton;
 
         BasicActor.onEndMovement += enableEndTurnButton;
-        BasicActor.onEndAct += disableEndTurnButton;
+        BasicActor.onEndAct += enableEndTurnButton;
 
         BasicActor.onChangeHealth += updateHealth;
 

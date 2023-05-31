@@ -1,9 +1,10 @@
 using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Button))]
-public class SkillButtonUI : MonoBehaviour {
+public class SkillButtonUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler {
 
     /** Skill using */
     private Skill _skill;
@@ -58,6 +59,14 @@ public class SkillButtonUI : MonoBehaviour {
                 _action();
             }
         }
+    }
+
+    public void OnPointerEnter(PointerEventData eventData) {
+        ((ManualActor)uCore.GameManager.getPlayer()).disableMovement();
+    }
+
+    public void OnPointerExit(PointerEventData eventData) {
+        ((ManualActor)uCore.GameManager.getPlayer()).enableMovement();
     }
 
 }

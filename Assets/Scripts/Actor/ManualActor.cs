@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class ManualActor : Actor {
@@ -11,6 +10,16 @@ public class ManualActor : Actor {
     List<Node> _walkablePath = new List<Node>();
 
     private skillID _tempSkillID;
+
+    private bool _canMove = true;
+
+    public void enableMovement() {
+        _canMove = true;
+    }
+
+    public void disableMovement() {
+        _canMove = false;
+    }
 
     // Unity Start
     protected override void Start() {
@@ -45,14 +54,13 @@ public class ManualActor : Actor {
 
             // Input
             if ((Input.GetMouseButtonDown(0)) && (canMove())) {
-
-                // TODO AQUÍ SE ASIGNA LA RUTA EXACTA DEL PLAYER 
-
-                setDestination(_walkablePath);
-                startMove();
-                _walkablePath = null;
-                // Animator
-                Anim.SetBool("moving", true);
+                if (_canMove) {
+                    setDestination(_walkablePath);
+                    startMove();
+                    _walkablePath = null;
+                    // Animator
+                    Anim.SetBool("moving", true);
+                }
             }
         }
 
@@ -119,11 +127,16 @@ public class ManualActor : Actor {
 
     }
 
+    public override void beginTurn() {
+        base.beginTurn();
+        _canMove = true;
+    }
+
     /*** Método para hacer el positioning del personaje */
     public void positioning() {
         nodePositionChanged();
         if (Input.GetMouseButtonDown(0) && _mouseNode != null) {
-            if (_mouseNode.type.Equals(Array2DEditor.nodeType.P)){
+            if (_mouseNode.type.Equals(Array2DEditor.nodeType.P)) {
                 BasicActor spot = Stage.StageManager.getActor(_mouseNode);
                 if (spot != null) {
                     spot.transform.position = transform.position;

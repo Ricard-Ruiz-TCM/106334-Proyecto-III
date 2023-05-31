@@ -120,7 +120,7 @@ public class ManualActor : Actor {
     /*** Método para hacer el positioning del personaje */
     public void positioning() {
         nodePositionChanged();
-        if (Input.GetMouseButtonDown(0)) {
+        if (Input.GetMouseButtonDown(0) && _mouseNode != null) {
             if (_mouseNode.type.Equals(Array2DEditor.nodeType.P)){
                 BasicActor spot = Stage.StageManager.getActor(_mouseNode);
                 if (spot != null) {

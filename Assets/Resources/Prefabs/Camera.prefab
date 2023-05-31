@@ -16,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &9105549821391066932
 Transform:
   m_ObjectHideFlags: 0
@@ -45,34 +45,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bb4a74ad83a5c2499d3c6c2f9809aa8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _animator: {fileID: 0}
-  finalPos: {x: 0, y: 0, z: 0}
-  finalRot: {x: 0, y: 0, z: 0}
-  duration: 0
-  startAnimPos: {x: 0, y: 0, z: 0}
-  startAnimRot: {x: 0, y: 0, z: 0}
-  startAnimFinalPos: {x: 0, y: 0, z: 0}
-  startAnimFinalRot: {x: 0, y: 0, z: 0}
-  _speed: 0
+  _animator: {fileID: 9105549821947461017}
+  finalPos: {x: 68.6, y: 175.5, z: -119.7}
+  finalRot: {x: 31.279, y: 0, z: 0}
+  duration: 3
+  startAnimPos: {x: 4.33, y: 30.45, z: 0}
+  startAnimRot: {x: 0, y: 9.2, z: 0}
+  startAnimFinalPos: {x: 41.79, y: 45.09, z: 12.64}
+  startAnimFinalRot: {x: 47.612, y: 0, z: 0}
+  _active: 0
+  _speed: 1
   _target: {fileID: 0}
   _maxZoom: 0
   _minZoom: 0
   _offset: {x: 0, y: 0}
   _limits: {x: 0, y: 0}
-  cameraPos: {fileID: 0}
-  cameraMoveMovementSpeed: 0
-  cameraMoveChangeTargetSpeed: 0
+  cameraPos: {fileID: 9105549821956440788}
+  cameraMoveMovementSpeed: 0.8
+  cameraMoveChangeTargetSpeed: 5
   mouseSens: 3
   targetRotate: {fileID: 0}
-  smoothTime: 0
-  cam: {fileID: 0}
-  maxFov: 0
-  minFov: 0
-  zoomMultiplier: 0
+  smoothTime: 0.001
+  cam: {fileID: 9105549821947461015}
+  maxFov: 60
+  minFov: 30
+  zoomMultiplier: 10
   velocityZoom: 0
-  smoothZoom: 0
-  cameraMoveMultiplier: 0
-  cameraMoveSum: 0
+  smoothZoom: 0.3
+  cameraMoveMultiplier: 3
+  cameraMoveSum: 6
 --- !u!1 &9105549821947461011
 GameObject:
   m_ObjectHideFlags: 0

@@ -20,6 +20,8 @@ public abstract class Actor : BasicActor {
     public static event Action onEndMovement;
     public static event Action onEndAct;
 
+    public static event Action onReAct;
+
     public static event Action onDestinationReached;
     public static event Action<Node> onStepReached;
     /** -------- */
@@ -70,6 +72,12 @@ public abstract class Actor : BasicActor {
         if (stepReached()) {
             nextStep();
         }
+    }
+
+    /** Override reAct pra el observer */
+    public override void reAct() {
+        base.reAct();
+        onReAct?.Invoke();
     }
 
     /** Override Act from Turnable */

@@ -2,84 +2,141 @@
 
 public class CameraGPT : MonoBehaviour {
 
-    public float cameraSpeed = 5f;
-    public float zoomSpeed = 5f;
-    public float rotationSpeed = 5f;
-
-    public float minZoom = 1f;
-    public float maxZoom = 10f;
-    public float minPosX = -10f;
-    public float maxPosX = 10f;
-    public float maxPosY = 25f;
-    public float minPosY = 5f;
-    public float minPosZ = -10f;
-    public float maxPosZ = 10f;
-    public float minFOV = 10f;
-    public float maxFOV = 60f;
-
-    private float rotationY = 0f;
-
-    public Transform _target;
-
-    private Vector3 targetPosition;
 
     [SerializeField, Header("Active:")]
     private bool _active;
+
+    [SerializeField, Header("Target:")]
+    private Transform _target;
+    [SerializeField]
+    private float _cameraYTargetOffset = 3f;
+
+    [SerializeField, Header("Limits:")]
+    private limit _zoomLimit;
+    [SerializeField]
+    private limit _xRotLimit;
+
+    [SerializeField, Header("Speeds:")]
+    private float _speed = 5f;
+    [SerializeField]
+    private float _zoomSpeed = 5f;
+    [SerializeField]
+    private float _rotSpeed = 5f;
+    [SerializeField]
+    private float _rotArountSpeed = 100f;
+
+    [SerializeField, Header("Distancia:")]
+    private float _distance;
+
+    /** Vectroes para pos y rot temporales */
+    private Vector3 _targetRot;
+    private Vector3 _targetPos;
+
+    /** La última en zoom que teniamos antes de ataque */
+    private float _lastY;
+
+    // Unity OnEnable
+    void OnEnable() {
+        Actor.onReAct += restoreZoom;
+        Actor.onEndAct += restoreZoom;
+        Actor.onStartAct += zoomOut;
+
+        TurnManager.instance.onStartSystem += activate;
+        TurnManager.instance.onNewCurrentTurnable += setTarget;
+    }
+
+    // Unity OnDisabel
+    void OnDisable() {
+        Actor.onReAct -= restoreZoom;
+        Actor.onEndAct -= restoreZoom;
+        Actor.onStartAct -= zoomOut;
+
+        TurnManager.instance.onStartSystem -= activate;
+        TurnManager.instance.onNewCurrentTurnable -= setTarget;
+    }
+
+    // Unity Start
+    void Start() {
+        _targetPos.y = _zoomLimit.max;    
+    }
 
     // Unity FixedUpdate
     void FixedUpdate() {
         if (!_active)
             return;
 
-        CameraZoom();
-        CameraRotation();
-        CameraFollowMovement();
+        // Behaviours
+        cameraZoom();
+        cameraRotation();
+        cameraFollow();
+        cameraLookAt();
+
+        // Clamp
+        cameraClamp();
 
         // Suavizado del movimiento de la cámara
-        transform.position = Vector3.Lerp(transform.position, targetPosition, cameraSpeed * Time.deltaTime);
+        transform.position = Vector3.Lerp(transform.position, _targetPos, _speed * Time.deltaTime);
+        transform.eulerAngles = Vector3.Lerp(transform.eulerAngles, _targetRot, _rotSpeed * Time.deltaTime);
+
     }
 
-    /*** Método para activar la cámara y activar el target */
-    public void ActivateCamera(Transform target) {
+    /** Método para setear el target */
+    public void setTarget(Turnable target) {
+        _target = target.transform;
+    }
+
+    /** Método para activar la cámara */
+    public void activate() {
         _active = true;
-        _target = target;
     }
 
-    private void CameraZoom() {
+    /** Método que levanta la camara like "zoom" */
+    private void cameraZoom() {
         float scrollAmount = Input.GetAxis("Mouse ScrollWheel");
-        float desiredZoom = scrollAmount * zoomSpeed;
-        desiredZoom = Mathf.Clamp(desiredZoom, -maxZoom, maxZoom);
-        targetPosition += transform.forward * desiredZoom;
-        ClampCameraPosition();
+        _targetPos += Vector3.down * scrollAmount * _zoomSpeed;
     }
 
-    private void CameraRotation() {
+    /** Método para rotar la camara desde el eje central*/
+    private void cameraRotation() {
         if (Input.GetMouseButton(2) && Input.GetKey(KeyCode.LeftAlt)) {
-            float mouseX = Input.GetAxis("Mouse X") * rotationSpeed;
-            rotationY += mouseX;
-            Quaternion rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, rotationY, transform.rotation.eulerAngles.z);
-            transform.rotation = rotation;
+            float mouseX = Input.GetAxis("Mouse X");
+            transform.RotateAround(_target.transform.position, new Vector3(0f, mouseX, 0f), _rotArountSpeed * Time.deltaTime);
         }
     }
 
-    private void CameraFollowMovement() {
-        Vector3 targetFollowPosition = _target.position;
-        targetFollowPosition.y = transform.position.y;
-        targetPosition = targetFollowPosition;
-        ClampCameraPosition();
+    /** Método para hacer lookAt de la camara */
+    private void cameraLookAt() {
+        Vector3 posTarget = _target.transform.position;
+        posTarget.y += _cameraYTargetOffset;
+        Vector3 direction = posTarget - transform.position;
+        _targetRot = Quaternion.LookRotation(direction).eulerAngles;
     }
 
-    private Vector3 GetCameraMovement(float mouseX, float mouseY) {
-        Quaternion rotation = Quaternion.Euler(0f, rotationY, 0f);
-        Vector3 cameraMovement = new Vector3(mouseX, 0f, mouseY) * cameraSpeed * Time.deltaTime;
-        cameraMovement = rotation * cameraMovement;
-        return cameraMovement;
+    /** Método para la camara, que siempre siga al target */
+    private void cameraFollow() {
+        Vector3 currentPosition = new Vector3(transform.position.x, 0f, transform.position.z);
+        Vector3 targetPosition = new Vector3(_target.position.x, 0f, _target.position.z);
+        float distance = Vector3.Distance(currentPosition, targetPosition);
+        if (distance > _distance) {
+            Vector3 direction = (targetPosition - currentPosition).normalized;
+            _targetPos.x = _target.position.x - direction.x * _distance;
+            _targetPos.z = _target.position.z - direction.z * _distance;
+        }
     }
 
-    private void ClampCameraPosition() {
-        targetPosition.x = Mathf.Clamp(targetPosition.x, minPosX, maxPosX);
-        targetPosition.y = Mathf.Clamp(targetPosition.y, minPosY, maxPosY);
-        targetPosition.z = Mathf.Clamp(targetPosition.z, minPosZ, maxPosZ);
+    /** Clamps para posicion y rotaicón */
+    private void cameraClamp() {
+        _targetPos.y = Mathf.Clamp(_targetPos.y, _zoomLimit.min, _zoomLimit.max);
+        _targetRot.x = Mathf.Clamp(_targetRot.x, _xRotLimit.min, _xRotLimit.max);
+    }
+
+    /** Métodos para hacer zoom a la haora de realizar un ataque */
+    private void zoomOut() {
+        _lastY = transform.position.y;
+        _targetPos.y = _zoomLimit.max;
+    }
+    private void restoreZoom() {
+        _targetPos.y = _lastY;
     }
 
 }

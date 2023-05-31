@@ -133,10 +133,12 @@ public class SceneStageManager : MonoBehaviour {
         uCore.GameManager.RestorePlayer(_player.GetComponent<Actor>());
 
         // Activate the actors
-        _actors.Add(_player);
+        _player.SetActive(true);
+        uCore.GameManager.getPlayer().build();
         foreach (GameObject actors in _actors) {
             actors.SetActive(true);
-            actors.GetComponent<Actor>().build();
+            if(actors.GetComponent<Actor>() != null)
+                actors.GetComponent<Actor>().build();
         }
 
         // Innit del turnManager

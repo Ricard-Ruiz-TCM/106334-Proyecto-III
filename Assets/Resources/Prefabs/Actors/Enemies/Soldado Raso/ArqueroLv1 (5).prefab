@@ -1237,13 +1237,19 @@ MonoBehaviour:
   state: 0
   acting: 0
   moving: 0
-  _alive: 1
   _health: 5
-  _maxHealth: 5
-  _maxSteps: 1
-  _route: []
-  _baseDamage: 0
-  _baseDefense: 0
+  _canAttack: 0
+  entitieUIPrefab: {fileID: 0}
+  entitieUI: {fileID: 0}
+  height: 0
+  skinnedMesh: {fileID: 0}
+  skinnedMaterials: []
+  _animator: {fileID: 0}
+  _steps: 3
+  _perks: {fileID: 0}
+  _bowObj: {fileID: 0}
+  _gladiusObj: {fileID: 0}
+  _hastaObj: {fileID: 0}
   _combatAI: 0
   _fleeThreshold: 20
 --- !u!114 &2044030555967109592
@@ -1306,9 +1312,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skills:
-  - skill: {fileID: 11400000, guid: 1e84fc4a7ac721f43b381a44c8bb7e77, type: 2}
+  - skill: {fileID: 11400000, guid: c7e621e8c6c48264ba7bb8749332c4ea, type: 2}
     cooldown: 0
-  - skill: {fileID: 11400000, guid: 098f952a572393646ba3d2c4b2357bf5, type: 2}
+  - skill: {fileID: 11400000, guid: d863197c4745970449831ec521919904, type: 2}
     cooldown: 0
 --- !u!1 &5584436487234522968
 GameObject:

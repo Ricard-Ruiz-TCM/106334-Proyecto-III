@@ -46,14 +46,7 @@ public class ManualActor : Actor {
             // Input
             if ((Input.GetMouseButtonDown(0)) && (canMove())) {
 
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                RaycastHit hit;
-
-                // Verificar si el raycast golpea un objeto en el layer UI
-                if (Physics.Raycast(ray, out hit, Mathf.Infinity, LayerMask.NameToLayer("UI"))) {
-                    // El raycast golpeó un objeto en el layer UI
-                    Debug.Log("Se hizo clic en un objeto del UI: " + hit.collider.gameObject.name);
-                }
+                // TODO AQUÍ SE ASIGNA LA RUTA EXACTA DEL PLAYER 
 
                 setDestination(_walkablePath);
                 startMove();

@@ -33,13 +33,16 @@ public class PlayerUI : MonoBehaviour {
         BuffManager.onApplyBuff += displayBuffs;
         BuffManager.onRemoveBuff += displayBuffs;
 
-        Actor.onSkillUsed += disableSkills;
+        Actor.onSkillUsed += (Node n) => { disableSkills(); };
 
         Actor.onStepReached += (Node n) => { updateSteps(); };
 
         BasicActor.onStartMovement += disableEndTurnButton;
         BasicActor.onStartAct += disableEndTurnButton;
         BasicActor.onReAct += enableEndTurnButton;
+
+        BasicActor.onEndMovement += enableSkills;
+        BasicActor.onStartMovement += disableSkills;
 
         BasicActor.onEndMovement += enableEndTurnButton;
         BasicActor.onEndAct += enableEndTurnButton;
@@ -57,7 +60,7 @@ public class PlayerUI : MonoBehaviour {
         BuffManager.onApplyBuff -= displayBuffs;
         BuffManager.onRemoveBuff -= displayBuffs;
 
-        ManualActor.onSkillUsed -= disableSkills;
+        Actor.onSkillUsed -= (Node n) => { disableSkills(); } ;
 
         Actor.onStepReached -= (Node n) => { updateSteps(); };
 
@@ -67,6 +70,9 @@ public class PlayerUI : MonoBehaviour {
 
         BasicActor.onEndMovement -= enableEndTurnButton;
         BasicActor.onEndAct -= enableEndTurnButton;
+
+        BasicActor.onEndMovement -= enableSkills;
+        BasicActor.onStartMovement -= disableSkills;
 
         BasicActor.onChangeHealth -= updateHealth;
 
@@ -172,9 +178,19 @@ public class PlayerUI : MonoBehaviour {
     }
 
     /** Método para desabilitar los skills icons */
-    private void disableSkills(Node pos = null) {
+    private void disableSkills() {
         foreach (KeyValuePair<skillID, SkillButtonUI> entry in _skillButtons) {
             entry.Value.gameObject.GetComponent<Button>().interactable = false;
+        }
+    }
+
+    /** Método para desabilitar los skills icons */
+    private void enableSkills() {
+        if (!TurnManager.instance.current.Equals(_player))
+            return;
+
+        foreach (KeyValuePair<skillID, SkillButtonUI> entry in _skillButtons) {
+            entry.Value.gameObject.GetComponent<Button>().interactable = true;
         }
     }
 

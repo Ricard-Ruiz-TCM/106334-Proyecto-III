@@ -136,7 +136,8 @@ public class SceneStageManager : MonoBehaviour {
         _actors.Add(_player);
         foreach (GameObject actors in _actors) {
             actors.SetActive(true);
-            actors.GetComponent<Actor>().build();
+            if(actors.GetComponent<Actor>() != null)
+                actors.GetComponent<Actor>().build();
         }
 
         // Innit del turnManager

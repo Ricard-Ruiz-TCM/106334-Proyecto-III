@@ -12,7 +12,9 @@ public class ImperialCry : Skill {
     public GameObject effectPrefab;
     //List<Material> anteriorMatarial;
 
-    public override void action(BasicActor from, Node to) {
+    public override void action(BasicActor from, Node to) 
+    {
+
         ((Actor)from).buffs.applyBuffs((Actor)from, buffsID.ArrowProof, buffsID.MidDefense);
 
 
@@ -35,18 +37,19 @@ public class ImperialCry : Skill {
         GameObject effect = Instantiate(effectPrefab, from.transform.position, Quaternion.identity);
         yield return new WaitForSeconds(0.2f);
 
-        for (int i = 0; i < from.skinnedMaterials.Count; i++)
-        {
-            //anteriorMatarial.Add(from.skinnedMaterials[i]);
-            from.skinnedMesh.materials[i] = mat;
-        }
 
-        yield return new WaitForSeconds(1f);
+        Material[] prova = new Material[from.skinnedMesh.materials.Length];
 
-        for (int i = 0; i < from.skinnedMaterials.Count; i++)
+        for (int i = 0; i < prova.Length; i++)
         {
-            from.skinnedMesh.materials[i] = from.skinnedMaterials[i];
+            prova[i] = mat;
         }
+        from.skinnedMesh.materials = prova;
+
+        yield return new WaitForSeconds(0.5f);
+
+        from.skinnedMesh.materials = from.skinnedMaterials;
+
         Destroy(effect, 1f);
     }
 

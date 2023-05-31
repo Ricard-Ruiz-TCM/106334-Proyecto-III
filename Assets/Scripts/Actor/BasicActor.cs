@@ -34,7 +34,7 @@ public abstract class BasicActor : Turnable {
     [SerializeField] float height;
 
     public SkinnedMeshRenderer skinnedMesh;
-    public List<Material> skinnedMaterials;
+    public Material[] skinnedMaterials;
 
     /** Getters */
     public bool isAlive() {
@@ -65,7 +65,8 @@ public abstract class BasicActor : Turnable {
     {
         if(skinnedMesh != null)
         {
-            skinnedMaterials = new List<Material>(skinnedMesh.materials);
+            skinnedMaterials = new Material[skinnedMesh.materials.Length];
+            skinnedMaterials = skinnedMesh.materials;
         }       
         _maxHealth = _health;
         Stage.Grid.changeNodeType(transform.position, Array2DEditor.nodeType.X);

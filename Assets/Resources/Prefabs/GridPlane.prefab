@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8265089780211892141}
   - component: {fileID: 2265855194133969109}
   m_Layer: 0
-  m_Name: x-png-15
+  m_Name: attackIndicator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 7306379181165412414}
   - component: {fileID: 7465647272564074720}
   m_Layer: 0
-  m_Name: Right
+  m_Name: right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -178,7 +178,7 @@ GameObject:
   - component: {fileID: 4751492180637255966}
   - component: {fileID: 969699181430929470}
   m_Layer: 0
-  m_Name: caminoSprite
+  m_Name: pathLine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -191,14 +191,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2176649313548397688}
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 5.24, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: 0.5, y: 0.5, z: -0.5, w: 0.5}
+  m_LocalPosition: {x: 5.15, y: 0, z: 0}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 194138305433008934}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 90, z: 0}
 --- !u!212 &969699181430929470
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -240,7 +240,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 21300000, guid: e474e16067dc5ce4886a17581f338f26, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2d918eb8db368b4408c0be17af623a0b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -262,7 +262,7 @@ GameObject:
   - component: {fileID: 1506859934016934011}
   - component: {fileID: 8974661901319648411}
   m_Layer: 0
-  m_Name: img_521976
+  m_Name: borders
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -389,7 +389,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3826263984375952515}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -475,7 +475,7 @@ GameObject:
   - component: {fileID: 7845197489178778372}
   - component: {fileID: 6090714524771163270}
   m_Layer: 0
-  m_Name: Down
+  m_Name: down
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -558,7 +558,7 @@ GameObject:
   - component: {fileID: 2075669949822637329}
   - component: {fileID: 1756685827101745560}
   m_Layer: 0
-  m_Name: Up
+  m_Name: up
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -641,7 +641,7 @@ GameObject:
   - component: {fileID: 7830893889295891743}
   - component: {fileID: 1264258489327904886}
   m_Layer: 0
-  m_Name: Left
+  m_Name: left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -722,7 +722,7 @@ GameObject:
   m_Component:
   - component: {fileID: 194138305433008934}
   m_Layer: 0
-  m_Name: Path
+  m_Name: path
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -754,7 +754,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1215366831245010419}
   m_Layer: 0
-  m_Name: showRange
+  m_Name: range
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

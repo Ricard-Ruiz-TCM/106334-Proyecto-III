@@ -22,7 +22,9 @@ public class PilarStatic : StaticActor {
         direction = direction * pilarHeight;
         Node endPoint = Stage.StageBuilder.getGridNode(pilarNode.x + (int)direction.x, pilarNode.y + (int)direction.y);
 
-        theCollumnGoesDown();
+        GameObject objToSpawn = new GameObject("Cool GameObject made from Code");
+        objToSpawn.transform.position = Stage.StageBuilder.getGridPlane(endPoint).transform.position;
+        theCollumnGoesDown(objToSpawn);
 
         List<Node> nodesToSetNotWalkable = Stage.Pathfinder.FindPath(pilarNode, endPoint, false);
 
@@ -51,9 +53,11 @@ public class PilarStatic : StaticActor {
         base.takeDamage(from, damage, weapon);
     }
 
-    private void theCollumnGoesDown()
+    private void theCollumnGoesDown(GameObject lookAt)
     {
-        pilar.transform.LookAt(damageFrom.transform);
-        pilar.transform.Rotate(0, 90, -90);
+        pilar.transform.LookAt(lookAt.transform);
+        pilar.transform.Rotate(0, 90, 90);
+
+        Destroy(lookAt);
     }
 }

@@ -76,6 +76,7 @@ public class AutomaticActor : Actor {
                 if (near != null) {
                     if (Stage.StageBuilder.getDistance(transform.position, near.transform.position) < _equip.weapon.range) {
                         skills.useSkill(skillID.Attack, this, Stage.StageBuilder.getGridNode(near.transform.position));
+                        UseSkill(Stage.StageBuilder.getGridNode(near.transform.position));
                     }
                 }
             }

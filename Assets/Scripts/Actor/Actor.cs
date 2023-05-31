@@ -11,6 +11,9 @@ using UnityEngine.AI;
 
 public abstract class Actor : BasicActor {
 
+    /** Event action callback, observer, para el uso de skills */
+    public static event Action<Node> onSkillUsed;
+
     /** Callback */
     /** -------- */
     public static event Action onDestinationReached;
@@ -50,6 +53,10 @@ public abstract class Actor : BasicActor {
     /** Setters */
     public void setRoute(List<Node> route) {
         _route = route;
+    }
+
+    public void UseSkill(Node node) {
+        onSkillUsed?.Invoke(node);
     }
 
     /** Set Destination, método para habilitar el movimiento */

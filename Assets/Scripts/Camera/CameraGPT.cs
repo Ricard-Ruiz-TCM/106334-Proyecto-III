@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
+using System.Collections;
 
 public class CameraGPT : MonoBehaviour {
 
@@ -26,10 +28,15 @@ public class CameraGPT : MonoBehaviour {
     [SerializeField, Header("Distancia:")]
     private float _distance;
 
+    [SerializeField, Header("Timings:2")]
+    private float _focusTime = 1f;
+
     /** Vectroes para pos y rot temporales */
     private Quaternion _targetRot;
     private Vector3 _targetLookAtPosition;
     private Vector3 _targetPos;
+
+    private Transform _temporalTarget;
 
     /** La última en zoom que teniamos antes de ataque */
     private float _lastY;
@@ -40,6 +47,8 @@ public class CameraGPT : MonoBehaviour {
         BasicActor.onEndAct += restoreZoom;
         BasicActor.onStartAct += zoomOut;
 
+        Actor.onSkillUsed += focusNode;
+
         TurnManager.instance.onStartSystem += activate;
         TurnManager.instance.onStartTurn += () => { setTarget(TurnManager.instance.current); };
     }
@@ -49,6 +58,8 @@ public class CameraGPT : MonoBehaviour {
         BasicActor.onReAct -= restoreZoom;
         BasicActor.onEndAct -= restoreZoom;
         BasicActor.onStartAct -= zoomOut;
+
+        Actor.onSkillUsed -= focusNode;
 
         TurnManager.instance.onStartSystem -= activate;
         TurnManager.instance.onStartTurn -= () => { setTarget(TurnManager.instance.current); };
@@ -136,6 +147,20 @@ public class CameraGPT : MonoBehaviour {
     private void restoreZoom() {
         _targetPos.y = _lastY;
     }
+
+    /** Método para establecer el focus temporal */
+    private void focusNode(Node target) {
+        _temporalTarget = _target;
+        _target = Stage.StageBuilder.getGridPlane(target).transform;
+        StartCoroutine(CRestoreTarget(_focusTime));
+    }
+
+    /** Méotod ede coroutine para volver al foco normal */
+    private IEnumerator CRestoreTarget(float delay) {
+        yield return new WaitForSeconds(delay);
+        _target = _temporalTarget;
+    }
+   
 
 }
 

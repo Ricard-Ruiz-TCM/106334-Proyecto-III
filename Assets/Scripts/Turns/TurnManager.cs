@@ -6,7 +6,14 @@ using UnityEngine;
 public class TurnManager : MonoBehaviour {
 
     /** Singleton Instance */
-    public static TurnManager instance = null;
+    private static TurnManager _instance;
+    public static TurnManager instance {
+        get {
+            if (_instance == null)
+                _instance = FindObjectOfType<TurnManager>();
+            return _instance;
+        }
+    }
 
     /** Callbacks */
     public Action onStartTurn;
@@ -47,16 +54,6 @@ public class TurnManager : MonoBehaviour {
     private float _endTurnDelaySecs = 1f;
     [SerializeField]
     private float _startTurnDelaySecs = 1f;
-
-    // Unity Awake
-    void Awake() {
-        // Singleton
-        if ((instance != null) && (instance != this)) {
-            GameObject.Destroy(this.gameObject);
-        } else {
-            instance = this;
-        }
-    }
 
     // Unity Update
     void Update() {

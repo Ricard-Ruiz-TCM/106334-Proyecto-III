@@ -33,7 +33,7 @@ public class PlayerUI : MonoBehaviour {
         BuffManager.onApplyBuff += displayBuffs;
         BuffManager.onRemoveBuff += displayBuffs;
 
-        ManualActor.onSkillUsed += disableSkills;
+        Actor.onSkillUsed += disableSkills;
 
         Actor.onStepReached += (Node n) => { updateSteps(); };
 
@@ -172,7 +172,7 @@ public class PlayerUI : MonoBehaviour {
     }
 
     /** Método para desabilitar los skills icons */
-    private void disableSkills() {
+    private void disableSkills(Node pos = null) {
         foreach (KeyValuePair<skillID, SkillButtonUI> entry in _skillButtons) {
             entry.Value.gameObject.GetComponent<Button>().interactable = false;
         }

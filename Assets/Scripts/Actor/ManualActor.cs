@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class ManualActor : Actor {
 
-    /** Event action callback, observer, para el uso de skills */
-    public static event Action onSkillUsed;
-
     /** Nodoso de control para trabajar, temporales */
     private Node _mouseNode;
     private Node _myNode;
@@ -48,6 +45,16 @@ public class ManualActor : Actor {
 
             // Input
             if ((Input.GetMouseButtonDown(0)) && (canMove())) {
+
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit;
+
+                // Verificar si el raycast golpea un objeto en el layer UI
+                if (Physics.Raycast(ray, out hit, Mathf.Infinity, LayerMask.NameToLayer("UI"))) {
+                    // El raycast golpeó un objeto en el layer UI
+                    Debug.Log("Se hizo clic en un objeto del UI: " + hit.collider.gameObject.name);
+                }
+
                 setDestination(_walkablePath);
                 startMove();
                 _walkablePath = null;
@@ -87,6 +94,8 @@ public class ManualActor : Actor {
             reAct();
         }
 
+        transform.Rotate(new Vector3(10f, 0f, 0f));
+
         // Solo Updateamos el attack si hemos movido el ratón
         if (nodePositionChanged()) {
             Stage.StageBuilder.clearGrid();
@@ -104,7 +113,7 @@ public class ManualActor : Actor {
                 Stage.StageBuilder.clearGrid();
                 BasicActor target = Stage.StageManager.getActor(_mouseNode);
                 skills.useSkill(_tempSkillID, this, _mouseNode);
-                onSkillUsed?.Invoke();
+                UseSkill(_mouseNode);
 
                 // Anim
                 if (equip.weapon.ID.Equals(itemID.Bow)) {

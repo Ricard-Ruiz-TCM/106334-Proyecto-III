@@ -157,18 +157,30 @@ public class GameManager : MonoBehaviour {
     [SerializeField]
     private List<perkID> _playerPerks = new List<perkID>();
 
+    private Actor _player;
+
+    public void setPlayer(Actor player) {
+        _player = player;
+    }
+
+    public Actor getPlayer() {
+        return _player;
+    }
+
     public void RestorePlayer(Actor player) {
         if (_avaliable) {
             player.equip.SetEquipment(_armor, _weapon, _shield);
             foreach (perkID id in _playerPerks) {
                 player.perks.addPerk(id);
             }
+        } else {
+            _player = player;
         }
     }
 
     public void SavePlayer(Actor player) {
-
         _avaliable = true;
+        _player = player;
         _armor = player.equip.getArmorInvItem();
         _weapon = player.equip.getWeaponInvItem();
         _shield = player.equip.getShieldInvItem();

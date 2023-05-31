@@ -2,7 +2,7 @@
 using UnityEngine;
 
 public class CameraController : MonoBehaviour {
-
+    /*
     [SerializeField, Header("Canera Animator:")] 
     Animator _animator;
 
@@ -93,6 +93,8 @@ public class CameraController : MonoBehaviour {
 
     bool changeTarget = false;
 
+    private Actor _actorTarget;
+
     // Unity Draw Gizmos
     void OnDrawGizmos() {
 
@@ -127,15 +129,15 @@ public class CameraController : MonoBehaviour {
         if (!_active)
             return;
 
-        Actor target;
-
-        _target = TurnManager.instance.current.transform;
-        target = _target.GetComponent<Actor>();
+        if (_target != TurnManager.instance.current.transform) {
+            _target = TurnManager.instance.current.transform;
+            _actorTarget = _target.GetComponent<Actor>();
+        }
 
         if (changeTarget) {
 
             changeTarget = false;
-            targetPos = new Vector3((target.getLastRouteNode().x - Stage.Grid.rows / 2.5f + cameraMoveSum) * cameraMoveMultiplier, 0, (target.getLastRouteNode().y - Stage.Grid.columns / 2.5f + cameraMoveSum) * cameraMoveMultiplier);
+            targetPos = new Vector3((_actorTarget.getLastRouteNode().x - Stage.Grid.rows / 2.5f + cameraMoveSum) * cameraMoveMultiplier, 0, (_actorTarget.getLastRouteNode().y - Stage.Grid.columns / 2.5f + cameraMoveSum) * cameraMoveMultiplier);
             cameraSpeed = cameraMoveChangeTargetSpeed;
         }
 
@@ -144,10 +146,10 @@ public class CameraController : MonoBehaviour {
             if (uCore.Action.GetKeyDown(KeyCode.Z)) {
                 StartCoroutine(EndAnim());
             }
-            if (!target.canMove()) {
+            if (!_actorTarget.canMove()) {
                 _animator.SetBool("zoom", true);
             }
-            if (target.canMove()) {
+            if (_actorTarget.canMove()) {
                 _animator.SetBool("zoom", false);
             }
 
@@ -161,13 +163,11 @@ public class CameraController : MonoBehaviour {
 
     private void CameraTargetMove() {
 
-        Actor target = _target.GetComponent<Actor>();
-
-        if (target.canMove()) {
-            if (xAnterior != target.getLastRouteNode().x || yAnterior != target.getLastRouteNode().y) {
-                xAnterior = target.getLastRouteNode().x;
-                yAnterior = target.getLastRouteNode().y;
-                targetPos = new Vector3((target.getLastRouteNode().x - Stage.Grid.rows / 2.5f + cameraMoveSum) * cameraMoveMultiplier, 0, (target.getLastRouteNode().y - Stage.Grid.columns / 2.5f + cameraMoveSum) * cameraMoveMultiplier);
+        if (_actorTarget.canMove()) {
+            if (xAnterior != _actorTarget.getLastRouteNode().x || yAnterior != _actorTarget.getLastRouteNode().y) {
+                xAnterior = _actorTarget.getLastRouteNode().x;
+                yAnterior = _actorTarget.getLastRouteNode().y;
+                // = new Vector3((_actorTarget.getLastRouteNode().x - Stage.Grid.rows / 2.5f + cameraMoveSum) * cameraMoveMultiplier, 0, (_actorTarget.getLastRouteNode().y - Stage.Grid.columns / 2.5f + cameraMoveSum) * cameraMoveMultiplier);
                 cameraSpeed = cameraMoveMovementSpeed;
             }
 
@@ -177,7 +177,6 @@ public class CameraController : MonoBehaviour {
                 cameraSpeed = cameraMoveChangeTargetSpeed;
             }
         }
-        Debug.Log(targetPos);
         cameraPos.localPosition = Vector3.Lerp(cameraPos.localPosition, targetPos, cameraSpeed * Time.deltaTime);
     }
 
@@ -249,5 +248,5 @@ public class CameraController : MonoBehaviour {
     public void ChangeTarget() {
 
     }
-
+*/
 }

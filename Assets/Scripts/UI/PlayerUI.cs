@@ -37,11 +37,12 @@ public class PlayerUI : MonoBehaviour {
 
         Actor.onStepReached += (Node n) => { updateSteps(); };
 
-        Actor.onStartMovement += disableEndTurnButton;
-        Actor.onStartAct += disableEndTurnButton;
+        BasicActor.onStartMovement += disableEndTurnButton;
+        BasicActor.onStartAct += disableEndTurnButton;
+        BasicActor.onReAct += enableEndTurnButton;
 
-        Actor.onEndMovement += enableEndTurnButton;
-        Actor.onEndAct += disableEndTurnButton;
+        BasicActor.onEndMovement += enableEndTurnButton;
+        BasicActor.onEndAct += disableEndTurnButton;
 
         BasicActor.onChangeHealth += updateHealth;
 
@@ -60,11 +61,12 @@ public class PlayerUI : MonoBehaviour {
 
         Actor.onStepReached -= (Node n) => { updateSteps(); };
 
-        Actor.onStartMovement += disableEndTurnButton;
-        Actor.onStartAct += disableEndTurnButton;
+        BasicActor.onStartMovement -= disableEndTurnButton;
+        BasicActor.onStartAct -= disableEndTurnButton;
+        BasicActor.onReAct -= enableEndTurnButton;
 
-        Actor.onEndMovement -= enableEndTurnButton;
-        Actor.onEndAct -= enableEndTurnButton;
+        BasicActor.onEndMovement -= enableEndTurnButton;
+        BasicActor.onEndAct -= enableEndTurnButton;
 
         BasicActor.onChangeHealth -= updateHealth;
 

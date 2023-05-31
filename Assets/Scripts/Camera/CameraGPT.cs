@@ -13,8 +13,6 @@ public class CameraGPT : MonoBehaviour {
 
     [SerializeField, Header("Limits:")]
     private limit _zoomLimit;
-    [SerializeField]
-    private limit _xRotLimit;
 
     [SerializeField, Header("Speeds:")]
     private float _speed = 5f;
@@ -29,7 +27,8 @@ public class CameraGPT : MonoBehaviour {
     private float _distance;
 
     /** Vectroes para pos y rot temporales */
-    private Vector3 _targetRot;
+    private Quaternion _targetRot;
+    private Vector3 _targetLookAtPosition;
     private Vector3 _targetPos;
 
     /** La última en zoom que teniamos antes de ataque */
@@ -37,27 +36,28 @@ public class CameraGPT : MonoBehaviour {
 
     // Unity OnEnable
     void OnEnable() {
-        Actor.onReAct += restoreZoom;
-        Actor.onEndAct += restoreZoom;
-        Actor.onStartAct += zoomOut;
+        BasicActor.onReAct += restoreZoom;
+        BasicActor.onEndAct += restoreZoom;
+        BasicActor.onStartAct += zoomOut;
 
         TurnManager.instance.onStartSystem += activate;
-        TurnManager.instance.onNewCurrentTurnable += setTarget;
+        TurnManager.instance.onStartTurn += () => { setTarget(TurnManager.instance.current); };
     }
 
     // Unity OnDisabel
     void OnDisable() {
-        Actor.onReAct -= restoreZoom;
-        Actor.onEndAct -= restoreZoom;
-        Actor.onStartAct -= zoomOut;
+        BasicActor.onReAct -= restoreZoom;
+        BasicActor.onEndAct -= restoreZoom;
+        BasicActor.onStartAct -= zoomOut;
 
         TurnManager.instance.onStartSystem -= activate;
-        TurnManager.instance.onNewCurrentTurnable -= setTarget;
+        TurnManager.instance.onStartTurn -= () => { setTarget(TurnManager.instance.current); };
     }
 
     // Unity Start
     void Start() {
-        _targetPos.y = _zoomLimit.max;    
+        _targetPos.y = 8f;
+        _targetRot = Quaternion.identity;
     }
 
     // Unity FixedUpdate
@@ -76,12 +76,13 @@ public class CameraGPT : MonoBehaviour {
 
         // Suavizado del movimiento de la cámara
         transform.position = Vector3.Lerp(transform.position, _targetPos, _speed * Time.deltaTime);
-        transform.eulerAngles = Vector3.Lerp(transform.eulerAngles, _targetRot, _rotSpeed * Time.deltaTime);
+        transform.rotation = Quaternion.Lerp(transform.rotation, _targetRot, _rotSpeed * Time.deltaTime);
 
     }
 
     /** Método para setear el target */
     public void setTarget(Turnable target) {
+        _targetPos.y = 8f;
         _target = target.transform;
     }
 
@@ -100,16 +101,14 @@ public class CameraGPT : MonoBehaviour {
     private void cameraRotation() {
         if (Input.GetMouseButton(2) && Input.GetKey(KeyCode.LeftAlt)) {
             float mouseX = Input.GetAxis("Mouse X");
-            transform.RotateAround(_target.transform.position, new Vector3(0f, mouseX, 0f), _rotArountSpeed * Time.deltaTime);
+            transform.RotateAround(_target.transform.position, Vector3.up, mouseX * _rotArountSpeed * Time.deltaTime);
         }
     }
 
     /** Método para hacer lookAt de la camara */
     private void cameraLookAt() {
-        Vector3 posTarget = _target.transform.position;
-        posTarget.y += _cameraYTargetOffset;
-        Vector3 direction = posTarget - transform.position;
-        _targetRot = Quaternion.LookRotation(direction).eulerAngles;
+        _targetLookAtPosition = _target.position + Vector3.up * _cameraYTargetOffset;
+        _targetRot = Quaternion.LookRotation(_targetLookAtPosition - transform.position);
     }
 
     /** Método para la camara, que siempre siga al target */
@@ -127,13 +126,12 @@ public class CameraGPT : MonoBehaviour {
     /** Clamps para posicion y rotaicón */
     private void cameraClamp() {
         _targetPos.y = Mathf.Clamp(_targetPos.y, _zoomLimit.min, _zoomLimit.max);
-        _targetRot.x = Mathf.Clamp(_targetRot.x, _xRotLimit.min, _xRotLimit.max);
     }
 
     /** Métodos para hacer zoom a la haora de realizar un ataque */
     private void zoomOut() {
         _lastY = transform.position.y;
-        _targetPos.y = _zoomLimit.max;
+        _targetPos.y = _zoomLimit.max - 2f;
     }
     private void restoreZoom() {
         _targetPos.y = _lastY;

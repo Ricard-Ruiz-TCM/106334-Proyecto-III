@@ -13,15 +13,6 @@ public abstract class Actor : BasicActor {
 
     /** Callback */
     /** -------- */
-
-    public static event Action onStartMovement;
-    public static event Action onStartAct;
-
-    public static event Action onEndMovement;
-    public static event Action onEndAct;
-
-    public static event Action onReAct;
-
     public static event Action onDestinationReached;
     public static event Action<Node> onStepReached;
     /** -------- */
@@ -63,8 +54,13 @@ public abstract class Actor : BasicActor {
 
     /** Set Destination, método para habilitar el movimiento */
     public void setDestination(List<Node> route) {
-        setRoute(route);
-        setStep(route[0]);
+        if (route == null)
+            endMovement();
+        else {
+            setRoute(route);
+            if (route.Count > 0)
+                setStep(route[0]);
+        }
     }
 
     /** Override Move from Turnable */
@@ -74,12 +70,6 @@ public abstract class Actor : BasicActor {
         }
     }
 
-    /** Override reAct pra el observer */
-    public override void reAct() {
-        base.reAct();
-        onReAct?.Invoke();
-    }
-
     /** Override Act from Turnable */
     public override void act() {
     }
@@ -87,7 +77,6 @@ public abstract class Actor : BasicActor {
     /** Override del endMovement para limpiar Grid */
     public override void endMovement() {
         Stage.StageBuilder.clearGrid();
-        onEndMovement?.Invoke();
         base.endMovement();
     }
 
@@ -112,17 +101,6 @@ public abstract class Actor : BasicActor {
         }
     }
 
-    /** Override del endAction */
-    public override void endAction() {
-        base.endAction();
-        onEndAct?.Invoke();
-    }
-
-    /** Override del startAct */
-    public override void startAct() {
-        base.startAct();
-        onStartAct?.Invoke();
-    }
 
     /** Método para agregar el siguietne step */
     private void setStep(Node node) {
@@ -132,12 +110,6 @@ public abstract class Actor : BasicActor {
     /** Comprueba si hemos llegado al punto */
     public bool stepReached() {
         return !_agent.hasPath && !_agent.pathPending && _agent.pathStatus == NavMeshPathStatus.PathComplete;
-    }
-
-    /** Override dle startMove para el observer */
-    public override void startMove() {
-        base.startMove();
-        onStartMovement?.Invoke();
     }
 
     #endregion
@@ -169,6 +141,7 @@ public abstract class Actor : BasicActor {
     /** Buffs, Perks & Skill Managers */
     protected BuffManager _buffs;
     public BuffManager buffs => _buffs;
+    [SerializeField]
     protected PerkManager _perks;
     public PerkManager perks => _perks;
     protected SkillManager _skills;
@@ -236,7 +209,8 @@ public abstract class Actor : BasicActor {
         _agent = GetComponent<NavMeshAgent>();
         // Managers
         _buffs = GetComponent<BuffManager>();
-        _perks = GetComponent<PerkManager>();
+        if (_perks == null)
+            _perks = GetComponent<PerkManager>();
         _skills = GetComponent<SkillManager>();
         _equip = GetComponent<EquipmentManager>();
 
@@ -255,14 +229,20 @@ public abstract class Actor : BasicActor {
             _baseDamage = _equip.damage;
 
             // Deactivate the non weapon usages
-            if (!_equip.weapon.ID.Equals(itemID.Bow))
-                _bowObj.gameObject.SetActive(false);
+            if (_bowObj != null) {
+                if (!_equip.weapon.ID.Equals(itemID.Bow))
+                    _bowObj.gameObject.SetActive(false);
+            }
 
-            if (!_equip.weapon.ID.Equals(itemID.Gladius))
-                _gladiusObj.gameObject.SetActive(false);
+            if (_gladiusObj != null) {
+                if (!_equip.weapon.ID.Equals(itemID.Gladius))
+                    _gladiusObj.gameObject.SetActive(false);
+            }
 
-            if (!_equip.weapon.ID.Equals(itemID.Hasta))
-                _hastaObj.gameObject.SetActive(false);
+            if (_hastaObj != null) {
+                if (!_equip.weapon.ID.Equals(itemID.Hasta))
+                    _hastaObj.gameObject.SetActive(false);
+            }
 
         }
         if (_equip.shield != null) {

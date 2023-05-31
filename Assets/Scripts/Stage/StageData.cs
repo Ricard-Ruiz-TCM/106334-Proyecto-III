@@ -20,6 +20,9 @@ public struct StageData {
     public DialogNode innitialDialog;
     public DialogNode lastDialog;
 
+    [Header("Perks for PerkDialog?:")]
+    public Perk[] perks;
+
     //[Header("Entrance & Exit:")]
     [HideInInspector]
     public stageEntrance exit;

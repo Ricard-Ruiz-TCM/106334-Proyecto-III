@@ -10,6 +10,9 @@ public class SceneStageManager : MonoBehaviour {
     private GameObject _upgradeUI;
     [SerializeField]
     private GameObject _perksUI;
+    [SerializeField]
+    private PerkSelectorUI _leftPerkPanel, _rightPerkPanel;
+
 
     [SerializeField, Header("Combat:")]
     private GameObject _turnUI;
@@ -72,6 +75,9 @@ public class SceneStageManager : MonoBehaviour {
 
         // Set data to Stage
         _stage.SetData(_data);
+
+        // Set del player al gamemanager
+        uCore.GameManager.setPlayer(_player.GetComponent<Actor>());
 
         // Set del estado del estado, a funciones y cositas
         buildStage();
@@ -152,6 +158,9 @@ public class SceneStageManager : MonoBehaviour {
     public void openPerkPanel() {
         _dialogUI.SetActive(false);
         _perksUI.SetActive(true);
+
+        _leftPerkPanel.setPerk(_data.perks[0]);
+        _rightPerkPanel.setPerk(_data.perks[1]);
     }
 
     /** Método para indicar en que estado del stage estamos y pasar al siguiente con el EndNode */

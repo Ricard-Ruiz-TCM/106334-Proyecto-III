@@ -72,11 +72,7 @@ public class TurnManager : MonoBehaviour {
 
     /** Método para el roundType.positioning */
     private void positioningRound() {
-        foreach (Turnable attender in _attenders) {
-            if (attender is ManualActor) {
-                ((ManualActor)current).positioning();
-            }
-        }
+        ((ManualActor)uCore.GameManager.getPlayer()).positioning();
     }
 
     /** Método para el roundType.combat */

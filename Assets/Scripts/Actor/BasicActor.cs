@@ -6,6 +6,15 @@ public abstract class BasicActor : Turnable {
 
     /** Callbacks */
     public static event Action onChangeHealth;
+
+    public static event Action onStartMovement;
+    public static event Action onStartAct;
+
+    public static event Action onEndMovement;
+    public static event Action onEndAct;
+
+    public static event Action onReAct;
+
     /** --------- */
 
     protected bool _alive = true;
@@ -111,6 +120,36 @@ public abstract class BasicActor : Turnable {
         popUp.transform.LookAt(FindObjectOfType<Camera>().transform.position, Vector3.up);
         popUp.transform.GetChild(0).GetComponent<TextMeshPro>().text = (amount > 0 ? "+" : "-") + Mathf.Abs(amount);
         Destroy(popUp, 1f);
+    }
+
+    /** Override reAct pra el observer */
+    public override void reAct() {
+        base.reAct();
+        onReAct?.Invoke();
+    }
+
+    /** Override del endMovement para limpiar Grid */
+    public override void endMovement() {
+        base.endMovement();
+        onEndMovement?.Invoke();
+    }
+
+    /** Override del endAction */
+    public override void endAction() {
+        base.endAction();
+        onEndAct?.Invoke();
+    }
+
+    /** Override del startAct */
+    public override void startAct() {
+        base.startAct();
+        onStartAct?.Invoke();
+    }
+
+    /** Override dle startMove para el observer */
+    public override void startMove() {
+        base.startMove();
+        onStartMovement?.Invoke();
     }
 
     /** Abstract para indicar que pasa cuando morimos */

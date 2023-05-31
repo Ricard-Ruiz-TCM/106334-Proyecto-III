@@ -2904,6 +2904,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 904388579}
     m_Modifications:
+    - target: {fileID: 1309354224323967947, guid: d646759376c7dc246b32a406c436c32f,
+        type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1309354224323967947, guid: d646759376c7dc246b32a406c436c32f,
+        type: 3}
+      propertyPath: m_Materials.Array.data[9]
+      value: 
+      objectReference: {fileID: 2100000, guid: a4d6dec8779dc454995e17bd00905f4d, type: 2}
     - target: {fileID: 2811769205094483148, guid: d646759376c7dc246b32a406c436c32f,
         type: 3}
       propertyPath: _weapon.weapon
@@ -2928,13 +2938,29 @@ PrefabInstance:
         type: 2}
     - target: {fileID: 2811769205094483184, guid: d646759376c7dc246b32a406c436c32f,
         type: 3}
+      propertyPath: skills.Array.data[2].skill
+      value: 
+      objectReference: {fileID: 11400000, guid: d97c46713b6daa645849574d46326b7e,
+        type: 2}
+    - target: {fileID: 2811769205094483184, guid: d646759376c7dc246b32a406c436c32f,
+        type: 3}
       propertyPath: skills.Array.data[1].cooldown
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2811769205094483184, guid: d646759376c7dc246b32a406c436c32f,
+        type: 3}
+      propertyPath: skills.Array.data[2].cooldown
       value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 2811769205094483191, guid: d646759376c7dc246b32a406c436c32f,
         type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 2811769205094483191, guid: d646759376c7dc246b32a406c436c32f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3192693271134101069, guid: d646759376c7dc246b32a406c436c32f,
         type: 3}

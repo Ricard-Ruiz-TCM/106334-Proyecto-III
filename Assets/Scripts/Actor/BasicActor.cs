@@ -1,6 +1,8 @@
 ﻿using System;
 using TMPro;
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 
 public abstract class BasicActor : Turnable {
 
@@ -31,6 +33,9 @@ public abstract class BasicActor : Turnable {
     public GameObject entitieUI;
     [SerializeField] float height;
 
+    [SerializeField] SkinnedMeshRenderer skinnedMesh;
+    public List<Material> skinnedMaterials;
+
     /** Getters */
     public bool isAlive() {
         return _alive;
@@ -56,7 +61,12 @@ public abstract class BasicActor : Turnable {
     }
 
     /** Override del start */
-    protected override void Start() {
+    protected override void Start() 
+    {
+        if(skinnedMesh != null)
+        {
+            skinnedMaterials = new List<Material>(skinnedMesh.materials);
+        }       
         _maxHealth = _health;
         Stage.Grid.changeNodeType(transform.position, Array2DEditor.nodeType.X);
         entitieUI = Instantiate(entitieUIPrefab, new Vector3(transform.position.x, transform.position.y + height, transform.position.z), Quaternion.identity);

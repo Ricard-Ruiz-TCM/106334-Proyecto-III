@@ -97,7 +97,7 @@ public class AutomaticActor : Actor {
         // Player Encontrado
         if (near != null) {
 
-            bool inWeaponRange = (Stage.StageBuilder.getDistance(transform.position, near.transform.position) <= _equip.weapon.range);
+            bool inWeaponRange = (Stage.StageBuilder.getDistance(transform.position, near.transform.position) <= _equip.weapon.range + 1);
 
             // Skills + end with combat
             if (canAct())
@@ -185,6 +185,8 @@ public class AutomaticActor : Actor {
                 path.Reverse();
                 path.RemoveRange(0, equip.weapon.range);
                 path.Reverse();
+            } else {
+                path.Clear();
             }
 
             // Cortamos el path al movimiento mínimo

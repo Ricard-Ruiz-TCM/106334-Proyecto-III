@@ -1,21 +1,38 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+
 
 [CreateAssetMenu(fileName = "Invisible", menuName = "Combat/Buffs/Invisible")]
 public class Invisible : Buff {
 
     [Header("Invisibility Material:")]
     public Material material;
-
+    Material[] invisibleMatList;
     public override void onApply(BasicActor me) 
     {
         Debug.Log("TODO: Apply Invisible Feedback + extras.");
-        me.GetComponent<MeshTrail>().startInvisible();
+
+        invisibleMatList = new Material[me.skinnedMesh.materials.Length];
+
+        for (int i = 0; i < invisibleMatList.Length; i++)
+        {
+            invisibleMatList[i] = material;
+        }
+
+        me.skinnedMesh.materials = invisibleMatList;
+        me.entitieUI.SetActive(false);
+        //me.GetComponent<MeshTrail>().startInvisible();
+
     }
 
     public override void onRemove(BasicActor me) 
     {
         Debug.Log("TODO: Remove Invisible Feedback");
-        me.GetComponent<MeshTrail>().endInvisible();
+        me.entitieUI.SetActive(true);
+        me.skinnedMesh.materials = me.skinnedMaterials;
+        //me.GetComponent<MeshTrail>().endInvisible();
     }
 
     public override void startTurnEffect(BasicActor me) {

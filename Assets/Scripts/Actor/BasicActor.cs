@@ -173,7 +173,9 @@ public abstract class BasicActor : Turnable {
     }
 
     /** Abstract para indicar que pasa cuando morimos */
-    public virtual void onActorDeath() {
+    public virtual void onActorDeath() 
+    {
+        Destroy(entitieUI);
         TurnManager.instance.unsubscribe(this);
         this.enabled = false;
     }

@@ -11,6 +11,9 @@ public class DoubleLungue : Skill {
         BasicActor target = Stage.StageManager.getActor(to);
         if (target != null) {
             from.StartCoroutine(C_DamageAgain(from, target));
+            var lookPos = target.transform.position - from.transform.position;
+            lookPos.y = 0;
+            from.transform.rotation = Quaternion.LookRotation(lookPos);
         }
         from.endAction();
     }

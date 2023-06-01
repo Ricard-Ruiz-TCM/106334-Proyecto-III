@@ -7,6 +7,9 @@ public class Disarm : Skill {
         BasicActor target = Stage.StageManager.getActor(to);
         if (target != null) {
             ((Actor)target).buffs.applyBuffs((Actor)target, buffsID.Disarmed);
+            var lookPos = target.transform.position - from.transform.position;
+            lookPos.y = 0;
+            from.transform.rotation = Quaternion.LookRotation(lookPos);
         }
         from.endAction();
     }

@@ -14,6 +14,9 @@ public class Attack : Skill {
         if (target != null)
         {
             target.takeDamage((Actor)from, from.totalDamage());
+            var lookPos = target.transform.position - from.transform.position;
+            lookPos.y = 0;
+            from.transform.rotation = Quaternion.LookRotation(lookPos);
         }
         ((Actor)from).endAction();
     }

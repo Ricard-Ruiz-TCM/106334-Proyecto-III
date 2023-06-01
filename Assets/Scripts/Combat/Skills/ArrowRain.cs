@@ -10,8 +10,12 @@ public class ArrowRain : Skill
         // Appy damage to neightbours 
         foreach (Node node in neight) {
             BasicActor actor = Stage.StageManager.getActor(node);
-            if (actor != null) {
+            if (actor != null) 
+            {
                 actor.takeDamage((Actor)from, from.totalDamage());
+                var lookPos = target.transform.position - from.transform.position;
+                lookPos.y = 0;
+                from.transform.rotation = Quaternion.LookRotation(lookPos);
             }
         }
 

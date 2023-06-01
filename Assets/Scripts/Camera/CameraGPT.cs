@@ -78,13 +78,14 @@ public class CameraGPT : MonoBehaviour {
 
         if (_target != null) {
             // Behaviours
-            cameraZoom();
             cameraRotation();
             cameraFollow();
             cameraLookAt();
             // Clamp
             cameraClamp();
         }
+        // Zoom
+        cameraZoom();
 
         // Suavizado del movimiento de la cámara
         transform.position = Vector3.Lerp(transform.position, _targetPos, _speed * Time.deltaTime);

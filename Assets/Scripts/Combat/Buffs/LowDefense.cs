@@ -12,7 +12,6 @@ public class LowDefense : ModBuff {
         shieldObj = Instantiate(shieldPrefab, Vector3.zero, Quaternion.identity);
         shieldObj.transform.SetParent(me.transform);
         shieldObj.transform.localPosition = new Vector3(0.203f, 0.87f, 0.1f);
-        Debug.Log("TODO: Apply Invisible Feedback + extras.");
     }
 
     public override void onRemove(BasicActor me) {
@@ -20,15 +19,12 @@ public class LowDefense : ModBuff {
             shieldObj.transform.GetChild(0).GetComponent<Animator>().SetTrigger("hit");
             Destroy(shieldObj, 0.7f);
         }
-        Debug.Log("TODO: Remove Invisible Feedback");
     }
 
     public override void startTurnEffect(BasicActor me) {
-        Debug.Log("TODO: Start Turn Invisible Feedback");
     }
 
     public override void endTurnEffect(BasicActor me) {
-        Debug.Log("TODO: End Turn Invisible Feedback");
     }
 
 }

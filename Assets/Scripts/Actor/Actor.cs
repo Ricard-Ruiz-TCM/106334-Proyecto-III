@@ -127,10 +127,8 @@ public abstract class Actor : BasicActor {
         if (_route != null)
             _route.Clear();
         buffs.applyStartTurnEffect(this);
-        Debug.Log("APPLY TURN EFECTS");
         skills.updateCooldown();
         buffs.updateBuffs(this);
-        Debug.Log("UPDATECOOLD");
         Stage.StageBuilder.clearGrid();
         base.beginTurn();
     }
@@ -139,8 +137,6 @@ public abstract class Actor : BasicActor {
     public override void endTurn() {
         base.endTurn();
         buffs.applyEndTurnEffect(this);
-        Debug.Log("APPLY END TURN EFECTS");
-        Debug.Log("APPLY update buffs");
         Stage.StageBuilder.clearGrid();
     }
 

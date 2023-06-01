@@ -21,7 +21,14 @@ public class UIText : MonoBehaviour {
 
     /** TextKey a.k.a. ID del json */
     private string _textKey = "";
-    private TextMeshProUGUI _text;
+    private TextMeshProUGUI _text {
+        get {
+            return GetComponent<TextMeshProUGUI>();
+        }
+        set {
+
+        }
+    }
 
     // Unity OnEnable
     private void OnEnable() {
@@ -35,7 +42,6 @@ public class UIText : MonoBehaviour {
 
     // Unity Awake
     void Awake() {
-        _text = GetComponent<TextMeshProUGUI>();
         _textKey = _text.text;
     }
 

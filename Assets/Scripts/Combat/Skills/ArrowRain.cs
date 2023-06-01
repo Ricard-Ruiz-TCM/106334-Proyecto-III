@@ -13,7 +13,7 @@ public class ArrowRain : Skill
             if (actor != null) 
             {
                 actor.takeDamage((Actor)from, from.totalDamage());
-                var lookPos = target.transform.position - from.transform.position;
+                var lookPos = actor.transform.position - from.transform.position;
                 lookPos.y = 0;
                 from.transform.rotation = Quaternion.LookRotation(lookPos);
             }

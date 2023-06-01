@@ -31,8 +31,6 @@ public class ManualActor : Actor {
     //done, falta que no es vegi la grid quan no es pot moure
     public override void thinking() {
 
-        Debug.Log("thinkin1");
-
         // Solo Updateamos el path si hemos movido el ratón
         if (nodePositionChanged() && canMove()) {
             Stage.StageBuilder.clearGrid();
@@ -46,8 +44,6 @@ public class ManualActor : Actor {
             }
         }
 
-        Debug.Log("thinkin2");
-
         // Display de walkablePath
         if ((_walkablePath != null) && (_walkablePath.Count > 0)) {
             Stage.StageBuilder.displayPath(_walkablePath, pathMaterial.walkable);
@@ -56,7 +52,6 @@ public class ManualActor : Actor {
             if (!_walkablePath.Contains(target))
                 return;
 
-            Debug.Log("thinkin3");
             // Input
             if ((Input.GetMouseButtonDown(0)) && (canMove())) {
                 if (_canMove) {
@@ -134,7 +129,6 @@ public class ManualActor : Actor {
 
     public override void beginTurn() {
         base.beginTurn();
-        Debug.Log("beguinTurn");
         _canMove = true;
     }
 

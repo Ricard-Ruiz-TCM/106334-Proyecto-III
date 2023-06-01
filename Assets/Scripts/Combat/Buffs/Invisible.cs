@@ -23,7 +23,7 @@ public class Invisible : Buff {
 
         me.skinnedMesh.materials = invisibleMatList;
         me.entitieUI.SetActive(false);
-        //me.GetComponent<MeshTrail>().startInvisible();
+        
 
     }
 
@@ -32,7 +32,7 @@ public class Invisible : Buff {
         Debug.Log("TODO: Remove Invisible Feedback");
         me.entitieUI.SetActive(true);
         me.skinnedMesh.materials = me.skinnedMaterials;
-        //me.GetComponent<MeshTrail>().endInvisible();
+        
     }
 
     public override void startTurnEffect(BasicActor me) {

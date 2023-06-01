@@ -128,7 +128,9 @@ public abstract class Actor : BasicActor {
         if (_route != null)
             _route.Clear();
         buffs.applyStartTurnEffect(this);
+        Debug.Log("APPLY TURN EFECTS");
         skills.updateCooldown();
+        Debug.Log("UPDATECOOLD");
         Stage.StageBuilder.clearGrid();
     }
 

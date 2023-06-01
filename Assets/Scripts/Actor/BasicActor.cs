@@ -89,6 +89,7 @@ public abstract class BasicActor : Turnable {
     /** Override para los cambios de nodo al movernos */
     public override void beginTurn() {
         _canAttack = true;
+        Debug.Log("change node type basic actr?");
         Stage.Grid.changeNodeType(transform.position, Array2DEditor.nodeType.__);
         base.beginTurn();
     }

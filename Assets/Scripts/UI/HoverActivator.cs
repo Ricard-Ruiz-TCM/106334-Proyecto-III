@@ -7,10 +7,12 @@ public class HoverActivator : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     protected GameObject _object;
 
     public virtual void OnPointerEnter(PointerEventData eventData) {
-        _object.SetActive(true);
+        if (_object != null)
+            _object.SetActive(true);
     }
 
     public virtual void OnPointerExit(PointerEventData eventData) {
-        _object.SetActive(false);
+        if (_object != null)
+            _object.SetActive(false);
     }
 }

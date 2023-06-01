@@ -180,7 +180,8 @@ public class PlayerUI : MonoBehaviour {
     /** Método para desabilitar los skills icons */
     private void disableSkills() {
         foreach (KeyValuePair<skillID, SkillButtonUI> entry in _skillButtons) {
-            entry.Value.gameObject.GetComponent<Button>().interactable = false;
+            if (entry.Value.gameObject != null)
+                entry.Value.gameObject.GetComponent<Button>().interactable = false;
         }
     }
 

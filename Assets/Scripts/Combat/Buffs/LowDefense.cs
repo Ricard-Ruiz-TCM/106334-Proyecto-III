@@ -16,8 +16,10 @@ public class LowDefense : ModBuff {
     }
 
     public override void onRemove(BasicActor me) {
-        shieldObj.transform.GetChild(0).GetComponent<Animator>().SetTrigger("hit");
-        Destroy(shieldObj, 0.7f);
+        if (shieldObj != null) {
+            shieldObj.transform.GetChild(0).GetComponent<Animator>().SetTrigger("hit");
+            Destroy(shieldObj, 0.7f);
+        }
         Debug.Log("TODO: Remove Invisible Feedback");
     }
 

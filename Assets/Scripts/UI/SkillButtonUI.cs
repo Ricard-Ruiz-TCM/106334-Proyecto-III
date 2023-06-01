@@ -45,8 +45,10 @@ public class SkillButtonUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
             };
         } else {
             _action = () => {
-                ((ManualActor)TurnManager.instance.current).setSkillToUse(_skill.ID);
-                TurnManager.instance.current.startAct();
+                if ((TurnManager.instance.current is ManualActor) || (TurnManager.instance.current is ProtectedActor)) {
+                    ((ManualActor)TurnManager.instance.current).setSkillToUse(_skill.ID);
+                    TurnManager.instance.current.startAct();
+                }
             };
         }
         _btn.onClick.AddListener(() => { _action(); });

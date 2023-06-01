@@ -111,7 +111,7 @@ public class CameraGPT : MonoBehaviour {
 
     /** Método para rotar la camara desde el eje central*/
     private void cameraRotation() {
-        if (Input.GetMouseButton(2) && Input.GetKey(KeyCode.LeftAlt)) {
+        if (Input.GetMouseButton(1) && Input.GetKey(KeyCode.LeftAlt)) {
             float mouseX = Input.GetAxis("Mouse X");
             transform.RotateAround(_target.transform.position, Vector3.up, mouseX * _rotArountSpeed * Time.deltaTime);
         }

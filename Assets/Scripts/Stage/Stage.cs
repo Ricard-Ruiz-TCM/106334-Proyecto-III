@@ -28,12 +28,12 @@ public class Stage : MonoBehaviour {
 
     // Unity OnDisable
     void OnDisable() {
-        TurnManager.instance.onEndRound -= (roundType r) => {
+        /*TurnManager.instance.onEndRound -= (roundType r) => {
             if (!r.Equals(roundType.positioning))
                 return;
 
             TurnManager.instance.onModifyAttenders += checkGameResolution;
-        };
+        };*/
     }
 
     // Unity Awake

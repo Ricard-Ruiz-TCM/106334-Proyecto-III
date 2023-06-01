@@ -196,6 +196,9 @@ public class PlayerUI : MonoBehaviour {
 
     /** M�todo para mostar los buffos del player */
     public void displayBuffs() {
+        if (!TurnManager.instance.current.Equals(_player))
+            return;
+
         clearPanel(_panelBuffs);
         for (int i = 0; i < _player.buffs.activeBuffs.Count && i < 6; i++) {
             GameObject.Instantiate(_shortBuffPfb, _panelBuffs).GetComponent<ShortStatusPanelUI>().UpdateStatus(_player.buffs.activeBuffs[i]);

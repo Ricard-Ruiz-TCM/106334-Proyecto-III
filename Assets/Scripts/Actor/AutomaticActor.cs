@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class AutomaticActor : Actor {
@@ -9,16 +10,31 @@ public class AutomaticActor : Actor {
     [SerializeField, Range(0, 100), Header("Threshold para huir:")]
     private int _fleeThreshold = 20;
 
+    private bool _delayDone = false;
+    [SerializeField, Header("Delay for acting/moving:")]
+    private float _delayTime = 1.5f;
+
     /** Override del onTurn */
     public override void thinking() {
 
+        if (!_delayDone) {
+            StartCoroutine(CThinking());
+        }
+    }
+
+    private IEnumerator CThinking()
+    {
+        _delayDone = true;
+        yield return new WaitForSeconds(_delayTime);
         // Change to flee if low health
-        if ((!_combatAI.Equals(combatAI.flee)) && (healthPercent() <= _fleeThreshold)) {
+        if ((!_combatAI.Equals(combatAI.flee)) && (healthPercent() <= _fleeThreshold))
+        {
             _combatAI = combatAI.flee;
         }
 
         // AI de combate
-        switch (_combatAI) {
+        switch (_combatAI)
+        {
             case combatAI.ranged:
             case combatAI.melee:
                 mixedCombatAI();
@@ -31,8 +47,9 @@ public class AutomaticActor : Actor {
                 endMovement();
                 break;
         }
-
+        _delayDone = false;
     }
+
 
     #region combatAI.ranged && combatAI.melee
     /** Método para establecer combate a distancia mínima */

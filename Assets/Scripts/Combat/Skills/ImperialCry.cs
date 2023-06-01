@@ -30,7 +30,7 @@ public class ImperialCry : Skill {
                     ((Actor)target).buffs.applyBuffs((Actor)target, buffsID.ArrowProof, buffsID.MidDefense);
             }
         }
-        from.endAction();
+
     }
     IEnumerator PlayEffect(BasicActor from)
     {
@@ -51,6 +51,7 @@ public class ImperialCry : Skill {
         from.skinnedMesh.materials = from.skinnedMaterials;
 
         Destroy(effect, 1f);
+        from.endAction();
     }
 
 }

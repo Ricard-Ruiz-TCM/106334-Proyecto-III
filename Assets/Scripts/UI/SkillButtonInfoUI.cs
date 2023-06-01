@@ -7,10 +7,10 @@ public class SkillButtonInfoUI : MonoBehaviour {
 
     public void Set(SkillItem skill) {
         _txtName.Clear(); 
-        _txtDesc.Clear();
+        //_txtDesc.Clear();
         if (skill != null) {
             _txtName.SetKey(skill.skill.keyName);
-            _txtDesc.SetKey(skill.skill.keyDesc);
+            //_txtDesc.SetKey(skill.skill.keyDesc);
         } else {
             gameObject.SetActive(false);
         }

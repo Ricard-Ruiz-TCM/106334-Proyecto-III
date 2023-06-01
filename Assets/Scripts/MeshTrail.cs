@@ -10,24 +10,39 @@ public class MeshTrail : MonoBehaviour
     [SerializeField] Material mat;
     [SerializeField] float destroyDelay;
     [SerializeField] string alphaRef;
+    Material[] newMat;
+    Material[] oldMat;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        newMat = new Material[skinnedMesh.materials.Length];
+        for (int i = 0; i < newMat.Length; i++)
+        {
+            newMat[i] = mat;
+        }
+
+        oldMat = new Material[skinnedMesh.materials.Length];
+        for (int i = 0; i < oldMat.Length; i++)
+        {
+            oldMat[i] = skinnedMesh.materials[i];
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (uCore.Action.GetKeyDown(KeyCode.O))
-        {
-            activateTrail = true;
-            StartCoroutine(ActivateTrail());
-        }
-        if (uCore.Action.GetKeyDown(KeyCode.P))
-        {
-            activateTrail = false;
-        }
+    }
+    public void startInvisible()
+    {
+        activateTrail = true;
+        skinnedMesh.materials = newMat;
+        StartCoroutine(ActivateTrail());
+    }
+    public void endInvisible()
+    {
+        skinnedMesh.materials = oldMat;
+        activateTrail = false;
     }
     IEnumerator ActivateTrail()
     {
@@ -42,12 +57,12 @@ public class MeshTrail : MonoBehaviour
 
             Mesh mesh = new Mesh();
             skinnedMesh.BakeMesh(mesh);
-
+         
+            
             mf.mesh = mesh;
-            mr.material = mat;
-            skinnedMesh.materials[1] = mat;
+            mr.materials = newMat;
 
-            StartCoroutine(AnimateMaterialAlpha(mr.material, 0.1f, 0.05f));
+            StartCoroutine(AnimateMaterialAlpha(mr.materials, 0.02f, 0.05f));
 
             Destroy(obj, destroyDelay);
 
@@ -55,16 +70,20 @@ public class MeshTrail : MonoBehaviour
         }
         skinnedMesh.materials[1] = null;
     }
-    IEnumerator AnimateMaterialAlpha(Material material, float rate, float freshRate)
+    IEnumerator AnimateMaterialAlpha(Material[] materials, float rate, float freshRate)
     {
-        material.SetFloat(alphaRef, 1);
-        float valueToAnimate = material.GetFloat(alphaRef);
+        //material.SetFloat(alphaRef, 1);
+        float valueToAnimate = 1;
 
         while (valueToAnimate > 0)
         {
-            Debug.Log(material.GetFloat(alphaRef));
-            valueToAnimate -= rate;
-            material.SetFloat(alphaRef, valueToAnimate);
+            for (int i = 0; i < materials.Length; i++)
+            {
+                Debug.Log(materials[i].GetFloat(alphaRef));
+                valueToAnimate -= rate;
+                materials[i].SetFloat(alphaRef, valueToAnimate);
+                
+            }
             yield return new WaitForSeconds(freshRate);
         }
     }

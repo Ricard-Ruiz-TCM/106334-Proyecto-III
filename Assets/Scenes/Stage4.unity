@@ -142,7 +142,7 @@ GameObject:
   m_IsActive: 1
 --- !u!114 &54483487
 MonoBehaviour:
-  m_ObjectHideFlags: 2
+  m_ObjectHideFlags: 10
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -1101,10 +1101,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 904388579}
     m_Modifications:
+    - target: {fileID: 2811769205094483184, guid: b5f0e00d446d4f14cb8795e7e6827b3d,
+        type: 3}
+      propertyPath: skills.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2811769205094483184, guid: b5f0e00d446d4f14cb8795e7e6827b3d,
+        type: 3}
+      propertyPath: skills.Array.data[0].skill
+      value: 
+      objectReference: {fileID: 11400000, guid: 71cfe4ff8ec55584eb91f5ea330b8e01,
+        type: 2}
     - target: {fileID: 2811769205094483191, guid: b5f0e00d446d4f14cb8795e7e6827b3d,
         type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 2811769205094483191, guid: b5f0e00d446d4f14cb8795e7e6827b3d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3192693271134101069, guid: b5f0e00d446d4f14cb8795e7e6827b3d,
         type: 3}

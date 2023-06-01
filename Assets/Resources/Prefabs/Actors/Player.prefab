@@ -466,6 +466,7 @@ GameObject:
   - component: {fileID: 2811769205094483187}
   - component: {fileID: 2811769205094483184}
   - component: {fileID: 50373196914462218}
+  - component: {fileID: 5544341734387521487}
   m_Layer: 9
   m_Name: Player
   m_TagString: Player
@@ -616,6 +617,23 @@ MonoBehaviour:
   _bow: {fileID: 4150270852270653593}
   _pugio: {fileID: 1933897024572593213}
   _dolabra: {fileID: 7833148125481124056}
+--- !u!114 &5544341734387521487
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2811769205094483191}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c689c9846f8b1c4280a4380ab4928f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skinnedMesh: {fileID: 3875966997347837704}
+  refreshRate: 0.15
+  mat: {fileID: 2100000, guid: cca16c313233395418897f5f320256ab, type: 2}
+  destroyDelay: 0.7
+  alphaRef: _alphaController
 --- !u!1 &2936879159829457372
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,12 +6,16 @@ public class Invisible : Buff {
     [Header("Invisibility Material:")]
     public Material material;
 
-    public override void onApply(BasicActor me) {
+    public override void onApply(BasicActor me) 
+    {
         Debug.Log("TODO: Apply Invisible Feedback + extras.");
+        me.GetComponent<MeshTrail>().startInvisible();
     }
 
-    public override void onRemove(BasicActor me) {
+    public override void onRemove(BasicActor me) 
+    {
         Debug.Log("TODO: Remove Invisible Feedback");
+        me.GetComponent<MeshTrail>().endInvisible();
     }
 
     public override void startTurnEffect(BasicActor me) {

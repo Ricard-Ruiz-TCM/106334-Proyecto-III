@@ -6,11 +6,15 @@ public class Invencible : Buff {
     [Header("Material:")]
     public Material material;
 
-    public override void onApply(BasicActor me) {
+    public override void onApply(BasicActor me) 
+    {
+        me.GetComponent<MeshTrail>().startInvisible();
         Debug.Log("TODO: Apply Invencible Feedback + extras.");
     }
 
-    public override void onRemove(BasicActor me) {
+    public override void onRemove(BasicActor me) 
+    {
+        me.GetComponent<MeshTrail>().endInvisible();
         Debug.Log("TODO: Remove Invencible Feedback");
     }
 

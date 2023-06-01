@@ -13,7 +13,6 @@ public class AutomaticActor : Actor {
     public override void thinking() {
 
         // Change to flee if low health
-        Debug.Log(healthPercent());
         if ((!_combatAI.Equals(combatAI.flee)) && (healthPercent() <= _fleeThreshold)) {
             _combatAI = combatAI.flee;
         }
@@ -28,6 +27,8 @@ public class AutomaticActor : Actor {
                 fleeCombatAI();
                 break;
             default:
+                endAction();
+                endMovement();
                 break;
         }
 

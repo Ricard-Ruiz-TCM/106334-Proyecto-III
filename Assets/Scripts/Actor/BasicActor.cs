@@ -53,7 +53,7 @@ public abstract class BasicActor : Turnable {
         return _canAttack;
     }
     public int healthPercent() {
-        return (int)((_health / _maxHealth) * 100f);
+        return (int)(((float)_health / (float)_maxHealth) * 100f);
     }
 
     public void disableAttack() {

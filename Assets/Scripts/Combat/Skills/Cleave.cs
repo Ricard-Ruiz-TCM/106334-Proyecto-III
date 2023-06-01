@@ -3,7 +3,7 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = "Cleave", menuName = "Combat/Skills/Cleave")]
 public class Cleave : Skill {
-
+    [SerializeField] GameObject bloodPrefab;
     public override void action(BasicActor from, Node to) {
 
         // bUSCAMOS A LA PEÑA Y APLICAMOS BUFF STUNNED :3 
@@ -13,7 +13,14 @@ public class Cleave : Skill {
             BasicActor actor = Stage.StageManager.getActor(node);
             if ((actor != null) && (actor != from) && (actor is Actor)) 
             {
-                Debug.Log("sexooooooooooooo");
+                Vector3 relativePos = from.transform.position - actor.transform.position;
+
+                // the second argument, upwards, defaults to Vector3.up
+                Quaternion rotation = Quaternion.LookRotation(relativePos, Vector3.up);
+
+                GameObject blood = Instantiate(bloodPrefab, new Vector3(actor.transform.position.x, actor.transform.position.y + 0.8f, actor.transform.position.z), rotation);
+                Destroy(blood, 2f);
+
                 ((Actor)actor).buffs.applyBuffs((Actor)actor, buffsID.Stunned);
             }
         }

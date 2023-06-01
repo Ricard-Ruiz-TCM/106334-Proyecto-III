@@ -243,6 +243,10 @@ public class AutomaticActor : Actor {
     public override void onActorDeath() {
         base.onActorDeath();
         Anim.SetTrigger("die");
+        //GameObject blood = Instantiate(Resources.Load("Particles/BloodDie") as GameObject);
+        //Debug.Break();
+        //blood.transform.position = new Vector3(transform.position.x, transform.position.y + 0.8f, transform.position.z);
+        //Destroy(blood, 2f);
     }
 
 }

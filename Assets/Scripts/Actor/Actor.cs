@@ -129,6 +129,7 @@ public abstract class Actor : BasicActor {
         buffs.applyStartTurnEffect(this);
         Debug.Log("APPLY TURN EFECTS");
         skills.updateCooldown();
+        buffs.updateBuffs(this);
         Debug.Log("UPDATECOOLD");
         Stage.StageBuilder.clearGrid();
         base.beginTurn();
@@ -139,7 +140,6 @@ public abstract class Actor : BasicActor {
         base.endTurn();
         buffs.applyEndTurnEffect(this);
         Debug.Log("APPLY END TURN EFECTS");
-        buffs.updateBuffs(this);
         Debug.Log("APPLY update buffs");
         Stage.StageBuilder.clearGrid();
     }

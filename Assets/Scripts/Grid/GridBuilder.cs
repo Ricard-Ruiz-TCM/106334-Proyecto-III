@@ -330,7 +330,8 @@ public class GridBuilder : MonoBehaviour {
 
             if (totalCount > range) {
                 count--;
-            } else {
+            } else 
+            {
                 count++;
             }
             totalCount++;

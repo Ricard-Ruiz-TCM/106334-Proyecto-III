@@ -49,7 +49,11 @@ public class EntitieUI : MonoBehaviour
                 Destroy(activeBuffsGO[i]);
                 activeBuffsGO.RemoveAt(i);
             }
-            activeBuffs[i].transform.position = positionBuffs[i];
+
+            if(activeBuffs.Count != 0)
+            {
+                activeBuffs[i].transform.position = positionBuffs[i];
+            }          
         }
     }
     public void SetHeal(float heal)

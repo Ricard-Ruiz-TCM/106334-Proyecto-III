@@ -494,6 +494,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd03af2059763ca4dab5187ed8526e55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  headIcon: {fileID: 0}
   state: 0
   acting: 0
   moving: 0
@@ -570,7 +571,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77fbec90f92da0e468929004fe5093fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skills: []
+  skills:
+  - skill: {fileID: 11400000, guid: 1d3dd0b207e439746add61a3187081dc, type: 2}
+    cooldown: 0
 --- !u!114 &50373196914462218
 MonoBehaviour:
   m_ObjectHideFlags: 0

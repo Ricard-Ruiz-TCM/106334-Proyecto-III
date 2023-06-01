@@ -494,6 +494,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd03af2059763ca4dab5187ed8526e55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  headIcon: {fileID: 0}
   state: 0
   acting: 0
   moving: 0
@@ -507,7 +508,7 @@ MonoBehaviour:
   skinnedMesh: {fileID: 520991161305602828}
   skinnedMaterials: []
   _animator: {fileID: 1376862989721974109}
-  _steps: 8
+  _steps: 6
   _perks: {fileID: 2811769205094483187}
   _combatAI: 0
   _fleeThreshold: 20
@@ -570,7 +571,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77fbec90f92da0e468929004fe5093fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skills: []
+  skills:
+  - skill: {fileID: 11400000, guid: d6e49de7d772a8b4f9860a6da898a4be, type: 2}
+    cooldown: 0
+  - skill: {fileID: 11400000, guid: 1e84fc4a7ac721f43b381a44c8bb7e77, type: 2}
+    cooldown: 0
 --- !u!114 &50373196914462218
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -15,6 +15,7 @@ class TurnableUI : MonoBehaviour {
         if (_filler != null) {
             _filler.fillAmount = (float)((float)((BasicActor)turnable).health() / (float)((BasicActor)turnable).maxHealth());
         }
+        _icon.sprite = turnable.headIcon;
     }
 
 }

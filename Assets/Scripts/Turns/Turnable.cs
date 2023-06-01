@@ -2,6 +2,8 @@
 
 public abstract class Turnable : MonoBehaviour {
 
+    public Sprite headIcon;
+
     // Unity Start
     protected virtual void Start() {
         TurnManager.instance.subscribe(this);

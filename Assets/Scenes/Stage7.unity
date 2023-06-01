@@ -1905,10 +1905,26 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: a116e50ed32627d46b3508b9b579a9d4, type: 2}
     - target: {fileID: 2811769205094483148, guid: caf71405d5bed5e47b7bc8febe1d9027,
         type: 3}
+      propertyPath: _shield.shield
+      value: 
+      objectReference: {fileID: 11400000, guid: a5e19b5569345be46a5b4f5917b26ec1,
+        type: 2}
+    - target: {fileID: 2811769205094483148, guid: caf71405d5bed5e47b7bc8febe1d9027,
+        type: 3}
       propertyPath: _weapon.weapon
       value: 
       objectReference: {fileID: 11400000, guid: d04d4d5d1c8bb8547a6bc392899e7907,
         type: 2}
+    - target: {fileID: 2811769205094483148, guid: caf71405d5bed5e47b7bc8febe1d9027,
+        type: 3}
+      propertyPath: _shield.upgrade
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2811769205094483148, guid: caf71405d5bed5e47b7bc8febe1d9027,
+        type: 3}
+      propertyPath: _weapon.upgrade
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2811769205094483191, guid: caf71405d5bed5e47b7bc8febe1d9027,
         type: 3}
       propertyPath: m_Name
@@ -48851,7 +48867,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3384231810829825827
 MonoBehaviour:
-  m_ObjectHideFlags: 2
+  m_ObjectHideFlags: 10
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}

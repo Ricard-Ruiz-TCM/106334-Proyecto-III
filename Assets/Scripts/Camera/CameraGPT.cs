@@ -65,7 +65,7 @@ public class CameraGPT : MonoBehaviour {
 
         Actor.onSkillUsed -= focusNode;
 
-        TurnManager.instance.onNewRound += setPosition;
+        TurnManager.instance.onNewRound -= setPosition;
 
         TurnManager.instance.onStartSystem -= activate;
         TurnManager.instance.onStartTurn -= () => { setTarget(TurnManager.instance.current); };

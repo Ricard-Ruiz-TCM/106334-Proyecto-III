@@ -14,4 +14,7 @@ public class DialogNode : ScriptableObject {
     [Header("Player Options")]
     public List<DialogOption> options;
 
+    [Header("Speaker:")]
+    public Sprite speaker;
+
 }

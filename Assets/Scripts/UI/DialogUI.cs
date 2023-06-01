@@ -10,9 +10,7 @@ public class DialogUI : MonoBehaviour {
     private GameObject _optionPrefab = null;
 
     [SerializeField, Header("Speakers:")]
-    private Image _imgLeftSpeaker;
-    [SerializeField]
-    private Image _imgRightSpeaker;
+    private Image _speaker;
 
     [SerializeField, Header("Options:")]
     private GameObject _panelOptions;
@@ -66,7 +64,7 @@ public class DialogUI : MonoBehaviour {
 
         // Node with Options
         if (_currentDialog.options.Count != 0) {
-            SetAlpha(_imgRightSpeaker, 0.5f);
+            SetAlpha(_speaker, 0f);
             _panelOptions.SetActive(true);
             foreach (DialogOption op in _currentDialog.options) {
                 GameObject option = GameObject.Instantiate(_optionPrefab, _panelOptions.transform);
@@ -81,8 +79,8 @@ public class DialogUI : MonoBehaviour {
         // Normal Node
         _dialogProgress = progress.doing;
         _panelText.SetActive(true);
-        SetAlpha(_imgRightSpeaker, 1f);
-        SetAlpha(_imgLeftSpeaker, 0.5f);
+        SetAlpha(_speaker, 1f);
+        _speaker.sprite = _currentDialog.speaker;
         _txtSpeakerName.SetKey(_currentDialog.keyName);
         StartCoroutine(C_DisplayText(uCore.Localization.GetText(_currentDialog.keyMessage)));
     }

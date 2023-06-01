@@ -259,10 +259,6 @@ public abstract class Actor : BasicActor {
         }
     }
 
-    /** Override del onActorDeath */
-    public override void onActorDeath() {
-        GameObject.Destroy(gameObject);
-    }
 
     /** Método que recupera el último nodo de la ruta */
     public Node getLastRouteNode() {

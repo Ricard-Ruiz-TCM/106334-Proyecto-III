@@ -172,11 +172,9 @@ public abstract class BasicActor : Turnable {
     }
 
     /** Abstract para indicar que pasa cuando morimos */
-    public abstract void onActorDeath();
-
-    protected override void OnDestroy() {
-        Stage.Grid.changeNodeType(transform.position, Array2DEditor.nodeType.__);
-        base.OnDestroy();
+    public virtual void onActorDeath() {
+        TurnManager.instance.unsubscribe(this);
+        this.enabled = false;
     }
 
 }

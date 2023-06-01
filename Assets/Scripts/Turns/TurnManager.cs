@@ -153,19 +153,19 @@ public class TurnManager : MonoBehaviour {
         if (!isRoundType(type))
             return;
 
+        onEndRound?.Invoke(_roundType);
         switch (type) {
             case roundType.thinking:
                 startManager();
                 break;
             case roundType.positioning:
-                onEndRound?.Invoke(_roundType);
                 _roundType = roundType.combat;
-                onNewRound?.Invoke(_roundType);
                 startTurn();
                 break;
             case roundType.completed:
                 break;
         }
+        onNewRound?.Invoke(_roundType);
     }
 
     /** Método para indicar que se acabo el combate dentro del stage */

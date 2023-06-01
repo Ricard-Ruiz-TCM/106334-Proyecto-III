@@ -142,7 +142,7 @@ public class SceneStageManager : MonoBehaviour {
         }
 
         // Innit del turnManager
-        TurnManager.instance.startManager();
+        TurnManager.instance.completeRound();
     }
 
     /** Método para mostrar el final del stage */

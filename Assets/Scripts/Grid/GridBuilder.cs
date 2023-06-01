@@ -320,7 +320,7 @@ public class GridBuilder : MonoBehaviour {
             }
             if (xCount == node.x - range || xCount == node.x + range) {
                 if (Stage.Grid.insideGrid(i, node.y)) {
-                    displayNode(xCount, node.y, pathMaterial.invisible);
+                    displayNode(xCount, node.y, pathMaterial.walkable);
                 }
             }
 
@@ -357,7 +357,7 @@ public class GridBuilder : MonoBehaviour {
                     }
                 }
             }
-            displayNode(item, pathMaterial.invisible);
+            displayNode(item, pathMaterial.walkable);
         }
         return a;
     }
@@ -386,7 +386,7 @@ public class GridBuilder : MonoBehaviour {
     }
     /*** Método para ocultar un nodo */
     public void hideNode(Node node) {
-        displayNode(node, pathMaterial.invisible);
+        displayNode(node, pathMaterial.walkable);
     }
     public void hideNode(int x, int y) {
         hideNode(getGridNode(x, y));
@@ -588,13 +588,13 @@ public class GridBuilder : MonoBehaviour {
                 mat = _materials[(int)pathMaterial.walkable];
                 break;
             case Array2DEditor.nodeType.P:
-                mat = _materials[(int)pathMaterial.skill];
+                mat = _materials[(int)pathMaterial.positioning];
                 break;
             case Array2DEditor.nodeType.X:
                 mat = _materials[(int)pathMaterial.notWalkable];
                 break;
             default:
-                mat = _materials[(int)pathMaterial.NONE];
+                mat = _materials[(int)pathMaterial.walkable];
                 break;
         }
 

@@ -1,6 +1,5 @@
-﻿using System;
+﻿using System.Collections;
 using UnityEngine;
-using System.Collections;
 
 public class CameraGPT : MonoBehaviour {
 
@@ -38,6 +37,9 @@ public class CameraGPT : MonoBehaviour {
 
     private Transform _temporalTarget;
 
+    public Transform _positioningPos;
+    public Transform _completedPos;
+
     /** La última en zoom que teniamos antes de ataque */
     private float _lastY;
 
@@ -46,6 +48,8 @@ public class CameraGPT : MonoBehaviour {
         BasicActor.onReAct += restoreZoom;
         BasicActor.onEndAct += restoreZoom;
         BasicActor.onStartAct += zoomOut;
+
+        TurnManager.instance.onNewRound += setPosition;
 
         Actor.onSkillUsed += focusNode;
 
@@ -61,14 +65,10 @@ public class CameraGPT : MonoBehaviour {
 
         Actor.onSkillUsed -= focusNode;
 
+        TurnManager.instance.onNewRound += setPosition;
+
         TurnManager.instance.onStartSystem -= activate;
         TurnManager.instance.onStartTurn -= () => { setTarget(TurnManager.instance.current); };
-    }
-
-    // Unity Start
-    void Start() {
-        _targetPos.y = 8f;
-        _targetRot = Quaternion.identity;
     }
 
     // Unity FixedUpdate
@@ -76,19 +76,19 @@ public class CameraGPT : MonoBehaviour {
         if (!_active)
             return;
 
-        // Behaviours
-        cameraZoom();
-        cameraRotation();
-        cameraFollow();
-        cameraLookAt();
-
-        // Clamp
-        cameraClamp();
+        if (_target != null) {
+            // Behaviours
+            cameraZoom();
+            cameraRotation();
+            cameraFollow();
+            cameraLookAt();
+            // Clamp
+            cameraClamp();
+        }
 
         // Suavizado del movimiento de la cámara
         transform.position = Vector3.Lerp(transform.position, _targetPos, _speed * Time.deltaTime);
         transform.rotation = Quaternion.Lerp(transform.rotation, _targetRot, _rotSpeed * Time.deltaTime);
-
     }
 
     /** Método para setear el target */
@@ -160,7 +160,15 @@ public class CameraGPT : MonoBehaviour {
         yield return new WaitForSeconds(delay);
         _target = _temporalTarget;
     }
-   
+
+    public void setPosition(roundType round) {
+        switch (round) {
+            case roundType.positioning:
+                _targetPos = _positioningPos.position;
+                _targetRot = _positioningPos.rotation;
+                break;
+        }
+    }
 
 }
 

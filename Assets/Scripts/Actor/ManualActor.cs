@@ -164,4 +164,14 @@ public class ManualActor : Actor {
         return false;
     }
 
+    public override void takeDamage(BasicActor from, int damage, itemID weapon = itemID.NONE) {
+        base.takeDamage(from, damage, weapon);
+        Anim.SetTrigger("takeDamage");
+    }
+
+    public override void onActorDeath() {
+        base.onActorDeath();
+        Anim.SetTrigger("die");
+    }
+
 }

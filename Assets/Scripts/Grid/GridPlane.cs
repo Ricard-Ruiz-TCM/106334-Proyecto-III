@@ -1,12 +1,8 @@
 using UnityEngine;
 
-[RequireComponent(typeof(MeshRenderer))]
 public class GridPlane : MonoBehaviour {
 
-    // MeshRenderer para cambiar el mat
-    private MeshRenderer _meshRenderer;
-
-    private GameObject attackShow;
+    public GameObject attackShow;
 
     // Node & Grid
     public Node node;
@@ -21,6 +17,9 @@ public class GridPlane : MonoBehaviour {
     private bool _canBeAttacked = false;
     public bool CanBeAttacked => _canBeAttacked;
 
+    public MeshRenderer _interior;
+
+
     public void setValid2Attack() {
         _canBeAttacked = true;
     }
@@ -32,12 +31,6 @@ public class GridPlane : MonoBehaviour {
         }
     }
 
-    // Unity Awake
-    void Awake() {
-        _meshRenderer = GetComponent<MeshRenderer>();
-        attackShow = transform.GetChild(1).gameObject;
-    }
-
     /** Método set de Grid y Nodo */
     public void setGrid(Grid2D grid, Node node) 
     {
@@ -47,15 +40,15 @@ public class GridPlane : MonoBehaviour {
 
     /** Método para setear el material */
     public void setMaterial(Material mat) {
-        _meshRenderer.material = mat;
+        _interior.material = mat;
     }
 
     public Material GetMaterial() {
-        return _meshRenderer.material;
+        return _interior.material;
     }
 
     public bool CompareMaterial(Material mat) {
-        return _meshRenderer.material == mat;
+        return _interior.material == mat;
     }
 
     public GameObject GetAttackIndicator() {

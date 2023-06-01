@@ -77,6 +77,12 @@ public class AutomaticActor : Actor {
                     if (Stage.StageBuilder.getDistance(transform.position, near.transform.position) < _equip.weapon.range) {
                         skills.useSkill(skillID.Attack, this, Stage.StageBuilder.getGridNode(near.transform.position));
                         UseSkill(Stage.StageBuilder.getGridNode(near.transform.position));
+                        // Anim
+                        if (equip.weapon.ID.Equals(itemID.Bow)) {
+                            Anim.SetTrigger("attackBow");
+                        } else {
+                            Anim.SetTrigger("attackWeapon");
+                        }
                     }
                 }
             }
@@ -106,6 +112,12 @@ public class AutomaticActor : Actor {
             if (canAct()) {
                 if (inWeaponRange && CanAttack()) {
                     skills.useSkill(skillID.Attack, this, Stage.StageBuilder.getGridNode(near.transform.position));
+                    // Anim
+                    if (equip.weapon.ID.Equals(itemID.Bow)) {
+                        Anim.SetTrigger("attackBow");
+                    } else {
+                        Anim.SetTrigger("attackWeapon");
+                    }
                 } else {
                     // Si no, usamos vanish
                     if (canAct())
@@ -190,5 +202,26 @@ public class AutomaticActor : Actor {
     }
     #endregion
 
+
+    public override void startMove() {
+        base.startMove();
+        Anim.SetBool("moving", true);
+    }
+
+    /** Override del en movmenet */
+    public override void endMovement() {
+        base.endMovement();
+        Anim.SetBool("moving", false);
+    }
+
+    public override void takeDamage(BasicActor from, int damage, itemID weapon = itemID.NONE) {
+        base.takeDamage(from, damage, weapon);
+        Anim.SetTrigger("takeDamage");
+    }
+
+    public override void onActorDeath() {
+        base.onActorDeath();
+        Anim.SetTrigger("die");
+    }
 
 }

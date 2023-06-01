@@ -115,7 +115,7 @@ public enum stageTerrain {
 
 // Tipo de material para el path
 public enum pathMaterial {
-    NONE, walkable, skill, notWalkable, invisible
+    walkable, notWalkable, skill, positioning
 }
 
 // Tipo de enemigos

@@ -4,7 +4,7 @@ public class WeaponHolder : MonoBehaviour {
 
     private itemID _myWeapon;
 
-    public GameObject _gladius, _hasta, _bow, _pugio, _dolabra;
+    public GameObject _gladius, _hasta, _bow, _pugio, _dolabra, _scutum;
 
     public void reArm() {
         setWeapon(_myWeapon);
@@ -16,6 +16,11 @@ public class WeaponHolder : MonoBehaviour {
         _bow.SetActive(false);
         _pugio.SetActive(false);
         _dolabra.SetActive(false);
+        _scutum.SetActive(false);
+    }
+
+    public void setShield() {
+        _scutum.SetActive(true);
     }
 
     public void setWeapon(itemID weaponID) {

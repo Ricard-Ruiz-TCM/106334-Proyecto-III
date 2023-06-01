@@ -239,6 +239,8 @@ public abstract class Actor : BasicActor {
         if (_equip.shield != null) {
             _skills.addSkill(skillID.Defense);
             _baseDefense += _equip.shieldDefense;
+
+            GetComponent<WeaponHolder>().setShield();
         }
         if (_equip.armor != null) {
             _baseDefense += _equip.armorDefense;

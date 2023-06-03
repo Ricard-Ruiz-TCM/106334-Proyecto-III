@@ -14,9 +14,9 @@ public class SpawnScript : MonoBehaviour
             {
                 Node myNode = Stage.StageBuilder.getGridNode(spawn.transform.position);
                 Stage.Grid.changeNodeType(myNode.x, myNode.y, Array2DEditor.nodeType.P);
-                Stage.StageBuilder.clearGrid();
-                Destroy(spawn);
+                Stage.StageBuilder.clearGrid();                
             }
+            Destroy(this);
         }
     }
 }

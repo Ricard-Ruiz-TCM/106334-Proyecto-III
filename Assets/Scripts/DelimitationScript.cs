@@ -14,9 +14,9 @@ public class DelimitationScript : MonoBehaviour
             {
                 Node myNode = Stage.StageBuilder.getGridNode(delimitation.transform.position);
                 Stage.Grid.changeNodeType(myNode.x, myNode.y, Array2DEditor.nodeType.X);
-                Stage.StageBuilder.clearGrid();
-                Destroy(delimitation);
-            }            
+                Stage.StageBuilder.clearGrid();                
+            }
+            Destroy(this);
         }
     }
 }

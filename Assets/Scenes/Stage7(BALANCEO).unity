@@ -675,7 +675,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &122357354
 MonoBehaviour:
-  m_ObjectHideFlags: 10
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -1661,6 +1661,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: c3098fc246eeaf6409e6d259dcb1e29e,
         type: 2}
+    - target: {fileID: 2811769205094483148, guid: caf71405d5bed5e47b7bc8febe1d9027,
+        type: 3}
+      propertyPath: _weapon.upgrade
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2811769205094483184, guid: caf71405d5bed5e47b7bc8febe1d9027,
         type: 3}
       propertyPath: skills.Array.size
@@ -1950,6 +1955,17 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: a116e50ed32627d46b3508b9b579a9d4, type: 2}
     - target: {fileID: 2811769205094483148, guid: caf71405d5bed5e47b7bc8febe1d9027,
         type: 3}
+      propertyPath: _armor.armor
+      value: 
+      objectReference: {fileID: 11400000, guid: 2c7a872f400063d4687c694524f19b61,
+        type: 2}
+    - target: {fileID: 2811769205094483148, guid: caf71405d5bed5e47b7bc8febe1d9027,
+        type: 3}
+      propertyPath: _armor.upgrade
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2811769205094483148, guid: caf71405d5bed5e47b7bc8febe1d9027,
+        type: 3}
       propertyPath: _shield.shield
       value: 
       objectReference: {fileID: 11400000, guid: a5e19b5569345be46a5b4f5917b26ec1,
@@ -2054,7 +2070,7 @@ PrefabInstance:
     - target: {fileID: 5565290215654821976, guid: caf71405d5bed5e47b7bc8febe1d9027,
         type: 3}
       propertyPath: _health
-      value: 20
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 5565290215654821976, guid: caf71405d5bed5e47b7bc8febe1d9027,
         type: 3}
@@ -2826,7 +2842,7 @@ PrefabInstance:
     - target: {fileID: 2811769205094483148, guid: 54cbe1f8b13eb6b42a869586112e77e9,
         type: 3}
       propertyPath: _weapon.upgrade
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2811769205094483184, guid: 54cbe1f8b13eb6b42a869586112e77e9,
         type: 3}
@@ -3998,7 +4014,7 @@ PrefabInstance:
     - target: {fileID: 2811769205094483149, guid: b5f0e00d446d4f14cb8795e7e6827b3d,
         type: 3}
       propertyPath: _health
-      value: 35
+      value: 45
       objectReference: {fileID: 0}
     - target: {fileID: 2811769205094483184, guid: b5f0e00d446d4f14cb8795e7e6827b3d,
         type: 3}

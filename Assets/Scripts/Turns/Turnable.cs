@@ -24,7 +24,6 @@ public abstract class Turnable : MonoBehaviour {
         state = turnState.thinking;
     }
     public virtual bool isTurnDone() {
-        Debug.Log("isturndone?");
         if (isActingDone() && isMovementDone()) {
             state = turnState.completed;
         }

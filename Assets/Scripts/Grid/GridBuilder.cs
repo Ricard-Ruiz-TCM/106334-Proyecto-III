@@ -1,8 +1,11 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Grid2D))]
 public class GridBuilder : MonoBehaviour {
+
+    public static event Action onGridBuild; 
 
     [HideInInspector]
     public Grid2D _grid;
@@ -11,8 +14,8 @@ public class GridBuilder : MonoBehaviour {
     [SerializeField, Header("Plane Prefab for Grid:")]
     private GameObject _planePfb;
     [SerializeField, Tooltip("gpl = GridPanelSize => Lo que mide el mesh del panel, pues scale 1 => 10")]
-    private float _planeSize;
-    [SerializeField]
+    //private float _planeSize;
+    //[SerializeField]
     private float _offset;
 
     [SerializeField, Header("Terrain Layer:")]
@@ -44,7 +47,7 @@ public class GridBuilder : MonoBehaviour {
             for (int y = 0; y < _grid.columns; y++) {
                 // Posición donde será isntanciado
                 Node node = _grid.getNode(x, y);
-                Vector3 position = new Vector3(x * _planeSize * _planePfb.transform.localScale.x + _offset, _offset, y * _planeSize * _planePfb.transform.localScale.y + _offset);
+                Vector3 position = new Vector3(x  * 10f * _planePfb.transform.localScale.x + _offset, _offset, y * 10f * _planePfb.transform.localScale.y + _offset);
                 // Instant del prefab
                 GridPlane obj = GameObject.Instantiate(_planePfb, position, Quaternion.identity, transform).GetComponent<GridPlane>();
                 obj.gameObject.name = "M[" + x + "," + y + "]-" + "W:" + node.walkable;
@@ -59,6 +62,7 @@ public class GridBuilder : MonoBehaviour {
                 _planeMap[x, y] = obj;
             }
         }
+        onGridBuild?.Invoke();
         clearGrid();
     }
 
@@ -92,7 +96,7 @@ public class GridBuilder : MonoBehaviour {
         return _planeMap[cX, cY];
     }
     public GridPlane getGridPlane(Vector3 worldPos) {
-        return getGridPlane(Mathf.RoundToInt(worldPos.x - _offset), Mathf.RoundToInt(worldPos.z - _offset));
+        return getGridPlane((int)(worldPos.x / 2f), (int)(worldPos.z / 2f));
     }
     public GridPlane getMouseGridPlane() {
         RaycastHit raycastHit;

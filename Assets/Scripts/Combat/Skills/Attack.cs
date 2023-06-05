@@ -9,7 +9,6 @@ public class Attack : Skill {
     [SerializeField] GameObject bloodPrefab;
     public override void action(BasicActor from, Node to) {
         BasicActor target = Stage.StageManager.getActor(to);
-        Debug.Log("33333");
         from.StartCoroutine(StartSlash(from));
         if (target != null)
         {

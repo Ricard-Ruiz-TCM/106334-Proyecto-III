@@ -1361,7 +1361,7 @@ PrefabInstance:
         type: 3}
       propertyPath: _armor.armor
       value: 
-      objectReference: {fileID: 11400000, guid: 2c7a872f400063d4687c694524f19b61,
+      objectReference: {fileID: 11400000, guid: d441fbeb3aed9a84797cca64fe4e2f81,
         type: 2}
     - target: {fileID: 2811769205094483148, guid: 3e33794c53a5c5943abd3ddc5e101bc1,
         type: 3}
@@ -1657,6 +1657,12 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: c98094b3f68023e45963611a9c293cc7, type: 2}
     - target: {fileID: 2811769205094483148, guid: caf71405d5bed5e47b7bc8febe1d9027,
         type: 3}
+      propertyPath: _armor.armor
+      value: 
+      objectReference: {fileID: 11400000, guid: 2c7a872f400063d4687c694524f19b61,
+        type: 2}
+    - target: {fileID: 2811769205094483148, guid: caf71405d5bed5e47b7bc8febe1d9027,
+        type: 3}
       propertyPath: _weapon.weapon
       value: 
       objectReference: {fileID: 11400000, guid: c3098fc246eeaf6409e6d259dcb1e29e,
@@ -1784,10 +1790,21 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: c98094b3f68023e45963611a9c293cc7, type: 2}
     - target: {fileID: 2811769205094483148, guid: caf71405d5bed5e47b7bc8febe1d9027,
         type: 3}
+      propertyPath: _armor.armor
+      value: 
+      objectReference: {fileID: 11400000, guid: d441fbeb3aed9a84797cca64fe4e2f81,
+        type: 2}
+    - target: {fileID: 2811769205094483148, guid: caf71405d5bed5e47b7bc8febe1d9027,
+        type: 3}
       propertyPath: _weapon.weapon
       value: 
       objectReference: {fileID: 11400000, guid: c3098fc246eeaf6409e6d259dcb1e29e,
         type: 2}
+    - target: {fileID: 2811769205094483148, guid: caf71405d5bed5e47b7bc8febe1d9027,
+        type: 3}
+      propertyPath: _weapon.upgrade
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2811769205094483184, guid: caf71405d5bed5e47b7bc8febe1d9027,
         type: 3}
       propertyPath: skills.Array.size
@@ -3270,6 +3287,12 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: c95c3c942764e7a43acd58dd6c38a873, type: 2}
     - target: {fileID: 2811769205094483148, guid: 3e33794c53a5c5943abd3ddc5e101bc1,
         type: 3}
+      propertyPath: _armor.armor
+      value: 
+      objectReference: {fileID: 11400000, guid: d89531ab99de4df47a81aff5e10e1430,
+        type: 2}
+    - target: {fileID: 2811769205094483148, guid: 3e33794c53a5c5943abd3ddc5e101bc1,
+        type: 3}
       propertyPath: _weapon.weapon
       value: 
       objectReference: {fileID: 11400000, guid: 1a5f1b970c05cac4294dccb3a29b76ac,
@@ -3828,6 +3851,12 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[14]
       value: 
       objectReference: {fileID: 2100000, guid: c95c3c942764e7a43acd58dd6c38a873, type: 2}
+    - target: {fileID: 2811769205094483148, guid: 3e33794c53a5c5943abd3ddc5e101bc1,
+        type: 3}
+      propertyPath: _armor.armor
+      value: 
+      objectReference: {fileID: 11400000, guid: d89531ab99de4df47a81aff5e10e1430,
+        type: 2}
     - target: {fileID: 2811769205094483148, guid: 3e33794c53a5c5943abd3ddc5e101bc1,
         type: 3}
       propertyPath: _weapon.weapon
@@ -7901,7 +7930,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2112911780
 MonoBehaviour:
-  m_ObjectHideFlags: 10
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}

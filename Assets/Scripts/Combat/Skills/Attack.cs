@@ -13,20 +13,20 @@ public class Attack : Skill {
         if (target != null)
         {
             target.takeDamage((Actor)from, from.totalDamage());
-            
+            var lookPos = target.transform.position - from.transform.position;
+
+            Vector3 relativePos = from.transform.position - target.transform.position;
+
+            // the second argument, upwards, defaults to Vector3.up
+            Quaternion rotation = Quaternion.LookRotation(relativePos, Vector3.up);
+
+            GameObject blood = Instantiate(bloodPrefab, new Vector3(target.transform.position.x, target.transform.position.y + 0.8f, target.transform.position.z), rotation);
+            Destroy(blood, 2f);
+
+            lookPos.y = 0;
+            from.transform.rotation = Quaternion.LookRotation(lookPos);
         }
-        var lookPos = target.transform.position - from.transform.position;
-
-        Vector3 relativePos = from.transform.position - target.transform.position;
-
-        // the second argument, upwards, defaults to Vector3.up
-        Quaternion rotation = Quaternion.LookRotation(relativePos, Vector3.up);
-
-        GameObject blood = Instantiate(bloodPrefab, new Vector3(target.transform.position.x, target.transform.position.y + 0.8f, target.transform.position.z), rotation);
-        Destroy(blood, 2f);
-
-        lookPos.y = 0;
-        from.transform.rotation = Quaternion.LookRotation(lookPos);
+        
         ((Actor)from).endAction();
     }
     IEnumerator StartSlash(BasicActor from)

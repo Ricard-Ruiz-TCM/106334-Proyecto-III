@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using FMODUnity;
 
 [CreateAssetMenu(fileName = "Attack", menuName = "Combat/Skills/Attack")]
 public class Attack : Skill {
 
+    public List<EventReference> soundEvents;
     public List<Slash> slashes;
     [SerializeField] GameObject bloodPrefab;
     public override void action(BasicActor from, Node to) {
@@ -33,6 +35,7 @@ public class Attack : Skill {
     {
         GameObject go;
         yield return new WaitForSeconds(0.5f);
+        FMODManager.instance.PlayOneShot(soundEvents[0]);
         for (int i = 0; i < slashes.Count; i++)
         {
             go = Instantiate(slashes[i].objSlash, Vector3.zero, Quaternion.identity);

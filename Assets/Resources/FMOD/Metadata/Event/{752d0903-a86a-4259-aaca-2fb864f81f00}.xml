@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="Event" id="{752d0903-a86a-4259-aaca-2fb864f81f00}">
+		<property name="name">
+			<value>25. Pugio Madera</value>
+		</property>
+		<property name="outputFormat">
+			<value>2</value>
+		</property>
+		<relationship name="folder">
+			<destination>{4170995c-fcfd-43b4-bff3-306778759691}</destination>
+		</relationship>
+		<relationship name="mixer">
+			<destination>{030a2fdf-41e5-4755-956d-df833bd2c954}</destination>
+		</relationship>
+		<relationship name="masterTrack">
+			<destination>{a0752dea-4eaa-4b66-812c-4e6bafb63293}</destination>
+		</relationship>
+		<relationship name="mixerInput">
+			<destination>{86557584-8671-4652-9194-323af0fe2619}</destination>
+		</relationship>
+		<relationship name="automatableProperties">
+			<destination>{96f31dba-3756-42ae-9b00-5337e9f48294}</destination>
+		</relationship>
+		<relationship name="markerTracks">
+			<destination>{7e8514c6-3634-473b-913d-8e477e25b601}</destination>
+		</relationship>
+		<relationship name="groupTracks">
+			<destination>{b4cf3b11-ff0a-4efb-b25f-5a53813151ab}</destination>
+		</relationship>
+		<relationship name="timeline">
+			<destination>{695d2a64-b777-4ef8-9926-2d60ac3e34bd}</destination>
+		</relationship>
+		<relationship name="banks">
+			<destination>{7964351d-0d49-40f9-82d6-cf57e39691bb}</destination>
+		</relationship>
+	</object>
+	<object class="EventMixer" id="{030a2fdf-41e5-4755-956d-df833bd2c954}">
+		<relationship name="masterBus">
+			<destination>{c9149cc0-4121-45f2-a629-cedcab08cb13}</destination>
+		</relationship>
+	</object>
+	<object class="MasterTrack" id="{a0752dea-4eaa-4b66-812c-4e6bafb63293}">
+		<relationship name="mixerGroup">
+			<destination>{c9149cc0-4121-45f2-a629-cedcab08cb13}</destination>
+		</relationship>
+	</object>
+	<object class="MixerInput" id="{86557584-8671-4652-9194-323af0fe2619}">
+		<relationship name="effectChain">
+			<destination>{93e47508-1f41-409d-9ce6-e69d2a83aeb1}</destination>
+		</relationship>
+		<relationship name="panner">
+			<destination>{3acf143a-c785-47d7-b42e-aee703c6c3bf}</destination>
+		</relationship>
+		<relationship name="output">
+			<destination>{f60c249d-810a-4d21-a82b-ee780be1f189}</destination>
+		</relationship>
+	</object>
+	<object class="EventAutomatableProperties" id="{96f31dba-3756-42ae-9b00-5337e9f48294}" />
+	<object class="MarkerTrack" id="{7e8514c6-3634-473b-913d-8e477e25b601}" />
+	<object class="GroupTrack" id="{b4cf3b11-ff0a-4efb-b25f-5a53813151ab}">
+		<relationship name="modules">
+			<destination>{17ff53b6-6015-4f0c-83f8-5492abc5f401}</destination>
+		</relationship>
+		<relationship name="mixerGroup">
+			<destination>{c95a7ede-f8bf-4cc9-b1d2-f9c0e2affee9}</destination>
+		</relationship>
+	</object>
+	<object class="Timeline" id="{695d2a64-b777-4ef8-9926-2d60ac3e34bd}">
+		<relationship name="modules">
+			<destination>{17ff53b6-6015-4f0c-83f8-5492abc5f401}</destination>
+		</relationship>
+	</object>
+	<object class="EventMixerMaster" id="{c9149cc0-4121-45f2-a629-cedcab08cb13}">
+		<relationship name="effectChain">
+			<destination>{f05f98a6-1ae3-4924-a067-ae613e77b117}</destination>
+		</relationship>
+		<relationship name="panner">
+			<destination>{5a718fc7-d0b0-43b0-9ecd-0e8297a1cd68}</destination>
+		</relationship>
+		<relationship name="mixer">
+			<destination>{030a2fdf-41e5-4755-956d-df833bd2c954}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusEffectChain" id="{93e47508-1f41-409d-9ce6-e69d2a83aeb1}">
+		<relationship name="effects">
+			<destination>{d4dc0331-f1ae-440c-a085-97bccde4d867}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusPanner" id="{3acf143a-c785-47d7-b42e-aee703c6c3bf}" />
+	<object class="SingleSound" id="{17ff53b6-6015-4f0c-83f8-5492abc5f401}">
+		<property name="length">
+			<value>0.56639583333333332</value>
+		</property>
+		<relationship name="audioFile">
+			<destination>{115914e1-698d-4f9e-86a8-8496890451c2}</destination>
+		</relationship>
+	</object>
+	<object class="EventMixerGroup" id="{c95a7ede-f8bf-4cc9-b1d2-f9c0e2affee9}">
+		<property name="name">
+			<value>25. pugio madera</value>
+		</property>
+		<relationship name="effectChain">
+			<destination>{7dd11fae-3390-45b3-ae98-0c749f9fe80b}</destination>
+		</relationship>
+		<relationship name="panner">
+			<destination>{d58f474a-2f3e-4527-ae9a-49055214f7a0}</destination>
+		</relationship>
+		<relationship name="output">
+			<destination>{c9149cc0-4121-45f2-a629-cedcab08cb13}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusEffectChain" id="{f05f98a6-1ae3-4924-a067-ae613e77b117}">
+		<relationship name="effects">
+			<destination>{2bb10aeb-7170-4899-a6b7-db3252c772ff}</destination>
+			<destination>{7762574d-411c-493a-9c91-757eadf0ac06}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusPanner" id="{5a718fc7-d0b0-43b0-9ecd-0e8297a1cd68}" />
+	<object class="MixerBusFader" id="{d4dc0331-f1ae-440c-a085-97bccde4d867}" />
+	<object class="MixerBusEffectChain" id="{7dd11fae-3390-45b3-ae98-0c749f9fe80b}">
+		<relationship name="effects">
+			<destination>{03cc6ea4-ce58-4a2f-872f-4466e462feed}</destination>
+			<destination>{040dd73e-1040-4a2d-b69e-52954efa26ee}</destination>
+			<destination>{6c1a4d60-0033-4757-b562-b6ff4f0e020f}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusPanner" id="{d58f474a-2f3e-4527-ae9a-49055214f7a0}" />
+	<object class="MixerBusFader" id="{2bb10aeb-7170-4899-a6b7-db3252c772ff}" />
+	<object class="SpatialiserEffect" id="{7762574d-411c-493a-9c91-757eadf0ac06}" />
+	<object class="SFXReverbEffect" id="{03cc6ea4-ce58-4a2f-872f-4466e462feed}">
+		<property name="decayTime">
+			<value>900</value>
+		</property>
+		<property name="earlyDelay">
+			<value>46</value>
+		</property>
+		<property name="lateDelay">
+			<value>52</value>
+		</property>
+	</object>
+	<object class="MixerBusFader" id="{040dd73e-1040-4a2d-b69e-52954efa26ee}" />
+	<object class="MultibandEqEffect" id="{6c1a4d60-0033-4757-b562-b6ff4f0e020f}">
+		<property name="frequencyA">
+			<value>11573.8594</value>
+		</property>
+		<property name="qualityA">
+			<value>8.26652145</value>
+		</property>
+	</object>
+</objects>

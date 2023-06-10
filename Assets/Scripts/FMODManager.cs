@@ -15,8 +15,7 @@ public class FMODManager : MonoBehaviour
     [Range(0, 1)]
     public float ambienceVolum = 1;
 
-    [SerializeField] private Transform cameraTransform;
-
+    private Transform updatedCameraTransform;
     private Bus masterBus;
     private Bus musicBus;
     private Bus sfxBus;
@@ -45,11 +44,12 @@ public class FMODManager : MonoBehaviour
         musicBus.setVolume(musicVolum);
         sfxBus.setVolume(sfxVolum);
         ambienceBus.setVolume(ambienceVolum);
+        updatedCameraTransform = Camera.main.transform;
     }
 
     public void PlayOneShot(EventReference eventReference) 
     {
-        RuntimeManager.PlayOneShot(eventReference, cameraTransform.position);
+        RuntimeManager.PlayOneShot(eventReference, updatedCameraTransform.position);
     }
 
     public EventInstance CreateInstance(EventReference eventReference)

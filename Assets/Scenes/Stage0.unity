@@ -238,7 +238,7 @@ PrefabInstance:
     - target: {fileID: 2811769205094483184, guid: 3e33794c53a5c5943abd3ddc5e101bc1,
         type: 3}
       propertyPath: skills.Array.size
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2811769205094483184, guid: 3e33794c53a5c5943abd3ddc5e101bc1,
         type: 3}
@@ -250,7 +250,19 @@ PrefabInstance:
         type: 3}
       propertyPath: skills.Array.data[1].skill
       value: 
-      objectReference: {fileID: 11400000, guid: 1d3dd0b207e439746add61a3187081dc,
+      objectReference: {fileID: 11400000, guid: c7e621e8c6c48264ba7bb8749332c4ea,
+        type: 2}
+    - target: {fileID: 2811769205094483184, guid: 3e33794c53a5c5943abd3ddc5e101bc1,
+        type: 3}
+      propertyPath: skills.Array.data[2].skill
+      value: 
+      objectReference: {fileID: 11400000, guid: f5ebd8c058045db40b49609812e8a509,
+        type: 2}
+    - target: {fileID: 2811769205094483184, guid: 3e33794c53a5c5943abd3ddc5e101bc1,
+        type: 3}
+      propertyPath: skills.Array.data[3].skill
+      value: 
+      objectReference: {fileID: 11400000, guid: f5ebd8c058045db40b49609812e8a509,
         type: 2}
     - target: {fileID: 2811769205094483191, guid: 3e33794c53a5c5943abd3ddc5e101bc1,
         type: 3}
@@ -410,6 +422,7 @@ MonoBehaviour:
   - {fileID: 462707317}
   - {fileID: 468273741}
   - {fileID: 1377369781}
+  - {fileID: 0}
 --- !u!1001 &377509798
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3703,12 +3716,12 @@ PrefabInstance:
     - target: {fileID: 2811769205094483149, guid: b5f0e00d446d4f14cb8795e7e6827b3d,
         type: 3}
       propertyPath: _health
-      value: 35
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 2811769205094483184, guid: b5f0e00d446d4f14cb8795e7e6827b3d,
         type: 3}
       propertyPath: skills.Array.size
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2811769205094483184, guid: b5f0e00d446d4f14cb8795e7e6827b3d,
         type: 3}
@@ -3720,25 +3733,25 @@ PrefabInstance:
         type: 3}
       propertyPath: skills.Array.data[1].skill
       value: 
-      objectReference: {fileID: 11400000, guid: 1d3dd0b207e439746add61a3187081dc,
+      objectReference: {fileID: 11400000, guid: 234758a2c003b0242a05312c2c0838a8,
         type: 2}
     - target: {fileID: 2811769205094483184, guid: b5f0e00d446d4f14cb8795e7e6827b3d,
         type: 3}
       propertyPath: skills.Array.data[2].skill
       value: 
-      objectReference: {fileID: 11400000, guid: d97c46713b6daa645849574d46326b7e,
+      objectReference: {fileID: 11400000, guid: c7e621e8c6c48264ba7bb8749332c4ea,
         type: 2}
     - target: {fileID: 2811769205094483184, guid: b5f0e00d446d4f14cb8795e7e6827b3d,
         type: 3}
       propertyPath: skills.Array.data[3].skill
       value: 
-      objectReference: {fileID: 11400000, guid: c7e621e8c6c48264ba7bb8749332c4ea,
+      objectReference: {fileID: 11400000, guid: 234758a2c003b0242a05312c2c0838a8,
         type: 2}
     - target: {fileID: 2811769205094483184, guid: b5f0e00d446d4f14cb8795e7e6827b3d,
         type: 3}
       propertyPath: skills.Array.data[4].skill
       value: 
-      objectReference: {fileID: 11400000, guid: d863197c4745970449831ec521919904,
+      objectReference: {fileID: 11400000, guid: 234758a2c003b0242a05312c2c0838a8,
         type: 2}
     - target: {fileID: 2811769205094483184, guid: b5f0e00d446d4f14cb8795e7e6827b3d,
         type: 3}
@@ -3753,13 +3766,19 @@ PrefabInstance:
     - target: {fileID: 2811769205094483187, guid: b5f0e00d446d4f14cb8795e7e6827b3d,
         type: 3}
       propertyPath: perks.Array.size
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2811769205094483187, guid: b5f0e00d446d4f14cb8795e7e6827b3d,
         type: 3}
       propertyPath: perks.Array.data[0].perk
       value: 
-      objectReference: {fileID: 11400000, guid: 2e205c6e0b617b24299e45d8035583b8,
+      objectReference: {fileID: 11400000, guid: af9e640fc81597a4b988ce96b875c5ee,
+        type: 2}
+    - target: {fileID: 2811769205094483187, guid: b5f0e00d446d4f14cb8795e7e6827b3d,
+        type: 3}
+      propertyPath: perks.Array.data[1].perk
+      value: 
+      objectReference: {fileID: 11400000, guid: fd3e1c21cd10a934193e3e2a83b43b1d,
         type: 2}
     - target: {fileID: 2811769205094483191, guid: b5f0e00d446d4f14cb8795e7e6827b3d,
         type: 3}

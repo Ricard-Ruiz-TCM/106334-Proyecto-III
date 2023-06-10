@@ -191,18 +191,17 @@ PrefabInstance:
         type: 3}
       propertyPath: _shield.shield
       value: 
-      objectReference: {fileID: 11400000, guid: a5e19b5569345be46a5b4f5917b26ec1,
-        type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 2811769205094483148, guid: 3e33794c53a5c5943abd3ddc5e101bc1,
         type: 3}
       propertyPath: _weapon.weapon
       value: 
-      objectReference: {fileID: 11400000, guid: 166a475cd6f81744a82dab3d373c4626,
+      objectReference: {fileID: 11400000, guid: 1a5f1b970c05cac4294dccb3a29b76ac,
         type: 2}
     - target: {fileID: 2811769205094483184, guid: 3e33794c53a5c5943abd3ddc5e101bc1,
         type: 3}
       propertyPath: skills.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2811769205094483184, guid: 3e33794c53a5c5943abd3ddc5e101bc1,
         type: 3}
@@ -214,13 +213,13 @@ PrefabInstance:
         type: 3}
       propertyPath: skills.Array.data[1].skill
       value: 
-      objectReference: {fileID: 11400000, guid: 1d3dd0b207e439746add61a3187081dc,
+      objectReference: {fileID: 11400000, guid: d6e49de7d772a8b4f9860a6da898a4be,
         type: 2}
     - target: {fileID: 2811769205094483184, guid: 3e33794c53a5c5943abd3ddc5e101bc1,
         type: 3}
       propertyPath: skills.Array.data[2].skill
       value: 
-      objectReference: {fileID: 11400000, guid: f5ebd8c058045db40b49609812e8a509,
+      objectReference: {fileID: 11400000, guid: 1e84fc4a7ac721f43b381a44c8bb7e77,
         type: 2}
     - target: {fileID: 2811769205094483184, guid: 3e33794c53a5c5943abd3ddc5e101bc1,
         type: 3}
@@ -231,12 +230,12 @@ PrefabInstance:
     - target: {fileID: 2811769205094483191, guid: 3e33794c53a5c5943abd3ddc5e101bc1,
         type: 3}
       propertyPath: m_Name
-      value: Arquero
+      value: Arquero*
       objectReference: {fileID: 0}
     - target: {fileID: 2811769205094483191, guid: 3e33794c53a5c5943abd3ddc5e101bc1,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3192693271134101069, guid: 3e33794c53a5c5943abd3ddc5e101bc1,
         type: 3}
@@ -301,7 +300,7 @@ PrefabInstance:
     - target: {fileID: 5565290215654821976, guid: 3e33794c53a5c5943abd3ddc5e101bc1,
         type: 3}
       propertyPath: _health
-      value: 60
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 5565290215654821976, guid: 3e33794c53a5c5943abd3ddc5e101bc1,
         type: 3}
@@ -389,8 +388,7 @@ PrefabInstance:
         type: 3}
       propertyPath: _shield.shield
       value: 
-      objectReference: {fileID: 11400000, guid: a5e19b5569345be46a5b4f5917b26ec1,
-        type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 2811769205094483148, guid: 3e33794c53a5c5943abd3ddc5e101bc1,
         type: 3}
       propertyPath: _weapon.weapon
@@ -400,7 +398,7 @@ PrefabInstance:
     - target: {fileID: 2811769205094483184, guid: 3e33794c53a5c5943abd3ddc5e101bc1,
         type: 3}
       propertyPath: skills.Array.size
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 2811769205094483184, guid: 3e33794c53a5c5943abd3ddc5e101bc1,
         type: 3}
@@ -418,23 +416,23 @@ PrefabInstance:
         type: 3}
       propertyPath: skills.Array.data[2].skill
       value: 
-      objectReference: {fileID: 11400000, guid: f5ebd8c058045db40b49609812e8a509,
+      objectReference: {fileID: 11400000, guid: c7e621e8c6c48264ba7bb8749332c4ea,
         type: 2}
     - target: {fileID: 2811769205094483184, guid: 3e33794c53a5c5943abd3ddc5e101bc1,
         type: 3}
       propertyPath: skills.Array.data[3].skill
       value: 
-      objectReference: {fileID: 11400000, guid: f5ebd8c058045db40b49609812e8a509,
+      objectReference: {fileID: 11400000, guid: 234758a2c003b0242a05312c2c0838a8,
         type: 2}
     - target: {fileID: 2811769205094483191, guid: 3e33794c53a5c5943abd3ddc5e101bc1,
         type: 3}
       propertyPath: m_Name
-      value: Asesino
+      value: Asesino*
       objectReference: {fileID: 0}
     - target: {fileID: 2811769205094483191, guid: 3e33794c53a5c5943abd3ddc5e101bc1,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3192693271134101069, guid: 3e33794c53a5c5943abd3ddc5e101bc1,
         type: 3}
@@ -494,12 +492,12 @@ PrefabInstance:
     - target: {fileID: 5565290215654821976, guid: 3e33794c53a5c5943abd3ddc5e101bc1,
         type: 3}
       propertyPath: _steps
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5565290215654821976, guid: 3e33794c53a5c5943abd3ddc5e101bc1,
         type: 3}
       propertyPath: _health
-      value: 60
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 5565290215654821976, guid: 3e33794c53a5c5943abd3ddc5e101bc1,
         type: 3}
@@ -585,6 +583,13 @@ MonoBehaviour:
   - {fileID: 468273741}
   - {fileID: 1377369781}
   - {fileID: 146146209}
+  - {fileID: 337206561}
+--- !u!1 &337206561 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2811769205094483191, guid: 3e33794c53a5c5943abd3ddc5e101bc1,
+    type: 3}
+  m_PrefabInstance: {fileID: 85763710}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &377509798
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3874,12 +3879,12 @@ PrefabInstance:
     - target: {fileID: 2811769205094483148, guid: b5f0e00d446d4f14cb8795e7e6827b3d,
         type: 3}
       propertyPath: _weapon.upgrade
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2811769205094483149, guid: b5f0e00d446d4f14cb8795e7e6827b3d,
         type: 3}
       propertyPath: _steps
-      value: 8
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 2811769205094483149, guid: b5f0e00d446d4f14cb8795e7e6827b3d,
         type: 3}
@@ -3889,7 +3894,7 @@ PrefabInstance:
     - target: {fileID: 2811769205094483184, guid: b5f0e00d446d4f14cb8795e7e6827b3d,
         type: 3}
       propertyPath: skills.Array.size
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2811769205094483184, guid: b5f0e00d446d4f14cb8795e7e6827b3d,
         type: 3}
@@ -3913,13 +3918,13 @@ PrefabInstance:
         type: 3}
       propertyPath: skills.Array.data[3].skill
       value: 
-      objectReference: {fileID: 11400000, guid: 234758a2c003b0242a05312c2c0838a8,
+      objectReference: {fileID: 11400000, guid: 1d3dd0b207e439746add61a3187081dc,
         type: 2}
     - target: {fileID: 2811769205094483184, guid: b5f0e00d446d4f14cb8795e7e6827b3d,
         type: 3}
       propertyPath: skills.Array.data[4].skill
       value: 
-      objectReference: {fileID: 11400000, guid: 234758a2c003b0242a05312c2c0838a8,
+      objectReference: {fileID: 11400000, guid: 1e84fc4a7ac721f43b381a44c8bb7e77,
         type: 2}
     - target: {fileID: 2811769205094483184, guid: b5f0e00d446d4f14cb8795e7e6827b3d,
         type: 3}
@@ -3934,7 +3939,7 @@ PrefabInstance:
     - target: {fileID: 2811769205094483187, guid: b5f0e00d446d4f14cb8795e7e6827b3d,
         type: 3}
       propertyPath: perks.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2811769205094483187, guid: b5f0e00d446d4f14cb8795e7e6827b3d,
         type: 3}
@@ -4388,12 +4393,12 @@ PrefabInstance:
         type: 3}
       propertyPath: _weapon.weapon
       value: 
-      objectReference: {fileID: 11400000, guid: 1a5f1b970c05cac4294dccb3a29b76ac,
+      objectReference: {fileID: 11400000, guid: 166a475cd6f81744a82dab3d373c4626,
         type: 2}
     - target: {fileID: 2811769205094483184, guid: 3e33794c53a5c5943abd3ddc5e101bc1,
         type: 3}
       propertyPath: skills.Array.size
-      value: 2
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2811769205094483184, guid: 3e33794c53a5c5943abd3ddc5e101bc1,
         type: 3}
@@ -4405,29 +4410,35 @@ PrefabInstance:
         type: 3}
       propertyPath: skills.Array.data[1].skill
       value: 
-      objectReference: {fileID: 11400000, guid: d6e49de7d772a8b4f9860a6da898a4be,
+      objectReference: {fileID: 11400000, guid: 1d3dd0b207e439746add61a3187081dc,
         type: 2}
     - target: {fileID: 2811769205094483184, guid: 3e33794c53a5c5943abd3ddc5e101bc1,
         type: 3}
       propertyPath: skills.Array.data[2].skill
       value: 
-      objectReference: {fileID: 11400000, guid: f5ebd8c058045db40b49609812e8a509,
+      objectReference: {fileID: 11400000, guid: c7e621e8c6c48264ba7bb8749332c4ea,
         type: 2}
     - target: {fileID: 2811769205094483184, guid: 3e33794c53a5c5943abd3ddc5e101bc1,
         type: 3}
       propertyPath: skills.Array.data[3].skill
       value: 
-      objectReference: {fileID: 11400000, guid: f5ebd8c058045db40b49609812e8a509,
+      objectReference: {fileID: 11400000, guid: 234758a2c003b0242a05312c2c0838a8,
+        type: 2}
+    - target: {fileID: 2811769205094483184, guid: 3e33794c53a5c5943abd3ddc5e101bc1,
+        type: 3}
+      propertyPath: skills.Array.data[4].skill
+      value: 
+      objectReference: {fileID: 11400000, guid: 1e84fc4a7ac721f43b381a44c8bb7e77,
         type: 2}
     - target: {fileID: 2811769205094483191, guid: 3e33794c53a5c5943abd3ddc5e101bc1,
         type: 3}
       propertyPath: m_Name
-      value: Asesino
+      value: Asesino*
       objectReference: {fileID: 0}
     - target: {fileID: 2811769205094483191, guid: 3e33794c53a5c5943abd3ddc5e101bc1,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3192693271134101069, guid: 3e33794c53a5c5943abd3ddc5e101bc1,
         type: 3}
@@ -4487,12 +4498,12 @@ PrefabInstance:
     - target: {fileID: 5565290215654821976, guid: 3e33794c53a5c5943abd3ddc5e101bc1,
         type: 3}
       propertyPath: _steps
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5565290215654821976, guid: 3e33794c53a5c5943abd3ddc5e101bc1,
         type: 3}
       propertyPath: _health
-      value: 60
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 5565290215654821976, guid: 3e33794c53a5c5943abd3ddc5e101bc1,
         type: 3}
@@ -18598,7 +18609,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &1781311025
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -19201,7 +19212,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2112911780
 MonoBehaviour:
-  m_ObjectHideFlags: 2
+  m_ObjectHideFlags: 10
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}

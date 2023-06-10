@@ -191,7 +191,8 @@ public class AutomaticActor : Actor {
     }
 
     /** Métodos de Moving */
-    private void moveFarAway() {
+    private void moveFarAway() 
+    {
         Turnable near = Stage.StageManager.findByTag(transform, "Player");
 
         // Player encontrado

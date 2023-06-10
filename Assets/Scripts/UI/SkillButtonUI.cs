@@ -42,6 +42,7 @@ public class SkillButtonUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         if (skill.skill.personal) {
             _action = () => {
                 ((Actor)actor).skills.useSkill(_skill.ID, (Actor)actor);
+                ((Actor)actor).UseSkill(null);
             };
         } else {
             _action = () => {

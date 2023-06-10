@@ -7,7 +7,7 @@ using System.Collections.Generic;
 [CreateAssetMenu(fileName = "Invisible", menuName = "Combat/Buffs/Invisible")]
 public class Invisible : Buff {
 
-    [Header("Invisibility Material:")]
+    [Header("Invisibility Ma+terial:")]
     public Material material;
     Material[] invisibleMatList;
     public override void onApply(BasicActor me) 

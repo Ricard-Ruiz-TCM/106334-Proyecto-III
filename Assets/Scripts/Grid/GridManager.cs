@@ -28,16 +28,22 @@ public class GridManager : MonoBehaviour {
     private Turnable findSomeOne(Transform origin, string tag) {
         Turnable nearest = null;
         float tmp = float.MaxValue;
-        foreach (Turnable actor in TurnManager.instance.attenders) {
+        foreach (Turnable actor in TurnManager.instance.attenders) 
+        {
             // Check es player
             if (!actor.CompareTag(tag))
                 continue;
-            // Find cercano
-            float dis = Vector3.Distance(origin.position, actor.transform.position);
-            if (dis < tmp) {
-                tmp = dis;
-                nearest = actor;
+            if (!((Actor)actor).buffs.isBuffActive(buffsID.Invisible))
+            {
+                // Find cercano
+                float dis = Vector3.Distance(origin.position, actor.transform.position);
+                if (dis < tmp)
+                {
+                    tmp = dis;
+                    nearest = actor;
+                }
             }
+            
         }
         return nearest;
     }

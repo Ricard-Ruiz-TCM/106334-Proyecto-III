@@ -25,7 +25,7 @@ public class SkillManager : MonoBehaviour {
     }
 
     public bool canUse(skillID id) {
-        return skills[findSkill(id)].cooldown < 0;
+        return skills[findSkill(id)].cooldown <= 0;
     }
 
     public void useSkill(skillID id, BasicActor from, Node to = null) {
@@ -33,7 +33,8 @@ public class SkillManager : MonoBehaviour {
         if (pos == -1)
             return;
 
-        if (skills[pos].cooldown < 0) {
+        if (skills[pos].cooldown <= 0) 
+        {
             skills[pos].cooldown = skills[pos].skill.cooldown;
             skills[pos].skill.action(from, to);
             onSkillUsed?.Invoke(skills[pos].skill.ID);

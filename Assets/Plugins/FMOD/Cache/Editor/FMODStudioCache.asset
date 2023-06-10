@@ -771,7 +771,7 @@ MonoBehaviour:
   Path: Assets/Resources/FMOD/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638220351463921005
+  lastModified: 638220423258923681
   FileSizes: []
   Exists: 1
 --- !u!114 &-392427498101550594
@@ -922,12 +922,14 @@ MonoBehaviour:
   - {fileID: -6628374750374485290}
   - {fileID: -392427498101550594}
   - {fileID: -4575735168840518811}
+  - {fileID: 2112487268510948891}
+  - {fileID: 3817269143746993324}
   EditorParameters: []
   MasterBanks:
   - {fileID: -1078370541524522390}
   StringsBanks:
   - {fileID: 3625364978230341005}
-  cacheTime: 638220351463964400
+  cacheTime: 638220423258979134
   cacheVersion: 131603
 --- !u!114 &1211284664457178468
 MonoBehaviour:
@@ -1010,6 +1012,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 568
+--- !u!114 &2112487268510948891
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Otros/Stun
+  m_EditorClassIdentifier: 
+  Path: event:/Otros/Stun
+  Guid:
+    Data1: 384957577
+    Data2: 1318531208
+    Data3: 1679988922
+    Data4: 1252506104
+  Banks:
+  - {fileID: -1078370541524522390}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 3592
 --- !u!114 &3243306675278223243
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1052,11 +1081,38 @@ MonoBehaviour:
   Path: Assets/Resources/FMOD/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638220351463964400
+  lastModified: 638220423258979134
   FileSizes:
   - Name: 
-    Value: 3586
+    Value: 3660
   Exists: 1
+--- !u!114 &3817269143746993324
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Otros/Bloodlust
+  m_EditorClassIdentifier: 
+  Path: event:/Otros/Bloodlust
+  Guid:
+    Data1: 1767837788
+    Data2: 1171154450
+    Data3: -13060682
+    Data4: -107109781
+  Banks:
+  - {fileID: -1078370541524522390}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 894
 --- !u!114 &4276609319169002944
 MonoBehaviour:
   m_ObjectHideFlags: 0

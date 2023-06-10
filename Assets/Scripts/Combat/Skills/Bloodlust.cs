@@ -1,15 +1,40 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using FMODUnity;
 
 [CreateAssetMenu(fileName = "Bloodlust", menuName = "Combat/Skills/Bloodlust")]
 public class Bloodlust : Skill {
     public List<BloodSlash> slashes;
+    public EventReference abilitySound;
+    public List<EventReference> soundEvents;
+    public EventReference missAttack;
     [SerializeField] GameObject bloodPrefab;
     public override void action(BasicActor from, Node to) {
         BasicActor target = Stage.StageManager.getActor(to);
+        FMODManager.instance.PlayOneShot(abilitySound);
         from.StartCoroutine(StartSlash(from));
         if (target != null) {
+            var equipment = from.gameObject.GetComponent<EquipmentManager>();
+            switch (equipment.weapon.ID)
+            {
+                case itemID.Bow:
+                    FMODManager.instance.PlayOneShot(soundEvents[0]);
+                    FMODManager.instance.PlayOneShot(soundEvents[1]);
+                    break;
+                case itemID.Dolabra:
+                    FMODManager.instance.PlayOneShot(soundEvents[2]);
+                    break;
+                case itemID.Gladius:
+                    FMODManager.instance.PlayOneShot(soundEvents[3]);
+                    break;
+                case itemID.Hasta:
+                    FMODManager.instance.PlayOneShot(soundEvents[4]);
+                    break;
+                case itemID.Pugio:
+                    FMODManager.instance.PlayOneShot(soundEvents[5]);
+                    break;
+            }
             target.takeDamage((Actor)from, from.totalDamage());
             from.heal(target.damageTaken());
             var lookPos = target.transform.position - from.transform.position;
@@ -24,6 +49,10 @@ public class Bloodlust : Skill {
 
             lookPos.y = 0;
             from.transform.rotation = Quaternion.LookRotation(lookPos);
+        }
+        else
+        {
+            FMODManager.instance.PlayOneShot(missAttack);
         }
 
         from.endAction();

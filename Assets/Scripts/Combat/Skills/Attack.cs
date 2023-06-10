@@ -49,7 +49,8 @@ public class Attack : Skill {
 
             lookPos.y = 0;
             from.transform.rotation = Quaternion.LookRotation(lookPos);
-        } else
+        } 
+        else
         {
             FMODManager.instance.PlayOneShot(missAttack);
         }

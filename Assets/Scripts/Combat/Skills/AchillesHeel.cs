@@ -1,16 +1,41 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using FMODUnity;
 
 [CreateAssetMenu(fileName = "AchillesHeel", menuName = "Combat/Skills/Achilles Heel")]
 public class AchillesHeel : Skill {
     public List<AchilesSlash> slashes;
+    public EventReference abilitySound;
+    public List<EventReference> soundEvents;
+    public EventReference missAttack;
     [SerializeField] GameObject bloodPrefab;
     public override void action(BasicActor from, Node to) {
         ((Actor)from).buffs.applyBuffs((Actor)from, buffsID.MidDamage);
+        FMODManager.instance.PlayOneShot(abilitySound);
         from.StartCoroutine(StartSlash(from));
         BasicActor target = Stage.StageManager.getActor(to);
         if (target != null) {
+            var equipment = from.gameObject.GetComponent<EquipmentManager>();
+            switch (equipment.weapon.ID)
+            {
+                case itemID.Bow:
+                    FMODManager.instance.PlayOneShot(soundEvents[0]);
+                    FMODManager.instance.PlayOneShot(soundEvents[1]);
+                    break;
+                case itemID.Dolabra:
+                    FMODManager.instance.PlayOneShot(soundEvents[2]);
+                    break;
+                case itemID.Gladius:
+                    FMODManager.instance.PlayOneShot(soundEvents[3]);
+                    break;
+                case itemID.Hasta:
+                    FMODManager.instance.PlayOneShot(soundEvents[4]);
+                    break;
+                case itemID.Pugio:
+                    FMODManager.instance.PlayOneShot(soundEvents[5]);
+                    break;
+            }
             target.takeDamage((Actor)from, from.totalDamage());
             var lookPos = target.transform.position - from.transform.position;
 
@@ -25,7 +50,11 @@ public class AchillesHeel : Skill {
             lookPos.y = 0;
             from.transform.rotation = Quaternion.LookRotation(lookPos);
         }
-        
+        else
+        {
+            FMODManager.instance.PlayOneShot(missAttack);
+        }
+
         from.endAction();
     }
 

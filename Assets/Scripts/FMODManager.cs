@@ -13,6 +13,8 @@ public class FMODManager : MonoBehaviour
     [Range(0, 1)]
     public float vfxVolum = 1;
 
+    [SerializeField] private Transform cameraTransform;
+
     private Bus masterBus;
     private Bus musicBus;
     private Bus vfxBus;
@@ -42,7 +44,7 @@ public class FMODManager : MonoBehaviour
 
     public void PlayOneShot(EventReference eventReference) 
     {
-        RuntimeManager.PlayOneShot(eventReference);
+        RuntimeManager.PlayOneShot(eventReference, cameraTransform.position);
     }
 
     public EventInstance CreateInstance(EventReference eventReference)

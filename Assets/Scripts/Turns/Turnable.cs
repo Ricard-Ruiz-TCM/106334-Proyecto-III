@@ -58,7 +58,8 @@ public abstract class Turnable : MonoBehaviour {
     /** Métodos de control de Movimiento */
     public progress moving;
     public abstract void move();
-    public virtual bool canMove() {
+    public virtual bool canMove() 
+    {
         return moving.Equals(progress.ready);
     }
     public virtual void startMove() 

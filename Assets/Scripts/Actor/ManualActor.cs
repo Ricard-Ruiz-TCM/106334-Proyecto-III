@@ -32,7 +32,7 @@ public class ManualActor : Actor {
     public override void thinking() {
 
         // Solo Updateamos el path si hemos movido el ratón
-        if (nodePositionChanged() && canMove()) {
+        if (nodePositionChanged() && canMove() && canMoveIfBuff()) {
             Stage.StageBuilder.clearGrid();
             Stage.StageBuilder.DisplayMovementRange(transform, stepsRemain());
             // Calcular la ruta nueva
@@ -53,7 +53,8 @@ public class ManualActor : Actor {
                 return;
 
             // Input
-            if ((Input.GetMouseButtonDown(0)) && (canMove())) {
+            if ((Input.GetMouseButtonDown(0)) && (canMove() && canMoveIfBuff())) //POSSIBLE BUG
+            {
                 if (_canMove) {
                     setDestination(_walkablePath);
                     startMove();
@@ -88,7 +89,9 @@ public class ManualActor : Actor {
     }
 
     /** Override del act */
-    public override void act() {
+    public override void act() 
+    {
+
         // Reset de la acción si pulsamos escape
         if (Input.GetKeyDown(KeyCode.Escape)) {
             Stage.StageBuilder.clearGrid();

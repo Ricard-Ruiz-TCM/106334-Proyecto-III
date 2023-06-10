@@ -3,7 +3,8 @@
 [CreateAssetMenu(fileName = "Disarm", menuName = "Combat/Skills/Disarm")]
 public class Disarm : Skill {
     [SerializeField] GameObject bloodPrefab;
-    public override void action(BasicActor from, Node to) {
+    public override void action(BasicActor from, Node to) 
+    {
         BasicActor target = Stage.StageManager.getActor(to);
         if (target != null) {
             ((Actor)target).buffs.applyBuffs((Actor)target, buffsID.Disarmed);

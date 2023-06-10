@@ -141,8 +141,25 @@ public abstract class Actor : BasicActor {
     }
 
     /** Override del canAct */
-    public override bool canAct() {
+    public override bool canAct() 
+    {
         return base.canAct();
+    }
+    public bool canMoveIfBuff()
+    {
+        if (_buffs.isBuffActive(buffsID.Stunned))
+        {
+            return false;
+        }
+        return true;
+    }
+    public bool canActIfBuff()
+    {
+        if (_buffs.isBuffActive(buffsID.Disarmed) || _buffs.isBuffActive(buffsID.Stunned))
+        {
+            return false;
+        }
+        return true;
     }
 
     /** Buffs, Perks & Skill Managers */
@@ -169,7 +186,7 @@ public abstract class Actor : BasicActor {
         foreach (BuffItem bi in _buffs.activeBuffs) {
             if (bi.buff is ModBuff) {
                 if (((ModBuff)bi.buff).type.Equals(modType.damage)) {
-                    dmg = ((ModBuff)bi.buff).applyMod(dmg);
+                    dmg = ((ModBuff)bi.buff).applyMod(dmg); 
 
                 }
             }

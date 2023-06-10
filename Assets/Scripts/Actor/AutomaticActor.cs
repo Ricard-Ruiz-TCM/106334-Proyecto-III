@@ -56,10 +56,30 @@ public class AutomaticActor : Actor {
     private void mixedCombatAI() {
         // Movimiento
         if (canMove())
-            moveMinWeaponRangeDistance();
+        {
+            if (canMoveIfBuff())
+            {
+                moveMinWeaponRangeDistance();
+            }
+            else
+            {
+                endMovement();
+            }
+        }
+            
         // Acting
-        if ((canAct()) && (isMovementDone()))
-            attackPriositisingSkills();
+        if (isMovementDone()&& canAct())
+        {
+            if (canActIfBuff())
+            {
+                attackPriositisingSkills();
+            }
+            else
+            {
+                endAction();
+            }
+        }
+            
     }
     #endregion
 
@@ -68,16 +88,36 @@ public class AutomaticActor : Actor {
     private void fleeCombatAI() {
         // Acting
         if (canAct())
-            attackPriositingMovementNDefensiveSkills();
+        {
+            if (canActIfBuff())
+            {
+                attackPriositingMovementNDefensiveSkills();
+            }
+            else
+            {
+                endAction();
+            }
+        }
+
         // Moving
         if (canMove())
-            moveFarAway();
+        {
+            if (canMoveIfBuff())
+            {
+                moveFarAway();
+            }
+            else
+            {
+                endMovement();
+            }
+        }           
     }
     #endregion
 
     #region combatAI's
     /** Métodos de Acting */
-    private void attackPriositingMovementNDefensiveSkills() {
+    private void attackPriositingMovementNDefensiveSkills() 
+    {
         Turnable near;
 
         if (canAct())

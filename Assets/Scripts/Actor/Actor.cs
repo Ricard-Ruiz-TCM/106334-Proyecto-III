@@ -18,6 +18,7 @@ public abstract class Actor : BasicActor {
     /** -------- */
     public static event Action onDestinationReached;
     public static event Action<Node> onStepReached;
+    public static event Action onStepsAdded;
     /** -------- */
 
     [SerializeField, Header("Animator")]
@@ -48,6 +49,7 @@ public abstract class Actor : BasicActor {
     /** Add de Steps */
     public void addSteps(int amount) {
         _stepsDone -= amount;
+        onStepsAdded?.Invoke();
     }
 
     /** Setters */
@@ -175,7 +177,9 @@ public abstract class Actor : BasicActor {
 
     /** Base de defensa y armadura */
     /** Depende de equipo y perks, se calcula en Start */
+    [SerializeField]
     protected int _baseDamage;
+    [SerializeField]
     protected int _baseDefense;
 
     /** Override para calcular el daño total que podemos hacer */
@@ -273,6 +277,13 @@ public abstract class Actor : BasicActor {
             if (pi.perk is ModPerk) {
                 if (pi.perk.modType.Equals(modType.defense)) {
                     _baseDefense = ((ModPerk)pi.perk).apply(_baseDefense);
+                }
+            }
+            if (pi.perk is ModPerk)
+            {
+                if (pi.perk.modType.Equals(modType.movement))
+                {
+                    _steps++;
                 }
             }
         }

@@ -29,10 +29,8 @@ public class DoubleLungue : Skill {
     /** Coroutine para aplicar el segúndo hit un tiempo después */
     public IEnumerator C_DamageAgain(BasicActor from, BasicActor target) {
         target.takeDamage((Actor)from, from.totalDamage());
-        Debug.Log(from.totalDamage());
         yield return new WaitForSeconds(_damageDelay);
-        Debug.Log(from.totalDamage()/2);
-        target.takeDamage((Actor)from, from.totalDamage()/2);
+        target.takeDamage((Actor)from, (int)((float)from.totalDamage() / 2f));
     }
 
 }

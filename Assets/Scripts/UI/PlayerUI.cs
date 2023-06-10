@@ -43,6 +43,7 @@ public class PlayerUI : MonoBehaviour {
 
         BasicActor.onEndMovement += enableSkills;
         BasicActor.onStartMovement += disableSkills;
+        Actor.onStepsAdded += updateSteps;
 
         BasicActor.onEndMovement += enableEndTurnButton;
         BasicActor.onEndAct += enableEndTurnButton;
@@ -67,6 +68,8 @@ public class PlayerUI : MonoBehaviour {
         BasicActor.onStartMovement -= disableEndTurnButton;
         BasicActor.onStartAct -= disableEndTurnButton;
         BasicActor.onReAct -= enableEndTurnButton;
+
+        Actor.onStepsAdded -= updateSteps;
 
         BasicActor.onEndMovement -= enableEndTurnButton;
         BasicActor.onEndAct -= enableEndTurnButton;
@@ -169,12 +172,14 @@ public class PlayerUI : MonoBehaviour {
             _skillButtons.Add(skI.skill.ID, btn.GetComponent<SkillButtonUI>());
             btn.GetComponent<SkillButtonUI>().Set(_player, skI, (KeyCode)(((int)KeyCode.Alpha0) + i), i);
             i++;
-            if (skI.skill.needWeapon && !_player.CanAttack()) {
+            if (skI.skill.needWeapon && !_player.canActIfBuff()) {
                 btn.GetComponent<Button>().interactable = false;
             }
         }
 
         _btnEndTurn.interactable = (_player.CompareTag("Player"));
+
+
     }
 
     /** Método para desabilitar los skills icons */

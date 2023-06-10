@@ -12,7 +12,7 @@ public abstract class Buff : ScriptableObject {
     public string keyName;
     public string keyDesc;
 
-    [Header("Data:")]
+    [Header("DATA:")]
     public buffsID ID;
     public int duration;
 

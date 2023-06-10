@@ -11,13 +11,16 @@ public class FMODManager : MonoBehaviour
     [Range(0, 1)]
     public float musicVolum = 1;
     [Range(0, 1)]
-    public float vfxVolum = 1;
+    public float sfxVolum = 1;
+    [Range(0, 1)]
+    public float ambienceVolum = 1;
 
     [SerializeField] private Transform cameraTransform;
 
     private Bus masterBus;
     private Bus musicBus;
-    private Bus vfxBus;
+    private Bus sfxBus;
+    private Bus ambienceBus;
     private List<EventInstance> eventInstances;
 
     public static FMODManager instance { get; private set; }
@@ -32,14 +35,16 @@ public class FMODManager : MonoBehaviour
         
         masterBus = RuntimeManager.GetBus("bus:/");
         musicBus = RuntimeManager.GetBus("bus:/Music");
-        vfxBus = RuntimeManager.GetBus("bus:/VFX");
+        sfxBus = RuntimeManager.GetBus("bus:/SFX");
+        ambienceBus = RuntimeManager.GetBus("bus:/Ambience");
     }
 
     private void Update()
     {
         masterBus.setVolume(masterVolume);
         musicBus.setVolume(musicVolum);
-        vfxBus.setVolume(vfxVolum);
+        sfxBus.setVolume(sfxVolum);
+        ambienceBus.setVolume(ambienceVolum);
     }
 
     public void PlayOneShot(EventReference eventReference) 

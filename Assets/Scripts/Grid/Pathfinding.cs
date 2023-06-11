@@ -80,6 +80,7 @@ public class Pathfinding : MonoBehaviour {
             path.Add(currentNode);
             currentNode = currentNode.parent;
         }
+        path.Add(origin);
         path.Reverse();
         return path;
     }

@@ -36,6 +36,7 @@ public class Bloodlust : Skill {
             }
             target.takeDamage((Actor)from, from.totalDamage());
             from.heal(target.damageTaken());
+            from.entitieUI.GetComponent<EntitieUI>().SetHeal((float)target.damageTaken()/(float)from.maxHealth());
             var lookPos = target.transform.position - from.transform.position;
 
             Vector3 relativePos = from.transform.position - target.transform.position;

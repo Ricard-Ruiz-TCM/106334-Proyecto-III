@@ -58,7 +58,7 @@ public class EntitieUI : MonoBehaviour
     }
     public void SetHeal(float heal)
     {
-
+        target += heal ;
     }
     // Start is called before the first frame update
     void Start()

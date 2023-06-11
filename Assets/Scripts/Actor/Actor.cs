@@ -1,4 +1,5 @@
 ﻿using FMOD.Studio;
+using FMODUnity;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -37,6 +38,11 @@ public abstract class Actor : BasicActor {
 
     protected List<Node> _route = new List<Node>();
     protected int _stepsDone;
+
+    private void Update()
+    {
+        footsteps.set3DAttributes(RuntimeUtils.To3DAttributes(Camera.main.transform.position));
+    }
 
     /** Getters */
     public int maxSteps() {
@@ -98,7 +104,7 @@ public abstract class Actor : BasicActor {
     /** Override del endMovement para limpiar Grid */
     public override void endMovement() {
         //FMOD STOP
-        footsteps.stop(STOP_MODE.ALLOWFADEOUT);
+        footsteps.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         Stage.StageBuilder.clearGrid();
         base.endMovement();
     }
@@ -259,7 +265,7 @@ public abstract class Actor : BasicActor {
         _animator = GetComponentInChildren<Animator>();
 
         //FMOD
-        footsteps = FMODManager.instance.CreateEventInstance(FMODEvents.instance.Steps);
+        footsteps = FMODManager.instance.CreateEventInstance(FMODEvents.instance.Steps);        
     }
 
     /** Método para construir las skills según las perks y equipamiento */

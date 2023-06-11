@@ -6,22 +6,22 @@ public class ModPerk : Perk {
     [Header("Effect on:")]
     public modType type;
     [Header("Value:")]
-    public int value;
+    public float value;
     [Header("How affect:")]
     public modOperation operation;
 
-    public int apply(int inputValue) {
+    public int apply(float inputValue) {
         switch (operation) {
             case modOperation.add:
-                return (inputValue + value);
+                return (int)(inputValue + value);
             case modOperation.sub:
-                return (inputValue - value);
+                return (int)(inputValue - value);
             case modOperation.mult:
-                return (inputValue * value);
+                return (int)(inputValue * value);
             case modOperation.div:
-                return (inputValue * value);
+                return (int)(inputValue * value);
         }
-        return inputValue;
+        return (int)inputValue;
     }
 
 }

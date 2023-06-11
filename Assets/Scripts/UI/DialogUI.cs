@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -82,7 +83,10 @@ public class DialogUI : MonoBehaviour {
         SetAlpha(_speaker, 1f);
         _speaker.sprite = _currentDialog.speaker;
         _txtSpeakerName.SetKey(_currentDialog.keyName);
-        StartCoroutine(C_DisplayText(uCore.Localization.GetText(_currentDialog.keyMessage)));
+        try
+        {
+            StartCoroutine(C_DisplayText(uCore.Localization.GetText(_currentDialog.keyMessage)));
+        } catch(Exception ex) { }
     }
 
 

@@ -7,6 +7,8 @@ public class SceneStageManager : MonoBehaviour {
     [SerializeField, Header("Dialog:")]
     private GameObject _dialogUI;
     [SerializeField]
+    private GameObject _tutorialUI;
+    [SerializeField]
     private GameObject _upgradeUI;
     [SerializeField]
     private GameObject _perksUI;
@@ -122,9 +124,17 @@ public class SceneStageManager : MonoBehaviour {
         DialogManager.instance.startDialog(node);
     }
 
+    private void startTutorial(DialogNode node)
+    {
+        _tutorialUI.SetActive(true);
+        // Innit del dialogManager
+        DialogManager.instance.startDialog(node);
+    }
+
     /** Método para inicializar combate */
     private void startCombat() {
         _objetiveUI.gameObject.SetActive(true);
+        if(_data.tutorialDialog != null) startTutorial(_data.tutorialDialog);
         _objetiveUI.SetObjetive(_data);
         _playerUI.SetActive(true);
         _turnUI.SetActive(true);

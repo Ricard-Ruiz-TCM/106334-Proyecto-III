@@ -26,7 +26,10 @@ public class FMODManager : MonoBehaviour
 
     private void Awake()
     {
-        if (instance != null) { }
+        if (instance != null) 
+        {
+            Debug.LogError("Found more than one FMOD Manager in the scene");
+        }
 
         instance = this;
 
@@ -52,7 +55,7 @@ public class FMODManager : MonoBehaviour
         RuntimeManager.PlayOneShot(eventReference, updatedCameraTransform.position);
     }
 
-    public EventInstance CreateInstance(EventReference eventReference)
+    public EventInstance CreateEventInstance(EventReference eventReference)
     {
         EventInstance eventInstance = RuntimeManager.CreateInstance(eventReference);
         eventInstances.Add(eventInstance);

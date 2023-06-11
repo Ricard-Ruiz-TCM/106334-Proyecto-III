@@ -30,7 +30,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 8447420235095792046}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -68,7 +69,6 @@ MonoBehaviour:
   musicVolum: 1
   sfxVolum: 1
   ambienceVolum: 1
-  cameraTransform: {fileID: 0}
 --- !u!114 &59224720673565092
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -100,3 +100,215 @@ MonoBehaviour:
   OverrideAttenuation: 0
   OverrideMinDistance: -1
   OverrideMaxDistance: -1
+--- !u!1 &1619205670586036673
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8447420235095792046}
+  - component: {fileID: 1517814517642551429}
+  m_Layer: 0
+  m_Name: FMODEvents
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8447420235095792046
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1619205670586036673}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 394201226856827962}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1517814517642551429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1619205670586036673}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bb2e5db0914fa844b37ac5e9a102e5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <MissAttack>k__BackingField:
+    Guid:
+      Data1: 1089516002
+      Data2: 1218197617
+      Data3: 1754444216
+      Data4: 1363065620
+    Path: event:/Arco/7. Lanzamiento Flecha
+  <InicioLanzarFlecha>k__BackingField:
+    Guid:
+      Data1: 1089516002
+      Data2: 1218197617
+      Data3: 1754444216
+      Data4: 1363065620
+    Path: event:/Arco/7. Lanzamiento Flecha
+  <FlechaContraCarne>k__BackingField:
+    Guid:
+      Data1: 966332324
+      Data2: 1299616476
+      Data3: 1138854584
+      Data4: -1982424774
+    Path: event:/Arco/8. Flecha Carne
+  <DolabraContraCarne>k__BackingField:
+    Guid:
+      Data1: -1160895581
+      Data2: 1191639221
+      Data3: 1617258370
+      Data4: 905781580
+    Path: event:/Dolabra/30. Dolabra Carne
+  <GladiusContraCarne>k__BackingField:
+    Guid:
+      Data1: -1083436717
+      Data2: 1105103754
+      Data3: -1104174430
+      Data4: 1258287738
+    Path: event:/Gladius/2. Gladius Carne
+  <HastaContraCarne>k__BackingField:
+    Guid:
+      Data1: -567182471
+      Data2: 1329393754
+      Data3: 1355306148
+      Data4: 124230498
+    Path: event:/Hasta/13. Hasta sobre Carne
+  <PugioContraCarne>k__BackingField:
+    Guid:
+      Data1: 344722566
+      Data2: 1224488920
+      Data3: -611334726
+      Data4: -974825690
+    Path: event:/Pugio/24. Pugio Carne
+  <FlechaPiedra>k__BackingField:
+    Guid:
+      Data1: -725621827
+      Data2: 1214496429
+      Data3: -1115933286
+      Data4: 404929322
+    Path: event:/Arco/10. Flecha Piedra
+  <DolabraPiedra>k__BackingField:
+    Guid:
+      Data1: -1822740692
+      Data2: 1317841730
+      Data3: -623417677
+      Data4: 269531686
+    Path: event:/Dolabra/32. Dolabra Piedra
+  <GladiusPiedra>k__BackingField:
+    Guid:
+      Data1: -1095351306
+      Data2: 1215136933
+      Data3: -1372920146
+      Data4: 1248586695
+    Path: event:/Gladius/4. Gladius Piedra
+  <HastaPiedra>k__BackingField:
+    Guid:
+      Data1: 646489228
+      Data2: 1165756093
+      Data3: -100193859
+      Data4: -462343729
+    Path: event:/Hasta/15. Hasta Piedra
+  <PugioPiedra>k__BackingField:
+    Guid:
+      Data1: -1950173580
+      Data2: 1298177541
+      Data3: -1631777091
+      Data4: -785348393
+    Path: event:/Pugio/26. Pugio Piedra
+  <LluviaDeFlechas>k__BackingField:
+    Guid:
+      Data1: -267268839
+      Data2: 1217129020
+      Data3: 1474064265
+      Data4: 800274684
+    Path: event:/Arco/20.Lluvia Flechas
+  <Bloodlust>k__BackingField:
+    Guid:
+      Data1: 1767837788
+      Data2: 1171154450
+      Data3: -13060682
+      Data4: -107109781
+    Path: event:/Otros/Bloodlust
+  <UsoHabilidad>k__BackingField:
+    Guid:
+      Data1: 1734810623
+      Data2: 1179050825
+      Data3: 756850582
+      Data4: -1269199939
+    Path: event:/Otros/17. Uso Habilidad
+  <Cleave>k__BackingField:
+    Guid:
+      Data1: 513024345
+      Data2: 1105404720
+      Data3: -1204617558
+      Data4: 301370267
+    Path: event:/Otros/18. Golpe Demoledor
+  <Stun>k__BackingField:
+    Guid:
+      Data1: 384957577
+      Data2: 1318531208
+      Data3: 1679988922
+      Data4: 1252506104
+    Path: event:/Otros/Stun
+  <Disarm>k__BackingField:
+    Guid:
+      Data1: -1784841742
+      Data2: 1243559574
+      Data3: 1893652894
+      Data4: -1152229427
+    Path: event:/Otros/Dissarm
+  <DoubleLungue>k__BackingField:
+    Guid:
+      Data1: 1335316181
+      Data2: 1333615479
+      Data3: -140958822
+      Data4: 122061978
+    Path: event:/Otros/22. Doble estocada
+  <DoubleMiss>k__BackingField:
+    Guid:
+      Data1: -106684885
+      Data2: 1263896362
+      Data3: -1228591705
+      Data4: -2114783588
+    Path: event:/Otros/DoubleMiss
+  <ImperialCry>k__BackingField:
+    Guid:
+      Data1: 1669410751
+      Data2: 1184234733
+      Data3: -1562331502
+      Data4: 145403447
+    Path: event:/Sonidos NPC's/34. Grito Imperial
+  <TrojanHorse>k__BackingField:
+    Guid:
+      Data1: 219633758
+      Data2: 1161985500
+      Data3: -1498644085
+      Data4: 1408009752
+    Path: event:/Otros/TrojanHorse
+  <Vanish>k__BackingField:
+    Guid:
+      Data1: -2106173432
+      Data2: 1193119879
+      Data3: -1538168167
+      Data4: -1020187681
+    Path: event:/Otros/28. Movimiento Sombras
+  <Steps>k__BackingField:
+    Guid:
+      Data1: 1041401553
+      Data2: 1275493568
+      Data3: -1824955263
+      Data4: 1643406410
+    Path: event:/Otros/Pasos

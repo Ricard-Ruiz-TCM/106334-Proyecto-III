@@ -798,7 +798,7 @@ MonoBehaviour:
   Path: Assets/Resources/FMOD/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638220487419714231
+  lastModified: 638220536661307477
   FileSizes: []
   Exists: 1
 --- !u!114 &-408055724919491982
@@ -981,12 +981,13 @@ MonoBehaviour:
   - {fileID: 8007413438877183640}
   - {fileID: -408055724919491982}
   - {fileID: -7992327519077191981}
+  - {fileID: 9043291193501071157}
   EditorParameters: []
   MasterBanks:
   - {fileID: -1078370541524522390}
   StringsBanks:
   - {fileID: 3625364978230341005}
-  cacheTime: 638220487419764307
+  cacheTime: 638220536661365124
   cacheVersion: 131603
 --- !u!114 &1211284664457178468
 MonoBehaviour:
@@ -1138,10 +1139,10 @@ MonoBehaviour:
   Path: Assets/Resources/FMOD/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638220487419764307
+  lastModified: 638220536661365124
   FileSizes:
   - Name: 
-    Value: 3792
+    Value: 3828
   Exists: 1
 --- !u!114 &3817269143746993324
 MonoBehaviour:
@@ -1628,3 +1629,30 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 1950
+--- !u!114 &9043291193501071157
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Otros/Pasos
+  m_EditorClassIdentifier: 
+  Path: event:/Otros/Pasos
+  Guid:
+    Data1: 1041401553
+    Data2: 1275493568
+    Data3: -1824955263
+    Data4: 1643406410
+  Banks:
+  - {fileID: -1078370541524522390}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 550

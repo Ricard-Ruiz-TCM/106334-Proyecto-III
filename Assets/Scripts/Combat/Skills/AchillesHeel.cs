@@ -1,18 +1,14 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using FMODUnity;
 
 [CreateAssetMenu(fileName = "AchillesHeel", menuName = "Combat/Skills/Achilles Heel")]
 public class AchillesHeel : Skill {
     public List<AchilesSlash> slashes;
-    public EventReference abilitySound;
-    public List<EventReference> soundEvents;
-    public EventReference missAttack;
     [SerializeField] GameObject bloodPrefab;
     public override void action(BasicActor from, Node to) {
         ((Actor)from).buffs.applyBuffs((Actor)from, buffsID.MidDamage);
-        FMODManager.instance.PlayOneShot(abilitySound);
+        FMODManager.instance.PlayOneShot(FMODEvents.instance.UsoHabilidad);
         from.StartCoroutine(StartSlash(from));
         BasicActor target = Stage.StageManager.getActor(to);
         if (target != null) {
@@ -20,20 +16,20 @@ public class AchillesHeel : Skill {
             switch (equipment.weapon.ID)
             {
                 case itemID.Bow:
-                    FMODManager.instance.PlayOneShot(soundEvents[0]);
-                    FMODManager.instance.PlayOneShot(soundEvents[1]);
+                    FMODManager.instance.PlayOneShot(FMODEvents.instance.InicioLanzarFlecha);
+                    FMODManager.instance.PlayOneShot(FMODEvents.instance.FlechaContraCarne);
                     break;
                 case itemID.Dolabra:
-                    FMODManager.instance.PlayOneShot(soundEvents[2]);
+                    FMODManager.instance.PlayOneShot(FMODEvents.instance.DolabraContraCarne);
                     break;
                 case itemID.Gladius:
-                    FMODManager.instance.PlayOneShot(soundEvents[3]);
+                    FMODManager.instance.PlayOneShot(FMODEvents.instance.GladiusContraCarne);
                     break;
                 case itemID.Hasta:
-                    FMODManager.instance.PlayOneShot(soundEvents[4]);
+                    FMODManager.instance.PlayOneShot(FMODEvents.instance.HastaContraCarne);
                     break;
                 case itemID.Pugio:
-                    FMODManager.instance.PlayOneShot(soundEvents[5]);
+                    FMODManager.instance.PlayOneShot(FMODEvents.instance.PugioContraCarne);
                     break;
             }
             target.takeDamage((Actor)from, from.totalDamage());
@@ -52,7 +48,7 @@ public class AchillesHeel : Skill {
         }
         else
         {
-            FMODManager.instance.PlayOneShot(missAttack);
+            FMODManager.instance.PlayOneShot(FMODEvents.instance.MissAttack);
         }
 
         from.endAction();

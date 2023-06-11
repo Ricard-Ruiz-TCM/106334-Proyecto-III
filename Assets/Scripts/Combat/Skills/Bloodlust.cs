@@ -6,33 +6,30 @@ using FMODUnity;
 [CreateAssetMenu(fileName = "Bloodlust", menuName = "Combat/Skills/Bloodlust")]
 public class Bloodlust : Skill {
     public List<BloodSlash> slashes;
-    public EventReference abilitySound;
-    public List<EventReference> soundEvents;
-    public EventReference missAttack;
     [SerializeField] GameObject bloodPrefab;
     public override void action(BasicActor from, Node to) {
         BasicActor target = Stage.StageManager.getActor(to);
-        FMODManager.instance.PlayOneShot(abilitySound);
+        FMODManager.instance.PlayOneShot(FMODEvents.instance.Bloodlust);
         from.StartCoroutine(StartSlash(from));
         if (target != null) {
             var equipment = from.gameObject.GetComponent<EquipmentManager>();
             switch (equipment.weapon.ID)
             {
                 case itemID.Bow:
-                    FMODManager.instance.PlayOneShot(soundEvents[0]);
-                    FMODManager.instance.PlayOneShot(soundEvents[1]);
+                    FMODManager.instance.PlayOneShot(FMODEvents.instance.InicioLanzarFlecha);
+                    FMODManager.instance.PlayOneShot(FMODEvents.instance.FlechaContraCarne);
                     break;
                 case itemID.Dolabra:
-                    FMODManager.instance.PlayOneShot(soundEvents[2]);
+                    FMODManager.instance.PlayOneShot(FMODEvents.instance.DolabraContraCarne);
                     break;
                 case itemID.Gladius:
-                    FMODManager.instance.PlayOneShot(soundEvents[3]);
+                    FMODManager.instance.PlayOneShot(FMODEvents.instance.GladiusContraCarne);
                     break;
                 case itemID.Hasta:
-                    FMODManager.instance.PlayOneShot(soundEvents[4]);
+                    FMODManager.instance.PlayOneShot(FMODEvents.instance.HastaContraCarne);
                     break;
                 case itemID.Pugio:
-                    FMODManager.instance.PlayOneShot(soundEvents[5]);
+                    FMODManager.instance.PlayOneShot(FMODEvents.instance.PugioContraCarne);
                     break;
             }
             target.takeDamage((Actor)from, from.totalDamage());
@@ -52,7 +49,7 @@ public class Bloodlust : Skill {
         }
         else
         {
-            FMODManager.instance.PlayOneShot(missAttack);
+            FMODManager.instance.PlayOneShot(FMODEvents.instance.MissAttack);
         }
 
         from.endAction();

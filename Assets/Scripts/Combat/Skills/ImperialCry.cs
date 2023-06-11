@@ -9,16 +9,14 @@ public class ImperialCry : Skill {
     
     [SerializeField, Header("Range effect:")]
     private int range = 2;
-    public EventReference imperialCrySound;
-    public EventReference abilitySound;
     public Material mat;
     public GameObject effectPrefab;
     //List<Material> anteriorMatarial;
 
     public override void action(BasicActor from, Node to) 
     {
-        FMODManager.instance.PlayOneShot(abilitySound);
-        FMODManager.instance.PlayOneShot(imperialCrySound);
+        FMODManager.instance.PlayOneShot(FMODEvents.instance.UsoHabilidad);
+        FMODManager.instance.PlayOneShot(FMODEvents.instance.ImperialCry);
         ((Actor)from).buffs.applyBuffs((Actor)from, buffsID.ArrowProof, buffsID.MidDefense);
 
 

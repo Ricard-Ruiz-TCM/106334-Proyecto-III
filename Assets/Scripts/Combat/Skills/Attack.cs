@@ -8,13 +8,14 @@ public class Attack : Skill {
     [SerializeField] GameObject bloodPrefab;
     public override void action(BasicActor from, Node to) {
         BasicActor target = Stage.StageManager.getActor(to);
-        from.StartCoroutine(StartSlash(from));
+        
         if (target != null)
         {
-            var equipment = from.gameObject.GetComponent<EquipmentManager>();
-            if(target is PilarStatic)
+
+            WeaponItem weapon = ((Actor)from).equip.weapon;
+            if (target is PilarStatic)
             {
-                switch (equipment.weapon.ID)
+                switch (weapon.ID)
                 {
                     case itemID.Bow:
                         FMODManager.instance.PlayOneShot(FMODEvents.instance.InicioLanzarFlecha);
@@ -22,15 +23,19 @@ public class Attack : Skill {
                         break;
                     case itemID.Dolabra:
                         FMODManager.instance.PlayOneShot(FMODEvents.instance.DolabraPiedra);
+                        from.StartCoroutine(StartSlash(from));
                         break;
                     case itemID.Gladius:
                         FMODManager.instance.PlayOneShot(FMODEvents.instance.GladiusPiedra);
+                        from.StartCoroutine(StartSlash(from));
                         break;
                     case itemID.Hasta:
                         FMODManager.instance.PlayOneShot(FMODEvents.instance.HastaPiedra);
+                        from.StartCoroutine(StartSlash(from));
                         break;
                     case itemID.Pugio:
                         FMODManager.instance.PlayOneShot(FMODEvents.instance.PugioPiedra);
+                        from.StartCoroutine(StartSlash(from));
                         break;
                     default:
                         break;
@@ -38,7 +43,7 @@ public class Attack : Skill {
             }
             else
             {
-                switch (equipment.weapon.ID)
+                switch (weapon.ID)
                 {
                     case itemID.Bow:
                         FMODManager.instance.PlayOneShot(FMODEvents.instance.InicioLanzarFlecha);

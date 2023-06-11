@@ -10,6 +10,7 @@ public class Invisible : Buff {
     [Header("Invisibility Ma+terial:")]
     public Material material;
     Material[] invisibleMatList;
+    Material weaponMat;
     public override void onApply(BasicActor me) 
     {
         Debug.Log("TODO: Apply Invisible Feedback + extras.");
@@ -23,7 +24,10 @@ public class Invisible : Buff {
 
         me.skinnedMesh.materials = invisibleMatList;
         me.entitieUI.SetActive(false);
-        
+
+        weaponMat = ((Actor)me).GetComponent<WeaponHolder>().getActiveWeapon().GetComponent<MeshRenderer>().material;
+
+        ((Actor)me).GetComponent<WeaponHolder>().getActiveWeapon().GetComponent<MeshRenderer>().material = material;
 
     }
 
@@ -32,7 +36,7 @@ public class Invisible : Buff {
         Debug.Log("TODO: Remove Invisible Feedback");
         me.entitieUI.SetActive(true);
         me.skinnedMesh.materials = me.skinnedMaterials;
-        
+        ((Actor)me).GetComponent<WeaponHolder>().getActiveWeapon().GetComponent<MeshRenderer>().material = weaponMat;
     }
 
     public override void startTurnEffect(BasicActor me) {

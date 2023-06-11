@@ -43,5 +43,19 @@ public class WeaponHolder : MonoBehaviour {
                 break;
         }
     }
+    public GameObject getActiveWeapon()
+    {
+        if (_gladius.activeSelf)
+            return _gladius;
+        if (_hasta.activeSelf)
+            return _hasta;
+        if (_bow.activeSelf)
+            return _bow;
+        if (_pugio.activeSelf)
+            return _pugio;
+        if (_dolabra.activeSelf)
+            return _dolabra;
+        return null;
+    }
 
 }

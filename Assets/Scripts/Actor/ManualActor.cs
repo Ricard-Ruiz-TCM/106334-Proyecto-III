@@ -174,6 +174,8 @@ public class ManualActor : Actor {
 
     public override void onActorDeath() {
         base.onActorDeath();
+        FMODManager.instance.PlayOneShot(FMODEvents.instance.PlayerDeath);
+        FMODManager.instance.PlayOneShot(FMODEvents.instance.GameOver);
         Anim.SetTrigger("die");
         //GameObject blood = Instantiate(Resources.Load("Particles/BloodDie") as GameObject);
         //Debug.Break();

@@ -20,6 +20,7 @@ public class StageResolutionUI : MonoBehaviour {
         if (res.Equals(stageResolution.defeat)) {
             _btnVictory.SetActive(false);
         } else {
+            FMODManager.instance.PlayOneShot(FMODEvents.instance.GameOver);
             _btnDefeat.SetActive(false);
         }
     }

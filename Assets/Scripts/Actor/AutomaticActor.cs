@@ -283,6 +283,8 @@ public class AutomaticActor : Actor {
 
     public override void onActorDeath() {
         base.onActorDeath();
+        FMODManager.instance.PlayOneShot(FMODEvents.instance.SoldierDeath);
+        FMODManager.instance.PlayOneShot(FMODEvents.instance.Disarm);
         Anim.SetTrigger("die");
         //GameObject blood = Instantiate(Resources.Load("Particles/BloodDie") as GameObject);
         //Debug.Break();

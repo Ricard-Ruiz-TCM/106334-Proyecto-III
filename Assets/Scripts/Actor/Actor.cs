@@ -27,6 +27,15 @@ public abstract class Actor : BasicActor {
     protected Animator _animator;
     protected Animator Anim => _animator;
 
+    [Header("readOnly")]
+    public int attackRange;
+
+    protected override void Start() {
+        base.Start();
+
+        attackRange = _equip.weapon.range;
+    }
+
     #region Movement: 
 
     /** NavMeshAgent */

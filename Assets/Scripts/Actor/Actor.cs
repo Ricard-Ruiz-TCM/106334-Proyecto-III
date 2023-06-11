@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FMOD.Studio;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -31,6 +32,8 @@ public abstract class Actor : BasicActor {
     [SerializeField, Header("Movimiento:")]
     protected int _steps;
     protected NavMeshAgent _agent;
+    //audio
+    private EventInstance footsteps;
 
     protected List<Node> _route = new List<Node>();
     protected int _stepsDone;
@@ -74,7 +77,16 @@ public abstract class Actor : BasicActor {
 
     /** Override Move from Turnable */
     public override void move() {
-        if (stepReached()) {
+        if (stepReached()) 
+        {
+            //FMOD PLAY
+            PLAYBACK_STATE playbackState;
+            footsteps.getPlaybackState(out playbackState);
+            Debug.Log("PLAY BACK STATE: " + playbackState);
+            if(playbackState.Equals(PLAYBACK_STATE.STOPPED))
+            {
+                footsteps.start();
+            }
             nextStep();
         }
     }
@@ -85,6 +97,8 @@ public abstract class Actor : BasicActor {
 
     /** Override del endMovement para limpiar Grid */
     public override void endMovement() {
+        //FMOD STOP
+        footsteps.stop(STOP_MODE.ALLOWFADEOUT);
         Stage.StageBuilder.clearGrid();
         base.endMovement();
     }
@@ -232,7 +246,7 @@ public abstract class Actor : BasicActor {
     }
 
     // Unity Awake
-    protected virtual void Awake() {
+    protected virtual void Awake() {        
         // NavMeshAgent
         _agent = GetComponent<NavMeshAgent>();
         // Managers
@@ -243,6 +257,9 @@ public abstract class Actor : BasicActor {
         _equip = GetComponent<EquipmentManager>();
 
         _animator = GetComponentInChildren<Animator>();
+
+        //FMOD
+        footsteps = FMODManager.instance.CreateEventInstance(FMODEvents.instance.Steps);
     }
 
     /** Método para construir las skills según las perks y equipamiento */

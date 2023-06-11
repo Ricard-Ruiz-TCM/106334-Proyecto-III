@@ -27,6 +27,8 @@ public class ManualActor : Actor {
         transform.position = Stage.StageManager.findPositionNode().transform.position;
     }
 
+    Actor anteriorEnemy;
+
     /** Override del onTurn */
     //done, falta que no es vegi la grid quan no es pot moure
     public override void thinking() {
@@ -34,7 +36,7 @@ public class ManualActor : Actor {
         // Solo Updateamos el path si hemos movido el ratón
         if (nodePositionChanged() && canMove() && canMoveIfBuff()) {
             Stage.StageBuilder.clearGrid();
-            Stage.StageBuilder.DisplayMovementRange(transform, stepsRemain());
+            Stage.StageBuilder.DisplayMovementRange(transform, stepsRemain(),false);
             // Calcular la ruta nueva
             List<Node> route = Stage.Pathfinder.FindPath(_myNode, _mouseNode);
             if (route != null) {
@@ -43,27 +45,47 @@ public class ManualActor : Actor {
                 _walkablePath = route.GetRange(0, steps);
             }
         }
-
-        // Display de walkablePath
-        if ((_walkablePath != null) && (_walkablePath.Count > 0)) {
-            Stage.StageBuilder.displayPath(_walkablePath, pathMaterial.walkable);
-            // Si no estamos dentro del rango de movimineot, no aceptamos input
-            Node target = Stage.StageBuilder.getMouseGridNode();
-            if (!_walkablePath.Contains(target))
-                return;
-
-            // Input
-            if ((Input.GetMouseButtonDown(0)) && (canMove() && canMoveIfBuff())) //POSSIBLE BUG
+        Actor enemy = Stage.StageBuilder.getMouseEnemy();
+        if (enemy != null)
+        {
+            if(enemy != anteriorEnemy)
             {
-                if (_canMove) {
-                    setDestination(_walkablePath);
-                    startMove();
-                    _walkablePath = null;
-                    // Animator
-                    Anim.SetBool("moving", true);
+                Stage.StageBuilder.clearGrid();
+                Stage.StageBuilder.DisplayMovementRange(enemy.transform, enemy.stepsRemain(),true);
+                Stage.StageBuilder.displaySkillRange(enemy.equip.weapon.range, Stage.StageBuilder.getGridNode(enemy.transform.position));
+
+                anteriorEnemy = enemy;
+            }
+            
+        }
+        else
+        {
+            anteriorEnemy = null;
+            // Display de walkablePath
+            if ((_walkablePath != null) && (_walkablePath.Count > 0))
+            {
+                Stage.StageBuilder.displayPath(_walkablePath, pathMaterial.walkable);
+                // Si no estamos dentro del rango de movimineot, no aceptamos input
+                Node target = Stage.StageBuilder.getMouseGridNode();
+                if (!_walkablePath.Contains(target))
+                    return;
+
+                // Input
+                if ((Input.GetMouseButtonDown(0)) && (canMove() && canMoveIfBuff())) //POSSIBLE BUG
+                {
+                    if (_canMove)
+                    {
+                        setDestination(_walkablePath);
+                        startMove();
+                        _walkablePath = null;
+                        // Animator
+                        Anim.SetBool("moving", true);
+                    }
                 }
             }
         }
+
+        
 
     }
 

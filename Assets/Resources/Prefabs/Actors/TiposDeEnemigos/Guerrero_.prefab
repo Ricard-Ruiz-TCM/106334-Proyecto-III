@@ -309,6 +309,7 @@ GameObject:
   - component: {fileID: 1928825789269507499}
   - component: {fileID: 4427900176132667217}
   - component: {fileID: 350256815446056408}
+  - component: {fileID: 8192010634430257554}
   m_Layer: 9
   m_Name: Guerrero_
   m_TagString: Enemy
@@ -488,6 +489,19 @@ MonoBehaviour:
   mat: {fileID: 2100000, guid: cca16c313233395418897f5f320256ab, type: 2}
   destroyDelay: 0.7
   alphaRef: _alphaController
+--- !u!65 &8192010634430257554
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1928825789269507500}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 2.338258, z: 0.64874744}
+  m_Center: {x: 0, y: 0.6691284, z: 0.17562628}
 --- !u!1 &1945853568633231886
 GameObject:
   m_ObjectHideFlags: 0

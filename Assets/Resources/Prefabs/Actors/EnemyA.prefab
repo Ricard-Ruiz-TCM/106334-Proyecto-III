@@ -438,6 +438,7 @@ GameObject:
   - component: {fileID: 2811769205094483184}
   - component: {fileID: 50373196914462218}
   - component: {fileID: 4115627398037054595}
+  - component: {fileID: 3096744271745053219}
   m_Layer: 9
   m_Name: EnemyA
   m_TagString: Enemy
@@ -511,6 +512,8 @@ MonoBehaviour:
   _animator: {fileID: 1376862989721974109}
   _steps: 0
   _perks: {fileID: 2811769205094483187}
+  _baseDamage: 0
+  _baseDefense: 0
   _combatAI: 0
   _fleeThreshold: 0
   _delayTime: 1.5
@@ -609,6 +612,19 @@ MonoBehaviour:
   mat: {fileID: 2100000, guid: cca16c313233395418897f5f320256ab, type: 2}
   destroyDelay: 0.7
   alphaRef: _alphaController
+--- !u!65 &3096744271745053219
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2811769205094483191}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 2.3349261, z: 0.6727669}
+  m_Center: {x: 0, y: 0.66746294, z: 0.16361654}
 --- !u!1 &2881685143030143145
 GameObject:
   m_ObjectHideFlags: 0

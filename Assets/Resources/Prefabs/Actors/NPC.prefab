@@ -468,6 +468,7 @@ GameObject:
   - component: {fileID: 2811769205094483184}
   - component: {fileID: 50373196914462218}
   - component: {fileID: 7333614543911466640}
+  - component: {fileID: 3468653215139913960}
   m_Layer: 9
   m_Name: NPC
   m_TagString: Player
@@ -541,6 +542,8 @@ MonoBehaviour:
   _animator: {fileID: 4463307798827380523}
   _steps: 4
   _perks: {fileID: 2811769205094483187}
+  _baseDamage: 0
+  _baseDefense: 0
 --- !u!114 &2811769205094483148
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -636,6 +639,19 @@ MonoBehaviour:
   mat: {fileID: 2100000, guid: cca16c313233395418897f5f320256ab, type: 2}
   destroyDelay: 0.7
   alphaRef: _alphaController
+--- !u!65 &3468653215139913960
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2811769205094483191}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 2.3559306, z: 0.72934914}
+  m_Center: {x: 0, y: 0.6779655, z: 0.13532543}
 --- !u!1 &2936879159829457372
 GameObject:
   m_ObjectHideFlags: 0

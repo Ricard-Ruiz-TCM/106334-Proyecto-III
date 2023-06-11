@@ -1061,6 +1061,7 @@ GameObject:
   - component: {fileID: 4668326745060675601}
   - component: {fileID: 7457579894211320555}
   - component: {fileID: 6832512663060951138}
+  - component: {fileID: 5471950714928265690}
   m_Layer: 9
   m_Name: Arquero__
   m_TagString: Enemy
@@ -1239,6 +1240,19 @@ MonoBehaviour:
   mat: {fileID: 2100000, guid: cca16c313233395418897f5f320256ab, type: 2}
   destroyDelay: 0.7
   alphaRef: _alphaController
+--- !u!65 &5471950714928265690
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4668326745060675606}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 2.3859792, z: 0.7495136}
+  m_Center: {x: 0, y: 0.69299006, z: 0.12524319}
 --- !u!1 &4687302886265599924
 GameObject:
   m_ObjectHideFlags: 0

@@ -14,6 +14,11 @@ public class GridPlane : MonoBehaviour {
     public GameObject limitUp;
     public GameObject limitDown;
 
+    public GameObject limitLeftSkill;
+    public GameObject limitRightSkill;
+    public GameObject limitUpSkill;
+    public GameObject limitDownSkill;
+
     private bool _canBeAttacked = false;
     public bool CanBeAttacked => _canBeAttacked;
 
@@ -61,6 +66,10 @@ public class GridPlane : MonoBehaviour {
         limitRight.SetActive(false);
         limitUp.SetActive(false);
         limitDown.SetActive(false);
+        limitLeftSkill.SetActive(false);
+        limitRightSkill.SetActive(false);
+        limitUpSkill.SetActive(false);
+        limitDownSkill.SetActive(false);
     }
 
     public void clear(Material mat) {

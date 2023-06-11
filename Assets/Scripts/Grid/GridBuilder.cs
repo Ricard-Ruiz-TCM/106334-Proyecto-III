@@ -89,6 +89,20 @@ public class GridBuilder : MonoBehaviour {
         }
         return null;
     }
+    public Actor getMouseEnemy()
+    {
+        RaycastHit raycastHit;
+        if (Physics.Raycast(Camera.main.ScreenPointToRay(uCore.Action.mousePosition), out raycastHit))
+        {
+            Debug.Log(raycastHit.transform.tag);
+            if (raycastHit.transform.GetComponent<AutomaticActor>())
+            {
+                return ((Actor)raycastHit.transform.GetComponent<AutomaticActor>());
+            }
+            
+        }
+        return null;
+    }
 
     /** Getters de GridPlane */
     public GridPlane getGridPlane(Node node) {
@@ -273,7 +287,7 @@ public class GridBuilder : MonoBehaviour {
 
 
     }
-    public void DisplayMovementRange(Transform from, int range) {
+    public void DisplayMovementRange(Transform from, int range, bool isEnemy) {
         int count = 1;
         int totalCount = 1;
         int xCount, jCount, zCount;
@@ -377,7 +391,7 @@ public class GridBuilder : MonoBehaviour {
             while (!hasArrivedCenter)
             {
                 closestPlane = findClosestGridRoc(getGridPlane(closestPlane.node), getGridPlane(node)); // si hay algun bug que se pone mal, 100000000000% es por esto uwu
-                if (closestPlane.node.type != Array2DEditor.nodeType.X)
+                if (closestPlane.node.type != Array2DEditor.nodeType.X || (closestPlane.node == node && isEnemy))
                 {
                     closestPlane.node.isRangelimit = true;
                     //displayNode(closestPlane, pathMaterial.invisible);
@@ -392,29 +406,59 @@ public class GridBuilder : MonoBehaviour {
             }
             displayNode(item, pathMaterial.walkable);
         }
-        DisplayBorders(finalGridList);
+        DisplayBorders(finalGridList,true);
         foreach (Node item in finalGridList) {
             item.isRangelimit = false;
         }
 
     }
 
-    public void DisplayBorders(List<Node> nodeList) {
+    public void DisplayBorders(List<Node> nodeList,bool path) {
         foreach (Node item in nodeList) {
             List<Vector2> neightbourList = new List<Vector2>(Stage.Grid.getNeighboursWithoutCheck(item));
             foreach (Vector2 neightbour in neightbourList) {
                 if (!getGridNode((int)neightbour.x, (int)neightbour.y).isRangelimit || !Stage.Grid.insideGrid((int)neightbour.x, (int)neightbour.y)) {
-                    if (neightbour.x > item.x) {
-                        getGridPlane(item).limitRight.SetActive(true);
+                    if (neightbour.x > item.x) 
+                    {
+                        if (path)
+                        {
+                            getGridPlane(item).limitRight.SetActive(true);
+                        }
+                        else
+                        {
+                            getGridPlane(item).limitRightSkill.SetActive(true);
+                        }
+                        
                     }
                     if (neightbour.x < item.x) {
-                        getGridPlane(item).limitLeft.SetActive(true);
+                        if (path)
+                        {
+                            getGridPlane(item).limitLeft.SetActive(true);
+                        }
+                        else
+                        {
+                            getGridPlane(item).limitLeftSkill.SetActive(true);
+                        }
                     }
                     if (neightbour.y > item.y) {
-                        getGridPlane(item).limitUp.SetActive(true);
+                        if (path)
+                        {
+                            getGridPlane(item).limitUp.SetActive(true);
+                        }
+                        else
+                        {
+                            getGridPlane(item).limitUpSkill.SetActive(true);
+                        }
                     }
                     if (neightbour.y < item.y) {
-                        getGridPlane(item).limitDown.SetActive(true);
+                        if (path)
+                        {
+                            getGridPlane(item).limitDown.SetActive(true);
+                        }
+                        else
+                        {
+                            getGridPlane(item).limitDownSkill.SetActive(true);
+                        }
                     }
 
                 }
@@ -521,7 +565,6 @@ public class GridBuilder : MonoBehaviour {
 
                     }
                 }
-                Debug.Log(outNodes.Count);
                 if (dir.x != 0 && dir.y != 0)
                 {
                     if (dir.x > 0)
@@ -577,7 +620,7 @@ public class GridBuilder : MonoBehaviour {
             item.isRangelimit = true;
         }
 
-        DisplayBorders(skilleableNodes);
+        DisplayBorders(skilleableNodes,false);
 
         foreach (Node item in skilleableNodes)
         {

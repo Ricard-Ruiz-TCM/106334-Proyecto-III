@@ -7,6 +7,7 @@ using FMODUnity;
 public class Attack : Skill {
 
     public List<EventReference> soundEvents;
+    public List<EventReference> pilarSoundEffects;
     public EventReference missAttack;
     public List<Slash> slashes;
     [SerializeField] GameObject bloodPrefab;
@@ -16,25 +17,50 @@ public class Attack : Skill {
         if (target != null)
         {
             var equipment = from.gameObject.GetComponent<EquipmentManager>();
-            switch (equipment.weapon.ID)
+            if(target is PilarStatic)
             {
-                case itemID.Bow:
-                    FMODManager.instance.PlayOneShot(soundEvents[0]);
-                    FMODManager.instance.PlayOneShot(soundEvents[1]);
-                    break;
-                case itemID.Dolabra:
-                    FMODManager.instance.PlayOneShot(soundEvents[2]);
-                    break;
-                case itemID.Gladius:
-                    FMODManager.instance.PlayOneShot(soundEvents[3]);
-                    break;
-                case itemID.Hasta:
-                    FMODManager.instance.PlayOneShot(soundEvents[4]);
-                    break;
-                case itemID.Pugio:
-                    FMODManager.instance.PlayOneShot(soundEvents[5]);
-                    break;
+                switch (equipment.weapon.ID)
+                {
+                    case itemID.Bow:
+                        FMODManager.instance.PlayOneShot(pilarSoundEffects[0]);
+                        FMODManager.instance.PlayOneShot(pilarSoundEffects[1]);
+                        break;
+                    case itemID.Dolabra:
+                        FMODManager.instance.PlayOneShot(pilarSoundEffects[2]);
+                        break;
+                    case itemID.Gladius:
+                        FMODManager.instance.PlayOneShot(pilarSoundEffects[3]);
+                        break;
+                    case itemID.Hasta:
+                        FMODManager.instance.PlayOneShot(pilarSoundEffects[4]);
+                        break;
+                    case itemID.Pugio:
+                        FMODManager.instance.PlayOneShot(pilarSoundEffects[5]);
+                        break;
+                }
             }
+            else
+            {
+                switch (equipment.weapon.ID)
+                {
+                    case itemID.Bow:
+                        FMODManager.instance.PlayOneShot(soundEvents[0]);
+                        FMODManager.instance.PlayOneShot(soundEvents[1]);
+                        break;
+                    case itemID.Dolabra:
+                        FMODManager.instance.PlayOneShot(soundEvents[2]);
+                        break;
+                    case itemID.Gladius:
+                        FMODManager.instance.PlayOneShot(soundEvents[3]);
+                        break;
+                    case itemID.Hasta:
+                        FMODManager.instance.PlayOneShot(soundEvents[4]);
+                        break;
+                    case itemID.Pugio:
+                        FMODManager.instance.PlayOneShot(soundEvents[5]);
+                        break;
+                }
+            }            
 
             target.takeDamage((Actor)from, from.totalDamage());
             var lookPos = target.transform.position - from.transform.position;
@@ -49,7 +75,7 @@ public class Attack : Skill {
 
             lookPos.y = 0;
             from.transform.rotation = Quaternion.LookRotation(lookPos);
-        } 
+        }
         else
         {
             FMODManager.instance.PlayOneShot(missAttack);

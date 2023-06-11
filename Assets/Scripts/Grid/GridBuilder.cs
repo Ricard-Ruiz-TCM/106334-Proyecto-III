@@ -215,7 +215,7 @@ public class GridBuilder : MonoBehaviour {
     }
 
     /** Método para mostar una skill concreta */
-    public void displaySkill(skillID id, Node node, pathMaterial material) {
+    public void displaySkill(skillID id, Node node, pathMaterial material, Actor from) {
         if (id.Equals(skillID.NONE))
             return;
 
@@ -225,16 +225,41 @@ public class GridBuilder : MonoBehaviour {
 
         int count = 1;
         int totalCount = 1;
+        Node closestNode = Stage.StageBuilder.findClosestNode(Stage.StageBuilder.getGridNode(from.transform.position), node);
+
         for (int i = node.x - sk.areaRange; i <= node.x + sk.areaRange; i++) {
             for (int j = node.y; j < count + node.y; j++) {
                 //displayNode(i, j, material);
-                if (Stage.Grid.insideGrid(i, j)) {
-                    getGridPlane(i, j).GetAttackIndicator().SetActive(true);
+                if (Stage.Grid.insideGrid(i, j)) 
+                {
+                    if (sk.ID == skillID.Cleave)
+                    {
+                        if(getGridNode(i, j) != closestNode) 
+                        {
+                            getGridPlane(i, j).GetAttackIndicator().SetActive(true);
+                        }
+                    }
+                    else
+                    {
+                        getGridPlane(i, j).GetAttackIndicator().SetActive(true);
+                    }
+                    
                 }
             }
             for (int z = node.y - 1; z > node.y - count; z--) {
-                if (Stage.Grid.insideGrid(i, z)) {
-                    getGridPlane(i, z).GetAttackIndicator().SetActive(true);
+                if (Stage.Grid.insideGrid(i, z)) 
+                {
+                    if (sk.ID == skillID.Cleave)
+                    {
+                        if (getGridNode(i, z) != closestNode)
+                        {
+                            getGridPlane(i, z).GetAttackIndicator().SetActive(true);
+                        }
+                    }
+                    else
+                    {
+                        getGridPlane(i, z).GetAttackIndicator().SetActive(true);
+                    }
                 }
             }
 

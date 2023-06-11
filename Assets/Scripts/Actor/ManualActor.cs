@@ -106,7 +106,7 @@ public class ManualActor : Actor {
             Stage.StageBuilder.displaySkillRange(equip.weapon.range, _myNode);
             // Check si estamos dentro de la distancia
             if (Stage.StageBuilder.getDistance(_mouseNode, _myNode) <= equip.weapon.range && Stage.StageBuilder.getGridPlane(_mouseNode).CanBeAttacked) {
-                Stage.StageBuilder.displaySkill(_tempSkillID, _mouseNode, pathMaterial.skill);
+                Stage.StageBuilder.displaySkill(_tempSkillID, _mouseNode, pathMaterial.skill,this);
             }
         }
 

@@ -19,8 +19,6 @@ public class DoubleLungue : Skill {
             // the second argument, upwards, defaults to Vector3.up
             Quaternion rotation = Quaternion.LookRotation(relativePos, Vector3.up);
 
-            //GameObject blood = Instantiate(bloodPrefab, new Vector3(target.transform.position.x, target.transform.position.y + 0.8f, target.transform.position.z), rotation);
-            //Destroy(blood, 2f);
             lookPos.y = 0;
             from.transform.rotation = Quaternion.LookRotation(lookPos);
         }
@@ -34,8 +32,20 @@ public class DoubleLungue : Skill {
     /** Coroutine para aplicar el segúndo hit un tiempo después */
     public IEnumerator C_DamageAgain(BasicActor from, BasicActor target) {
         target.takeDamage((Actor)from, from.totalDamage());
+        Vector3 relativePos = from.transform.position - target.transform.position;
+        Quaternion rotation = Quaternion.LookRotation(relativePos, Vector3.up);
+        if (!target.GetComponent<StaticActor>())
+        {
+            GameObject blood = Instantiate(bloodPrefab, new Vector3(target.transform.position.x, target.transform.position.y + 0.8f, target.transform.position.z), rotation);
+            Destroy(blood, 2f);
+        }
         yield return new WaitForSeconds(_damageDelay);
         target.takeDamage((Actor)from, (int)((float)from.totalDamage() / 2f));
+        if (!target.GetComponent<StaticActor>())
+        {
+            GameObject blood = Instantiate(bloodPrefab, new Vector3(target.transform.position.x, target.transform.position.y + 0.8f, target.transform.position.z), rotation);
+            Destroy(blood, 2f);
+        }
     }
 
 }

@@ -23,9 +23,11 @@ public class ArrowRain : Skill
                 // the second argument, upwards, defaults to Vector3.up
                 Quaternion rotation = Quaternion.LookRotation(relativePos, Vector3.up);
 
-                GameObject blood = Instantiate(bloodPrefab, new Vector3(actor.transform.position.x, actor.transform.position.y + 0.8f, actor.transform.position.z), rotation);
-
-                Destroy(blood, 2f);
+                if (!actor.GetComponent<StaticActor>())
+                {
+                    GameObject blood = Instantiate(bloodPrefab, new Vector3(actor.transform.position.x, actor.transform.position.y + 0.8f, actor.transform.position.z), rotation);
+                    Destroy(blood, 2f);
+                }
                 from.transform.rotation = Quaternion.LookRotation(lookPos);
             }
         }

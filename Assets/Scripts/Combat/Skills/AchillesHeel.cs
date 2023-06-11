@@ -42,8 +42,12 @@ public class AchillesHeel : Skill {
             // the second argument, upwards, defaults to Vector3.up
             Quaternion rotation = Quaternion.LookRotation(relativePos, Vector3.up);
 
-            GameObject blood = Instantiate(bloodPrefab, new Vector3(target.transform.position.x, target.transform.position.y + 0.8f, target.transform.position.z), rotation);
-            Destroy(blood, 2f);
+            if (!target.GetComponent<StaticActor>()) 
+            {
+                GameObject blood = Instantiate(bloodPrefab, new Vector3(target.transform.position.x, target.transform.position.y + 0.8f, target.transform.position.z), rotation);
+                Destroy(blood, 2f);
+            }
+            
 
             lookPos.y = 0;
             from.transform.rotation = Quaternion.LookRotation(lookPos);

@@ -20,6 +20,14 @@ public class StaticActor : BasicActor {
     public override int totalDamage() {
         return 0;
     }
+    public override void takeDamage(BasicActor from, int damage, itemID weapon = itemID.NONE)
+    {
+        if (((Actor)from).equip.weapon.ID.Equals(itemID.Bow))
+        {
+            return;
+        }
+        base.takeDamage(from, damage, weapon);
+    }
 
     public override int totalDefense() {
         return _resistance;

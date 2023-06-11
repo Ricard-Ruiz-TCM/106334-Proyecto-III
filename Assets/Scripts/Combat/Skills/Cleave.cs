@@ -9,6 +9,7 @@ public class Cleave : Skill {
 
         // bUSCAMOS A LA PEÑA Y APLICAMOS BUFF STUNNED :3 
         List<Node> neight = Stage.Grid.getNeighbours(to);
+
         neight.Add(to);
         foreach (Node node in neight) {
             BasicActor actor = Stage.StageManager.getActor(node);
@@ -21,8 +22,11 @@ public class Cleave : Skill {
                 // the second argument, upwards, defaults to Vector3.up
                 Quaternion rotation = Quaternion.LookRotation(relativePos, Vector3.up);
 
-                GameObject blood = Instantiate(bloodPrefab, new Vector3(actor.transform.position.x, actor.transform.position.y + 0.8f, actor.transform.position.z), rotation);
-                Destroy(blood, 2f);
+                if (!actor.GetComponent<StaticActor>())
+                {
+                    GameObject blood = Instantiate(bloodPrefab, new Vector3(actor.transform.position.x, actor.transform.position.y + 0.8f, actor.transform.position.z), rotation);
+                    Destroy(blood, 2f);
+                }
 
                 ((Actor)actor).buffs.applyBuffs((Actor)actor, buffsID.Stunned);
             }

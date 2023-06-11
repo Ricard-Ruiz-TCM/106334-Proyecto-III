@@ -111,7 +111,8 @@ public abstract class Actor : BasicActor {
 
     /** Método para ir al siguiente nodo */
     private void nextStep() {
-        if (_route == null) {
+        if (_route == null) 
+        {
             endMovement();
             return;
         }
@@ -119,12 +120,14 @@ public abstract class Actor : BasicActor {
         if (_stepsDone < _route.Count) {
             onStepReached?.Invoke(Stage.StageBuilder.getGridPlane(_route[_stepsDone]).node);
             _stepsDone++;
-            if (_stepsDone >= _route.Count) {
+            if (_stepsDone >= _route.Count) 
+            {
                 endMovement();
             } else {
                 setStep(_route[_stepsDone]);
             }
-        } else {
+        } else 
+        {
             endMovement();
             onDestinationReached?.Invoke();
         }
@@ -137,8 +140,14 @@ public abstract class Actor : BasicActor {
     }
 
     /** Comprueba si hemos llegado al punto */
-    public bool stepReached() {
-        return !_agent.hasPath && !_agent.pathPending && _agent.pathStatus == NavMeshPathStatus.PathComplete;
+    public bool stepReached() 
+    {
+        if(!_agent.hasPath && !_agent.pathPending && _agent.pathStatus == NavMeshPathStatus.PathComplete)
+        {
+            Stage.StageBuilder.getGridPlane(transform.position).pathGameObject.SetActive(false);
+            return true;
+        }
+        return false;
     }
 
     #endregion

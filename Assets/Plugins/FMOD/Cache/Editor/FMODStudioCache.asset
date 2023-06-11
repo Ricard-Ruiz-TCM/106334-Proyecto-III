@@ -27,6 +27,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 2200
+--- !u!114 &-7992327519077191981
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Otros/TrojanHorse
+  m_EditorClassIdentifier: 
+  Path: event:/Otros/TrojanHorse
+  Guid:
+    Data1: 219633758
+    Data2: 1161985500
+    Data3: -1498644085
+    Data4: 1408009752
+  Banks:
+  - {fileID: -1078370541524522390}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 2786
 --- !u!114 &-7565046921759432226
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -771,9 +798,36 @@ MonoBehaviour:
   Path: Assets/Resources/FMOD/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638220423258923681
+  lastModified: 638220468887626828
   FileSizes: []
   Exists: 1
+--- !u!114 &-408055724919491982
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Otros/DoubleMiss
+  m_EditorClassIdentifier: 
+  Path: event:/Otros/DoubleMiss
+  Guid:
+    Data1: -106684885
+    Data2: 1263896362
+    Data3: -1228591705
+    Data4: -2114783588
+  Banks:
+  - {fileID: -1078370541524522390}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 236
 --- !u!114 &-392427498101550594
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -924,12 +978,15 @@ MonoBehaviour:
   - {fileID: -4575735168840518811}
   - {fileID: 2112487268510948891}
   - {fileID: 3817269143746993324}
+  - {fileID: 8007413438877183640}
+  - {fileID: -408055724919491982}
+  - {fileID: -7992327519077191981}
   EditorParameters: []
   MasterBanks:
   - {fileID: -1078370541524522390}
   StringsBanks:
   - {fileID: 3625364978230341005}
-  cacheTime: 638220423258979134
+  cacheTime: 638220468887698160
   cacheVersion: 131603
 --- !u!114 &1211284664457178468
 MonoBehaviour:
@@ -1081,10 +1138,10 @@ MonoBehaviour:
   Path: Assets/Resources/FMOD/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638220423258979134
+  lastModified: 638220468887698160
   FileSizes:
   - Name: 
-    Value: 3660
+    Value: 3792
   Exists: 1
 --- !u!114 &3817269143746993324
 MonoBehaviour:
@@ -1463,6 +1520,33 @@ MonoBehaviour:
   - Fuego
   - No Fuego
   Exists: 1
+--- !u!114 &8007413438877183640
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Otros/Dissarm
+  m_EditorClassIdentifier: 
+  Path: event:/Otros/Dissarm
+  Guid:
+    Data1: -1784841742
+    Data2: 1243559574
+    Data3: 1893652894
+    Data4: -1152229427
+  Banks:
+  - {fileID: -1078370541524522390}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 1333
 --- !u!114 &8177945226348829221
 MonoBehaviour:
   m_ObjectHideFlags: 0

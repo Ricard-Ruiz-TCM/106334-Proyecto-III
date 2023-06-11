@@ -2,19 +2,23 @@ using System;
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using FMODUnity;
 
 [CreateAssetMenu(fileName = "ImperialCry", menuName = "Combat/Skills/Imperial Cry")]
 public class ImperialCry : Skill {
     
     [SerializeField, Header("Range effect:")]
     private int range = 2;
+    public EventReference imperialCrySound;
+    public EventReference abilitySound;
     public Material mat;
     public GameObject effectPrefab;
     //List<Material> anteriorMatarial;
 
     public override void action(BasicActor from, Node to) 
     {
-
+        FMODManager.instance.PlayOneShot(abilitySound);
+        FMODManager.instance.PlayOneShot(imperialCrySound);
         ((Actor)from).buffs.applyBuffs((Actor)from, buffsID.ArrowProof, buffsID.MidDefense);
 
 

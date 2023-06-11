@@ -1,15 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
+using FMODUnity;
 
 [CreateAssetMenu(fileName = "Double Lungue", menuName = "Combat/Skills/Double Lungue")]
 public class DoubleLungue : Skill {
-
+    public EventReference doubleLungueSound;
+    public EventReference doubleMissAttack;
     [SerializeField]
     private float _damageDelay = 0.25f;
     [SerializeField] GameObject bloodPrefab;
     public override void action(BasicActor from, Node to) {
         BasicActor target = Stage.StageManager.getActor(to);
         if (target != null) {
+            FMODManager.instance.PlayOneShot(doubleLungueSound);
             from.StartCoroutine(C_DamageAgain(from, target));
             var lookPos = target.transform.position - from.transform.position;
 
@@ -22,6 +25,10 @@ public class DoubleLungue : Skill {
             //Destroy(blood, 2f);
             lookPos.y = 0;
             from.transform.rotation = Quaternion.LookRotation(lookPos);
+        }
+        else
+        {
+            FMODManager.instance.PlayOneShot(doubleMissAttack);
         }
         from.endAction();
     }

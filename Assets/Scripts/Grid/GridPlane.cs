@@ -61,15 +61,24 @@ public class GridPlane : MonoBehaviour {
     }
 
 
-    public void ClearBorders() {
+    public void ClearBorders()
+    {
         limitLeft.SetActive(false);
         limitRight.SetActive(false);
         limitUp.SetActive(false);
         limitDown.SetActive(false);
+
         limitLeftSkill.SetActive(false);
+        limitLeftSkill.GetComponent<MeshRenderer>().material = Resources.Load("Materials/rangeMat", typeof(Material)) as Material;
+
         limitRightSkill.SetActive(false);
+        limitRightSkill.GetComponent<MeshRenderer>().material = Resources.Load("Materials/rangeMat", typeof(Material)) as Material;
+
         limitUpSkill.SetActive(false);
+        limitUpSkill.GetComponent<MeshRenderer>().material = Resources.Load("Materials/rangeMat", typeof(Material)) as Material;
+
         limitDownSkill.SetActive(false);
+        limitDownSkill.GetComponent<MeshRenderer>().material = Resources.Load("Materials/rangeMat", typeof(Material)) as Material;
     }
 
     public void clear(Material mat) {

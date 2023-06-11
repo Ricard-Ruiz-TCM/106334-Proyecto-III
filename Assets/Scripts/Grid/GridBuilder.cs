@@ -501,6 +501,33 @@ public class GridBuilder : MonoBehaviour {
 
         getSkilleableNodes(skillRangeNodeList, node);
     }
+
+    public void displayBothBordersActive()
+    {
+        for (int x = 0; x < _grid.rows; x++)
+        {
+            for (int y = 0; y < _grid.columns; y++)
+            {
+                GridPlane plane = getGridPlane(x, y);
+                if(plane.limitUp.activeSelf && plane.limitUpSkill.activeSelf)
+                {
+                    plane.limitUpSkill.GetComponent<MeshRenderer>().material = Resources.Load("Materials/borderMat", typeof(Material)) as Material;
+                }
+                if (plane.limitDown.activeSelf && plane.limitDownSkill.activeSelf)
+                {
+                    plane.limitDownSkill.GetComponent<MeshRenderer>().material = Resources.Load("Materials/borderMat", typeof(Material)) as Material;
+                }
+                if (plane.limitLeft.activeSelf && plane.limitLeftSkill.activeSelf)
+                {
+                    plane.limitLeftSkill.GetComponent<MeshRenderer>().material = Resources.Load("Materials/borderMat", typeof(Material)) as Material;
+                }
+                if (plane.limitRight.activeSelf && plane.limitRightSkill.activeSelf)
+                {
+                    plane.limitRightSkill.GetComponent<MeshRenderer>().material = Resources.Load("Materials/borderMat", typeof(Material)) as Material;
+                }
+            }
+        }
+    }
     private List<Node> getSkilleableNodes(List<Node> nodeList, Node origin) {
         List<Node> skilleableNodes = new List<Node>(nodeList.ToArray());
 

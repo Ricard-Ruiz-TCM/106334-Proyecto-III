@@ -15,6 +15,8 @@ public class FMODManager : MonoBehaviour
     [Range(0, 1)]
     public float ambienceVolum = 1;
 
+    [SerializeField] private List<EventReference> drawReferences;
+
     private Transform updatedCameraTransform;
     private Bus masterBus;
     private Bus musicBus;
@@ -48,6 +50,14 @@ public class FMODManager : MonoBehaviour
         sfxBus.setVolume(sfxVolum);
         ambienceBus.setVolume(ambienceVolum);
         updatedCameraTransform = Camera.main.transform;
+    }
+
+    public void MakeDraws()
+    {
+        foreach(var draw in drawReferences)
+        {
+            PlayOneShot(draw);
+        }
     }
 
     public void PlayOneShot(EventReference eventReference) 

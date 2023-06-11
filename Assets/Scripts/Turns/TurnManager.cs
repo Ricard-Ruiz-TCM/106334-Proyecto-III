@@ -1,3 +1,5 @@
+using FMOD.Studio;
+using FMODUnity;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -31,6 +33,9 @@ public class TurnManager : MonoBehaviour {
     public Action onModifyAttenders;
     /** --------- */
 
+    //Check if it has been drawn already
+    private bool haveDrawn = false;
+
     [SerializeField, Header("Actores que participan:")]
     protected int _current = 0;
     public Turnable current {
@@ -55,6 +60,7 @@ public class TurnManager : MonoBehaviour {
     [SerializeField]
     private float _startTurnDelaySecs = 1f;
 
+
     // Unity Update
     void Update() {
         switch (_roundType) {
@@ -69,6 +75,11 @@ public class TurnManager : MonoBehaviour {
 
     /** Método para el roundType.positioning */
     private void positioningRound() {
+        if (!haveDrawn)
+        {
+            FMODManager.instance.MakeDraws();
+            haveDrawn = !haveDrawn;
+        }
         ((ManualActor)uCore.GameManager.getPlayer()).positioning();
     }
 

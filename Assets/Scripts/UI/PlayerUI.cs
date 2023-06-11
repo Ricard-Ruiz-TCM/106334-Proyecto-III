@@ -41,7 +41,7 @@ public class PlayerUI : MonoBehaviour {
         BasicActor.onStartAct += disableEndTurnButton;
         BasicActor.onReAct += enableEndTurnButton;
 
-        BasicActor.onEndMovement += enableSkills;
+        BasicActor.onEndMovement += displaySkills; // en caso de bug esto es enable skills
         BasicActor.onStartMovement += disableSkills;
         Actor.onStepsAdded += updateSteps;
 
@@ -190,12 +190,13 @@ public class PlayerUI : MonoBehaviour {
         }
     }
 
-    /** Método para desabilitar los skills icons */
+    /** Método para habilitar los skills icons */
     private void enableSkills() {
         if (!TurnManager.instance.current.Equals(_player))
             return;
 
-        foreach (KeyValuePair<skillID, SkillButtonUI> entry in _skillButtons) {
+        foreach (KeyValuePair<skillID, SkillButtonUI> entry in _skillButtons) 
+        {
             entry.Value.gameObject.GetComponent<Button>().interactable = true;
         }
     }

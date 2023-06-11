@@ -178,7 +178,7 @@ public abstract class Actor : BasicActor {
     public bool canActIfBuff()
     {
         if (_buffs.isBuffActive(buffsID.Disarmed) || _buffs.isBuffActive(buffsID.Stunned))
-        {
+        {         
             return false;
         }
         return true;

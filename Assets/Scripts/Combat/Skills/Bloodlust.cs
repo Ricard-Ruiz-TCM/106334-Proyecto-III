@@ -31,6 +31,8 @@ public class Bloodlust : Skill {
                 case itemID.Pugio:
                     FMODManager.instance.PlayOneShot(FMODEvents.instance.PugioContraCarne);
                     break;
+                default:
+                    break;
             }
             target.takeDamage((Actor)from, from.totalDamage());
             from.heal(target.damageTaken());

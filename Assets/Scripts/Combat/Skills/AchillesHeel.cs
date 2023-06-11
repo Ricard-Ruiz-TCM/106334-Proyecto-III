@@ -31,6 +31,8 @@ public class AchillesHeel : Skill {
                 case itemID.Pugio:
                     FMODManager.instance.PlayOneShot(FMODEvents.instance.PugioContraCarne);
                     break;
+                default:
+                    break;
             }
             target.takeDamage((Actor)from, from.totalDamage());
             var lookPos = target.transform.position - from.transform.position;

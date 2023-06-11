@@ -1,5 +1,32 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-9119447630839896065
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Sonidos NPC's/Saludo Informante (FEMENINO)
+  m_EditorClassIdentifier: 
+  Path: event:/Sonidos NPC's/Saludo Informante (FEMENINO)
+  Guid:
+    Data1: 934500620
+    Data2: 1207053514
+    Data3: 513871498
+    Data4: 922377290
+  Banks:
+  - {fileID: -1078370541524522390}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 517
 --- !u!114 &-8567997742796392015
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -798,7 +825,7 @@ MonoBehaviour:
   Path: Assets/Resources/FMOD/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638220587512152384
+  lastModified: 638220626099691330
   FileSizes: []
   Exists: 1
 --- !u!114 &-408055724919491982
@@ -982,12 +1009,13 @@ MonoBehaviour:
   - {fileID: -408055724919491982}
   - {fileID: -7992327519077191981}
   - {fileID: 9043291193501071157}
+  - {fileID: -9119447630839896065}
   EditorParameters: []
   MasterBanks:
   - {fileID: -1078370541524522390}
   StringsBanks:
   - {fileID: 3625364978230341005}
-  cacheTime: 638220587512213295
+  cacheTime: 638220626099751506
   cacheVersion: 131603
 --- !u!114 &1211284664457178468
 MonoBehaviour:
@@ -1139,10 +1167,10 @@ MonoBehaviour:
   Path: Assets/Resources/FMOD/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638220587512213295
+  lastModified: 638220626099751506
   FileSizes:
   - Name: 
-    Value: 3828
+    Value: 3888
   Exists: 1
 --- !u!114 &3817269143746993324
 MonoBehaviour:

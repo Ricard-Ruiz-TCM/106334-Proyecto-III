@@ -32,6 +32,8 @@ public class Attack : Skill {
                     case itemID.Pugio:
                         FMODManager.instance.PlayOneShot(FMODEvents.instance.PugioPiedra);
                         break;
+                    default:
+                        break;
                 }
             }
             else
@@ -53,6 +55,8 @@ public class Attack : Skill {
                         break;
                     case itemID.Pugio:
                         FMODManager.instance.PlayOneShot(FMODEvents.instance.PugioContraCarne);
+                        break;
+                    default:
                         break;
                 }
             }            

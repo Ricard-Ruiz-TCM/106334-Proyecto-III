@@ -180,12 +180,12 @@ PrefabInstance:
     - target: {fileID: 59224720673565092, guid: 9b8e72ca0ca602e48b7b5e0139277428,
         type: 3}
       propertyPath: PlayEvent
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 59224720673565092, guid: 9b8e72ca0ca602e48b7b5e0139277428,
         type: 3}
       propertyPath: EventReference.Path
-      value: 
+      value: event:/Sonidos NPC's/Saludo Informante (FEMENINO)
       objectReference: {fileID: 0}
     - target: {fileID: 59224720673565092, guid: 9b8e72ca0ca602e48b7b5e0139277428,
         type: 3}
@@ -200,22 +200,22 @@ PrefabInstance:
     - target: {fileID: 59224720673565092, guid: 9b8e72ca0ca602e48b7b5e0139277428,
         type: 3}
       propertyPath: EventReference.Guid.Data1
-      value: 0
+      value: 934500620
       objectReference: {fileID: 0}
     - target: {fileID: 59224720673565092, guid: 9b8e72ca0ca602e48b7b5e0139277428,
         type: 3}
       propertyPath: EventReference.Guid.Data2
-      value: 0
+      value: 1207053514
       objectReference: {fileID: 0}
     - target: {fileID: 59224720673565092, guid: 9b8e72ca0ca602e48b7b5e0139277428,
         type: 3}
       propertyPath: EventReference.Guid.Data3
-      value: 0
+      value: 513871498
       objectReference: {fileID: 0}
     - target: {fileID: 59224720673565092, guid: 9b8e72ca0ca602e48b7b5e0139277428,
         type: 3}
       propertyPath: EventReference.Guid.Data4
-      value: 0
+      value: 922377290
       objectReference: {fileID: 0}
     - target: {fileID: 394201226856827909, guid: 9b8e72ca0ca602e48b7b5e0139277428,
         type: 3}
@@ -724,7 +724,7 @@ MonoBehaviour:
     type: 0
     terrain: 0
     diff: 0
-    innitialDialog: {fileID: 0}
+    innitialDialog: {fileID: 11400000, guid: 5e15969bc5ba9ef4ca6661a772b1fcd7, type: 2}
     lastDialog: {fileID: 0}
     perks:
     - {fileID: 11400000, guid: 1f7dac5034b79774783126ba7af09673, type: 2}
@@ -3578,6 +3578,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attenuationObject: {fileID: 0}
+--- !u!114 &448948695 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 394201226856827909, guid: 9b8e72ca0ca602e48b7b5e0139277428,
+    type: 3}
+  m_PrefabInstance: {fileID: 78826043}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 448948686}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fee9ee92b136a745a0d632a5fb9dd64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &462707316
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4565,13 +4577,48 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 627592351513843490, guid: 85814647159765c428cbb6482cc9bc8e,
         type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 627592351513843490, guid: 85814647159765c428cbb6482cc9bc8e,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 627592351513843490, guid: 85814647159765c428cbb6482cc9bc8e,
+        type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
       objectReference: {fileID: 294624309}
     - target: {fileID: 627592351513843490, guid: 85814647159765c428cbb6482cc9bc8e,
         type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_Target
+      value: 
+      objectReference: {fileID: 448948695}
+    - target: {fileID: 627592351513843490, guid: 85814647159765c428cbb6482cc9bc8e,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 627592351513843490, guid: 85814647159765c428cbb6482cc9bc8e,
+        type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
       value: nextStageState
+      objectReference: {fileID: 0}
+    - target: {fileID: 627592351513843490, guid: 85814647159765c428cbb6482cc9bc8e,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_MethodName
+      value: ConfirmPerk
+      objectReference: {fileID: 0}
+    - target: {fileID: 627592351513843490, guid: 85814647159765c428cbb6482cc9bc8e,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_TargetAssemblyTypeName
+      value: FMODManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 627592351513843490, guid: 85814647159765c428cbb6482cc9bc8e,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 85814647159765c428cbb6482cc9bc8e, type: 3}

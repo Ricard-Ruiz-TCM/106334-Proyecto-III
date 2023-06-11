@@ -177,11 +177,171 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1035843192}
     m_Modifications:
+    - target: {fileID: 59224720673565092, guid: 9b8e72ca0ca602e48b7b5e0139277428,
+        type: 3}
+      propertyPath: PlayEvent
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 59224720673565092, guid: 9b8e72ca0ca602e48b7b5e0139277428,
+        type: 3}
+      propertyPath: EventReference.Path
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 59224720673565092, guid: 9b8e72ca0ca602e48b7b5e0139277428,
+        type: 3}
+      propertyPath: OverrideMaxDistance
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 59224720673565092, guid: 9b8e72ca0ca602e48b7b5e0139277428,
+        type: 3}
+      propertyPath: OverrideMinDistance
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 59224720673565092, guid: 9b8e72ca0ca602e48b7b5e0139277428,
+        type: 3}
+      propertyPath: EventReference.Guid.Data1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 59224720673565092, guid: 9b8e72ca0ca602e48b7b5e0139277428,
+        type: 3}
+      propertyPath: EventReference.Guid.Data2
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 59224720673565092, guid: 9b8e72ca0ca602e48b7b5e0139277428,
+        type: 3}
+      propertyPath: EventReference.Guid.Data3
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 59224720673565092, guid: 9b8e72ca0ca602e48b7b5e0139277428,
+        type: 3}
+      propertyPath: EventReference.Guid.Data4
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 394201226856827909, guid: 9b8e72ca0ca602e48b7b5e0139277428,
+        type: 3}
+      propertyPath: sfxVolum
+      value: 0.593
+      objectReference: {fileID: 0}
+    - target: {fileID: 394201226856827909, guid: 9b8e72ca0ca602e48b7b5e0139277428,
+        type: 3}
+      propertyPath: musicVolum
+      value: 0.183
+      objectReference: {fileID: 0}
+    - target: {fileID: 394201226856827909, guid: 9b8e72ca0ca602e48b7b5e0139277428,
+        type: 3}
+      propertyPath: ambienceVolum
+      value: 0.707
+      objectReference: {fileID: 0}
     - target: {fileID: 394201226856827909, guid: 9b8e72ca0ca602e48b7b5e0139277428,
         type: 3}
       propertyPath: cameraTransform
       value: 
       objectReference: {fileID: 4477324567445985473}
+    - target: {fileID: 394201226856827909, guid: 9b8e72ca0ca602e48b7b5e0139277428,
+        type: 3}
+      propertyPath: drawReferences.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 394201226856827909, guid: 9b8e72ca0ca602e48b7b5e0139277428,
+        type: 3}
+      propertyPath: drawReferences.Array.data[0].Path
+      value: event:/Arco/6. Desenfundado Arco
+      objectReference: {fileID: 0}
+    - target: {fileID: 394201226856827909, guid: 9b8e72ca0ca602e48b7b5e0139277428,
+        type: 3}
+      propertyPath: drawReferences.Array.data[1].Path
+      value: event:/Gladius/1. Desenfundado Gladius
+      objectReference: {fileID: 0}
+    - target: {fileID: 394201226856827909, guid: 9b8e72ca0ca602e48b7b5e0139277428,
+        type: 3}
+      propertyPath: drawReferences.Array.data[2].Path
+      value: event:/Gladius/1. Desenfundado Gladius
+      objectReference: {fileID: 0}
+    - target: {fileID: 394201226856827909, guid: 9b8e72ca0ca602e48b7b5e0139277428,
+        type: 3}
+      propertyPath: drawReferences.Array.data[3].Path
+      value: event:/Hasta/12. Desenfundado Hasta
+      objectReference: {fileID: 0}
+    - target: {fileID: 394201226856827909, guid: 9b8e72ca0ca602e48b7b5e0139277428,
+        type: 3}
+      propertyPath: drawReferences.Array.data[0].Guid.Data1
+      value: 1293514131
+      objectReference: {fileID: 0}
+    - target: {fileID: 394201226856827909, guid: 9b8e72ca0ca602e48b7b5e0139277428,
+        type: 3}
+      propertyPath: drawReferences.Array.data[0].Guid.Data2
+      value: 1151876033
+      objectReference: {fileID: 0}
+    - target: {fileID: 394201226856827909, guid: 9b8e72ca0ca602e48b7b5e0139277428,
+        type: 3}
+      propertyPath: drawReferences.Array.data[0].Guid.Data3
+      value: 605529250
+      objectReference: {fileID: 0}
+    - target: {fileID: 394201226856827909, guid: 9b8e72ca0ca602e48b7b5e0139277428,
+        type: 3}
+      propertyPath: drawReferences.Array.data[0].Guid.Data4
+      value: 117348496
+      objectReference: {fileID: 0}
+    - target: {fileID: 394201226856827909, guid: 9b8e72ca0ca602e48b7b5e0139277428,
+        type: 3}
+      propertyPath: drawReferences.Array.data[1].Guid.Data1
+      value: 875352910
+      objectReference: {fileID: 0}
+    - target: {fileID: 394201226856827909, guid: 9b8e72ca0ca602e48b7b5e0139277428,
+        type: 3}
+      propertyPath: drawReferences.Array.data[1].Guid.Data2
+      value: 1335191575
+      objectReference: {fileID: 0}
+    - target: {fileID: 394201226856827909, guid: 9b8e72ca0ca602e48b7b5e0139277428,
+        type: 3}
+      propertyPath: drawReferences.Array.data[1].Guid.Data3
+      value: 1370620295
+      objectReference: {fileID: 0}
+    - target: {fileID: 394201226856827909, guid: 9b8e72ca0ca602e48b7b5e0139277428,
+        type: 3}
+      propertyPath: drawReferences.Array.data[1].Guid.Data4
+      value: -694646180
+      objectReference: {fileID: 0}
+    - target: {fileID: 394201226856827909, guid: 9b8e72ca0ca602e48b7b5e0139277428,
+        type: 3}
+      propertyPath: drawReferences.Array.data[2].Guid.Data1
+      value: 875352910
+      objectReference: {fileID: 0}
+    - target: {fileID: 394201226856827909, guid: 9b8e72ca0ca602e48b7b5e0139277428,
+        type: 3}
+      propertyPath: drawReferences.Array.data[2].Guid.Data2
+      value: 1335191575
+      objectReference: {fileID: 0}
+    - target: {fileID: 394201226856827909, guid: 9b8e72ca0ca602e48b7b5e0139277428,
+        type: 3}
+      propertyPath: drawReferences.Array.data[2].Guid.Data3
+      value: 1370620295
+      objectReference: {fileID: 0}
+    - target: {fileID: 394201226856827909, guid: 9b8e72ca0ca602e48b7b5e0139277428,
+        type: 3}
+      propertyPath: drawReferences.Array.data[2].Guid.Data4
+      value: -694646180
+      objectReference: {fileID: 0}
+    - target: {fileID: 394201226856827909, guid: 9b8e72ca0ca602e48b7b5e0139277428,
+        type: 3}
+      propertyPath: drawReferences.Array.data[3].Guid.Data1
+      value: -1947491085
+      objectReference: {fileID: 0}
+    - target: {fileID: 394201226856827909, guid: 9b8e72ca0ca602e48b7b5e0139277428,
+        type: 3}
+      propertyPath: drawReferences.Array.data[3].Guid.Data2
+      value: 1259091413
+      objectReference: {fileID: 0}
+    - target: {fileID: 394201226856827909, guid: 9b8e72ca0ca602e48b7b5e0139277428,
+        type: 3}
+      propertyPath: drawReferences.Array.data[3].Guid.Data3
+      value: 95414427
+      objectReference: {fileID: 0}
+    - target: {fileID: 394201226856827909, guid: 9b8e72ca0ca602e48b7b5e0139277428,
+        type: 3}
+      propertyPath: drawReferences.Array.data[3].Guid.Data4
+      value: 434460279
+      objectReference: {fileID: 0}
     - target: {fileID: 394201226856827961, guid: 9b8e72ca0ca602e48b7b5e0139277428,
         type: 3}
       propertyPath: m_Name
@@ -241,6 +401,51 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7638382502447952554, guid: 9b8e72ca0ca602e48b7b5e0139277428,
+        type: 3}
+      propertyPath: PlayEvent
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7638382502447952554, guid: 9b8e72ca0ca602e48b7b5e0139277428,
+        type: 3}
+      propertyPath: StopEvent
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7638382502447952554, guid: 9b8e72ca0ca602e48b7b5e0139277428,
+        type: 3}
+      propertyPath: EventReference.Path
+      value: "event:/Men\xFA/51. Menu Inicio"
+      objectReference: {fileID: 0}
+    - target: {fileID: 7638382502447952554, guid: 9b8e72ca0ca602e48b7b5e0139277428,
+        type: 3}
+      propertyPath: OverrideMaxDistance
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 7638382502447952554, guid: 9b8e72ca0ca602e48b7b5e0139277428,
+        type: 3}
+      propertyPath: OverrideMinDistance
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7638382502447952554, guid: 9b8e72ca0ca602e48b7b5e0139277428,
+        type: 3}
+      propertyPath: EventReference.Guid.Data1
+      value: -205792989
+      objectReference: {fileID: 0}
+    - target: {fileID: 7638382502447952554, guid: 9b8e72ca0ca602e48b7b5e0139277428,
+        type: 3}
+      propertyPath: EventReference.Guid.Data2
+      value: 1239517548
+      objectReference: {fileID: 0}
+    - target: {fileID: 7638382502447952554, guid: 9b8e72ca0ca602e48b7b5e0139277428,
+        type: 3}
+      propertyPath: EventReference.Guid.Data3
+      value: 613691811
+      objectReference: {fileID: 0}
+    - target: {fileID: 7638382502447952554, guid: 9b8e72ca0ca602e48b7b5e0139277428,
+        type: 3}
+      propertyPath: EventReference.Guid.Data4
+      value: -1205723788
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9b8e72ca0ca602e48b7b5e0139277428, type: 3}
@@ -3354,6 +3559,25 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 85763710}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &448948686 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 394201226856827961, guid: 9b8e72ca0ca602e48b7b5e0139277428,
+    type: 3}
+  m_PrefabInstance: {fileID: 78826043}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &448948691
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 448948686}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attenuationObject: {fileID: 0}
 --- !u!1001 &462707316
 PrefabInstance:
   m_ObjectHideFlags: 0

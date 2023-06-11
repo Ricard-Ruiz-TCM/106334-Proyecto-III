@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 394201226856827909}
   - component: {fileID: 59224720673565092}
   - component: {fileID: 7638382502447952554}
+  - component: {fileID: 3809399318122908929}
   m_Layer: 0
   m_Name: AudioManager
   m_TagString: Untagged
@@ -70,6 +71,7 @@ MonoBehaviour:
   musicVolum: 1
   sfxVolum: 1
   ambienceVolum: 1
+  drawReferences: []
 --- !u!114 &59224720673565092
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -132,6 +134,19 @@ MonoBehaviour:
   OverrideAttenuation: 0
   OverrideMinDistance: -1
   OverrideMaxDistance: -1
+--- !u!114 &3809399318122908929
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 394201226856827961}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attenuationObject: {fileID: 0}
 --- !u!1 &1619205670586036673
 GameObject:
   m_ObjectHideFlags: 0
@@ -365,10 +380,10 @@ MonoBehaviour:
       Data3: 1944032440
       Data4: 1483671214
     Path: event:/Sonidos NPC's/37. Muerte Soldado Raso
-  <DrawBow>k__BackingField:
+  <ConfirmPerk>k__BackingField:
     Guid:
-      Data1: 1293514131
-      Data2: 1151876033
-      Data3: 605529250
-      Data4: 117348496
-    Path: event:/Arco/6. Desenfundado Arco
+      Data1: 1492619454
+      Data2: 1186365051
+      Data3: 955600296
+      Data4: -1323740004
+    Path: event:/Otros/43. Obtencion Perk

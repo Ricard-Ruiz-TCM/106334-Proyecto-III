@@ -17,7 +17,6 @@ public class FMODManager : MonoBehaviour
 
     [SerializeField] private List<EventReference> drawReferences;
 
-    private Transform updatedCameraTransform;
     private Bus masterBus;
     private Bus musicBus;
     private Bus sfxBus;
@@ -49,7 +48,11 @@ public class FMODManager : MonoBehaviour
         musicBus.setVolume(musicVolum);
         sfxBus.setVolume(sfxVolum);
         ambienceBus.setVolume(ambienceVolum);
-        updatedCameraTransform = Camera.main.transform;
+    }
+
+    public void ConfirmPerk()
+    {
+        PlayOneShot(FMODEvents.instance.ConfirmPerk);
     }
 
     public void MakeDraws()
@@ -62,7 +65,7 @@ public class FMODManager : MonoBehaviour
 
     public void PlayOneShot(EventReference eventReference) 
     {
-        RuntimeManager.PlayOneShot(eventReference, updatedCameraTransform.position);
+        RuntimeManager.PlayOneShot(eventReference, this.gameObject.transform.position);
     }
 
     public EventInstance CreateEventInstance(EventReference eventReference)

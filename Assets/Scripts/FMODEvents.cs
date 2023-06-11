@@ -33,6 +33,7 @@ public class FMODEvents : MonoBehaviour
     [field: SerializeField] public EventReference PlayerDeath { get; private set; }
     [field: SerializeField] public EventReference GameOver { get; private set; }
     [field: SerializeField] public EventReference SoldierDeath { get; private set; }
+    [field: SerializeField] public EventReference ConfirmPerk { get; private set; }
 
     public static FMODEvents instance { get; private set; }
 

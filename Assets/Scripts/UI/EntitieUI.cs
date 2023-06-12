@@ -50,8 +50,12 @@ public class EntitieUI : MonoBehaviour {
         target += heal;
     }
     // Start is called before the first frame update
-    void Start() {
-
+    void Start() 
+    {
+        if (transform.parent.GetComponent<AutomaticActor>())
+        {
+            healthbarSprite.color = Color.red;
+        }
     }
 
     // Update is called once per frame

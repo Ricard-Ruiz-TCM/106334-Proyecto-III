@@ -16,7 +16,7 @@ MonoBehaviour:
   keyName: SKILL.ACHILLES_HEEL.NAME
   keyDesc: SKILL.ACHILLES_HEEL.DESC
   ID: 9
-  cooldown: 3
+  cooldown: 4
   personal: 0
   areaRange: 0
   needWeapon: 1
@@ -29,56 +29,5 @@ MonoBehaviour:
       type: 3}
     delay: 1
     pos: {x: 0, y: 1.5, z: 0}
-  abilitySound:
-    Guid:
-      Data1: 1734810623
-      Data2: 1179050825
-      Data3: 756850582
-      Data4: -1269199939
-    Path: event:/Otros/17. Uso Habilidad
-  soundEvents:
-  - Guid:
-      Data1: 1089516002
-      Data2: 1218197617
-      Data3: 1754444216
-      Data4: 1363065620
-    Path: event:/Arco/7. Lanzamiento Flecha
-  - Guid:
-      Data1: 966332324
-      Data2: 1299616476
-      Data3: 1138854584
-      Data4: -1982424774
-    Path: event:/Arco/8. Flecha Carne
-  - Guid:
-      Data1: -1160895581
-      Data2: 1191639221
-      Data3: 1617258370
-      Data4: 905781580
-    Path: event:/Dolabra/30. Dolabra Carne
-  - Guid:
-      Data1: -1083436717
-      Data2: 1105103754
-      Data3: -1104174430
-      Data4: 1258287738
-    Path: event:/Gladius/2. Gladius Carne
-  - Guid:
-      Data1: -567182471
-      Data2: 1329393754
-      Data3: 1355306148
-      Data4: 124230498
-    Path: event:/Hasta/13. Hasta sobre Carne
-  - Guid:
-      Data1: 344722566
-      Data2: 1224488920
-      Data3: -611334726
-      Data4: -974825690
-    Path: event:/Pugio/24. Pugio Carne
-  missAttack:
-    Guid:
-      Data1: 1089516002
-      Data2: 1218197617
-      Data3: 1754444216
-      Data4: 1363065620
-    Path: event:/Arco/7. Lanzamiento Flecha
   bloodPrefab: {fileID: 9165009315386229762, guid: de8f43d8a3e9b3042badf6ec53430fca,
     type: 3}

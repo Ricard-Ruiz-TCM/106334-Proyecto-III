@@ -1,7 +1,9 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class CameraController : MonoBehaviour {
-    /*
+    
     [SerializeField, Header("Canera Animator:")] 
     Animator _animator;
 
@@ -247,5 +249,4 @@ public class CameraController : MonoBehaviour {
     public void ChangeTarget() {
 
     }
-*/
 }

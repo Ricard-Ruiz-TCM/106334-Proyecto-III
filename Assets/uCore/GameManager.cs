@@ -156,6 +156,7 @@ public class GameManager : MonoBehaviour {
 
     [SerializeField]
     private List<perkID> _playerPerks = new List<perkID>();
+    private List<skillID> _playerSkills = new List<skillID>();
 
     private Actor _player;
 
@@ -171,10 +172,21 @@ public class GameManager : MonoBehaviour {
         return _playerPerks;
     }
 
+    public List<skillID> restoreSkills() {
+        return _playerSkills;
+    }
+
     public void savePerks(Actor player) {
         _playerPerks.Clear();
         foreach (PerkItem pkI in player.perks.perks) {
             _playerPerks.Add(pkI.perk.ID);
+        }
+    }
+
+    public void saveSkills(Actor player) {
+        _playerSkills.Clear();
+        foreach (SkillItem skI in player.skills.skills) {
+            _playerSkills.Add(skI.skill.ID);
         }
     }
 

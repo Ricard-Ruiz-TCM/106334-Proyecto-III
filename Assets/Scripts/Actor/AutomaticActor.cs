@@ -223,6 +223,8 @@ public class AutomaticActor : Actor {
                 path.Reverse();
                 path.RemoveRange(0, equip.weapon.range);
                 path.Reverse();
+            } else {
+                path.Clear();
             }
 
             // Cortamos el path al movimiento mínimo

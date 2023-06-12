@@ -142,6 +142,9 @@ public class SceneStageManager : MonoBehaviour {
         foreach (perkID id in uCore.GameManager.restorePerks()) {
             _player.GetComponent<Actor>().perks.addPerk(id);
         }
+        foreach (skillID id in uCore.GameManager.restoreSkills()) {
+            _player.GetComponent<Actor>().skills.addSkill(id);
+        }
 
         // Activate the actors
         _player.SetActive(true);
@@ -194,6 +197,7 @@ public class SceneStageManager : MonoBehaviour {
     public void stageSuccess() {
         uCore.GameManager.SaveGameData();
         uCore.GameManager.savePerks(_player.GetComponent<Actor>());
+        uCore.GameManager.saveSkills(_player.GetComponent<Actor>());
         uCore.Director.LoadScene(_nextScene);
     }
 

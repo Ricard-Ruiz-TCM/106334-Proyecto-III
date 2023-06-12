@@ -197,6 +197,7 @@ public abstract class Actor : BasicActor {
     [SerializeField]
     protected PerkManager _perks;
     public PerkManager perks => _perks;
+    [SerializeField]
     protected SkillManager _skills;
     public SkillManager skills => _skills;
     protected EquipmentManager _equip;
@@ -266,7 +267,9 @@ public abstract class Actor : BasicActor {
         _buffs = GetComponent<BuffManager>();
         if (_perks == null)
             _perks = GetComponent<PerkManager>();
-        _skills = GetComponent<SkillManager>();
+        if (_skills == null)
+            _skills = GetComponent<SkillManager>();
+
         _equip = GetComponent<EquipmentManager>();
 
         _animator = GetComponentInChildren<Animator>();

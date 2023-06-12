@@ -6,6 +6,10 @@ using UnityEngine;
 public class Attack : Skill {
     public List<Slash> slashes;
     [SerializeField] GameObject bloodPrefab;
+    [SerializeField] GameObject arrowPrefab;
+    [SerializeField] AnimationCurve curve;
+    [SerializeField] float heightY;
+    [SerializeField] float duration;
     public override void action(BasicActor from, Node to) {
         BasicActor target = Stage.StageManager.getActor(to);
 
@@ -17,6 +21,7 @@ public class Attack : Skill {
                     case itemID.Bow:
                         FMODManager.instance.PlayOneShot(FMODEvents.instance.InicioLanzarFlecha);
                         FMODManager.instance.PlayOneShot(FMODEvents.instance.FlechaPiedra);
+                        from.StartCoroutine(ShootArrow(from, target));
                         break;
                     case itemID.Dolabra:
                         FMODManager.instance.PlayOneShot(FMODEvents.instance.DolabraPiedra);
@@ -42,18 +47,23 @@ public class Attack : Skill {
                     case itemID.Bow:
                         FMODManager.instance.PlayOneShot(FMODEvents.instance.InicioLanzarFlecha);
                         FMODManager.instance.PlayOneShot(FMODEvents.instance.FlechaContraCarne);
+                        from.StartCoroutine(ShootArrow(from, target));
                         break;
                     case itemID.Dolabra:
                         FMODManager.instance.PlayOneShot(FMODEvents.instance.DolabraContraCarne);
+                        from.StartCoroutine(StartSlash(from));
                         break;
                     case itemID.Gladius:
                         FMODManager.instance.PlayOneShot(FMODEvents.instance.GladiusContraCarne);
+                        from.StartCoroutine(StartSlash(from));
                         break;
                     case itemID.Hasta:
                         FMODManager.instance.PlayOneShot(FMODEvents.instance.HastaContraCarne);
+                        from.StartCoroutine(StartSlash(from));
                         break;
                     case itemID.Pugio:
                         FMODManager.instance.PlayOneShot(FMODEvents.instance.PugioContraCarne);
+                        from.StartCoroutine(StartSlash(from));
                         break;
                     default:
                         break;
@@ -81,6 +91,27 @@ public class Attack : Skill {
 
         ((Actor)from).endAction();
     }
+    IEnumerator ShootArrow(BasicActor from, BasicActor target)
+    {
+        yield return new WaitForSeconds(1f);
+        GameObject arrow = Instantiate(arrowPrefab, new Vector3(from.transform.position.x, from.transform.position.y + 1.7f, from.transform.position.z), Quaternion.identity);
+        float timer = 0;
+        while (timer< duration)
+        {
+            //float linearT = timer / duration;
+            //float heightT = curve.Evaluate(linearT);
+
+            //float height = Mathf.Lerp(0, heightY, heightT);
+
+            //arrow.transform.position = Vector3.Lerp(arrow.transform.position, targetPos, linearT) + new Vector3(0, height, 0);
+
+            arrow.transform.position = new Vector3(arrow.transform.position.x, arrow.transform.position.y + curve.Evaluate(Time.deltaTime * 3), arrow.transform.position.z);
+
+            yield return null;
+        }
+        
+    }
+    
     IEnumerator StartSlash(BasicActor from) {
         GameObject go;
         yield return new WaitForSeconds(0.5f);

@@ -119,6 +119,11 @@ public class FMODEvents : MonoBehaviour {
     public EventReference PressButtonUI {
         get; private set;
     }
+    [field: SerializeField]
+    public EventReference PressButtonSpeed
+    {
+        get; private set;
+    }
 
     public static FMODEvents instance {
         get; private set;

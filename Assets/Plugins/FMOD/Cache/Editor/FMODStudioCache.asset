@@ -852,7 +852,7 @@ MonoBehaviour:
   Path: Assets/Resources/FMOD/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638221400537035318
+  lastModified: 638221979147536013
   FileSizes: []
   Exists: 1
 --- !u!114 &-408055724919491982
@@ -1039,12 +1039,13 @@ MonoBehaviour:
   - {fileID: -9119447630839896065}
   - {fileID: -1752981189961321060}
   - {fileID: 3082293981400545831}
+  - {fileID: 1437746760525471006}
   EditorParameters: []
   MasterBanks:
   - {fileID: -1078370541524522390}
   StringsBanks:
   - {fileID: 3625364978230341005}
-  cacheTime: 638221400537090986
+  cacheTime: 638221979147576023
   cacheVersion: 131603
 --- !u!114 &1211284664457178468
 MonoBehaviour:
@@ -1073,6 +1074,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 570
+--- !u!114 &1437746760525471006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Otros/SpeedUp
+  m_EditorClassIdentifier: 
+  Path: event:/Otros/SpeedUp
+  Guid:
+    Data1: -1842398870
+    Data2: 1174901765
+    Data3: -1362778997
+    Data4: 1399810547
+  Banks:
+  - {fileID: -1078370541524522390}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 1100
 --- !u!114 &1902732208859627775
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1223,10 +1251,10 @@ MonoBehaviour:
   Path: Assets/Resources/FMOD/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638221400537090986
+  lastModified: 638221979147576023
   FileSizes:
   - Name: 
-    Value: 3986
+    Value: 4034
   Exists: 1
 --- !u!114 &3817269143746993324
 MonoBehaviour:

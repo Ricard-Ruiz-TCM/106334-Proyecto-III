@@ -31,12 +31,12 @@ public class PilarStatic : StaticActor {
 
         BasicActor endPointActor = Stage.StageManager.getActor(endPoint);
         if (endPointActor != null)
-            endPointActor.takeDamage(this, damageFromPilar, itemID.NONE);
+            endPointActor.takeDamage(this, damageFromPilar);
 
         foreach (var node in nodesToSetNotWalkable) {
             BasicActor nodeActor = Stage.StageManager.getActor(node);
             if (nodeActor != null)
-                nodeActor.takeDamage(this, damageFromPilar, itemID.NONE);
+                nodeActor.takeDamage(this, damageFromPilar);
 
             Stage.Grid.changeNodeType(node.x, node.y, Array2DEditor.nodeType.X);
         }

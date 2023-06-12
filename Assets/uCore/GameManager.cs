@@ -167,28 +167,15 @@ public class GameManager : MonoBehaviour {
         return _player;
     }
 
-    public void RestorePlayer(Actor player) {
-        /**if (_avaliable) {
-            player.equip.SetEquipment(_armor, _weapon, _shield);
-            foreach (perkID id in _playerPerks) {
-                player.perks.addPerk(id);
-            }
-        } else {
-            _player = player;
-        }*/
+    public List<perkID> restorePerks() {
+        return _playerPerks;
     }
 
-    public void SavePlayer(Actor player) {
-        /*_avaliable = true;
-        _player = player;
-        _armor = player.equip.getArmorInvItem();
-        _weapon = player.equip.getWeaponInvItem();
-        _shield = player.equip.getShieldInvItem();
-
+    public void savePerks(Actor player) {
         _playerPerks.Clear();
         foreach (PerkItem pkI in player.perks.perks) {
             _playerPerks.Add(pkI.perk.ID);
-        }*/
+        }
     }
 
     #endregion

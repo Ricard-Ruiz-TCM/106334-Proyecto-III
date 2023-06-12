@@ -139,7 +139,9 @@ public class SceneStageManager : MonoBehaviour {
         _turnUI.SetActive(true);
 
         // Restore Player
-        uCore.GameManager.RestorePlayer(_player.GetComponent<Actor>());
+        foreach (perkID id in uCore.GameManager.restorePerks()) {
+            _player.GetComponent<Actor>().perks.addPerk(id);
+        }
 
         // Activate the actors
         _player.SetActive(true);
@@ -191,7 +193,7 @@ public class SceneStageManager : MonoBehaviour {
     /** Método para determinar qeu se ha ganado el Stage */
     public void stageSuccess() {
         uCore.GameManager.SaveGameData();
-        uCore.GameManager.SavePlayer(_player.GetComponent<Actor>());
+        uCore.GameManager.savePerks(_player.GetComponent<Actor>());
         uCore.Director.LoadScene(_nextScene);
     }
 

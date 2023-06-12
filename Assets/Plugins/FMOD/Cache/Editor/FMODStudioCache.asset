@@ -675,6 +675,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 1383
+--- !u!114 &-1752981189961321060
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: "event:/Otros/Pulsar Bot\xF3n"
+  m_EditorClassIdentifier: 
+  Path: "event:/Otros/Pulsar Bot\xF3n"
+  Guid:
+    Data1: -1202805623
+    Data2: 1252243989
+    Data3: 947107724
+    Data4: -35036660
+  Banks:
+  - {fileID: -1078370541524522390}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 78
 --- !u!114 &-1693935528783697702
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -825,7 +852,7 @@ MonoBehaviour:
   Path: Assets/Resources/FMOD/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638220675868888759
+  lastModified: 638221400537035318
   FileSizes: []
   Exists: 1
 --- !u!114 &-408055724919491982
@@ -1010,12 +1037,14 @@ MonoBehaviour:
   - {fileID: -7992327519077191981}
   - {fileID: 9043291193501071157}
   - {fileID: -9119447630839896065}
+  - {fileID: -1752981189961321060}
+  - {fileID: 3082293981400545831}
   EditorParameters: []
   MasterBanks:
   - {fileID: -1078370541524522390}
   StringsBanks:
   - {fileID: 3625364978230341005}
-  cacheTime: 638220675868949138
+  cacheTime: 638221400537090986
   cacheVersion: 131603
 --- !u!114 &1211284664457178468
 MonoBehaviour:
@@ -1125,6 +1154,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 3592
+--- !u!114 &3082293981400545831
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Otros/Musica Stage
+  m_EditorClassIdentifier: 
+  Path: event:/Otros/Musica Stage
+  Guid:
+    Data1: -407167581
+    Data2: 1095583299
+    Data3: 71343520
+    Data4: -768079001
+  Banks:
+  - {fileID: -1078370541524522390}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 110000
 --- !u!114 &3243306675278223243
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1167,10 +1223,10 @@ MonoBehaviour:
   Path: Assets/Resources/FMOD/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638220675868949138
+  lastModified: 638221400537090986
   FileSizes:
   - Name: 
-    Value: 3888
+    Value: 3986
   Exists: 1
 --- !u!114 &3817269143746993324
 MonoBehaviour:

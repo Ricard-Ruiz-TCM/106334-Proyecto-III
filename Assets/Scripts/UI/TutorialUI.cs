@@ -62,6 +62,7 @@ public class TutorialUI : MonoBehaviour {
     // Clickar en el texto del dialogo
     public void onClickSetNext()
     {
+        FMODManager.instance.PlayOneShot(FMODEvents.instance.PressButtonUI);
         if(nextPopUp != null)
         {
             nextPopUp.gameObject.SetActive(true);

@@ -11,6 +11,8 @@ public class TutorialUIManager : MonoBehaviour
     [SerializeField]
     private GameObject positioningPanel;
     [SerializeField]
+    private List<GameObject> positioningRoundOfPanels;
+    [SerializeField]
     private GameObject combatPanel;
 
     private bool firstTimeInCombat = true;
@@ -38,10 +40,11 @@ public class TutorialUIManager : MonoBehaviour
             case roundType.combat:
                 if(firstTimeInCombat)
                 {
+                    foreach(var positionRoundPanel in positioningRoundOfPanels) { positionRoundPanel.SetActive(false); }
                     firstTimeInCombat = false;
                     combatPanel.SetActive(true);
                     combatPanel.GetComponent<TutorialUI>().setRoundsHaveStarted();
-                }                
+                }          
                 break;
             default:
                 break;

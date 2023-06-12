@@ -71,6 +71,7 @@ public class DialogUI : MonoBehaviour {
                 GameObject option = GameObject.Instantiate(_optionPrefab, _panelOptions.transform);
                 option.GetComponentInChildren<UIText>().SetKey(op.keyText);
                 option.GetComponent<Button>().onClick.AddListener(() => {
+                    FMODManager.instance.PlayOneShot(FMODEvents.instance.PressButtonUI);
                     DialogManager.instance.NextDialog(op.next);
                 });
             }
@@ -117,6 +118,7 @@ public class DialogUI : MonoBehaviour {
 
     // Clickar en el texto del dialogo
     public void EVENT_OnClickDialogue() {
+        FMODManager.instance.PlayOneShot(FMODEvents.instance.PressButtonUI);
         if (_dialogProgress.Equals(progress.doing)) {
             StopAllCoroutines();
             _txtSpeakerText.SetKey(_currentDialog.keyMessage);

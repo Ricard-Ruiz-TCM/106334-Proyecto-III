@@ -5,7 +5,7 @@ public class MidMovement : ModBuff {
 
     public override void onApply(BasicActor me) {
         Debug.Log("TODO: Apply Invisible Feedback + extras.");
-        ((Actor)me).addSteps(value);
+        ((Actor)me).addSteps((int)value);
     }
 
     public override void onRemove(BasicActor me) {

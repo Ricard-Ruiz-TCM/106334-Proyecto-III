@@ -5,22 +5,22 @@ public abstract class ModBuff : Buff {
     [Header("Effect on:")]
     public modType type;
     [Header("Value:")]
-    public int value;
+    public float value;
     [Header("How affect:")]
     public modOperation operation;
 
-    public int applyMod(int inputValue) {
+    public int applyMod(float inputValue) {
         switch (operation) {
             case modOperation.add:
-                return (inputValue + value);
+                return (int)(inputValue + value);
             case modOperation.sub:
-                return (inputValue - value);
+                return (int)(inputValue - value);
             case modOperation.mult:
-                return (inputValue * value);
+                return (int)(inputValue * value);
             case modOperation.div:
-                return (inputValue * value);
+                return (int)(inputValue * value);
         }
-        return inputValue;
+        return (int)inputValue;
     }
 
 }

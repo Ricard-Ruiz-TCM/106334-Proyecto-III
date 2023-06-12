@@ -49,7 +49,7 @@ public class ManualActor : Actor {
         if (enemy != null) {
             if (enemy != anteriorEnemy) {
                 Stage.StageBuilder.clearGrid();
-                Stage.StageBuilder.DisplayMovementRange(enemy.transform, enemy.stepsRemain(), true);
+                Stage.StageBuilder.DisplayMovementRange(enemy.transform, enemy.maxSteps(), true);
                 Stage.StageBuilder.displaySkillRange(enemy.equip.weapon.range, Stage.StageBuilder.getGridNode(enemy.transform.position));
 
                 Stage.StageBuilder.displayBothBordersActive();

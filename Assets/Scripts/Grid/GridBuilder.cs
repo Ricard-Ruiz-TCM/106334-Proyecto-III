@@ -274,7 +274,8 @@ public class GridBuilder : MonoBehaviour {
 
 
     }
-    public void DisplayMovementRange(Transform from, int range, bool isEnemy) {
+    public void DisplayMovementRange(Transform from, int range, bool isEnemy)
+    {
         int count = 1;
         int totalCount = 1;
         int xCount, jCount, zCount;
@@ -282,7 +283,8 @@ public class GridBuilder : MonoBehaviour {
         List<Node> gridList = new List<Node>();
         List<Node> finalGridList = new List<Node>();
 
-        for (int i = node.x - range; i <= node.x + range; i++) {
+        for (int i = node.x - range; i <= node.x + range; i++)
+        {
             if (i < 0)
                 xCount = 0;
             else if (i > Stage.Grid.rows)
@@ -290,26 +292,32 @@ public class GridBuilder : MonoBehaviour {
             else
                 xCount = i;
 
-            for (int j = count + node.y - 1; j < count + node.y; j++) {
+            for (int j = count + node.y - 1; j < count + node.y; j++)
+            {
                 if (j < 0)
                     jCount = 0;
                 if (j > Stage.Grid.columns)
                     jCount = Stage.Grid.columns;
                 else
                     jCount = j;
-                if (getGridNode(xCount, jCount).type != Array2DEditor.nodeType.X && Stage.Pathfinder.isAchievable(node, getGridNode(xCount, jCount), range)) {
+                if (getGridNode(xCount, jCount).type != Array2DEditor.nodeType.X && Stage.Pathfinder.isAchievable(node, getGridNode(xCount, jCount), range))
+                {
                     displayNode(xCount, jCount, pathMaterial.walkable);
                     gridList.Add(getGridNode(xCount, jCount));
                     finalGridList.Add(getGridNode(xCount, jCount));
                     getGridNode(xCount, jCount).isRangelimit = true;
 
                     //GetInsideNodes(getGridPlane(i, j).node, node);
-                } else {
+                }
+                else
+                {
                     bool hasFindClosed = false;
                     GridPlane closestPlane = getGridPlane(xCount, jCount);
-                    /*while (!hasFindClosed) {
+                    while (!hasFindClosed)
+                    {
                         closestPlane = findClosestGridRoc(closestPlane, getGridPlane(node.x, node.y));
-                        if (Stage.Pathfinder.isAchievable(node, closestPlane.node, range)) {
+                        if (Stage.Pathfinder.isAchievable(node, closestPlane.node, range) )
+                        {
                             displayNode(closestPlane.node, pathMaterial.walkable);
                             hasFindClosed = true;
                             gridList.Add(closestPlane.node);
@@ -318,12 +326,13 @@ public class GridBuilder : MonoBehaviour {
 
                             //GetInsideNodes(closestPlane.node, node);
                         }
-                    }*/
+                    }
 
                 }
 
             }
-            for (int z = node.y - count + 1; z > node.y - count; z--) {
+            for (int z = node.y - count + 1; z > node.y - count; z--)
+            {
                 if (z < 0)
                     zCount = 0;
                 if (z > Stage.Grid.columns)
@@ -331,19 +340,24 @@ public class GridBuilder : MonoBehaviour {
                 else
                     zCount = z;
 
-                if (getGridNode(xCount, zCount).type != Array2DEditor.nodeType.X && Stage.Pathfinder.isAchievable(node, getGridNode(xCount, zCount), range)) {
+                if (getGridNode(xCount, zCount).type != Array2DEditor.nodeType.X && Stage.Pathfinder.isAchievable(node, getGridNode(xCount, zCount), range))
+                {
                     displayNode(xCount, zCount, pathMaterial.walkable);
                     gridList.Add(getGridNode(xCount, zCount));
                     finalGridList.Add(getGridNode(xCount, zCount));
                     getGridNode(xCount, zCount).isRangelimit = true;
 
                     //GetInsideNodes(getGridPlane(i, z).node, node);
-                } else {
+                }
+                else
+                {
                     bool hasFindClosed = false;
                     GridPlane closestPlane = getGridPlane(xCount, zCount);
-                    /*while (!hasFindClosed) {
+                    while (!hasFindClosed)
+                    {
                         closestPlane = findClosestGridRoc(closestPlane, getGridPlane(node.x, node.y));
-                        if (Stage.Pathfinder.isAchievable(node, closestPlane.node, range)) {
+                        if (Stage.Pathfinder.isAchievable(node, closestPlane.node, range))
+                        {
                             displayNode(closestPlane.node, pathMaterial.walkable);
                             hasFindClosed = true;
                             gridList.Add(closestPlane.node);
@@ -352,35 +366,44 @@ public class GridBuilder : MonoBehaviour {
 
                             //GetInsideNodes(closestPlane.node, node);
                         }
-                    }*/
+                    }
 
                 }
             }
-            if (xCount == node.x - range || xCount == node.x + range) {
-                if (Stage.Grid.insideGrid(i, node.y)) {
+            if (xCount == node.x - range || xCount == node.x + range)
+            {
+                if (Stage.Grid.insideGrid(i, node.y))
+                {
                     displayNode(xCount, node.y, pathMaterial.walkable);
                 }
             }
 
-            if (totalCount > range) {
+            if (totalCount > range)
+            {
                 count--;
-            } else {
+            }
+            else
+            {
                 count++;
             }
             totalCount++;
         }
 
-        foreach (Node item in gridList) {
+        foreach (Node item in gridList)
+        {
             bool hasArrivedCenter = false;
             GridPlane closestPlane = getGridPlane(item);
-            while (!hasArrivedCenter) {
+            while (!hasArrivedCenter)
+            {
                 closestPlane = findClosestGridRoc(getGridPlane(closestPlane.node), getGridPlane(node)); // si hay algun bug que se pone mal, 100000000000% es por esto uwu
-                if (closestPlane.node.type != Array2DEditor.nodeType.X || (closestPlane.node == node && isEnemy)) {
+                if (closestPlane.node.type != Array2DEditor.nodeType.X || (closestPlane.node == node && isEnemy))
+                {
                     closestPlane.node.isRangelimit = true;
                     //displayNode(closestPlane, pathMaterial.invisible);
                     finalGridList.Add(closestPlane.node);
 
-                    if (closestPlane.node == node) {
+                    if (closestPlane.node == node)
+                    {
                         hasArrivedCenter = true;
 
                     }
@@ -389,7 +412,8 @@ public class GridBuilder : MonoBehaviour {
             displayNode(item, pathMaterial.walkable);
         }
         DisplayBorders(finalGridList, true);
-        foreach (Node item in finalGridList) {
+        foreach (Node item in finalGridList)
+        {
             item.isRangelimit = false;
         }
 

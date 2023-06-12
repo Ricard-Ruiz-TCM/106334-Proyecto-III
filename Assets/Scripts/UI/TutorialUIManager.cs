@@ -6,6 +6,14 @@ public class TutorialUIManager : MonoBehaviour
 {
     [SerializeField]
     private GameObject firstPanel;
+    [SerializeField]
+    private List<GameObject> firstRoundOfPanels;
+    [SerializeField]
+    private GameObject positioningPanel;
+    [SerializeField]
+    private GameObject combatPanel;
+
+    private bool firstTimeInCombat = true;
 
     void OnEnable()
     {
@@ -21,7 +29,32 @@ public class TutorialUIManager : MonoBehaviour
 
     public void ActivatePanel(roundType roundType)
     {
-        firstPanel.SetActive(true);
-        firstPanel.GetComponent<TutorialUI>().setRoundsHaveStarted();
+        switch(roundType)
+        {
+            case roundType.positioning:
+                firstPanel.SetActive(true);
+                firstPanel.GetComponent<TutorialUI>().setRoundsHaveStarted();
+                break;
+            case roundType.combat:
+                if(firstTimeInCombat)
+                {
+                    firstTimeInCombat = false;
+                    combatPanel.SetActive(true);
+                    combatPanel.GetComponent<TutorialUI>().setRoundsHaveStarted();
+                }                
+                break;
+            default:
+                break;
+        }        
+    }
+
+    public void ActivateOnPositioningPanel()
+    {
+        foreach(var panel in firstRoundOfPanels)
+        {
+            panel.SetActive(false);
+        }
+        positioningPanel.SetActive(true);
+        positioningPanel.GetComponent<TutorialUI>().setRoundsHaveStarted();
     }
 }

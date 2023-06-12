@@ -30,7 +30,7 @@ public class Stage : MonoBehaviour {
     // Unity OnDisable
     void OnDisable() {
         /*TurnManager.instance.onEndRound -= (roundType r) => {
-            if (!r.Equals(roundType.positioning))
+            if (!r.Equals(roundType.posit mal.ioning))
                 return;
 
             TurnManager.instance.onModifyAttenders += checkGameResolution;

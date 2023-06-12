@@ -307,7 +307,7 @@ public class GridBuilder : MonoBehaviour {
                 } else {
                     bool hasFindClosed = false;
                     GridPlane closestPlane = getGridPlane(xCount, jCount);
-                    while (!hasFindClosed) {
+                    /*while (!hasFindClosed) {
                         closestPlane = findClosestGridRoc(closestPlane, getGridPlane(node.x, node.y));
                         if (Stage.Pathfinder.isAchievable(node, closestPlane.node, range)) {
                             displayNode(closestPlane.node, pathMaterial.walkable);
@@ -318,7 +318,7 @@ public class GridBuilder : MonoBehaviour {
 
                             //GetInsideNodes(closestPlane.node, node);
                         }
-                    }
+                    }*/
 
                 }
 
@@ -341,7 +341,7 @@ public class GridBuilder : MonoBehaviour {
                 } else {
                     bool hasFindClosed = false;
                     GridPlane closestPlane = getGridPlane(xCount, zCount);
-                    while (!hasFindClosed) {
+                    /*while (!hasFindClosed) {
                         closestPlane = findClosestGridRoc(closestPlane, getGridPlane(node.x, node.y));
                         if (Stage.Pathfinder.isAchievable(node, closestPlane.node, range)) {
                             displayNode(closestPlane.node, pathMaterial.walkable);
@@ -352,7 +352,7 @@ public class GridBuilder : MonoBehaviour {
 
                             //GetInsideNodes(closestPlane.node, node);
                         }
-                    }
+                    }*/
 
                 }
             }

@@ -143,7 +143,7 @@ public class GameManager : MonoBehaviour {
 
     #region Player
 
-   
+
     [SerializeField, Header("Player Data:")]
     private bool _avaliable = false;
 

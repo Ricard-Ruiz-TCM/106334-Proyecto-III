@@ -22,19 +22,16 @@ public class AutomaticActor : Actor {
         }
     }
 
-    private IEnumerator CThinking()
-    {
+    private IEnumerator CThinking() {
         _delayDone = true;
         yield return new WaitForSeconds(_delayTime);
         // Change to flee if low health
-        if ((!_combatAI.Equals(combatAI.flee)) && (healthPercent() <= _fleeThreshold))
-        {
+        if ((!_combatAI.Equals(combatAI.flee)) && (healthPercent() <= _fleeThreshold)) {
             _combatAI = combatAI.flee;
         }
 
         // AI de combate
-        switch (_combatAI)
-        {
+        switch (_combatAI) {
             case combatAI.ranged:
             case combatAI.melee:
                 mixedCombatAI();
@@ -55,31 +52,23 @@ public class AutomaticActor : Actor {
     /** Método para establecer combate a distancia mínima */
     private void mixedCombatAI() {
         // Movimiento
-        if (canMove())
-        {
-            if (canMoveIfBuff())
-            {
+        if (canMove()) {
+            if (canMoveIfBuff()) {
                 moveMinWeaponRangeDistance();
-            }
-            else
-            {
+            } else {
                 endMovement();
             }
         }
-            
+
         // Acting
-        if (isMovementDone()&& canAct())
-        {
-            if (canActIfBuff())
-            {
+        if (isMovementDone() && canAct()) {
+            if (canActIfBuff()) {
                 attackPriositisingSkills();
-            }
-            else
-            {
+            } else {
                 endAction();
             }
         }
-            
+
     }
     #endregion
 
@@ -87,37 +76,28 @@ public class AutomaticActor : Actor {
     /** Método para establecer la IA de combate de huir */
     private void fleeCombatAI() {
         // Acting
-        if (canAct())
-        {
-            if (canActIfBuff())
-            {
+        if (canAct()) {
+            if (canActIfBuff()) {
                 attackPriositingMovementNDefensiveSkills();
-            }
-            else
-            {
+            } else {
                 endAction();
             }
         }
 
         // Moving
-        if (canMove())
-        {
-            if (canMoveIfBuff())
-            {
+        if (canMove()) {
+            if (canMoveIfBuff()) {
                 moveFarAway();
-            }
-            else
-            {
+            } else {
                 endMovement();
             }
-        }           
+        }
     }
     #endregion
 
     #region combatAI's
     /** Métodos de Acting */
-    private void attackPriositingMovementNDefensiveSkills() 
-    {
+    private void attackPriositingMovementNDefensiveSkills() {
         Turnable near;
 
         if (canAct())
@@ -133,7 +113,7 @@ public class AutomaticActor : Actor {
                 // Last Chance para atacar
                 near = Stage.StageManager.findByTag(transform, "Player");
                 if (near != null) {
-                    if (Stage.StageBuilder.getDistance(transform.position, near.transform.position) < _equip.weapon.range) {
+                    if (Stage.StageBuilder.getDistance(transform.position, near.transform.position) <= _equip.weapon.range) {
                         skills.useSkill(skillID.Attack, this, Stage.StageBuilder.getGridNode(near.transform.position));
                         UseSkill(Stage.StageBuilder.getGridNode(near.transform.position));
                         // Anim
@@ -155,7 +135,7 @@ public class AutomaticActor : Actor {
         // Player Encontrado
         if (near != null) {
 
-            bool inWeaponRange = (Stage.StageBuilder.getDistance(transform.position, near.transform.position) <= _equip.weapon.range + 1);
+            bool inWeaponRange = (Stage.StageBuilder.getDistance(transform.position, near.transform.position) <= _equip.weapon.range);
 
             // Skills + end with combat
             if (canAct())
@@ -191,8 +171,7 @@ public class AutomaticActor : Actor {
     }
 
     /** Métodos de Moving */
-    private void moveFarAway() 
-    {
+    private void moveFarAway() {
         Turnable near = Stage.StageManager.findByTag(transform, "Player");
 
         // Player encontrado
@@ -240,12 +219,10 @@ public class AutomaticActor : Actor {
             }
 
             // Cortamos el path aa la distancia mínima del arma
-            if (path.Count > equip.weapon.range) {
+            if (path.Count > equip.weapon.range + 1) {
                 path.Reverse();
                 path.RemoveRange(0, equip.weapon.range);
                 path.Reverse();
-            } else {
-                path.Clear();
             }
 
             // Cortamos el path al movimiento mínimo

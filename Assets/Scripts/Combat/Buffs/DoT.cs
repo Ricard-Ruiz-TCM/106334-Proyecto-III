@@ -6,7 +6,7 @@ public abstract class DoT : Buff {
     public int damage;
 
     public override void endTurnEffect(BasicActor me) {
-        me.takeDamage((Actor)me, damage);
+        me.takeDamage((Actor)me, damage, itemID.NONE);
     }
 
 }

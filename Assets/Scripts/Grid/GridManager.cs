@@ -1,6 +1,5 @@
-using System;
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class GridManager : MonoBehaviour {
 
@@ -28,22 +27,19 @@ public class GridManager : MonoBehaviour {
     private Turnable findSomeOne(Transform origin, string tag) {
         Turnable nearest = null;
         float tmp = float.MaxValue;
-        foreach (Turnable actor in TurnManager.instance.attenders) 
-        {
+        foreach (Turnable actor in TurnManager.instance.attenders) {
             // Check es player
             if (!actor.CompareTag(tag))
                 continue;
-            if (!((Actor)actor).buffs.isBuffActive(buffsID.Invisible))
-            {
+            if (!((Actor)actor).buffs.isBuffActive(buffsID.Invisible)) {
                 // Find cercano
                 float dis = Vector3.Distance(origin.position, actor.transform.position);
-                if (dis < tmp)
-                {
+                if (dis < tmp) {
                     tmp = dis;
                     nearest = actor;
                 }
             }
-            
+
         }
         return nearest;
     }
@@ -75,7 +71,7 @@ public class GridManager : MonoBehaviour {
         for (int x = 0; x < grid.rows; x++) {
             for (int y = 0; y < grid.columns; y++) {
                 if (grid.nodeMap[x, y].type.Equals(Array2DEditor.nodeType.P)) {
-                    innitials.Add(grid.nodeMap[x,y]);
+                    innitials.Add(grid.nodeMap[x, y]);
                 }
             }
         }

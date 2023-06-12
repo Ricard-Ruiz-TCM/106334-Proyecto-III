@@ -1,5 +1,5 @@
-using System;
 using Array2DEditor;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -89,8 +89,7 @@ public class Grid2D : MonoBehaviour {
 
         return neighbours;
     }
-    public List<Vector2> getNeighboursWithoutCheck(Node node)
-    {
+    public List<Vector2> getNeighboursWithoutCheck(Node node) {
         List<Vector2> neighbours = new List<Vector2>();
 
         neighbours.Add(new Vector2(node.x + 1, node.y));

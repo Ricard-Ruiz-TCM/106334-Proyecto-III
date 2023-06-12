@@ -36,7 +36,7 @@ public class ManualActor : Actor {
         // Solo Updateamos el path si hemos movido el ratón
         if (nodePositionChanged() && canMove() && canMoveIfBuff()) {
             Stage.StageBuilder.clearGrid();
-            Stage.StageBuilder.DisplayMovementRange(transform, stepsRemain(),false);
+            Stage.StageBuilder.DisplayMovementRange(transform, stepsRemain(), false);
             // Calcular la ruta nueva
             List<Node> route = Stage.Pathfinder.FindPath(_myNode, _mouseNode);
             if (route != null) {
@@ -46,26 +46,21 @@ public class ManualActor : Actor {
             }
         }
         Actor enemy = Stage.StageBuilder.getMouseEnemy();
-        if (enemy != null)
-        {
-            if(enemy != anteriorEnemy)
-            {
+        if (enemy != null) {
+            if (enemy != anteriorEnemy) {
                 Stage.StageBuilder.clearGrid();
-                Stage.StageBuilder.DisplayMovementRange(enemy.transform, enemy.stepsRemain(),true);
+                Stage.StageBuilder.DisplayMovementRange(enemy.transform, enemy.stepsRemain(), true);
                 Stage.StageBuilder.displaySkillRange(enemy.equip.weapon.range, Stage.StageBuilder.getGridNode(enemy.transform.position));
 
                 Stage.StageBuilder.displayBothBordersActive();
 
                 anteriorEnemy = enemy;
             }
-            
-        }
-        else
-        {
+
+        } else {
             anteriorEnemy = null;
             // Display de walkablePath
-            if ((_walkablePath != null) && (_walkablePath.Count > 0))
-            {
+            if ((_walkablePath != null) && (_walkablePath.Count > 0)) {
                 Stage.StageBuilder.displayPath(_walkablePath, pathMaterial.walkable);
                 // Si no estamos dentro del rango de movimineot, no aceptamos input
                 Node target = Stage.StageBuilder.getMouseGridNode();
@@ -75,8 +70,7 @@ public class ManualActor : Actor {
                 // Input
                 if ((Input.GetMouseButtonDown(0)) && (canMove() && canMoveIfBuff())) //POSSIBLE BUG
                 {
-                    if (_canMove)
-                    {
+                    if (_canMove) {
                         setDestination(_walkablePath);
                         startMove();
                         _walkablePath = null;
@@ -87,7 +81,7 @@ public class ManualActor : Actor {
             }
         }
 
-        
+
 
     }
 
@@ -113,8 +107,7 @@ public class ManualActor : Actor {
     }
 
     /** Override del act */
-    public override void act() 
-    {
+    public override void act() {
 
         // Reset de la acción si pulsamos escape
         if (Input.GetKeyDown(KeyCode.Escape)) {
@@ -130,7 +123,7 @@ public class ManualActor : Actor {
             Stage.StageBuilder.displaySkillRange(equip.weapon.range, _myNode);
             // Check si estamos dentro de la distancia
             if (Stage.StageBuilder.getDistance(_mouseNode, _myNode) <= equip.weapon.range && Stage.StageBuilder.getGridPlane(_mouseNode).CanBeAttacked) {
-                Stage.StageBuilder.displaySkill(_tempSkillID, _mouseNode, pathMaterial.skill,this);
+                Stage.StageBuilder.displaySkill(_tempSkillID, _mouseNode, pathMaterial.skill, this);
             }
         }
 

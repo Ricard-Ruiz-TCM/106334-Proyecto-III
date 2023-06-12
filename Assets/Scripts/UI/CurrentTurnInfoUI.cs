@@ -1,9 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class CurrentTurnInfoUI : MonoBehaviour
-{
+public class CurrentTurnInfoUI : MonoBehaviour {
 
     [SerializeField]
     private UIText _health, _defense;

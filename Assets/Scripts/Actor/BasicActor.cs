@@ -1,8 +1,6 @@
 ﻿using System;
 using TMPro;
 using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 
 public abstract class BasicActor : Turnable {
 
@@ -61,18 +59,15 @@ public abstract class BasicActor : Turnable {
     }
 
     /** Override del start */
-    protected override void Start() 
-    {
-        if(skinnedMesh != null)
-        {
+    protected override void Start() {
+        if (skinnedMesh != null) {
             skinnedMaterials = new Material[skinnedMesh.materials.Length];
             skinnedMaterials = skinnedMesh.materials;
-        }       
+        }
         _maxHealth = _health;
         Stage.Grid.changeNodeType(transform.position, Array2DEditor.nodeType.X);
 
-        if(entitieUIPrefab != null)
-        {
+        if (entitieUIPrefab != null) {
             entitieUI = Instantiate(entitieUIPrefab, new Vector3(transform.position.x, transform.position.y + height, transform.position.z), Quaternion.identity);
             entitieUI.transform.SetParent(transform);
         }
@@ -110,10 +105,9 @@ public abstract class BasicActor : Turnable {
 
         InstantPopUp(-_damageTaken);
 
-        if(entitieUI != null)
-        {
+        if (entitieUI != null) {
             entitieUI.GetComponent<EntitieUI>().SetDamage((float)_damageTaken / (float)_maxHealth);
-        }      
+        }
 
         onChangeHealth?.Invoke();
 
@@ -172,8 +166,7 @@ public abstract class BasicActor : Turnable {
     }
 
     /** Abstract para indicar que pasa cuando morimos */
-    public virtual void onActorDeath() 
-    {
+    public virtual void onActorDeath() {
         Destroy(entitieUI);
         TurnManager.instance.unsubscribe(this);
         this.enabled = false;

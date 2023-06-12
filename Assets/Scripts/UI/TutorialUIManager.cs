@@ -1,9 +1,7 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TutorialUIManager : MonoBehaviour
-{
+public class TutorialUIManager : MonoBehaviour {
     [SerializeField]
     private GameObject firstPanel;
     [SerializeField]
@@ -17,44 +15,39 @@ public class TutorialUIManager : MonoBehaviour
 
     private bool firstTimeInCombat = true;
 
-    void OnEnable()
-    {
+    void OnEnable() {
         TurnManager.instance.onNewRound += ActivatePanel;
         //DialogManager.instance.onNextDialog += UpdateDialog;
     }
 
     // Unity OnDisable
-    void OnDisable()
-    {
+    void OnDisable() {
         TurnManager.instance.onNewRound -= ActivatePanel;
     }
 
-    public void ActivatePanel(roundType roundType)
-    {
-        switch(roundType)
-        {
+    public void ActivatePanel(roundType roundType) {
+        switch (roundType) {
             case roundType.positioning:
                 firstPanel.SetActive(true);
                 firstPanel.GetComponent<TutorialUI>().setRoundsHaveStarted();
                 break;
             case roundType.combat:
-                if(firstTimeInCombat)
-                {
-                    foreach(var positionRoundPanel in positioningRoundOfPanels) { positionRoundPanel.SetActive(false); }
+                if (firstTimeInCombat) {
+                    foreach (var positionRoundPanel in positioningRoundOfPanels) {
+                        positionRoundPanel.SetActive(false);
+                    }
                     firstTimeInCombat = false;
                     combatPanel.SetActive(true);
                     combatPanel.GetComponent<TutorialUI>().setRoundsHaveStarted();
-                }          
+                }
                 break;
             default:
                 break;
-        }        
+        }
     }
 
-    public void ActivateOnPositioningPanel()
-    {
-        foreach(var panel in firstRoundOfPanels)
-        {
+    public void ActivateOnPositioningPanel() {
+        foreach (var panel in firstRoundOfPanels) {
             panel.SetActive(false);
         }
         positioningPanel.SetActive(true);

@@ -1,15 +1,12 @@
 ﻿using UnityEngine;
 
 [CreateAssetMenu(fileName = "MidDefense", menuName = "Combat/Buffs/Mid Defense")]
-public class MidDefense : ModBuff 
-{
-    public override void onApply(BasicActor me) 
-    {
+public class MidDefense : ModBuff {
+    public override void onApply(BasicActor me) {
         Debug.Log("TODO: Apply Invisible Feedback + extras.");
     }
 
-    public override void onRemove(BasicActor me) 
-    {
+    public override void onRemove(BasicActor me) {
         Debug.Log("TODO: Remove Invisible Feedback");
     }
 

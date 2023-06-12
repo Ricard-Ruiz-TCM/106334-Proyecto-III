@@ -1,6 +1,5 @@
-using System;
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class SceneStageManager : MonoBehaviour {
 
@@ -124,8 +123,7 @@ public class SceneStageManager : MonoBehaviour {
         DialogManager.instance.startDialog(node);
     }
 
-    private void startTutorial(DialogNode node)
-    {
+    private void startTutorial(DialogNode node) {
         _tutorialUI.SetActive(true);
         // Innit del dialogManager
         DialogManager.instance.startDialog(node);
@@ -134,7 +132,8 @@ public class SceneStageManager : MonoBehaviour {
     /** Método para inicializar combate */
     private void startCombat() {
         _objetiveUI.gameObject.SetActive(true);
-        if(_data.tutorialDialog != null) startTutorial(_data.tutorialDialog);
+        if (_data.tutorialDialog != null)
+            startTutorial(_data.tutorialDialog);
         _objetiveUI.SetObjetive(_data);
         _playerUI.SetActive(true);
         _turnUI.SetActive(true);
@@ -147,7 +146,7 @@ public class SceneStageManager : MonoBehaviour {
         uCore.GameManager.getPlayer().build();
         foreach (GameObject actors in _actors) {
             actors.SetActive(true);
-            if(actors.GetComponent<Actor>() != null)
+            if (actors.GetComponent<Actor>() != null)
                 actors.GetComponent<Actor>().build();
         }
 

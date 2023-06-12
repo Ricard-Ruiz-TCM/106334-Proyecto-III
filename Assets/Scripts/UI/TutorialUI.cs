@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -29,42 +28,34 @@ public class TutorialUI : MonoBehaviour {
     private bool textSetted = false;
 
 
-    private void Update()
-    {
-        if(roundsHaveStarted && myTurn && !textSetted)
-        {
+    private void Update() {
+        if (roundsHaveStarted && myTurn && !textSetted) {
             textSetted = true;
             setText();
         }
 
     }
 
-    public bool getMyTurnValue()
-    {
+    public bool getMyTurnValue() {
         return myTurn;
     }
 
-    public void setMyTurn()
-    {
+    public void setMyTurn() {
         myTurn = true;
     }
 
-    private void setText()
-    {
+    private void setText() {
         TutorialTextWritter.AddWritter_Static(_txtSpeakerName, _txtSpeakerText, _txtSpeakerName.text = uCore.Localization.GetText(txtNameKey), _txtSpeakerText.text = uCore.Localization.GetText(txtDescriptKey), timePerCharacter);
     }
 
-    public void setRoundsHaveStarted()
-    {
+    public void setRoundsHaveStarted() {
         roundsHaveStarted = true;
     }
 
     // Clickar en el texto del dialogo
-    public void onClickSetNext()
-    {
+    public void onClickSetNext() {
         FMODManager.instance.PlayOneShot(FMODEvents.instance.PressButtonUI);
-        if(nextPopUp != null)
-        {
+        if (nextPopUp != null) {
             nextPopUp.gameObject.SetActive(true);
             nextPopUp.setMyTurn();
             nextPopUp.setText();

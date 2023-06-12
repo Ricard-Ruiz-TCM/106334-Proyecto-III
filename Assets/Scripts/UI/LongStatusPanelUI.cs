@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class LongStatusPanelUI : MonoBehaviour {
-    
+
     public Image _icon;
     public UIText _name;
     public UIText _duration;

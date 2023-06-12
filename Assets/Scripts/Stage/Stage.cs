@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class Stage : MonoBehaviour {
@@ -49,10 +50,14 @@ public class Stage : MonoBehaviour {
         _data = data;
     }
 
+    private bool completed = false;
+
     /** Método para comprobar si el stage ha sido completado, depende del objetivo */
     private void checkGameResolution() {
+        if (completed)
+            return;
 
-        bool completed = false;
+        completed = false;
         bool palyer = TurnManager.instance.attenders.Exists(x => x is ManualActor);
         bool npc = TurnManager.instance.attenders.Exists(x => x is ProtectedActor);
         bool enemies = TurnManager.instance.attenders.Exists(x => x is AutomaticActor);
@@ -76,12 +81,15 @@ public class Stage : MonoBehaviour {
             }
 
             if (completed) {
-                endStage(stageResolution.victory);
+                StartCoroutine(endStage(stageResolution.victory));
             }
         }
     }
 
-    private void endStage(stageResolution res) {
+    public float _resolutionDelayInSec = 2.5f;
+
+    private IEnumerator endStage(stageResolution res) {
+        yield return new WaitForSeconds(_resolutionDelayInSec);
         TurnManager.instance.endManager();
         onCompleteStage?.Invoke(res);
     }

@@ -1,5 +1,5 @@
-using System;
 using Array2DEditor;
+using System;
 
 [Serializable]
 public class Node {

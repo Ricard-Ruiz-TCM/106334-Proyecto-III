@@ -5,7 +5,7 @@ using UnityEngine;
 public class ArmorInventoryItem {
 
     public ArmorItem armor;
-    [Range(0,2)]
+    [Range(0, 2)]
     public int upgrade;
 
     public int defense => armor.defense[upgrade];

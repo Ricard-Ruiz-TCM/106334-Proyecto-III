@@ -1,1 +1,2 @@
-﻿public class ProtectedActor : ManualActor { }
+﻿public class ProtectedActor : ManualActor {
+}

@@ -61,7 +61,7 @@ public class PlayerUI : MonoBehaviour {
         BuffManager.onApplyBuff -= displayBuffs;
         BuffManager.onRemoveBuff -= displayBuffs;
 
-        Actor.onSkillUsed -= (Node n) => { disableSkills(); } ;
+        Actor.onSkillUsed -= (Node n) => { disableSkills(); };
 
         Actor.onStepReached -= (Node n) => { updateSteps(); };
 
@@ -195,8 +195,7 @@ public class PlayerUI : MonoBehaviour {
         if (!TurnManager.instance.current.Equals(_player))
             return;
 
-        foreach (KeyValuePair<skillID, SkillButtonUI> entry in _skillButtons) 
-        {
+        foreach (KeyValuePair<skillID, SkillButtonUI> entry in _skillButtons) {
             entry.Value.gameObject.GetComponent<Button>().interactable = true;
         }
     }

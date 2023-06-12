@@ -150,8 +150,7 @@ public class CameraGPT : MonoBehaviour {
     }
 
     /** Método para establecer el focus temporal */
-    private void focusNode(Node target) 
-    {
+    private void focusNode(Node target) {
         if (target == null)
             return;
         _temporalTarget = _target;

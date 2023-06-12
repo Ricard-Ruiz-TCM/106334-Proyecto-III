@@ -41,8 +41,7 @@ public abstract class Turnable : MonoBehaviour {
     public virtual bool canAct() {
         return acting.Equals(progress.ready);
     }
-    public virtual void startAct() 
-    {
+    public virtual void startAct() {
         state = turnState.acting;
         acting = progress.doing;
     }
@@ -58,12 +57,10 @@ public abstract class Turnable : MonoBehaviour {
     /** Métodos de control de Movimiento */
     public progress moving;
     public abstract void move();
-    public virtual bool canMove() 
-    {
+    public virtual bool canMove() {
         return moving.Equals(progress.ready);
     }
-    public virtual void startMove() 
-    {
+    public virtual void startMove() {
         state = turnState.moving;
         moving = progress.doing;
     }

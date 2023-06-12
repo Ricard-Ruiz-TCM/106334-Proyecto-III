@@ -1,7 +1,7 @@
-﻿using UnityEngine;
-using Array2DEditor;
+﻿using Array2DEditor;
+using UnityEngine;
 
-public class SingleGridModifier  : MonoBehaviour{
+public class SingleGridModifier : MonoBehaviour {
 
     [SerializeField]
     private nodeType _newType;

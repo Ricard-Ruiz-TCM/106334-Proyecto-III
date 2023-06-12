@@ -84,10 +84,9 @@ public class DialogUI : MonoBehaviour {
         SetAlpha(_speaker, 1f);
         _speaker.sprite = _currentDialog.speaker;
         _txtSpeakerName.SetKey(_currentDialog.keyName);
-        try
-        {
+        try {
             StartCoroutine(C_DisplayText(uCore.Localization.GetText(_currentDialog.keyMessage)));
-        } catch(Exception ex) { }
+        } catch (Exception ex) { }
     }
 
 

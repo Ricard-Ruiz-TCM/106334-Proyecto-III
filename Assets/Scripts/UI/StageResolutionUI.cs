@@ -16,11 +16,12 @@ public class StageResolutionUI : MonoBehaviour {
     /** Establece la informaicón básica del stage, nombre y objetivo */
     public void SetResolution(stageResolution res, Action success, Action failure) {
         _txtResolution.SetKey(res.ToString());
-        _success = success; _failure = failure;
+        _success = success;
+        _failure = failure;
         if (res.Equals(stageResolution.defeat)) {
             FMODManager.instance.PlayOneShot(FMODEvents.instance.GameOver);
             _btnVictory.SetActive(false);
-        } else {            
+        } else {
             _btnDefeat.SetActive(false);
         }
     }

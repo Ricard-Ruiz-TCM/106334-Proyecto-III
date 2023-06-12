@@ -8,7 +8,7 @@ public class SkillItem {
 
     public SkillItem(Skill data) {
         skill = data;
-        cooldown = data.cooldown;
+        cooldown = 0;
     }
 
 }

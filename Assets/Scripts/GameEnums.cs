@@ -73,7 +73,7 @@ public enum buffsID {
     // Buffos "Planos"
     LowDefense, MidDefense, MidDamage, MidMovement,
     // Efecto
-    Disarmed, Stunned, Invisible, Motivated, Invencible, ArrowProof, 
+    Disarmed, Stunned, Invisible, Motivated, Invencible, ArrowProof,
 
     MAX
 }

@@ -48,8 +48,7 @@ public abstract class Actor : BasicActor {
     protected List<Node> _route = new List<Node>();
     protected int _stepsDone;
 
-    private void Update()
-    {
+    private void Update() {
         footsteps.set3DAttributes(RuntimeUtils.To3DAttributes(Camera.main.transform.position));
     }
 
@@ -92,14 +91,12 @@ public abstract class Actor : BasicActor {
 
     /** Override Move from Turnable */
     public override void move() {
-        if (stepReached()) 
-        {
+        if (stepReached()) {
             //FMOD PLAY
             PLAYBACK_STATE playbackState;
             footsteps.getPlaybackState(out playbackState);
             Debug.Log("PLAY BACK STATE: " + playbackState);
-            if(playbackState.Equals(PLAYBACK_STATE.STOPPED))
-            {
+            if (playbackState.Equals(PLAYBACK_STATE.STOPPED)) {
                 footsteps.start();
             }
             nextStep();
@@ -120,8 +117,7 @@ public abstract class Actor : BasicActor {
 
     /** Método para ir al siguiente nodo */
     private void nextStep() {
-        if (_route == null) 
-        {
+        if (_route == null) {
             endMovement();
             return;
         }
@@ -129,14 +125,12 @@ public abstract class Actor : BasicActor {
         if (_stepsDone < _route.Count) {
             onStepReached?.Invoke(Stage.StageBuilder.getGridPlane(_route[_stepsDone]).node);
             _stepsDone++;
-            if (_stepsDone >= _route.Count) 
-            {
+            if (_stepsDone >= _route.Count) {
                 endMovement();
             } else {
                 setStep(_route[_stepsDone]);
             }
-        } else 
-        {
+        } else {
             endMovement();
             onDestinationReached?.Invoke();
         }
@@ -149,10 +143,8 @@ public abstract class Actor : BasicActor {
     }
 
     /** Comprueba si hemos llegado al punto */
-    public bool stepReached() 
-    {
-        if(!_agent.hasPath && !_agent.pathPending && _agent.pathStatus == NavMeshPathStatus.PathComplete)
-        {
+    public bool stepReached() {
+        if (!_agent.hasPath && !_agent.pathPending && _agent.pathStatus == NavMeshPathStatus.PathComplete) {
             Stage.StageBuilder.getGridPlane(transform.position).pathGameObject.SetActive(false);
             return true;
         }
@@ -181,22 +173,17 @@ public abstract class Actor : BasicActor {
     }
 
     /** Override del canAct */
-    public override bool canAct() 
-    {
+    public override bool canAct() {
         return base.canAct();
     }
-    public bool canMoveIfBuff()
-    {
-        if (_buffs.isBuffActive(buffsID.Stunned))
-        {
+    public bool canMoveIfBuff() {
+        if (_buffs.isBuffActive(buffsID.Stunned)) {
             return false;
         }
         return true;
     }
-    public bool canActIfBuff()
-    {
-        if (_buffs.isBuffActive(buffsID.Disarmed) || _buffs.isBuffActive(buffsID.Stunned))
-        {         
+    public bool canActIfBuff() {
+        if (_buffs.isBuffActive(buffsID.Disarmed) || _buffs.isBuffActive(buffsID.Stunned)) {
             return false;
         }
         return true;
@@ -228,7 +215,7 @@ public abstract class Actor : BasicActor {
         foreach (BuffItem bi in _buffs.activeBuffs) {
             if (bi.buff is ModBuff) {
                 if (((ModBuff)bi.buff).type.Equals(modType.damage)) {
-                    dmg = ((ModBuff)bi.buff).applyMod(dmg); 
+                    dmg = ((ModBuff)bi.buff).applyMod(dmg);
 
                 }
             }
@@ -270,7 +257,7 @@ public abstract class Actor : BasicActor {
     }
 
     // Unity Awake
-    protected virtual void Awake() {        
+    protected virtual void Awake() {
         // NavMeshAgent
         _agent = GetComponent<NavMeshAgent>();
         // Managers
@@ -283,7 +270,7 @@ public abstract class Actor : BasicActor {
         _animator = GetComponentInChildren<Animator>();
 
         //FMOD
-        footsteps = FMODManager.instance.CreateEventInstance(FMODEvents.instance.Steps);        
+        footsteps = FMODManager.instance.CreateEventInstance(FMODEvents.instance.Steps);
     }
 
     /** Método para construir las skills según las perks y equipamiento */
@@ -320,10 +307,8 @@ public abstract class Actor : BasicActor {
                     _baseDefense = ((ModPerk)pi.perk).apply(_baseDefense);
                 }
             }
-            if (pi.perk is ModPerk)
-            {
-                if (pi.perk.modType.Equals(modType.movement))
-                {
+            if (pi.perk is ModPerk) {
+                if (pi.perk.modType.Equals(modType.movement)) {
                     _steps++;
                 }
             }

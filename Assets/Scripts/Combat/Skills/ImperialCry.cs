@@ -1,20 +1,16 @@
-using System;
-using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
-using FMODUnity;
+using UnityEngine;
 
 [CreateAssetMenu(fileName = "ImperialCry", menuName = "Combat/Skills/Imperial Cry")]
 public class ImperialCry : Skill {
-    
+
     [SerializeField, Header("Range effect:")]
     private int range = 2;
     public Material mat;
     public GameObject effectPrefab;
     //List<Material> anteriorMatarial;
 
-    public override void action(BasicActor from, Node to) 
-    {
+    public override void action(BasicActor from, Node to) {
         FMODManager.instance.PlayOneShot(FMODEvents.instance.UsoHabilidad);
         FMODManager.instance.PlayOneShot(FMODEvents.instance.ImperialCry);
         ((Actor)from).buffs.applyBuffs((Actor)from, buffsID.ArrowProof, buffsID.MidDefense);
@@ -34,16 +30,14 @@ public class ImperialCry : Skill {
         }
 
     }
-    IEnumerator PlayEffect(BasicActor from)
-    {
+    IEnumerator PlayEffect(BasicActor from) {
         GameObject effect = Instantiate(effectPrefab, from.transform.position, Quaternion.identity);
         yield return new WaitForSeconds(0.2f);
 
 
         Material[] prova = new Material[from.skinnedMesh.materials.Length];
 
-        for (int i = 0; i < prova.Length; i++)
-        {
+        for (int i = 0; i < prova.Length; i++) {
             prova[i] = mat;
         }
         from.skinnedMesh.materials = prova;

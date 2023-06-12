@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(Grid2D))]
 public class GridBuilder : MonoBehaviour {
 
-    public static event Action onGridBuild; 
+    public static event Action onGridBuild;
 
     [HideInInspector]
     public Grid2D _grid;
@@ -51,7 +51,7 @@ public class GridBuilder : MonoBehaviour {
             for (int y = 0; y < _grid.columns; y++) {
                 // Posición donde será isntanciado
                 Node node = _grid.getNode(x, y);
-                Vector3 position = new Vector3(x  * 10f * _planePfb.transform.localScale.x + _offset, 0.1f, y * 10f * _planePfb.transform.localScale.y + _offset);
+                Vector3 position = new Vector3(x * 10f * _planePfb.transform.localScale.x + _offset, 0.1f, y * 10f * _planePfb.transform.localScale.y + _offset);
                 // Instant del prefab
                 GridPlane obj = GameObject.Instantiate(_planePfb, position, Quaternion.identity, transform).GetComponent<GridPlane>();
                 obj.gameObject.name = "M[" + x + "," + y + "]-" + "W:" + node.walkable;
@@ -89,17 +89,14 @@ public class GridBuilder : MonoBehaviour {
         }
         return null;
     }
-    public Actor getMouseEnemy()
-    {
+    public Actor getMouseEnemy() {
         RaycastHit raycastHit;
-        if (Physics.Raycast(Camera.main.ScreenPointToRay(uCore.Action.mousePosition), out raycastHit))
-        {
+        if (Physics.Raycast(Camera.main.ScreenPointToRay(uCore.Action.mousePosition), out raycastHit)) {
             Debug.Log(raycastHit.transform.tag);
-            if (raycastHit.transform.GetComponent<AutomaticActor>())
-            {
+            if (raycastHit.transform.GetComponent<AutomaticActor>()) {
                 return ((Actor)raycastHit.transform.GetComponent<AutomaticActor>());
             }
-            
+
         }
         return null;
     }
@@ -244,34 +241,24 @@ public class GridBuilder : MonoBehaviour {
         for (int i = node.x - sk.areaRange; i <= node.x + sk.areaRange; i++) {
             for (int j = node.y; j < count + node.y; j++) {
                 //displayNode(i, j, material);
-                if (Stage.Grid.insideGrid(i, j)) 
-                {
-                    if (sk.ID == skillID.Cleave)
-                    {
-                        if(getGridNode(i, j) != closestNode) 
-                        {
+                if (Stage.Grid.insideGrid(i, j)) {
+                    if (sk.ID == skillID.Cleave) {
+                        if (getGridNode(i, j) != closestNode) {
                             getGridPlane(i, j).GetAttackIndicator().SetActive(true);
                         }
-                    }
-                    else
-                    {
+                    } else {
                         getGridPlane(i, j).GetAttackIndicator().SetActive(true);
                     }
-                    
+
                 }
             }
             for (int z = node.y - 1; z > node.y - count; z--) {
-                if (Stage.Grid.insideGrid(i, z)) 
-                {
-                    if (sk.ID == skillID.Cleave)
-                    {
-                        if (getGridNode(i, z) != closestNode)
-                        {
+                if (Stage.Grid.insideGrid(i, z)) {
+                    if (sk.ID == skillID.Cleave) {
+                        if (getGridNode(i, z) != closestNode) {
                             getGridPlane(i, z).GetAttackIndicator().SetActive(true);
                         }
-                    }
-                    else
-                    {
+                    } else {
                         getGridPlane(i, z).GetAttackIndicator().SetActive(true);
                     }
                 }
@@ -377,28 +364,23 @@ public class GridBuilder : MonoBehaviour {
 
             if (totalCount > range) {
                 count--;
-            } else 
-            {
+            } else {
                 count++;
             }
             totalCount++;
         }
 
-        foreach (Node item in gridList)
-        {
+        foreach (Node item in gridList) {
             bool hasArrivedCenter = false;
             GridPlane closestPlane = getGridPlane(item);
-            while (!hasArrivedCenter)
-            {
+            while (!hasArrivedCenter) {
                 closestPlane = findClosestGridRoc(getGridPlane(closestPlane.node), getGridPlane(node)); // si hay algun bug que se pone mal, 100000000000% es por esto uwu
-                if (closestPlane.node.type != Array2DEditor.nodeType.X || (closestPlane.node == node && isEnemy))
-                {
+                if (closestPlane.node.type != Array2DEditor.nodeType.X || (closestPlane.node == node && isEnemy)) {
                     closestPlane.node.isRangelimit = true;
                     //displayNode(closestPlane, pathMaterial.invisible);
                     finalGridList.Add(closestPlane.node);
 
-                    if (closestPlane.node == node)
-                    {
+                    if (closestPlane.node == node) {
                         hasArrivedCenter = true;
 
                     }
@@ -406,57 +388,44 @@ public class GridBuilder : MonoBehaviour {
             }
             displayNode(item, pathMaterial.walkable);
         }
-        DisplayBorders(finalGridList,true);
+        DisplayBorders(finalGridList, true);
         foreach (Node item in finalGridList) {
             item.isRangelimit = false;
         }
 
     }
 
-    public void DisplayBorders(List<Node> nodeList,bool path) {
+    public void DisplayBorders(List<Node> nodeList, bool path) {
         foreach (Node item in nodeList) {
             List<Vector2> neightbourList = new List<Vector2>(Stage.Grid.getNeighboursWithoutCheck(item));
             foreach (Vector2 neightbour in neightbourList) {
                 if (!getGridNode((int)neightbour.x, (int)neightbour.y).isRangelimit || !Stage.Grid.insideGrid((int)neightbour.x, (int)neightbour.y)) {
-                    if (neightbour.x > item.x) 
-                    {
-                        if (path)
-                        {
+                    if (neightbour.x > item.x) {
+                        if (path) {
                             getGridPlane(item).limitRight.SetActive(true);
-                        }
-                        else
-                        {
+                        } else {
                             getGridPlane(item).limitRightSkill.SetActive(true);
                         }
-                        
+
                     }
                     if (neightbour.x < item.x) {
-                        if (path)
-                        {
+                        if (path) {
                             getGridPlane(item).limitLeft.SetActive(true);
-                        }
-                        else
-                        {
+                        } else {
                             getGridPlane(item).limitLeftSkill.SetActive(true);
                         }
                     }
                     if (neightbour.y > item.y) {
-                        if (path)
-                        {
+                        if (path) {
                             getGridPlane(item).limitUp.SetActive(true);
-                        }
-                        else
-                        {
+                        } else {
                             getGridPlane(item).limitUpSkill.SetActive(true);
                         }
                     }
                     if (neightbour.y < item.y) {
-                        if (path)
-                        {
+                        if (path) {
                             getGridPlane(item).limitDown.SetActive(true);
-                        }
-                        else
-                        {
+                        } else {
                             getGridPlane(item).limitDownSkill.SetActive(true);
                         }
                     }
@@ -502,27 +471,20 @@ public class GridBuilder : MonoBehaviour {
         getSkilleableNodes(skillRangeNodeList, node);
     }
 
-    public void displayBothBordersActive()
-    {
-        for (int x = 0; x < _grid.rows; x++)
-        {
-            for (int y = 0; y < _grid.columns; y++)
-            {
+    public void displayBothBordersActive() {
+        for (int x = 0; x < _grid.rows; x++) {
+            for (int y = 0; y < _grid.columns; y++) {
                 GridPlane plane = getGridPlane(x, y);
-                if(plane.limitUp.activeSelf && plane.limitUpSkill.activeSelf)
-                {
+                if (plane.limitUp.activeSelf && plane.limitUpSkill.activeSelf) {
                     plane.limitUpSkill.GetComponent<MeshRenderer>().material = Resources.Load("Materials/borderMat", typeof(Material)) as Material;
                 }
-                if (plane.limitDown.activeSelf && plane.limitDownSkill.activeSelf)
-                {
+                if (plane.limitDown.activeSelf && plane.limitDownSkill.activeSelf) {
                     plane.limitDownSkill.GetComponent<MeshRenderer>().material = Resources.Load("Materials/borderMat", typeof(Material)) as Material;
                 }
-                if (plane.limitLeft.activeSelf && plane.limitLeftSkill.activeSelf)
-                {
+                if (plane.limitLeft.activeSelf && plane.limitLeftSkill.activeSelf) {
                     plane.limitLeftSkill.GetComponent<MeshRenderer>().material = Resources.Load("Materials/borderMat", typeof(Material)) as Material;
                 }
-                if (plane.limitRight.activeSelf && plane.limitRightSkill.activeSelf)
-                {
+                if (plane.limitRight.activeSelf && plane.limitRightSkill.activeSelf) {
                     plane.limitRightSkill.GetComponent<MeshRenderer>().material = Resources.Load("Materials/borderMat", typeof(Material)) as Material;
                 }
             }
@@ -535,7 +497,7 @@ public class GridBuilder : MonoBehaviour {
             if (!item.walkable) {
                 List<Node> outNodes = new List<Node>();
 
-                Vector2 dir = getDirection(item, origin);              
+                Vector2 dir = getDirection(item, origin);
 
                 if (dir.x > 0) {
                     Node nodeProva = item;
@@ -592,44 +554,30 @@ public class GridBuilder : MonoBehaviour {
 
                     }
                 }
-                if (dir.x != 0 && dir.y != 0)
-                {
-                    if (dir.x > 0)
-                    {
-                        foreach (Node outItem in outNodes)
-                        {
+                if (dir.x != 0 && dir.y != 0) {
+                    if (dir.x > 0) {
+                        foreach (Node outItem in outNodes) {
                             Node nodeProva = outItem;
                             bool noMoreNodes = false;
-                            while (!noMoreNodes)
-                            {
+                            while (!noMoreNodes) {
                                 nodeProva = getGridNode(nodeProva.x + 1, nodeProva.y);
-                                if (skilleableNodes.Contains(nodeProva))
-                                {
+                                if (skilleableNodes.Contains(nodeProva)) {
                                     skilleableNodes.Remove(getGridNode(nodeProva.x, nodeProva.y));
-                                }
-                                else
-                                {
+                                } else {
                                     noMoreNodes = true;
                                 }
 
                             }
                         }
-                    }
-                    else
-                    {
-                        foreach (Node outItem in outNodes)
-                        {
+                    } else {
+                        foreach (Node outItem in outNodes) {
                             Node nodeProva = outItem;
                             bool noMoreNodes = false;
-                            while (!noMoreNodes)
-                            {
+                            while (!noMoreNodes) {
                                 nodeProva = getGridNode(nodeProva.x - 1, nodeProva.y);
-                                if (skilleableNodes.Contains(nodeProva))
-                                {
+                                if (skilleableNodes.Contains(nodeProva)) {
                                     skilleableNodes.Remove(getGridNode(nodeProva.x, nodeProva.y));
-                                }
-                                else
-                                {
+                                } else {
                                     noMoreNodes = true;
                                 }
 
@@ -647,10 +595,9 @@ public class GridBuilder : MonoBehaviour {
             item.isRangelimit = true;
         }
 
-        DisplayBorders(skilleableNodes,false);
+        DisplayBorders(skilleableNodes, false);
 
-        foreach (Node item in skilleableNodes)
-        {
+        foreach (Node item in skilleableNodes) {
             item.isRangelimit = false;
         }
         return skilleableNodes;

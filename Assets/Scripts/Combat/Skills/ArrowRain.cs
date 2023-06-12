@@ -1,9 +1,8 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 [CreateAssetMenu(fileName = "ArrowRain", menuName = "Combat/Skills/ArrowRain")]
-public class ArrowRain : Skill 
-{
+public class ArrowRain : Skill {
     [SerializeField] GameObject bloodPrefab;
     public override void action(BasicActor from, Node to) {
         uCore.Particles.PlayParticles("ParticulasFlechas", new Vector3(Stage.StageBuilder.getGridPlane(to).position.x, Stage.StageBuilder.getGridPlane(to).position.y + 1.6f, Stage.StageBuilder.getGridPlane(to).position.z));
@@ -12,9 +11,8 @@ public class ArrowRain : Skill
         // Appy damage to neightbours 
         foreach (Node node in neight) {
             BasicActor actor = Stage.StageManager.getActor(node);
-            if (actor != null) 
-            {
-                actor.takeDamage((Actor)from, from.totalDamage());
+            if (actor != null) {
+                actor.takeDamage((Actor)from, from.totalDamage(), ((Actor)from).equip.weapon.ID);
                 var lookPos = actor.transform.position - from.transform.position;
                 lookPos.y = 0;
 
@@ -23,8 +21,7 @@ public class ArrowRain : Skill
                 // the second argument, upwards, defaults to Vector3.up
                 Quaternion rotation = Quaternion.LookRotation(relativePos, Vector3.up);
 
-                if (!actor.GetComponent<StaticActor>())
-                {
+                if (!actor.GetComponent<StaticActor>()) {
                     GameObject blood = Instantiate(bloodPrefab, new Vector3(actor.transform.position.x, actor.transform.position.y + 0.8f, actor.transform.position.z), rotation);
                     Destroy(blood, 2f);
                 }

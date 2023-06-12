@@ -1,5 +1,3 @@
-using FMOD.Studio;
-using FMODUnity;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -75,8 +73,7 @@ public class TurnManager : MonoBehaviour {
 
     /** Método para el roundType.positioning */
     private void positioningRound() {
-        if (!haveDrawn)
-        {
+        if (!haveDrawn) {
             FMODManager.instance.MakeDraws();
             haveDrawn = !haveDrawn;
         }

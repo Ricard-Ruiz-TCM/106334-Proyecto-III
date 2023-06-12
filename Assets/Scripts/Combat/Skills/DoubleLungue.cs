@@ -1,6 +1,5 @@
-﻿using UnityEngine;
-using System.Collections;
-using FMODUnity;
+﻿using System.Collections;
+using UnityEngine;
 
 [CreateAssetMenu(fileName = "Double Lungue", menuName = "Combat/Skills/Double Lungue")]
 public class DoubleLungue : Skill {
@@ -21,9 +20,7 @@ public class DoubleLungue : Skill {
 
             lookPos.y = 0;
             from.transform.rotation = Quaternion.LookRotation(lookPos);
-        }
-        else
-        {
+        } else {
             FMODManager.instance.PlayOneShot(FMODEvents.instance.DoubleMiss);
         }
         from.endAction();
@@ -31,18 +28,16 @@ public class DoubleLungue : Skill {
 
     /** Coroutine para aplicar el segúndo hit un tiempo después */
     public IEnumerator C_DamageAgain(BasicActor from, BasicActor target) {
-        target.takeDamage((Actor)from, from.totalDamage());
+        target.takeDamage((Actor)from, from.totalDamage(), ((Actor)from).equip.weapon.ID);
         Vector3 relativePos = from.transform.position - target.transform.position;
         Quaternion rotation = Quaternion.LookRotation(relativePos, Vector3.up);
-        if (!target.GetComponent<StaticActor>())
-        {
+        if (!target.GetComponent<StaticActor>()) {
             GameObject blood = Instantiate(bloodPrefab, new Vector3(target.transform.position.x, target.transform.position.y + 0.8f, target.transform.position.z), rotation);
             Destroy(blood, 2f);
         }
         yield return new WaitForSeconds(_damageDelay);
-        target.takeDamage((Actor)from, (int)((float)from.totalDamage() / 2f));
-        if (!target.GetComponent<StaticActor>())
-        {
+        target.takeDamage((Actor)from, (int)((float)from.totalDamage() / 2f), ((Actor)from).equip.weapon.ID);
+        if (!target.GetComponent<StaticActor>()) {
             GameObject blood = Instantiate(bloodPrefab, new Vector3(target.transform.position.x, target.transform.position.y + 0.8f, target.transform.position.z), rotation);
             Destroy(blood, 2f);
         }

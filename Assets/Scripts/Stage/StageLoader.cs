@@ -28,7 +28,7 @@ public class StageLoader : MonoBehaviour {
     /** Método para consturi todo el stage */
     public void buildStage(StageData data) {
         _stage = GameObject.Instantiate(Resources.Load<GameObject>(_stagePath + _stageName + data.ID.ToString())).GetComponent<Stage>();
-        
+
     }
 
 }

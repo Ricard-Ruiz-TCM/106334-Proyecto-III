@@ -1,7 +1,4 @@
-﻿using System;
-using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
+﻿using UnityEngine;
 
 
 [CreateAssetMenu(fileName = "Invisible", menuName = "Combat/Buffs/Invisible")]
@@ -11,14 +8,12 @@ public class Invisible : Buff {
     public Material material;
     Material[] invisibleMatList;
     Material weaponMat;
-    public override void onApply(BasicActor me) 
-    {
+    public override void onApply(BasicActor me) {
         Debug.Log("TODO: Apply Invisible Feedback + extras.");
 
         invisibleMatList = new Material[me.skinnedMesh.materials.Length];
 
-        for (int i = 0; i < invisibleMatList.Length; i++)
-        {
+        for (int i = 0; i < invisibleMatList.Length; i++) {
             invisibleMatList[i] = material;
         }
 
@@ -31,8 +26,7 @@ public class Invisible : Buff {
 
     }
 
-    public override void onRemove(BasicActor me) 
-    {
+    public override void onRemove(BasicActor me) {
         Debug.Log("TODO: Remove Invisible Feedback");
         me.entitieUI.SetActive(true);
         me.skinnedMesh.materials = me.skinnedMaterials;

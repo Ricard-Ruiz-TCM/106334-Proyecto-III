@@ -23,7 +23,7 @@ public class Skill : ScriptableObject {
     public virtual void action(BasicActor from, Node to) {
         BasicActor target = Stage.StageManager.getActor(to);
         if (target != null) {
-            target.takeDamage((Actor)from, from.totalDamage());
+            target.takeDamage((Actor)from, from.totalDamage(), ((Actor)from).equip.weapon.ID);
         }
         ((Actor)from).endAction();
     }

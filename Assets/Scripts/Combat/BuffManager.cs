@@ -1,6 +1,6 @@
 ﻿using System;
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class BuffManager : MonoBehaviour {
 
@@ -47,10 +47,9 @@ public class BuffManager : MonoBehaviour {
 
     public void applyBuffs(Actor actor, params buffsID[] ids) {
         foreach (buffsID id in ids) {
-            if (findBuff(id) == -1) 
-            {
+            if (findBuff(id) == -1) {
                 activeBuffs.Add(new BuffItem(uCore.GameManager.GetBuff(id)));
-                activeBuffs[activeBuffs.Count - 1].buff.onApply(actor);               
+                activeBuffs[activeBuffs.Count - 1].buff.onApply(actor);
                 actor.entitieUI.GetComponent<EntitieUI>().AddBuff(uCore.GameManager.GetBuff(id).ImageIcon);
                 onApplyBuff?.Invoke();
             }

@@ -6,7 +6,7 @@ public class SkillButtonInfoUI : MonoBehaviour {
     private UIText _txtName, _txtDesc;
 
     public void Set(SkillItem skill) {
-        _txtName.Clear(); 
+        _txtName.Clear();
         //_txtDesc.Clear();
         if (skill != null) {
             _txtName.SetKey(skill.skill.keyName);

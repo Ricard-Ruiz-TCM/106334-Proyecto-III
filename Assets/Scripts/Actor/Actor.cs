@@ -41,6 +41,7 @@ public abstract class Actor : BasicActor {
     /** NavMeshAgent */
     [SerializeField, Header("Movimiento:")]
     protected int _steps;
+    protected int _tempSteps;
     protected NavMeshAgent _agent;
     //audio
     private EventInstance footsteps;
@@ -60,12 +61,12 @@ public abstract class Actor : BasicActor {
         return _stepsDone;
     }
     public int stepsRemain() {
-        return _steps - _stepsDone;
+        return _tempSteps - _stepsDone;
     }
 
     /** Add de Steps */
     public void addSteps(int amount) {
-        _stepsDone -= amount;
+        _tempSteps += amount;
         onStepsAdded?.Invoke();
     }
 
@@ -156,6 +157,7 @@ public abstract class Actor : BasicActor {
     /** Override del beginTurn */
     public override void beginTurn() {
         _stepsDone = 0;
+        _tempSteps = _steps;
         if (_route != null)
             _route.Clear();
         buffs.applyStartTurnEffect(this);

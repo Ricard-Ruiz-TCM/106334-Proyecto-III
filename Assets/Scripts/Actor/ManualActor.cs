@@ -54,6 +54,8 @@ public class ManualActor : Actor {
 
                 Stage.StageBuilder.displayBothBordersActive();
 
+                TargetInfoUI.instance.ShowPanel(enemy);
+
                 anteriorEnemy = enemy;
             }
 

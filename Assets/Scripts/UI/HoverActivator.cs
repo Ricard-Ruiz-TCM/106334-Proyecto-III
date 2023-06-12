@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
+
 public class HoverActivator : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler {
 
     [SerializeField, Header("GameObject")]
@@ -16,3 +17,4 @@ public class HoverActivator : MonoBehaviour, IPointerEnterHandler, IPointerExitH
             _object.SetActive(false);
     }
 }
+

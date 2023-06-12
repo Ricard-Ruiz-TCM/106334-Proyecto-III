@@ -9,7 +9,7 @@ class TurnManagerUI : MonoBehaviour {
     private GameObject _sTurnableUI;
 
     [SerializeField]
-    private CurrentTurnInfoUI _turnInfo;
+    private TargetInfoUI _turnInfo;
 
     // Unity OnEnable
     void OnEnable() {

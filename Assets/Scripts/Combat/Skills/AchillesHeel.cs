@@ -6,10 +6,11 @@ using UnityEngine;
 public class AchillesHeel : Skill {
     public List<AchilesSlash> slashes;
     [SerializeField] GameObject bloodPrefab;
+    [SerializeField] GameObject arrowPrefab;
+    [SerializeField] float duration;
     public override void action(BasicActor from, Node to) {
         ((Actor)from).buffs.applyBuffs((Actor)from, buffsID.MidDamage);
         FMODManager.instance.PlayOneShot(FMODEvents.instance.UsoHabilidad);
-        from.StartCoroutine(StartSlash(from));
         BasicActor target = Stage.StageManager.getActor(to);
         if (target != null) {
             var equipment = from.gameObject.GetComponent<EquipmentManager>();
@@ -17,18 +18,23 @@ public class AchillesHeel : Skill {
                 case itemID.Bow:
                     FMODManager.instance.PlayOneShot(FMODEvents.instance.InicioLanzarFlecha);
                     FMODManager.instance.PlayOneShot(FMODEvents.instance.FlechaContraCarne);
+                    from.StartCoroutine(ShootArrow(from, target));
                     break;
                 case itemID.Dolabra:
                     FMODManager.instance.PlayOneShot(FMODEvents.instance.DolabraContraCarne);
+                    from.StartCoroutine(StartSlash(from));
                     break;
                 case itemID.Gladius:
                     FMODManager.instance.PlayOneShot(FMODEvents.instance.GladiusContraCarne);
+                    from.StartCoroutine(StartSlash(from));
                     break;
                 case itemID.Hasta:
                     FMODManager.instance.PlayOneShot(FMODEvents.instance.HastaContraCarne);
+                    from.StartCoroutine(StartSlash(from));
                     break;
                 case itemID.Pugio:
                     FMODManager.instance.PlayOneShot(FMODEvents.instance.PugioContraCarne);
+                    from.StartCoroutine(StartSlash(from));
                     break;
                 default:
                     break;
@@ -54,6 +60,21 @@ public class AchillesHeel : Skill {
         }
 
         from.endAction();
+    }
+    IEnumerator ShootArrow(BasicActor from, BasicActor target)
+    {
+        yield return new WaitForSeconds(1f);
+        GameObject arrow = Instantiate(arrowPrefab, new Vector3(from.transform.position.x, from.transform.position.y + 1.7f, from.transform.position.z), Quaternion.identity);
+        float timer = 0;
+        while (timer < duration)
+        {
+            timer += Time.deltaTime;
+            float percentageDuration = timer / duration;
+            arrow.transform.position = Vector3.Slerp(new Vector3(from.transform.position.x, from.transform.position.y + 1.7f, from.transform.position.z), new Vector3(target.transform.position.x, target.transform.position.y + 1f, target.transform.position.z), percentageDuration);
+            arrow.transform.rotation = Quaternion.LookRotation(target.transform.position - from.transform.position);
+            yield return null;
+        }
+        Destroy(arrow);
     }
 
     IEnumerator StartSlash(BasicActor from) {

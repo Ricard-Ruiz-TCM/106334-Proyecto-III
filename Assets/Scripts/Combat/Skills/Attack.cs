@@ -7,8 +7,6 @@ public class Attack : Skill {
     public List<Slash> slashes;
     [SerializeField] GameObject bloodPrefab;
     [SerializeField] GameObject arrowPrefab;
-    [SerializeField] AnimationCurve curve;
-    [SerializeField] float heightY;
     [SerializeField] float duration;
     public override void action(BasicActor from, Node to) {
         BasicActor target = Stage.StageManager.getActor(to);

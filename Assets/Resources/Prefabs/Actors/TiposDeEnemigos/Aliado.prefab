@@ -1546,6 +1546,7 @@ GameObject:
   - component: {fileID: 5911320429346048088}
   - component: {fileID: 8484400761762857634}
   - component: {fileID: 1209894070464248376}
+  - component: {fileID: 491228910571774073}
   m_Layer: 9
   m_Name: Aliado
   m_TagString: Player
@@ -1616,9 +1617,12 @@ MonoBehaviour:
   height: 2.5
   skinnedMesh: {fileID: 4667524576768060320}
   skinnedMaterials: []
+  isDead: 0
   _animator: {fileID: 5259229536527213443}
+  attackRange: 0
   _steps: 4
   _perks: {fileID: 5911320429346048091}
+  _skills: {fileID: 0}
   _baseDamage: 0
   _baseDefense: 0
 --- !u!114 &5911320429346048100
@@ -1723,6 +1727,19 @@ MonoBehaviour:
   mat: {fileID: 2100000, guid: cca16c313233395418897f5f320256ab, type: 2}
   destroyDelay: 0.7
   alphaRef: _alphaController
+--- !u!65 &491228910571774073
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5911320429346048095}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 2.30512, z: 0.80246824}
+  m_Center: {x: 0, y: 0.6525607, z: 0.09876588}
 --- !u!1 &6124906972659754443
 GameObject:
   m_ObjectHideFlags: 0

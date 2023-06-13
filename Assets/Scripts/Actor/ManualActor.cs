@@ -45,20 +45,9 @@ public class ManualActor : Actor {
                 _walkablePath = route.GetRange(0, steps);
             }
         }
-        Actor enemy = Stage.StageBuilder.getMouseEnemy();
+        Actor enemy = Stage.StageBuilder.getMouseEnemyOrNPC();
         if (enemy != null) {
-            if (enemy != anteriorEnemy && !enemy.isDead) {
-                Stage.StageBuilder.clearGrid();
-                Stage.StageBuilder.DisplayMovementRange(enemy.transform, enemy.maxSteps(), true);
-                Stage.StageBuilder.displaySkillRange(enemy.equip.weapon.range, Stage.StageBuilder.getGridNode(enemy.transform.position));
-
-                Stage.StageBuilder.displayBothBordersActive();
-
-                TargetInfoUI.instance.ShowPanel(enemy);
-
-                anteriorEnemy = enemy;
-            }
-
+            displayInfoFrame();
         } else {
             anteriorEnemy = null;
             // Display de walkablePath
@@ -165,6 +154,26 @@ public class ManualActor : Actor {
                 }
                 transform.position = Stage.StageBuilder.getGridPlane(_mouseNode).transform.position;
             }
+        }
+        displayInfoFrame();
+    }
+
+    public void displayInfoFrame() {
+        Actor enemy = Stage.StageBuilder.getMouseEnemyOrNPC();
+        if (enemy != null) {
+            if (enemy != anteriorEnemy && !enemy.isDead) {
+                Stage.StageBuilder.clearGrid();
+                Stage.StageBuilder.DisplayMovementRange(enemy.transform, enemy.maxSteps(), true);
+                Stage.StageBuilder.displaySkillRange(enemy.equip.weapon.range, Stage.StageBuilder.getGridNode(enemy.transform.position));
+
+                Stage.StageBuilder.displayBothBordersActive();
+
+                TargetInfoUI.instance.ShowPanel(enemy);
+
+                anteriorEnemy = enemy;
+            }
+        } else {
+            anteriorEnemy = null;
         }
     }
 

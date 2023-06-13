@@ -89,12 +89,11 @@ public class GridBuilder : MonoBehaviour {
         }
         return null;
     }
-    public Actor getMouseEnemy() {
+    public Actor getMouseEnemyOrNPC() {
         RaycastHit raycastHit;
         if (Physics.Raycast(Camera.main.ScreenPointToRay(uCore.Action.mousePosition), out raycastHit)) {
-            Debug.Log(raycastHit.transform.tag);
-            if (raycastHit.transform.GetComponent<AutomaticActor>()) {
-                return ((Actor)raycastHit.transform.GetComponent<AutomaticActor>());
+            if (raycastHit.transform.GetComponent<Actor>()) {
+                return raycastHit.transform.GetComponent<Actor>();
             }
 
         }

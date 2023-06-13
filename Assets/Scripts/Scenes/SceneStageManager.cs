@@ -83,6 +83,7 @@ public class SceneStageManager : MonoBehaviour {
         // Set del estado del estado, a funciones y cositas
         buildStage();
 
+        FadeFX.instance.FadeOut();
     }
 
     /** Método para actualizar el stage */
@@ -209,7 +210,7 @@ public class SceneStageManager : MonoBehaviour {
 
     /** Botones */
     public void BTN_StageSuccessUIClose() {
-        stageSuccess();
+        FadeFX.instance.FadeIn(() => { stageSuccess(); });
     }
     /** ------- */
 

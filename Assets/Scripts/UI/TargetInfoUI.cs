@@ -109,6 +109,7 @@ public class TargetInfoUI : MonoBehaviour, IPointerExitHandler {
     public void HidePanel() {
         gameObject.SetActive(false);
         _extraInfoPanel.SetActive(false);
+        Stage.StageBuilder.clearGrid();
     }
 
     public void OnPointerExit(PointerEventData eventData) {

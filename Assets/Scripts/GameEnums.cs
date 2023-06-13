@@ -115,7 +115,7 @@ public enum stageTerrain {
 
 // Tipo de material para el path
 public enum pathMaterial {
-    walkable, notWalkable, skill, positioning
+    walkable, notWalkable, skill, positioning, cover
 }
 
 // Tipo de enemigos
@@ -126,8 +126,13 @@ public enum enemyClass {
 // Tipo de dificultad del terreno, Enum especial para el package de Array2DEditor
 namespace Array2DEditor {
     public enum nodeType {
-        __ = 0,
-        P = 1,
-        X = 255
+        // Walkable
+        __,
+        // Punto nicio
+        P,
+        // No walkable, cobertura
+        X,
+        // No walkable
+        C
     }
 }

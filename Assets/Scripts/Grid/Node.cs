@@ -17,7 +17,14 @@ public class Node {
     // Check if node is walkable
     public bool walkable {
         get {
-            return !type.Equals(nodeType.X);
+            return (!type.Equals(nodeType.X) && !type.Equals(nodeType.C));
+        }
+    }
+    
+    // Check if node create cover
+    public bool makeCover {
+        get {
+            return type.Equals(nodeType.X);
         }
     }
 

@@ -27,7 +27,7 @@ public class PilarStatic : StaticActor {
 
         List<Node> nodesToSetNotWalkable = Stage.Pathfinder.FindPath(pilarNode, endPoint, false);
 
-        Stage.Grid.changeNodeType(endPoint.x, endPoint.y, Array2DEditor.nodeType.X);
+        Stage.Grid.changeNodeType(endPoint.x, endPoint.y, Array2DEditor.nodeType.C);
 
         BasicActor endPointActor = Stage.StageManager.getActor(endPoint);
         if (endPointActor != null && endPointActor != this)
@@ -38,8 +38,10 @@ public class PilarStatic : StaticActor {
             if (nodeActor != null && nodeActor != this)
                 nodeActor.takeDamage(this, damageFromPilar);
 
-            Stage.Grid.changeNodeType(node.x, node.y, Array2DEditor.nodeType.X);
+            Stage.Grid.changeNodeType(node.x, node.y, Array2DEditor.nodeType.C);
         }
+
+        Stage.Grid.changeNodeType(pilarNode.x, pilarNode.y, Array2DEditor.nodeType.C);
 
         Stage.StageBuilder.clearGrid();
         TurnManager.instance.unsubscribe(this);

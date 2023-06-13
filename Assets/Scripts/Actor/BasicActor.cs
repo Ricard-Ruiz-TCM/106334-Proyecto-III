@@ -34,6 +34,8 @@ public abstract class BasicActor : Turnable {
     public SkinnedMeshRenderer skinnedMesh;
     public Material[] skinnedMaterials;
 
+    public bool isDead = false;
+
     /** Getters */
     public bool isAlive() {
         return _alive;
@@ -112,7 +114,10 @@ public abstract class BasicActor : Turnable {
         onChangeHealth?.Invoke();
 
         // Check Death
-        if (_health <= 0) {
+        if (_health <= 0) 
+        {
+            isDead = true;
+            Destroy(entitieUI);
             _alive = false;
             onActorDeath();
         }

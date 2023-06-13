@@ -98,18 +98,13 @@ public class Attack : Skill {
         float timer = 0;
         while (timer< duration)
         {
-            //float linearT = timer / duration;
-            //float heightT = curve.Evaluate(linearT);
-
-            //float height = Mathf.Lerp(0, heightY, heightT);
-
-            //arrow.transform.position = Vector3.Lerp(arrow.transform.position, targetPos, linearT) + new Vector3(0, height, 0);
-
-            arrow.transform.position = new Vector3(arrow.transform.position.x, arrow.transform.position.y + curve.Evaluate(Time.deltaTime * 3), arrow.transform.position.z);
-
+            timer += Time.deltaTime;
+            float percentageDuration = timer / duration;
+            arrow.transform.position = Vector3.Slerp(new Vector3(from.transform.position.x, from.transform.position.y + 1.7f, from.transform.position.z), new Vector3(target.transform.position.x, target.transform.position.y + 1f, target.transform.position.z), percentageDuration);
+            arrow.transform.rotation = Quaternion.LookRotation(target.transform.position - from.transform.position);
             yield return null;
         }
-        
+        Destroy(arrow);
     }
     
     IEnumerator StartSlash(BasicActor from) {

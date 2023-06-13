@@ -464,6 +464,182 @@ public class GridBuilder : MonoBehaviour {
     public void hideNode(int x, int y) {
         hideNode(getGridNode(x, y));
     }
+    public List<Node> rangeList(int range, Node node)
+    {
+        List<Node> skillRangeNodeList = new List<Node>();
+        List<Node> rangeListToReturn = new List<Node>();
+
+        int count = 1;
+        int totalCount = 1;
+        for (int i = node.x - range; i <= node.x + range; i++)
+        {
+            for (int j = node.y; j < count + node.y; j++)
+            {
+                if (Stage.Grid.insideGrid(i, j))
+                {
+                    //displayNode(i, j, mat);
+                    skillRangeNodeList.Add(getGridNode(i, j));
+                    rangeListToReturn.Add(getGridNode(i, j));
+                }
+            }
+            for (int z = node.y - 1; z > node.y - count; z--)
+            {
+                if (Stage.Grid.insideGrid(i, z))
+                {
+                    //displayNode(i, z, mat);
+                    skillRangeNodeList.Add(getGridNode(i, z));
+                    rangeListToReturn.Add(getGridNode(i, z));
+                }
+            }
+
+            if (totalCount > range)
+            {
+                count--;
+            }
+            else
+            {
+                count++;
+            }
+            totalCount++;
+        }
+
+        //getSkilleableNodes(skillRangeNodeList, node);
+
+        foreach (Node item in skillRangeNodeList)
+        {
+            if (item.makeCover)
+            {
+                List<Node> outNodes = new List<Node>();
+
+                Vector2 dir = getDirection(item, node);
+
+                if (dir.x > 0)
+                {
+                    Node nodeProva = item;
+                    bool noMoreNodes = false;
+                    while (!noMoreNodes)
+                    {
+                        nodeProva = getGridNode(nodeProva.x + 1, nodeProva.y);
+                        if (rangeListToReturn.Contains(nodeProva))
+                        {
+                            rangeListToReturn.Remove(getGridNode(nodeProva.x, nodeProva.y));
+                        }
+                        else
+                        {
+                            noMoreNodes = true;
+                        }
+
+                    }
+
+                }
+                else if (dir.x < 0)
+                {
+                    Node nodeProva = item;
+                    bool noMoreNodes = false;
+                    while (!noMoreNodes)
+                    {
+                        nodeProva = getGridNode(nodeProva.x - 1, nodeProva.y);
+                        if (rangeListToReturn.Contains(nodeProva))
+                        {
+                            rangeListToReturn.Remove(getGridNode(nodeProva.x, nodeProva.y));
+                        }
+                        else
+                        {
+                            noMoreNodes = true;
+                        }
+
+                    }
+                }
+
+                if (dir.y > 0)
+                {
+                    Node nodeProva = item;
+                    bool noMoreNodes = false;
+                    while (!noMoreNodes)
+                    {
+                        nodeProva = getGridNode(nodeProva.x, nodeProva.y + 1);
+                        if (rangeListToReturn.Contains(nodeProva))
+                        {
+                            rangeListToReturn.Remove(getGridNode(nodeProva.x, nodeProva.y));
+                            outNodes.Add(getGridNode(nodeProva.x, nodeProva.y));
+                        }
+                        else
+                        {
+                            noMoreNodes = true;
+                        }
+
+                    }
+
+                }
+                else if (dir.y < 0)
+                {
+                    Node nodeProva = item;
+                    bool noMoreNodes = false;
+                    while (!noMoreNodes)
+                    {
+                        nodeProva = getGridNode(nodeProva.x, nodeProva.y - 1);
+                        if (rangeListToReturn.Contains(nodeProva))
+                        {
+                            rangeListToReturn.Remove(getGridNode(nodeProva.x, nodeProva.y));
+                            outNodes.Add(getGridNode(nodeProva.x, nodeProva.y));
+                        }
+                        else
+                        {
+                            noMoreNodes = true;
+                        }
+
+                    }
+                }
+                if (dir.x != 0 && dir.y != 0)
+                {
+                    if (dir.x > 0)
+                    {
+                        foreach (Node outItem in outNodes)
+                        {
+                            Node nodeProva = outItem;
+                            bool noMoreNodes = false;
+                            while (!noMoreNodes)
+                            {
+                                nodeProva = getGridNode(nodeProva.x + 1, nodeProva.y);
+                                if (rangeListToReturn.Contains(nodeProva))
+                                {
+                                    rangeListToReturn.Remove(getGridNode(nodeProva.x, nodeProva.y));
+                                }
+                                else
+                                {
+                                    noMoreNodes = true;
+                                }
+
+                            }
+                        }
+                    }
+                    else
+                    {
+                        foreach (Node outItem in outNodes)
+                        {
+                            Node nodeProva = outItem;
+                            bool noMoreNodes = false;
+                            while (!noMoreNodes)
+                            {
+                                nodeProva = getGridNode(nodeProva.x - 1, nodeProva.y);
+                                if (rangeListToReturn.Contains(nodeProva))
+                                {
+                                    rangeListToReturn.Remove(getGridNode(nodeProva.x, nodeProva.y));
+                                }
+                                else
+                                {
+                                    noMoreNodes = true;
+                                }
+
+                            }
+                        }
+                    }
+                }
+            }
+        }       
+
+        return rangeListToReturn;
+    }
     public void displaySkillRange(int range, Node node, pathMaterial mat = pathMaterial.skill) {
         List<Node> skillRangeNodeList = new List<Node>();
 

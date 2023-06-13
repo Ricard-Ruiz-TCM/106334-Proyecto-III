@@ -112,8 +112,10 @@ public class AutomaticActor : Actor {
             if (canAct()) {
                 // Last Chance para atacar
                 near = Stage.StageManager.findByTag(transform, "Player");
-                if (near != null) {
-                    if (Stage.StageBuilder.getDistance(transform.position, near.transform.position) <= _equip.weapon.range) {
+                if (near != null) 
+                {
+                    if (Stage.StageBuilder.getDistance(transform.position, near.transform.position) <= _equip.weapon.range) 
+                    {
                         skills.useSkill(skillID.Attack, this, Stage.StageBuilder.getGridNode(near.transform.position));
                         UseSkill(Stage.StageBuilder.getGridNode(near.transform.position));
                         // Anim
@@ -130,39 +132,86 @@ public class AutomaticActor : Actor {
     }
     private void attackPriositisingSkills() {
 
-        Turnable near = Stage.StageManager.findByTag(transform, "Player");
+        List<Turnable> alonso = new List<Turnable>(TurnManager.instance.attenders.ToArray());
+        alonso.RemoveAll(x => x is AutomaticActor);
+        alonso.RemoveAll(x => x is StaticActor);
 
         // Player Encontrado
-        if (near != null) {
+        if (alonso.Count != 0) 
+        {
+            List<Turnable> personsInRange = new List<Turnable>();
+            List<Node> rangeListNodes = Stage.StageBuilder.rangeList(equip.weapon.range, Stage.StageBuilder.getGridNode(transform.position));
 
-            bool inWeaponRange = (Stage.StageBuilder.getDistance(transform.position, near.transform.position) <= _equip.weapon.range);
+            foreach (Turnable persona in alonso)
+            {
+                Node nodePersona = Stage.StageBuilder.getGridNode(persona.transform.position);
+                foreach (Node item in rangeListNodes)
+                {
+                    if (item == nodePersona)
+                    {
+                        personsInRange.Add(persona);
+                        break;
+                    }
+                }
+            }
+
+
+            if (personsInRange.Count != 0)
+            {
+                Turnable lowestPerson = null;
+                foreach (Turnable item in personsInRange)
+                {
+                    if(lowestPerson == null )
+                    {
+                        lowestPerson = item;
+                    }
+                    else
+                    {
+                        if(((Actor)item).health() < ((Actor)lowestPerson).health())
+                        {
+                            lowestPerson = item;
+                        }
+                    }
+                }
+
+            bool inWeaponRange = (Stage.StageBuilder.getDistance(transform.position, lowestPerson.transform.position) <= _equip.weapon.range);
 
             // Skills + end with combat
             if (canAct())
                 skills.useSkill(skillID.ImperialCry, this);
             if (canAct() && inWeaponRange && CanAttack())
-                skills.useSkill(skillID.Bloodlust, this, Stage.StageBuilder.getGridNode(near.transform.position));
+                skills.useSkill(skillID.Bloodlust, this, Stage.StageBuilder.getGridNode(lowestPerson.transform.position));
             if (canAct() && inWeaponRange)
-                skills.useSkill(skillID.Disarm, this, Stage.StageBuilder.getGridNode(near.transform.position));
+                skills.useSkill(skillID.Disarm, this, Stage.StageBuilder.getGridNode(lowestPerson.transform.position));
             if (canAct() && inWeaponRange)
-                skills.useSkill(skillID.AchillesHeel, this, Stage.StageBuilder.getGridNode(near.transform.position));
+                skills.useSkill(skillID.AchillesHeel, this, Stage.StageBuilder.getGridNode(lowestPerson.transform.position));
             if (canAct() && inWeaponRange && CanAttack())
-                skills.useSkill(equip.weapon.skill, this, Stage.StageBuilder.getGridNode(near.transform.position));
-            if (canAct()) {
-                if (inWeaponRange && CanAttack()) {
-                    skills.useSkill(skillID.Attack, this, Stage.StageBuilder.getGridNode(near.transform.position));
+                skills.useSkill(equip.weapon.skill, this, Stage.StageBuilder.getGridNode(lowestPerson.transform.position));
+            if (canAct())
+            {
+                if (inWeaponRange && CanAttack())
+                {
+                    skills.useSkill(skillID.Attack, this, Stage.StageBuilder.getGridNode(lowestPerson.transform.position));
                     // Anim
-                    if (equip.weapon.ID.Equals(itemID.Bow)) {
+                    if (equip.weapon.ID.Equals(itemID.Bow))
+                    {
                         Anim.SetTrigger("attackBow");
-                    } else {
+                    }
+                    else
+                    {
                         Anim.SetTrigger("attackWeapon");
                     }
-                } else {
+                }
+                else
+                {
                     // Si no, usamos vanish
                     if (canAct())
                         skills.useSkill(skillID.Vanish, this);
                 }
             }
+            }
+            
+
         }
 
         endAction();
@@ -218,12 +267,15 @@ public class AutomaticActor : Actor {
                 return;
             }
 
-            // Cortamos el path aa la distancia mínima del arma
-            if (path.Count > equip.weapon.range + 1) {
+            //// Cortamos el path aa la distancia mínima del arma
+            if (path.Count > equip.weapon.range + 1)
+            {
                 path.Reverse();
                 path.RemoveRange(0, equip.weapon.range);
                 path.Reverse();
-            } else {
+            }
+            else
+            {
                 path.Clear();
             }
 

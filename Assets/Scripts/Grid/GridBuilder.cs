@@ -518,7 +518,7 @@ public class GridBuilder : MonoBehaviour {
         List<Node> skilleableNodes = new List<Node>(nodeList.ToArray());
 
         foreach (Node item in nodeList) {
-            if (!item.walkable) {
+            if (item.makeCover) {
                 List<Node> outNodes = new List<Node>();
 
                 Vector2 dir = getDirection(item, origin);
@@ -664,6 +664,9 @@ public class GridBuilder : MonoBehaviour {
         switch (getGridNode(x, y).type) {
             case Array2DEditor.nodeType.__:
                 mat = _materials[(int)pathMaterial.walkable];
+                break;
+            case Array2DEditor.nodeType.C:
+                mat = _materials[(int)pathMaterial.cover];
                 break;
             case Array2DEditor.nodeType.P:
                 mat = _materials[(int)pathMaterial.positioning];

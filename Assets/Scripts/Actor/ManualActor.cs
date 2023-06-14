@@ -129,9 +129,14 @@ public class ManualActor : Actor {
 
                 // Anim
                 if (equip.weapon.ID.Equals(itemID.Bow)) {
-                    Anim.SetTrigger("attackBow");
+                    Anim.Play("Bow");
                 } else {
-                    Anim.SetTrigger("attackWeapon");
+                    if (_tempSkillID.Equals(skillID.Attack)) {
+                        Anim.Play("Attack" + Random.Range(0, 2).ToString());
+                    } else {
+                        // CUSTOM ANIM, MADE IN THE SKILL ITSELF?
+                        // @see Disarm
+                    }
                 }
             }
         }
@@ -197,13 +202,13 @@ public class ManualActor : Actor {
 
     public override void takeDamage(BasicActor from, int damage, itemID weapon = itemID.NONE) {
         base.takeDamage(from, damage, weapon);
-        Anim.SetTrigger("takeDamage");
+        Anim.Play("Death");
     }
 
     public override void onActorDeath() {
         base.onActorDeath();
         FMODManager.instance.PlayOneShot(FMODEvents.instance.PlayerDeath);
-        Anim.SetTrigger("die");
+        Anim.Play("Death");
         //GameObject blood = Instantiate(Resources.Load("Particles/BloodDie") as GameObject);
         //Debug.Break();
         //blood.transform.position = new Vector3(transform.position.x, transform.position.y + 0.8f, transform.position.z);

@@ -168,11 +168,11 @@ public class AutomaticActor : Actor {
                         // Anim
                         if (equip.weapon.ID.Equals(itemID.Bow))
                         {
-                            Anim.SetTrigger("attackBow");
+                            Anim.Play("Bow");
                         }
                         else
                         {
-                            Anim.SetTrigger("attackWeapon");
+                            Anim.Play("Attack" + Random.Range(0, 2).ToString());
                         }
                     }
                 }
@@ -245,11 +245,11 @@ public class AutomaticActor : Actor {
                     // Anim
                     if (equip.weapon.ID.Equals(itemID.Bow))
                     {
-                        Anim.SetTrigger("attackBow");
+                        Anim.Play("Bow");
                     }
                     else
                     {
-                        Anim.SetTrigger("attackWeapon");
+                        Anim.Play("Attack" + Random.Range(0, 2).ToString());
                     }
                 }
                 else
@@ -359,14 +359,14 @@ public class AutomaticActor : Actor {
 
     public override void takeDamage(BasicActor from, int damage, itemID weapon = itemID.NONE) {
         base.takeDamage(from, damage, weapon);
-        Anim.SetTrigger("takeDamage");
+        Anim.Play("TakeDamage");
     }
 
     public override void onActorDeath() {
         base.onActorDeath();
         FMODManager.instance.PlayOneShot(FMODEvents.instance.SoldierDeath);
         FMODManager.instance.PlayOneShot(FMODEvents.instance.Disarm);
-        Anim.SetTrigger("die");
+        Anim.Play("Death");
         //GameObject blood = Instantiate(Resources.Load("Particles/BloodDie") as GameObject);
         //Debug.Break();
         //blood.transform.position = new Vector3(transform.position.x, transform.position.y + 0.8f, transform.position.z);

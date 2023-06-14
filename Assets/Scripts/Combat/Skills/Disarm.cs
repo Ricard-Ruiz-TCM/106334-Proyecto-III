@@ -20,6 +20,7 @@ public class Disarm : Skill {
         } else {
             FMODManager.instance.PlayOneShot(FMODEvents.instance.MissAttack);
         }
+        ((Actor)from).Anim.Play("Disarm");
         from.endAction();
     }
 

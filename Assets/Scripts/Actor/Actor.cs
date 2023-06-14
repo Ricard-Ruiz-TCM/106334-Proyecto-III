@@ -25,7 +25,7 @@ public abstract class Actor : BasicActor {
 
     [SerializeField, Header("Animator")]
     protected Animator _animator;
-    protected Animator Anim => _animator;
+    public Animator Anim => _animator;
 
     [Header("readOnly")]
     public int attackRange;
@@ -255,7 +255,7 @@ public abstract class Actor : BasicActor {
             return;
         }
         // Animator
-        Anim.SetTrigger("takeDamage");
+        Anim.Play("TakeDamage");
         base.takeDamage(from, damage, weapon);
     }
 

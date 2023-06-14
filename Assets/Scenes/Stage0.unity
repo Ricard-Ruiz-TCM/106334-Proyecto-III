@@ -680,7 +680,7 @@ MonoBehaviour:
     type: 0
     terrain: 0
     diff: 0
-    innitialDialog: {fileID: 11400000, guid: 5e15969bc5ba9ef4ca6661a772b1fcd7, type: 2}
+    innitialDialog: {fileID: 0}
     tutorialDialog: {fileID: 0}
     lastDialog: {fileID: 0}
     perks:
@@ -695,9 +695,7 @@ MonoBehaviour:
   _actors:
   - {fileID: 462707317}
   - {fileID: 468273741}
-  - {fileID: 2811769203938951766}
   - {fileID: 237028403}
-  - {fileID: 2811769205044978313}
 --- !u!1001 &319385638
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2411,6 +2409,22 @@ PrefabInstance:
         type: 3}
       propertyPath: skills.Array.data[1].cooldown
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2811769205094483186, guid: b5f0e00d446d4f14cb8795e7e6827b3d,
+        type: 3}
+      propertyPath: activeBuffs.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2811769205094483186, guid: b5f0e00d446d4f14cb8795e7e6827b3d,
+        type: 3}
+      propertyPath: activeBuffs.Array.data[0].buff
+      value: 
+      objectReference: {fileID: 11400000, guid: 150bfaf906dcc5c4099d4127f06bcbc6,
+        type: 2}
+    - target: {fileID: 2811769205094483186, guid: b5f0e00d446d4f14cb8795e7e6827b3d,
+        type: 3}
+      propertyPath: activeBuffs.Array.data[0].duration
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2811769205094483187, guid: b5f0e00d446d4f14cb8795e7e6827b3d,
         type: 3}
@@ -56834,18 +56848,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!1 &2811769203938951766 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1928825789269507500, guid: e349630dc76a5b94a8e026b1b919b577,
-    type: 3}
-  m_PrefabInstance: {fileID: 4450112679703445498}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &2811769205044978313 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2934718192415642171, guid: b23330d02664d2d4881a09203fcaa68a,
-    type: 3}
-  m_PrefabInstance: {fileID: 1134730722525393074}
-  m_PrefabAsset: {fileID: 0}
 --- !u!33 &2813948644043192020
 MeshFilter:
   m_ObjectHideFlags: 0

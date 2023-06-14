@@ -18,11 +18,21 @@ public class TutorialUIManager : MonoBehaviour {
     void OnEnable() {
         TurnManager.instance.onNewRound += ActivatePanel;
         //DialogManager.instance.onNextDialog += UpdateDialog;
+
+        Stage.onCompleteStage += (stageResolution res) => {
+            firstPanel.SetActive(false);
+            combatPanel.SetActive(false);
+        };
     }
 
     // Unity OnDisable
     void OnDisable() {
         TurnManager.instance.onNewRound -= ActivatePanel;
+
+        Stage.onCompleteStage -= (stageResolution res) => {
+            firstPanel.SetActive(false);
+            combatPanel.SetActive(false);
+        };
     }
 
     public void ActivatePanel(roundType roundType) {

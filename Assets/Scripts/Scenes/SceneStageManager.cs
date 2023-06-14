@@ -199,7 +199,7 @@ public class SceneStageManager : MonoBehaviour {
         uCore.GameManager.SaveGameData();
         uCore.GameManager.savePerks(_player.GetComponent<Actor>());
         uCore.GameManager.saveSkills(_player.GetComponent<Actor>());
-        uCore.Director.LoadScene(_nextScene);
+        FadeFX.instance.FadeIn(() => { uCore.Director.LoadScene(_nextScene); });
     }
 
     /** Método para determinar que se ha perdido el Stage */

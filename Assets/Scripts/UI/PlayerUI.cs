@@ -41,7 +41,7 @@ public class PlayerUI : MonoBehaviour {
         BasicActor.onStartAct += disableEndTurnButton;
         BasicActor.onReAct += enableEndTurnButton;
 
-        BasicActor.onEndMovement += displaySkills; // en caso de bug esto es enable skills
+        BasicActor.onEndMovement += enableSkills; 
         BasicActor.onStartMovement += disableSkills;
         Actor.onStepsAdded += updateSteps;
 

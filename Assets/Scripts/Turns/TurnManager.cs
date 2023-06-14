@@ -10,7 +10,7 @@ public class TurnManager : MonoBehaviour {
     public static TurnManager instance {
         get {
             if (_instance == null)
-                _instance = FindObjectOfType<TurnManager>();
+                _instance = GameObject.FindObjectOfType<TurnManager>();
             return _instance;
         }
     }
@@ -57,6 +57,10 @@ public class TurnManager : MonoBehaviour {
     private float _endTurnDelaySecs = 1f;
     [SerializeField]
     private float _startTurnDelaySecs = 1f;
+
+    private void Awake() {
+        _instance = this;
+    }
 
 
     // Unity Update

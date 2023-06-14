@@ -852,7 +852,7 @@ MonoBehaviour:
   Path: Assets/Resources/FMOD/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638222052410110229
+  lastModified: 638223559909083243
   FileSizes: []
   Exists: 1
 --- !u!114 &-408055724919491982
@@ -1040,12 +1040,13 @@ MonoBehaviour:
   - {fileID: -1752981189961321060}
   - {fileID: 3082293981400545831}
   - {fileID: 1437746760525471006}
+  - {fileID: 5736055996095152576}
   EditorParameters: []
   MasterBanks:
   - {fileID: -1078370541524522390}
   StringsBanks:
   - {fileID: 3625364978230341005}
-  cacheTime: 638222052410120166
+  cacheTime: 638223559909093204
   cacheVersion: 131603
 --- !u!114 &1211284664457178468
 MonoBehaviour:
@@ -1251,10 +1252,10 @@ MonoBehaviour:
   Path: Assets/Resources/FMOD/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638222052410120166
+  lastModified: 638223559909093204
   FileSizes:
   - Name: 
-    Value: 4034
+    Value: 4134
   Exists: 1
 --- !u!114 &3817269143746993324
 MonoBehaviour:
@@ -1364,6 +1365,34 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 1886
+--- !u!114 &5736055996095152576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Otros/TextSound
+  m_EditorClassIdentifier: 
+  Path: event:/Otros/TextSound
+  Guid:
+    Data1: 2011843658
+    Data2: 1230035715
+    Data3: -608801374
+    Data4: 1345418259
+  Banks:
+  - {fileID: -1078370541524522390}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters:
+  - {fileID: 6842572513866966167}
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 200
 --- !u!114 &6238288619663745105
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1472,6 +1501,30 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 1008
+--- !u!114 &6842572513866966167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/TextSound/Pitch
+  m_EditorClassIdentifier: 
+  Name: Pitch
+  StudioPath: 
+  Min: -6
+  Max: 6
+  Default: 0
+  ID:
+    data1: 3515623886
+    data2: 1792720069
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 1
 --- !u!114 &6937423316970246666
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -11,6 +11,13 @@ public class Attack : Skill {
     public override void action(BasicActor from, Node to) {
         BasicActor target = Stage.StageManager.getActor(to);
 
+        int rValue = Random.Range(0, 2); // 1 vertical
+        ((Actor)from).Anim.Play("Attack" + rValue.ToString());
+
+        if (((Actor)from).equip.weapon.ID.Equals(itemID.Bow)) {
+            ((Actor)from).Anim.Play("Bow");
+        }
+
         if (target != null) {
 
             WeaponItem weapon = ((Actor)from).equip.weapon;

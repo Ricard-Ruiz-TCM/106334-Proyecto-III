@@ -8,6 +8,7 @@ public class MidDefense : ModBuff {
 
     public override void onRemove(BasicActor me) {
         Debug.Log("TODO: Remove Invisible Feedback");
+        ((Actor)me).Anim.SetBool("deff", false);
     }
 
     public override void startTurnEffect(BasicActor me) {

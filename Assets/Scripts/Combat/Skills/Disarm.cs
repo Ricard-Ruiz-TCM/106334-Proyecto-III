@@ -17,6 +17,7 @@ public class Disarm : Skill {
             var lookPos = target.transform.position - from.transform.position;
             lookPos.y = 0;
             from.transform.rotation = Quaternion.LookRotation(lookPos);
+            target.GetComponent<WeaponHolder>().disarm();
         } else {
             FMODManager.instance.PlayOneShot(FMODEvents.instance.MissAttack);
         }

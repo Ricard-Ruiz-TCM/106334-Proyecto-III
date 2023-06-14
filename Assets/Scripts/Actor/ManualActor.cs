@@ -126,18 +126,6 @@ public class ManualActor : Actor {
                 BasicActor target = Stage.StageManager.getActor(_mouseNode);
                 skills.useSkill(_tempSkillID, this, _mouseNode);
                 UseSkill(_mouseNode);
-
-                // Anim
-                if (equip.weapon.ID.Equals(itemID.Bow)) {
-                    Anim.Play("Bow");
-                } else {
-                    if (_tempSkillID.Equals(skillID.Attack)) {
-                        Anim.Play("Attack" + Random.Range(0, 2).ToString());
-                    } else {
-                        // CUSTOM ANIM, MADE IN THE SKILL ITSELF?
-                        // @see Disarm
-                    }
-                }
             }
         }
 

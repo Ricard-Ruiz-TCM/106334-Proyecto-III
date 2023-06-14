@@ -5,6 +5,8 @@ public class Vanish : Skill {
     public override void action(BasicActor from, Node to) {
         FMODManager.instance.PlayOneShot(FMODEvents.instance.Vanish);
         ((Actor)from).buffs.applyBuffs((Actor)from, buffsID.Invisible);
+        ((Actor)from).Anim.Play("Vanish");
+        from.GetComponent<WeaponHolder>().invisible();
         from.endAction();
     }
 

@@ -6,6 +6,7 @@ public class Defense : Skill {
         FMODManager.instance.PlayOneShot(FMODEvents.instance.UsoHabilidad);
         ((Actor)from).buffs.applyBuffs((Actor)from, buffsID.LowDefense);
         //((Actor)from).UseSkill(null);
+        ((Actor)from).Anim.SetBool("deff", true);
         from.endAction();
     }
 

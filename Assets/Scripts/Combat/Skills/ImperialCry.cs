@@ -47,6 +47,7 @@ public class ImperialCry : Skill {
         from.skinnedMesh.materials = from.skinnedMaterials;
 
         Destroy(effect, 1f);
+        ((Actor)from).Anim.Play("ImperialCry");
         from.endAction();
     }
 

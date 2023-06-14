@@ -16,6 +16,7 @@ public class LowDefense : ModBuff {
             shieldObj.transform.GetChild(0).GetComponent<Animator>().SetTrigger("hit");
             Destroy(shieldObj, 0.7f);
         }
+        ((Actor)me).Anim.SetBool("deff", false);
     }
 
     public override void startTurnEffect(BasicActor me) {

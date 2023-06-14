@@ -2,12 +2,20 @@ using UnityEngine;
 
 public class WeaponHolder : MonoBehaviour {
 
+    [SerializeField]
     private itemID _myWeapon;
 
     public GameObject _gladius, _hasta, _bow, _pugio, _dolabra, _scutum;
 
     public void reArm() {
         setWeapon(_myWeapon);
+        if (_shield)
+            setShield();
+    }
+
+    public void invisible() {
+        disarm();
+        _scutum.SetActive(false);
     }
 
     public void disarm() {
@@ -16,12 +24,16 @@ public class WeaponHolder : MonoBehaviour {
         _bow.SetActive(false);
         _pugio.SetActive(false);
         _dolabra.SetActive(false);
-        _scutum.SetActive(false);
     }
+
+
+    bool _shield = false;
 
     public void setShield() {
         _scutum.SetActive(true);
+        _shield = true;
     }
+
 
     public void setWeapon(itemID weaponID) {
         _myWeapon = weaponID;

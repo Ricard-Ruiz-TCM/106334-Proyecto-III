@@ -242,15 +242,6 @@ public class AutomaticActor : Actor {
                 if ( CanAttack())
                 {
                     skills.useSkill(skillID.Attack, this, Stage.StageBuilder.getGridNode(lowestPerson.transform.position));
-                    // Anim
-                    if (equip.weapon.ID.Equals(itemID.Bow))
-                    {
-                        Anim.Play("Bow");
-                    }
-                    else
-                    {
-                        Anim.Play("Attack" + Random.Range(0, 2).ToString());
-                    }
                 }
                 else
                 {

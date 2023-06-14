@@ -21,7 +21,7 @@ public class timeControl : MonoBehaviour
 
         if (Input.GetKeyUp(KeyCode.Space))
         {
-            if (!speedySoundHasBeenPlayed)
+            if (speedySoundHasBeenPlayed)
             {
                 speedySoundHasBeenPlayed = false;
             }

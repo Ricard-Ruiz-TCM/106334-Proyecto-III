@@ -10,8 +10,6 @@ public class MovementStopper : MonoBehaviour, IPointerEnterHandler, IPointerExit
     }
 
     public void OnPointerExit(PointerEventData eventData) {
-        Stage.StageBuilder.clearGrid();
-        Stage.StageBuilder.clearPath();
         ((ManualActor)uCore.GameManager.getPlayer()).enableMovement();
     }
 }

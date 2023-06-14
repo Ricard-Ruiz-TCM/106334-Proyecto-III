@@ -14,7 +14,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &224769949687301011
 Transform:
@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 4955891994370163007}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 119.526, y: 0.075, z: 39.368}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.74367, y: 0.74367, z: 0.74367}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4319211970901003790}
@@ -100,25 +100,55 @@ PrefabInstance:
       propertyPath: m_Name
       value: fire
       objectReference: {fileID: 0}
+    - target: {fileID: 6644333399975959025, guid: 39906f8ea4f10b847a0d43ad73a6a208,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 6644333400279220333, guid: 39906f8ea4f10b847a0d43ad73a6a208,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.89
+      objectReference: {fileID: 0}
+    - target: {fileID: 6644333400279220334, guid: 39906f8ea4f10b847a0d43ad73a6a208,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 6644333400279220339, guid: 39906f8ea4f10b847a0d43ad73a6a208,
         type: 3}
       propertyPath: m_Range
-      value: 4.7140884
+      value: 27.31
       objectReference: {fileID: 0}
     - target: {fileID: 6644333400279220339, guid: 39906f8ea4f10b847a0d43ad73a6a208,
         type: 3}
       propertyPath: m_Color.b
-      value: 0.0779192
+      value: 0.07843135
       objectReference: {fileID: 0}
     - target: {fileID: 6644333400279220339, guid: 39906f8ea4f10b847a0d43ad73a6a208,
         type: 3}
       propertyPath: m_Color.g
-      value: 0.5111544
+      value: 0.6532591
       objectReference: {fileID: 0}
     - target: {fileID: 6644333400279220339, guid: 39906f8ea4f10b847a0d43ad73a6a208,
         type: 3}
       propertyPath: m_Color.r
-      value: 0.9716981
+      value: 0.972549
+      objectReference: {fileID: 0}
+    - target: {fileID: 6644333400279220339, guid: 39906f8ea4f10b847a0d43ad73a6a208,
+        type: 3}
+      propertyPath: m_Intensity
+      value: 4.38
+      objectReference: {fileID: 0}
+    - target: {fileID: 6644333400279220339, guid: 39906f8ea4f10b847a0d43ad73a6a208,
+        type: 3}
+      propertyPath: m_Shadows.m_Type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6644333401025513079, guid: 39906f8ea4f10b847a0d43ad73a6a208,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 39906f8ea4f10b847a0d43ad73a6a208, type: 3}
@@ -219,6 +249,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: fogata_low
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: f8ccd70d82839884685e1ca981e1977c,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f8ccd70d82839884685e1ca981e1977c, type: 3}

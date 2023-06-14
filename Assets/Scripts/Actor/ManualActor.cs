@@ -190,7 +190,7 @@ public class ManualActor : Actor {
 
     public override void takeDamage(BasicActor from, int damage, itemID weapon = itemID.NONE) {
         base.takeDamage(from, damage, weapon);
-        Anim.Play("Death");
+        Anim.Play("TakeDamage");
     }
 
     public override void onActorDeath() {

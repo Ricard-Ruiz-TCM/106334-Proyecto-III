@@ -21,6 +21,9 @@ public class FMODManager : MonoBehaviour {
     private Bus ambienceBus;
     private List<EventInstance> eventInstances;
 
+    EventInstance instaceText;
+    private PARAMETER_ID pitchParameterId;
+
     public static FMODManager instance {
         get; private set;
     }
@@ -40,11 +43,30 @@ public class FMODManager : MonoBehaviour {
         ambienceBus = RuntimeManager.GetBus("bus:/Ambience");
     }
 
+    private void Start()
+    {
+        instaceText = RuntimeManager.CreateInstance(FMODEvents.instance.TextSound);
+        EventDescription pitchEventDescription;
+        instaceText.getDescription(out pitchEventDescription);
+        PARAMETER_DESCRIPTION pitchParameterDescription;
+        pitchEventDescription.getParameterDescriptionByName("Pitch", out pitchParameterDescription);
+        pitchParameterId = pitchParameterDescription.id;
+
+        instaceText.start();
+    }
+
     private void Update() {
         masterBus.setVolume(masterVolume);
         musicBus.setVolume(musicVolum);
         sfxBus.setVolume(sfxVolum);
         ambienceBus.setVolume(ambienceVolum);
+    }
+
+    public void PlayWritingMusic()
+    {
+        float pitch = Random.Range(-6f, 6f);
+        instaceText.setParameterByID(pitchParameterId, pitch);
+        PlayOneShot(FMODEvents.instance.TextSound);
     }
 
     public void ConfirmPerk() {

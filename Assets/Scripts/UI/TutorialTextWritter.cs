@@ -53,6 +53,7 @@ public class TutorialTextWritter : MonoBehaviour {
             uiTextName.text = textOfName;
             timer -= Time.deltaTime;
             if (timer <= 0f) {
+                FMODManager.instance.PlayWritingMusic();
                 timer += timePerCharacter;
                 characterIndex++;
                 uiTextDescription.text = textOfDescription.Substring(0, characterIndex);

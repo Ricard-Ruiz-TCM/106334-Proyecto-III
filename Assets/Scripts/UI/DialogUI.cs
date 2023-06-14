@@ -93,6 +93,7 @@ public class DialogUI : MonoBehaviour {
         if (pos == text.Length) {
             _dialogProgress = progress.done;
         } else {
+            FMODManager.instance.PlayWritingMusic();
             _txtSpeakerText.UpdateText(text.Substring(0, pos + 1));
             yield return new WaitForSeconds(_textSpeed);
             StartCoroutine(C_DisplayText(text, pos + 1));

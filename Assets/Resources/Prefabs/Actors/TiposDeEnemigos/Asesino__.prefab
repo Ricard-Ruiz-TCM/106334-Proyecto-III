@@ -1351,6 +1351,7 @@ GameObject:
   - component: {fileID: 6561405578610253607}
   - component: {fileID: 8987307483816465885}
   - component: {fileID: 4978175225331171156}
+  - component: {fileID: 1696520601236660256}
   m_Layer: 9
   m_Name: Asesino__
   m_TagString: Enemy
@@ -1421,9 +1422,12 @@ MonoBehaviour:
   height: 2.5
   skinnedMesh: {fileID: 8876960034888843483}
   skinnedMaterials: []
+  isDead: 0
   _animator: {fileID: 8002961640659889802}
+  attackRange: 0
   _steps: 4
   _perks: {fileID: 6561405578610253604}
+  _skills: {fileID: 0}
   _baseDamage: 0
   _baseDefense: 0
   _combatAI: 1
@@ -1531,6 +1535,19 @@ MonoBehaviour:
   mat: {fileID: 2100000, guid: cca16c313233395418897f5f320256ab, type: 2}
   destroyDelay: 0.7
   alphaRef: _alphaController
+--- !u!65 &1696520601236660256
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6561405578610253600}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 2.3859792, z: 0.7495136}
+  m_Center: {x: 0, y: 0.69299006, z: 0.12524319}
 --- !u!1 &6626606992675537790
 GameObject:
   m_ObjectHideFlags: 0

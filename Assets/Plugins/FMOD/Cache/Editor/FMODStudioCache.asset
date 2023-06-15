@@ -906,7 +906,7 @@ MonoBehaviour:
   Path: Assets/Resources/FMOD/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638224183085936368
+  lastModified: 638224399370680444
   FileSizes: []
   Exists: 1
 --- !u!114 &-408055724919491982
@@ -1098,12 +1098,15 @@ MonoBehaviour:
   - {fileID: -5551885793750673602}
   - {fileID: 1194454863681488560}
   - {fileID: -2747295386215113086}
+  - {fileID: 1436680536023416022}
+  - {fileID: 8984027618156230288}
+  - {fileID: 1355372210707816223}
   EditorParameters: []
   MasterBanks:
   - {fileID: -1078370541524522390}
   StringsBanks:
   - {fileID: 3625364978230341005}
-  cacheTime: 638224183085936368
+  cacheTime: 638224399370680444
   cacheVersion: 131603
 --- !u!114 &1194454863681488560
 MonoBehaviour:
@@ -1159,6 +1162,60 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 570
+--- !u!114 &1355372210707816223
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: "event:/Men\xFA/Victoria"
+  m_EditorClassIdentifier: 
+  Path: "event:/Men\xFA/Victoria"
+  Guid:
+    Data1: -1321357319
+    Data2: 1136608911
+    Data3: -1380196448
+    Data4: -1105715853
+  Banks:
+  - {fileID: -1078370541524522390}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 4000
+--- !u!114 &1436680536023416022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Otros/MusicaCombateRoma
+  m_EditorClassIdentifier: 
+  Path: event:/Otros/MusicaCombateRoma
+  Guid:
+    Data1: 1570604582
+    Data2: 1270027157
+    Data3: 2068389765
+    Data4: 1514688171
+  Banks:
+  - {fileID: -1078370541524522390}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 64000
 --- !u!114 &1437746760525471006
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1336,10 +1393,10 @@ MonoBehaviour:
   Path: Assets/Resources/FMOD/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638223948550286424
+  lastModified: 638224349496846581
   FileSizes:
   - Name: 
-    Value: 4270
+    Value: 4392
   Exists: 1
 --- !u!114 &3817269143746993324
 MonoBehaviour:
@@ -1878,6 +1935,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 1950
+--- !u!114 &8984027618156230288
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Otros/MusicaDialogoRoma
+  m_EditorClassIdentifier: 
+  Path: event:/Otros/MusicaDialogoRoma
+  Guid:
+    Data1: 918501322
+    Data2: 1128774392
+    Data3: -1447642473
+    Data4: 1546652638
+  Banks:
+  - {fileID: -1078370541524522390}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 19200
 --- !u!114 &9043291193501071157
 MonoBehaviour:
   m_ObjectHideFlags: 0

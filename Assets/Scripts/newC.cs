@@ -16,6 +16,8 @@ public class newC : MonoBehaviour {
 
     [SerializeField, Header("Speeds:")]
     private float _zoomSpeed;
+    [SerializeField]
+    private float _rootSpeed;
 
     [SerializeField, Header("Smooths:")]
     private float _rotSmoothTime;
@@ -24,13 +26,10 @@ public class newC : MonoBehaviour {
     private float _distance;
 
     [Header("Positions:")]
-    public Transform _startPosition;
     public Transform _positioningPosition;
     // LIBRE POSITION
     public Transform _completedPosition;
 
-    [SerializeField, Header("Mouse Sens:")]
-    private float _mouseSensibility;
 
     [SerializeField, Header("Center Point:")]
     private Transform _pivot;
@@ -45,7 +44,6 @@ public class newC : MonoBehaviour {
         TurnManager.onEndRound += endRound;
 
         TurnManager.onStartSystem += activate;
-        //TurnManager.onStartTurn += () => { setTarget(TurnManager.instance.current); };
     }
 
     // Unity OnDisabel
@@ -54,7 +52,6 @@ public class newC : MonoBehaviour {
         TurnManager.onEndRound -= endRound;
 
         TurnManager.onStartSystem -= activate;
-        //TurnManager.onStartTurn -= () => { setTarget(TurnManager.instance.current); };
     }
 
     // Unity FixedUpdate
@@ -75,11 +72,6 @@ public class newC : MonoBehaviour {
         transform.localEulerAngles = _targetRot;
     }
 
-
-    /** Método para setear el target */
-    public void setTarget(Turnable target) {
-        StartCoroutine(play(target));
-    }
 
     private IEnumerator play(Turnable target) {
         yield return null;
@@ -127,8 +119,8 @@ public class newC : MonoBehaviour {
     private void cameraRotation() {
         float mouseX = 0f, mouseY = 0f;
         if (Input.GetMouseButton(1)) {
-            mouseX = Input.GetAxis("Mouse X") * _mouseSensibility;
-            mouseY = Input.GetAxis("Mouse Y") * _mouseSensibility;
+            mouseX = Input.GetAxis("Mouse X") * _rootSpeed;
+            mouseY = Input.GetAxis("Mouse Y") * _rootSpeed;
         }
         Vector3 nextRot = new Vector3(transform.localEulerAngles.x + mouseY, transform.localEulerAngles.y - mouseX);
         _targetRot = Vector3.SmoothDamp(transform.localEulerAngles, nextRot, ref _rotSmoothSpeed, _rotSmoothTime);
@@ -150,26 +142,22 @@ public class newC : MonoBehaviour {
         }
     }
 
+    /** Start Anim to move 2 the positioning round */
     private IEnumerator StartAnim() {
-        yield return null;
-        /*animating = true;
-        transform.position = startAnimPos;
-        transform.rotation = Quaternion.Euler(startAnimRot);
         yield return new WaitForSeconds(0.5f);
         float timer = 0;
 
+        float duration = 3f;
         while (timer < duration) {
             timer += Time.deltaTime;
             float percentageDuration = timer / duration;
-            transform.position = Vector3.Lerp(startAnimPos, startAnimFinalPos, percentageDuration);
-            transform.rotation = Quaternion.Lerp(Quaternion.Euler(startAnimRot), Quaternion.Euler(startAnimFinalRot), percentageDuration);
+            transform.position = Vector3.Lerp(transform.position, _positioningPosition.position, percentageDuration);
+            transform.rotation = Quaternion.Lerp(Quaternion.Euler(transform.eulerAngles), Quaternion.Euler(_positioningPosition.localEulerAngles), percentageDuration);
             yield return new WaitForFixedUpdate();
         }
 
-        transform.position = startAnimFinalPos;
-        transform.rotation = Quaternion.Euler(startAnimFinalRot);
-        animating = false;
-        canPlay = false;*/
+        transform.position = _positioningPosition.position;
+        transform.rotation = _positioningPosition.rotation;
     }
 
     private IEnumerator EndAnim() {

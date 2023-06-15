@@ -22,7 +22,7 @@ public class SceneIntroManager : MonoBehaviour {
     void Update() {
         if (_sceneLoaded) {
             if (uCore.Action.isInputConfigured()) {
-                uCore.Director.AllowScene();
+                FadeFX.instance.FadeIn(() => { uCore.Director.AllowScene(); });
             }
         }
     }

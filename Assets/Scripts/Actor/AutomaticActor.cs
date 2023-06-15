@@ -309,7 +309,7 @@ public class AutomaticActor : Actor {
             }
 
             //// Cortamos el path aa la distancia mínima del arma
-            if (path.Count > equip.weapon.range + 1)
+            if (path.Count > equip.weapon.range)
             {              
                 //path.Reverse();
                 //path.RemoveRange(0, equip.weapon.range); DE MOMENTO SE QUEDA ASI

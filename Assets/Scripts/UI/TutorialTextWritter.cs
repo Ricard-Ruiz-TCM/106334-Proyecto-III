@@ -6,17 +6,32 @@ using UnityEngine;
 public class TutorialTextWritter : MonoBehaviour {
     private static TutorialTextWritter instance;
     private List<TextWriterSingle> textWriterSingleList;
+    private int writtersCounter;
 
     private void Awake() {
         instance = this;
         textWriterSingleList = new List<TextWriterSingle>();
+        writtersCounter = -1;
     }
 
-    public static void AddWritter_Static(TextMeshProUGUI uiTextName, TextMeshProUGUI uiTextDescription, string textOfName, string textOfDescription, float timePerCharacter) {
-        instance.AddWritter(uiTextName, uiTextDescription, textOfName, textOfDescription, timePerCharacter);
+    public static int AddWritter_Static(TextMeshProUGUI uiTextName, TextMeshProUGUI uiTextDescription, string textOfName, string textOfDescription, float timePerCharacter) {
+        return instance.AddWritter(uiTextName, uiTextDescription, textOfName, textOfDescription, timePerCharacter);
     }
-    private void AddWritter(TextMeshProUGUI uiTextName, TextMeshProUGUI uiTextDescription, string textOfName, string textOfDescription, float timePerCharacter) {
+
+    public static void setSetDestroyInstance(int writterId)
+    {
+        instance.SetDestroyInstance(writterId);
+    }
+
+    private void SetDestroyInstance(int writterId)
+    {
+        textWriterSingleList[writterId].SetDestroyInstance();
+    }
+
+    private int AddWritter(TextMeshProUGUI uiTextName, TextMeshProUGUI uiTextDescription, string textOfName, string textOfDescription, float timePerCharacter) {
+        writtersCounter++;
         textWriterSingleList.Add(new TextWriterSingle(uiTextName, uiTextDescription, textOfName, textOfDescription, timePerCharacter));
+        return writtersCounter;
     }
 
     private void Update() {
@@ -25,6 +40,7 @@ public class TutorialTextWritter : MonoBehaviour {
                 if (textWriterSingle != null) {
                     bool destroyInstance = textWriterSingle.Update();
                     if (destroyInstance) {
+                        writtersCounter--;
                         textWriterSingleList.Remove(textWriterSingle);
                     }
                 }
@@ -40,6 +56,7 @@ public class TutorialTextWritter : MonoBehaviour {
         private int characterIndex;
         private float timePerCharacter;
         private float timer;
+        private bool destroyInstance;
 
         public TextWriterSingle(TextMeshProUGUI uiTextName, TextMeshProUGUI uiTextDescription, string textOfName, string textOfDescription, float timePerCharacter) {
             this.uiTextName = uiTextName;
@@ -61,8 +78,17 @@ public class TutorialTextWritter : MonoBehaviour {
                 if (characterIndex >= textOfDescription.Length) {
                     return true;
                 }
+                else if(destroyInstance)
+                {
+                    return true;
+                }
             }
             return false;
+        }
+
+        public void SetDestroyInstance()
+        {
+            destroyInstance = true;
         }
     }
 }

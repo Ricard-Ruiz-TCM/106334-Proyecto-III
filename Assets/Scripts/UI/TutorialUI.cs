@@ -29,10 +29,12 @@ public class TutorialUI : MonoBehaviour {
     private MovementStopper movementStopper;
     private bool roundsHaveStarted = false;
     private bool textSetted = false;
+    private int writterId;
 
     private void Start()
     {
         movementStopper = gameObject.GetComponent<MovementStopper>();
+        writterId = 0;
     }
 
     private void Update() {
@@ -52,7 +54,12 @@ public class TutorialUI : MonoBehaviour {
     }
 
     private void setText() {
-        TutorialTextWritter.AddWritter_Static(_txtSpeakerName, _txtSpeakerText, _txtSpeakerName.text = uCore.Localization.GetText(txtNameKey), _txtSpeakerText.text = uCore.Localization.GetText(txtDescriptKey), timePerCharacter);
+        writterId = TutorialTextWritter.AddWritter_Static(_txtSpeakerName, _txtSpeakerText, _txtSpeakerName.text = uCore.Localization.GetText(txtNameKey), _txtSpeakerText.text = uCore.Localization.GetText(txtDescriptKey), timePerCharacter);
+    }
+
+    private void destroyWritterInstance()
+    {
+        TutorialTextWritter.setSetDestroyInstance(writterId);
     }
 
     public void setRoundsHaveStarted() {
@@ -71,6 +78,7 @@ public class TutorialUI : MonoBehaviour {
         {
             movementStopper.OnPointerExit(null);
         }
+        destroyWritterInstance();
         gameObject.SetActive(false);
     }
 

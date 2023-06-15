@@ -175,14 +175,17 @@ MonoBehaviour:
     min: 12
     max: 68
   _zoomSpeed: 14
-  _rootSpeed: 25
+  _rootSpeed: 35
+  breathFovSpeed: 20
   _rotSmoothTime: 0.3
-  _moveSmoothTime: 0.02
+  _moveSmoothTime: 0.2
   _distance: 15
   _positioningPosition: {fileID: 0}
   _completedPosition: {fileID: 0}
   _pivot: {fileID: 0}
   hasTouchedSpeed: 8
+  _breathSpeed: 0.5
+  _breathMagnitude: 0.0001
 --- !u!114 &984297145340256001
 MonoBehaviour:
   m_ObjectHideFlags: 0

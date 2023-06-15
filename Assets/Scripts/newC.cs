@@ -24,6 +24,8 @@ public class newC : MonoBehaviour {
     private float _rotSmoothTime;
     [SerializeField]
     private float _moveSmoothTime;
+    private float _moveSavageSmoothTime;
+    private float _moveSlowTime;
 
     [SerializeField, Header("Distancia:")]
     private float _distance;
@@ -43,26 +45,38 @@ public class newC : MonoBehaviour {
     [SerializeField] float hasTouchedSpeed = 3;
     bool touchingWall = false;
 
-    public float breathSpeed = 1.0f; // Adjust the speed of the breathing animation
-    public float breathMagnitude = 0.1f; // Adjust the magnitude of the breathing animation
-    float initialFov;
+    public float _breathSpeed = 1.0f; // Adjust the speed of the breathing animation
+    public float _breathMagnitude = 0.1f; // Adjust the magnitude of the breathing animation
+    float _innitialFOV;
+
+    // Coroutines
+    private Coroutine _animThinking;
 
     // Unity OnEnable
     void OnEnable() {
         TurnManager.onNewRound += startRound;
         TurnManager.onEndRound += endRound;
+
+        TurnManager.onEndTurn += () => { _moveSmoothTime = _moveSlowTime; };
+        TurnManager.onStartTurn += () => { _moveSmoothTime = _moveSavageSmoothTime; };
     }
 
     // Unity OnDisabel
     void OnDisable() {
         TurnManager.onNewRound -= startRound;
         TurnManager.onEndRound -= endRound;
+
+        TurnManager.onEndTurn -= () => { _moveSmoothTime = _moveSlowTime; };
+        TurnManager.onStartTurn -= () => { _moveSmoothTime = _moveSavageSmoothTime; };
     }
-    private void Start()
-    {
-        initialFov = _camera.fieldOfView;
-        StartCoroutine(AnimThinking());
+
+    private void Start() {
+        _innitialFOV = _camera.fieldOfView;
+        _moveSlowTime = _moveSmoothTime;
+        _moveSavageSmoothTime = _moveSlowTime * 10000f;
+        _animThinking = StartCoroutine(AnimThinking());
     }
+
     // Unity FixedUpdate
     void FixedUpdate() {
         if (!_active)
@@ -85,38 +99,6 @@ public class newC : MonoBehaviour {
         transform.localEulerAngles = _targetRot;
     }
 
-
-    private IEnumerator play(Turnable target) {
-        yield return null;
-        /*if (!canPlay) {
-            animating = true;
-            yield return new WaitForSeconds(0.5f);
-            float timer = 0;
-            Vector3 startpos = transform.position;
-            Quaternion startRot = transform.rotation;
-
-            while (timer < duration) {
-                timer += Time.deltaTime;
-                float percentageDuration = timer / duration;
-                transform.position = Vector3.Lerp(startpos, playAnimFinalPos, percentageDuration);
-                transform.rotation = Quaternion.Lerp(startRot, Quaternion.Euler(playAnimFinalRot), percentageDuration);
-                yield return new WaitForFixedUpdate();
-            }
-
-            transform.position = playAnimFinalPos;
-            transform.rotation = Quaternion.Euler(playAnimFinalRot);
-            animating = false;
-            canPlay = true;
-
-            _targetPos.y = 8f;
-            _target = target.transform;
-
-        } else {
-            _targetPos.y = 8f;
-            _target = target.transform;
-        }*/
-    }
-
     /** Método para activar la cámara */
     public void activate() {
         _active = true;
@@ -131,7 +113,7 @@ public class newC : MonoBehaviour {
     /** Método para rotar la camara desde el eje central  DOOOONE*/
     private void cameraRotation() {
         float mouseX = 0f, mouseY = 0f;
-        if (Input.GetMouseButton(1)) {
+        if ((Input.GetMouseButton(1)) && (_moveSmoothTime > _moveSlowTime)) {
             mouseX = -Input.GetAxis("Mouse X") * _rootSpeed;
             mouseY = -Input.GetAxis("Mouse Y") * _rootSpeed;
         }
@@ -140,14 +122,10 @@ public class newC : MonoBehaviour {
     }
 
     public void startRound(roundType round) {
-        
         switch (round) {
             case roundType.positioning:
+                StopCoroutine(_animThinking);
                 StartCoroutine(StartAnim());
-                break;
-            case roundType.combat:
-                
-                //StartCoroutine(AnimAttack());
                 break;
         }
     }
@@ -158,13 +136,14 @@ public class newC : MonoBehaviour {
                 StopAllCoroutines();
                 transform.position = _positioningPosition.position;
                 transform.rotation = _positioningPosition.rotation;
+                _camera.fieldOfView = _innitialFOV;
+                _camera.orthographic = false;
                 activate();
                 break;
             case roundType.combat:
                 StartCoroutine(EndAnim());
                 break;
             case roundType.thinking:
-                StopAllCoroutines();
                 break;
 
         }
@@ -172,50 +151,48 @@ public class newC : MonoBehaviour {
 
     /** Start Anim to move 2 the positioning round */
     private IEnumerator StartAnim() {
-        yield return new WaitForSeconds(0.5f);
-        float timer = 0;
+        float timer = 0, duration = 1.5f;
 
-        float duration = 3f;
-        while (timer < duration) {
-            timer += Time.deltaTime;
-            float percentageDuration = timer / duration;
-            transform.position = Vector3.Lerp(transform.position, _positioningPosition.position, percentageDuration);
-            transform.rotation = Quaternion.Lerp(Quaternion.Euler(transform.eulerAngles), Quaternion.Euler(_positioningPosition.localEulerAngles), percentageDuration);
-            yield return new WaitForFixedUpdate();
+        Vector3 innitialPos = transform.position;
+        Vector3 innitialRot = transform.eulerAngles;
+
+        float percentageDuration = 0f;
+        while (percentageDuration <= 1f) {
+            timer += Time.deltaTime; 
+            percentageDuration = timer / duration;
+            transform.position = Vector3.Lerp(innitialPos, _positioningPosition.position, percentageDuration);
+            transform.rotation = Quaternion.Lerp(Quaternion.Euler(innitialRot), Quaternion.Euler(_positioningPosition.localEulerAngles), percentageDuration);
+            yield return null;
         }
 
+        _camera.orthographic = true;
         transform.position = _positioningPosition.position;
         transform.rotation = _positioningPosition.rotation;
     }
-    private IEnumerator AnimThinking()
-    {
+
+    private IEnumerator AnimThinking() {
         int fovDir = -1;
-        bool nano33canada = true;
-        while (nano33canada)
-        {
-            Debug.Log("3QAAAAAAAAAAAAA");
-            float breath = Mathf.Sin(Time.time * breathSpeed) * breathMagnitude;
+        while (true) {
+            float breath = Mathf.Sin(Time.time * _breathSpeed) * _breathMagnitude;
 
             // Apply the breathing animation to the local position of the object
             Vector3 newPosition = transform.localPosition + new Vector3(0f, breath, 0f);
             _camera.fieldOfView += breath * breathFovSpeed * fovDir;
             transform.localPosition = newPosition;
-            if(Mathf.Abs(_camera.fieldOfView - initialFov) > 1)
-            {
+            if (Mathf.Abs(_camera.fieldOfView - _innitialFOV) > 1) {
                 fovDir *= -1;
             }
             yield return null;
         }
     }
-    private IEnumerator AnimAttack()
-    {
+
+    private IEnumerator AnimAttack() {
         yield return new WaitForSeconds(0.5f);
         _targetRot = new Vector3(25, 180, 0);
         float timer = 0;
 
         float duration = 3f;
-        while (timer < duration)
-        {
+        while (timer < duration) {
             timer += Time.deltaTime;
             float percentageDuration = timer / duration;
             transform.position = Vector3.Lerp(transform.position, _pivot.position - transform.forward * _distance, percentageDuration);
@@ -227,17 +204,16 @@ public class newC : MonoBehaviour {
         transform.eulerAngles = _targetRot;
         //activate();
     }
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.CompareTag("CameraWall"))
-        {
+
+    // Collisions
+    private void OnTriggerStay(Collider other) {
+        if (other.CompareTag("CameraWall")) {
             _distance -= hasTouchedSpeed * Time.deltaTime;
             touchingWall = true;
         }
-        
+
     }
-    private void OnTriggerExit(Collider other)
-    {
+    private void OnTriggerExit(Collider other) {
         touchingWall = false;
     }
 

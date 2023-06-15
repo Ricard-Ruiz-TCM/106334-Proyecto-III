@@ -46,7 +46,7 @@ public class TutorialUIManager : MonoBehaviour {
                 firstPanel.GetComponent<TutorialUI>().setRoundsHaveStarted();
                 break;
             case roundType.combat:
-                if (firstTimeInCombat) {
+                if (firstTimeInCombat && combatPanel != null) {
                     if(positioningRoundOfPanels != null)
                     {
                         foreach (var positionRoundPanel in positioningRoundOfPanels)

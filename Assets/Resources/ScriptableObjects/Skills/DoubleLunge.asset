@@ -20,6 +20,18 @@ MonoBehaviour:
   personal: 0
   areaRange: 0
   needWeapon: 1
-  _damageDelay: 0.25
+  slashes:
+  - objSlash: {fileID: 7378207430977456858, guid: 26897dff2ebfa6c4ca13aeeedb8595c3,
+      type: 3}
+    delay: 1
+    pos: {x: 0, y: 1.5, z: 0}
+  - objSlash: {fileID: 1302666427840568571, guid: 3a97aef54ad305e43b011150519a0577,
+      type: 3}
+    delay: 1
+    pos: {x: 0, y: 1.5, z: 0}
+  arrowPrefab: {fileID: 2465351817820689655, guid: d7697d985effe3142a2b726d14f6a997,
+    type: 3}
+  _damageDelay: 1.2
   bloodPrefab: {fileID: 9165009315386229762, guid: de8f43d8a3e9b3042badf6ec53430fca,
     type: 3}
+  duration: 0.2

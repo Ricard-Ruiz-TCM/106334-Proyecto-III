@@ -26,40 +26,30 @@ public class AchillesHeel : Skill {
                     FMODManager.instance.PlayOneShot(FMODEvents.instance.InicioLanzarFlecha);
                     FMODManager.instance.PlayOneShot(FMODEvents.instance.FlechaContraCarne);
                     ((Actor)from).Anim.Play("Bow");
-                    from.StartCoroutine(ShootArrow(from, target.transform.position));
+                    from.StartCoroutine(ShootArrow(from, target.transform.position, target));
                     break;
                 case itemID.Dolabra:
                     FMODManager.instance.PlayOneShot(FMODEvents.instance.DolabraContraCarne);
                     ((Actor)from).Anim.Play("Attack" + rValue.ToString());
-                    from.StartCoroutine(StartSlash(from, rValue));
+                    from.StartCoroutine(StartSlash(from, rValue, target));
                     break;
                 case itemID.Gladius:
                     FMODManager.instance.PlayOneShot(FMODEvents.instance.GladiusContraCarne);
                     ((Actor)from).Anim.Play("Attack" + rValue.ToString());
-                    from.StartCoroutine(StartSlash(from, rValue));
+                    from.StartCoroutine(StartSlash(from, rValue, target));
                     break;
                 case itemID.Hasta:
                     FMODManager.instance.PlayOneShot(FMODEvents.instance.HastaContraCarne);
                     ((Actor)from).Anim.Play("Attack" + rValue.ToString());
-                    from.StartCoroutine(StartSlash(from, rValue));
+                    from.StartCoroutine(StartSlash(from, rValue, target));
                     break;
                 case itemID.Pugio:
                     FMODManager.instance.PlayOneShot(FMODEvents.instance.PugioContraCarne);
                     ((Actor)from).Anim.Play("Attack" + rValue.ToString());
-                    from.StartCoroutine(StartSlash(from, rValue));
+                    from.StartCoroutine(StartSlash(from, rValue,target));
                     break;
                 default:
                     break;
-            }
-            target.takeDamage((Actor)from, from.totalDamage(), ((Actor)from).equip.weapon.ID);
-
-            if (!target.GetComponent<StaticActor>()) {
-                Vector3 relativePos = from.transform.position - target.transform.position;
-
-                // the second argument, upwards, defaults to Vector3.up
-                Quaternion rotation = Quaternion.LookRotation(relativePos, Vector3.up);
-                GameObject blood = Instantiate(bloodPrefab, new Vector3(target.transform.position.x, target.transform.position.y + 0.8f, target.transform.position.z), rotation);
-                Destroy(blood, 2f);
             }
 
 
@@ -69,19 +59,19 @@ public class AchillesHeel : Skill {
             if (weapon.ID == itemID.Bow)
             {
                 ((Actor)from).Anim.Play("Bow");
-                from.StartCoroutine(ShootArrow(from, Stage.StageBuilder.getGridPlane(to).position));
+                from.StartCoroutine(ShootArrow(from, Stage.StageBuilder.getGridPlane(to).position,null));
             }
             else
             {
                 ((Actor)from).Anim.Play("Attack" + rValue.ToString());
-                from.StartCoroutine(StartSlash(from, rValue));
+                from.StartCoroutine(StartSlash(from, rValue,null));
             }
             FMODManager.instance.PlayOneShot(FMODEvents.instance.MissAttack);
         }
 
         from.endAction();
     }
-    IEnumerator ShootArrow(BasicActor from, Vector3 target)
+    IEnumerator ShootArrow(BasicActor from, Vector3 target, BasicActor targetActor)
     {
         yield return new WaitForSeconds(1f);
         GameObject arrow = Instantiate(arrowPrefab, new Vector3(from.transform.position.x, from.transform.position.y + 1.7f, from.transform.position.z), Quaternion.identity);
@@ -94,10 +84,21 @@ public class AchillesHeel : Skill {
             arrow.transform.rotation = Quaternion.LookRotation(target - from.transform.position);
             yield return null;
         }
+        if (targetActor != null)
+        {
+            targetActor.takeDamage((Actor)from, from.totalDamage(), ((Actor)from).equip.weapon.ID);
+            Vector3 relativePos = from.transform.position - targetActor.transform.position;
+            Quaternion rotation = Quaternion.LookRotation(relativePos, Vector3.up);
+            if (!targetActor.GetComponent<StaticActor>())
+            {
+                GameObject blood = Instantiate(bloodPrefab, new Vector3(targetActor.transform.position.x, targetActor.transform.position.y + 0.8f, targetActor.transform.position.z), rotation);
+                Destroy(blood, 2f);
+            }
+        }
         Destroy(arrow);
     }
 
-    IEnumerator StartSlash(BasicActor from, int num)
+    IEnumerator StartSlash(BasicActor from, int num, BasicActor targetActor)
     {
         GameObject go;
         yield return new WaitForSeconds(0.4f);
@@ -108,6 +109,17 @@ public class AchillesHeel : Skill {
             go.transform.localPosition = slashes[1].pos;
             go.transform.localRotation = Quaternion.identity;
             go.SetActive(true);
+            if (targetActor != null)
+            {
+                targetActor.takeDamage((Actor)from, from.totalDamage(), ((Actor)from).equip.weapon.ID);
+                Vector3 relativePos = from.transform.position - targetActor.transform.position;
+                Quaternion rotation = Quaternion.LookRotation(relativePos, Vector3.up);
+                if (!targetActor.GetComponent<StaticActor>())
+                {
+                    GameObject blood = Instantiate(bloodPrefab, new Vector3(targetActor.transform.position.x, targetActor.transform.position.y + 0.8f, targetActor.transform.position.z), rotation);
+                    Destroy(blood, 2f);
+                }
+            }
             yield return new WaitForSeconds(slashes[1].delay);
             Destroy(go);
         }
@@ -118,6 +130,17 @@ public class AchillesHeel : Skill {
             go.transform.localPosition = slashes[0].pos;
             go.transform.localRotation = Quaternion.identity;
             go.SetActive(true);
+            if (targetActor != null)
+            {
+                targetActor.takeDamage((Actor)from, from.totalDamage(), ((Actor)from).equip.weapon.ID);
+                Vector3 relativePos = from.transform.position - targetActor.transform.position;
+                Quaternion rotation = Quaternion.LookRotation(relativePos, Vector3.up);
+                if (!targetActor.GetComponent<StaticActor>())
+                {
+                    GameObject blood = Instantiate(bloodPrefab, new Vector3(targetActor.transform.position.x, targetActor.transform.position.y + 0.8f, targetActor.transform.position.z), rotation);
+                    Destroy(blood, 2f);
+                }
+            }
             yield return new WaitForSeconds(slashes[0].delay);
             Destroy(go);
         }

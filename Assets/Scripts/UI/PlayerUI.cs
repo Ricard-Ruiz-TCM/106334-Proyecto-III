@@ -198,9 +198,8 @@ public class PlayerUI : MonoBehaviour {
         if (!_player.canAct() || !_player.canMoveIfBuff())
             return;
 
-        foreach (KeyValuePair<skillID, SkillButtonUI> entry in _skillButtons) 
+        foreach (KeyValuePair<skillID, SkillButtonUI> entry in _skillButtons)
         {
-            //if(entry.Value.)
             if (entry.Value.SkItem.skill.needWeapon && !_player.canActIfBuff())
             {
                 entry.Value.gameObject.GetComponent<Button>().interactable = false;
@@ -209,11 +208,11 @@ public class PlayerUI : MonoBehaviour {
             {
                 entry.Value.gameObject.GetComponent<Button>().interactable = true;
             }
-            if(entry.Value.SkItem.skill.cooldown > -1)
-            {
-                entry.Value.gameObject.GetComponent<Button>().interactable = false;
-            }
-            
+            //if(_player.skills.getSkill(entry.Value.SkItem.skill.ID).cooldown > -1)
+            //{
+            //    entry.Value.gameObject.GetComponent<Button>().interactable = false;
+            //}
+
         }
     }
 

@@ -129,6 +129,11 @@ public class FMODEvents : MonoBehaviour {
     {
         get; private set;
     }
+    [field: SerializeField]
+    public EventReference Victory
+    {
+        get; private set;
+    }
 
     public static FMODEvents instance {
         get; private set;

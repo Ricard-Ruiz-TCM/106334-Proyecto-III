@@ -22,6 +22,7 @@ public class StageResolutionUI : MonoBehaviour {
             FMODManager.instance.PlayOneShot(FMODEvents.instance.GameOver);
             _btnVictory.SetActive(false);
         } else {
+            FMODManager.instance.PlayOneShot(FMODEvents.instance.Victory);
             _btnDefeat.SetActive(false);
         }
     }

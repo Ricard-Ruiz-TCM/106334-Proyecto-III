@@ -194,9 +194,9 @@ public class ManualActor : Actor {
     }
 
     public override void onActorDeath() {
-        base.onActorDeath();
         FMODManager.instance.PlayOneShot(FMODEvents.instance.PlayerDeath);
-        Anim.Play("Death");
+        Anim.SetTrigger("die");
+        base.onActorDeath();
         //GameObject blood = Instantiate(Resources.Load("Particles/BloodDie") as GameObject);
         //Debug.Break();
         //blood.transform.position = new Vector3(transform.position.x, transform.position.y + 0.8f, transform.position.z);

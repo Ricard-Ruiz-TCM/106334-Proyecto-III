@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Stage : MonoBehaviour {
@@ -19,22 +20,12 @@ public class Stage : MonoBehaviour {
 
     // Unity OnEnable
     void OnEnable() {
-        TurnManager.onEndRound += (roundType r) => {
-            if (!r.Equals(roundType.positioning))
-                return;
-
-            TurnManager.onModifyAttenders += checkGameResolution;
-        };
+        TurnManager.onModifyAttenders += checkGameResolution;
     }
 
     // Unity OnDisable
     void OnDisable() {
-        TurnManager.onEndRound -= (roundType r) => {
-            if (!r.Equals(roundType.positioning))
-                return;
-
-            TurnManager.onModifyAttenders += checkGameResolution;
-        };
+        TurnManager.onModifyAttenders -= checkGameResolution;
     }
 
     // Unity Awake
@@ -54,16 +45,28 @@ public class Stage : MonoBehaviour {
 
     /** Método para comprobar si el stage ha sido completado, depende del objetivo */
     private void checkGameResolution() {
+        // Si no es combate, no comprobamos el rsolution
+        if (!TurnManager.instance.isCombatStarted())
+            return;
+
         if (completed)
             return;
 
         completed = false;
-        bool palyer = TurnManager.instance.attenders.Exists(x => x is ManualActor);
+
+        bool player = false;
+        List<Turnable> players = TurnManager.instance.attenders.FindAll(x => x is ManualActor);
+        foreach (Turnable turnables in players) {
+            if (turnables.name == "Player") {
+                player = true;
+            }
+        }
+
         bool npc = TurnManager.instance.attenders.Exists(x => x is ProtectedActor);
         bool enemies = TurnManager.instance.attenders.Exists(x => x is AutomaticActor);
 
-        if (!palyer) {
-            endStage(stageResolution.defeat);
+        if (!player) {
+            StartCoroutine(endStage(stageResolution.defeat));
         } else {
             switch (_data.objetive) {
                 case stageObjetive.killAll:
@@ -73,7 +76,7 @@ public class Stage : MonoBehaviour {
                     break;
                 case stageObjetive.protectNPC:
                     if (!npc) {
-                        endStage(stageResolution.defeat);
+                        StartCoroutine(endStage(stageResolution.defeat));
                     } else if (!enemies) {
                         completed = TurnManager.instance.attenders.Exists(x => x is ProtectedActor);
                     }
@@ -89,8 +92,8 @@ public class Stage : MonoBehaviour {
     public float _resolutionDelayInSec = 2.5f;
 
     private IEnumerator endStage(stageResolution res) {
-        yield return new WaitForSeconds(_resolutionDelayInSec);
         TurnManager.instance.endManager();
+        yield return new WaitForSeconds(_resolutionDelayInSec);
         onCompleteStage?.Invoke(res);
     }
 

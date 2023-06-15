@@ -50,6 +50,12 @@ public class TurnManager : MonoBehaviour {
     private roundType _roundType = roundType.thinking;
     [SerializeField]
     private int _rounds = 0;
+    public int getRounds() {
+        return _rounds;
+    }
+    public bool isCombatStarted() {
+        return getRounds() > 0;
+    }
 
     [SerializeField, Header("Tiempos:")]
     private float _endTurnDelaySecs = 1f;

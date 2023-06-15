@@ -172,9 +172,10 @@ public abstract class BasicActor : Turnable {
 
     /** Abstract para indicar que pasa cuando morimos */
     public virtual void onActorDeath() {
-        Destroy(entitieUI);
         TurnManager.instance.unsubscribe(this);
         this.enabled = false;
+        Destroy(entitieUI);
+        Stage.Grid.changeNodeType(transform.position, Array2DEditor.nodeType.C);
     }
 
 }

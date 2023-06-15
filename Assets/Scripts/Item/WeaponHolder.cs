@@ -18,6 +18,10 @@ public class WeaponHolder : MonoBehaviour {
         _scutum.SetActive(false);
     }
 
+    public void throwWeapon() {
+        //getActiveWeapon().transform.SetParent(null);
+    }
+
     public void disarm() {
         _gladius.SetActive(false);
         _hasta.SetActive(false);

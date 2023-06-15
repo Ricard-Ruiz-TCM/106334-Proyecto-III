@@ -52,7 +52,7 @@ public class ManualActor : Actor {
             anteriorEnemy = null;
             // Display de walkablePath
             if ((_walkablePath != null) && (_walkablePath.Count > 0)) {
-                Stage.StageBuilder.displayPath(_walkablePath, pathMaterial.walkable);
+                Stage.StageBuilder.displayPath(_walkablePath, pathMaterial.walkable,transform.position);
                 // Si no estamos dentro del rango de movimineot, no aceptamos input
                 Node target = Stage.StageBuilder.getMouseGridNode();
                 if (!_walkablePath.Contains(target))

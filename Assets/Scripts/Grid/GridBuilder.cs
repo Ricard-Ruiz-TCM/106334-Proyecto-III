@@ -163,7 +163,7 @@ public class GridBuilder : MonoBehaviour {
         Node node = null;
         List<Node> neighbours = _grid.getNeighbours(target.node);
         foreach (Node cell in neighbours) {
-            if (cell != target.node) {
+            if (cell != target.node && cell.walkable) {
                 int dis = getDistance(origin.node, cell);
                 if (dis < tmp) {
                     tmp = dis;
@@ -191,22 +191,25 @@ public class GridBuilder : MonoBehaviour {
     }
 
     /** Método para mostar un path concreto */
-    public void displayPath(List<Node> path, pathMaterial material) {
-        for (int i = 0; i < path.Count; i++) {
-            if (i < path.Count - 1) {
-                GameObject pathObj = getGridPlane(path[i].x, path[i].y).pathGameObject;
+    public void displayPath(List<Node> path, pathMaterial material,Vector3 pos) 
+    {     
+        List<Node> pathList = new List<Node>(path.ToArray());
+        pathList.Insert(0, getGridNode(pos));
+        for (int i = 0; i < pathList.Count; i++) {
+            if (i < pathList.Count - 1) {
+                GameObject pathObj = getGridPlane(pathList[i].x, pathList[i].y).pathGameObject;
                 pathObj.SetActive(true);
 
-                if (path[i + 1].x > path[i].x) {
+                if (pathList[i + 1].x > pathList[i].x) {
                     pathObj.transform.rotation = Quaternion.Euler(0, 0, 0);
                 }
-                if (path[i + 1].x < path[i].x) {
+                if (pathList[i + 1].x < pathList[i].x) {
                     pathObj.transform.rotation = Quaternion.Euler(0, 180, 0);
                 }
-                if (path[i + 1].y > path[i].y) {
+                if (pathList[i + 1].y > pathList[i].y) {
                     pathObj.transform.rotation = Quaternion.Euler(0, -90, 0);
                 }
-                if (path[i + 1].y < path[i].y) {
+                if (pathList[i + 1].y < pathList[i].y) {
                     pathObj.transform.rotation = Quaternion.Euler(0, 90, 0);
                 }
             }

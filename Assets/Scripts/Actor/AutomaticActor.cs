@@ -112,48 +112,16 @@ public class AutomaticActor : Actor {
                 skills.useSkill(skillID.Defense, this);
             if (canAct()) 
             {
-                List<Turnable> alonso = new List<Turnable>(TurnManager.instance.attenders.ToArray());
-                alonso.RemoveAll(x => x is AutomaticActor);
-                alonso.RemoveAll(x => x is StaticActor);
-
+                List<Turnable> alonso = getAllPlayers();
                 // Player Encontrado
                 if (alonso.Count != 0)
                 {
-                    List<Turnable> personsInRange = new List<Turnable>();
-                    List<Node> rangeListNodes = Stage.StageBuilder.rangeList(equip.weapon.range, Stage.StageBuilder.getGridNode(transform.position));
-
-                    foreach (Turnable persona in alonso)
-                    {
-                        Node nodePersona = Stage.StageBuilder.getGridNode(persona.transform.position);
-                        foreach (Node item in rangeListNodes)
-                        {
-                            if (item == nodePersona)
-                            {
-                                personsInRange.Add(persona);
-                                break;
-                            }
-                        }
-                    }
-
+                    List<Turnable> personsInRange = playerInRange(alonso,transform.position);
 
                     if (personsInRange.Count != 0)
                     {
-                        Turnable lowestPerson = null;
-                        foreach (Turnable item in personsInRange)
-                        {
-                            if (lowestPerson == null)
-                            {
-                                lowestPerson = item;
-                            }
-                            else
-                            {
-                                if (((Actor)item).health() < ((Actor)lowestPerson).health())
-                                {
-                                    lowestPerson = item;
-                                }
-                            }
-                        }
 
+                        Turnable lowestPerson = getLowestHpPlayer(personsInRange);
                         if (canAct())
                         {
                             skills.useSkill(skillID.Bloodlust, this, Stage.StageBuilder.getGridNode(lowestPerson.transform.position));
@@ -180,54 +148,68 @@ public class AutomaticActor : Actor {
             endAction();
         }
     }
-    private void attackPriositisingSkills() {
-
+    private List<Turnable> getAllPlayers()
+    {
         List<Turnable> alonso = new List<Turnable>(TurnManager.instance.attenders.ToArray());
         alonso.RemoveAll(x => x is AutomaticActor);
         alonso.RemoveAll(x => x is StaticActor);
+        return alonso;
+    }
+    private List<Turnable> playerInRange(List<Turnable> alonso, Vector3 pos)
+    {
+        List<Turnable> personsInRange = new List<Turnable>();
+        List<Node> rangeListNodes = Stage.StageBuilder.rangeList(equip.weapon.range, Stage.StageBuilder.getGridNode(pos));
 
-        // Player Encontrado
-        if (alonso.Count != 0) 
+        foreach (Turnable persona in alonso)
         {
-            List<Turnable> personsInRange = new List<Turnable>();
-            List<Node> rangeListNodes = Stage.StageBuilder.rangeList(equip.weapon.range, Stage.StageBuilder.getGridNode(transform.position));
-
-            foreach (Turnable persona in alonso)
+            Node nodePersona = Stage.StageBuilder.getGridNode(persona.transform.position);
+            foreach (Node item in rangeListNodes)
             {
-                Node nodePersona = Stage.StageBuilder.getGridNode(persona.transform.position);
-                foreach (Node item in rangeListNodes)
+                if (item == nodePersona)
                 {
-                    if (item == nodePersona)
-                    {
-                        personsInRange.Add(persona);
-                        break;
-                    }
+                    personsInRange.Add(persona);
+                    break;
                 }
             }
+        }
+        return personsInRange;
+    }
+    private Turnable getLowestHpPlayer(List<Turnable> personsInRange)
+    {
+        Turnable lowestPerson = null;
+        foreach (Turnable item in personsInRange)
+        {
+            if (lowestPerson == null)
+            {
+                lowestPerson = item;
+            }
+            else
+            {
+                if (((Actor)item).health() < ((Actor)lowestPerson).health())
+                {
+                    lowestPerson = item;
+                }
+            }
+        }
+        return lowestPerson;
+    }
+    private void attackPriositisingSkills() {
 
+        List<Turnable> alonso = getAllPlayers();
+        // Player Encontrado
+        if (alonso.Count != 0)
+        {
+            List<Turnable> personsInRange = playerInRange(alonso,transform.position);
 
             if (personsInRange.Count != 0)
             {
-                Turnable lowestPerson = null;
-                foreach (Turnable item in personsInRange)
-                {
-                    if(lowestPerson == null )
-                    {
-                        lowestPerson = item;
-                    }
-                    else
-                    {
-                        if(((Actor)item).health() < ((Actor)lowestPerson).health())
-                        {
-                            lowestPerson = item;
-                        }
-                    }
-                }
 
-            //bool inWeaponRange = (Stage.StageBuilder.getDistance(transform.position, lowestPerson.transform.position) <= _equip.weapon.range); posible bug oir quitarlo en el if de can act
+                Turnable lowestPerson = getLowestHpPlayer(personsInRange);
 
-            // Skills + end with combat
-            if (canAct())
+                //bool inWeaponRange = (Stage.StageBuilder.getDistance(transform.position, lowestPerson.transform.position) <= _equip.weapon.range); posible bug oir quitarlo en el if de can act
+
+                // Skills + end with combat
+                if (canAct())
                 skills.useSkill(skillID.ImperialCry, this);
             if (canAct()  && CanAttack())
                 skills.useSkill(skillID.Bloodlust, this, Stage.StageBuilder.getGridNode(lowestPerson.transform.position));
@@ -308,25 +290,39 @@ public class AutomaticActor : Actor {
                 return;
             }
 
-            //// Cortamos el path aa la distancia mínima del arma
-            if (path.Count > equip.weapon.range)
-            {              
-                //path.Reverse();
-                //path.RemoveRange(0, equip.weapon.range); DE MOMENTO SE QUEDA ASI
-                //path.Reverse();
-            }
-            else
-            {
-                path.Clear();
-            }
-
             // Cortamos el path al movimiento mínimo
             if (stepsRemain() < path.Count) {
                 int steps = Mathf.Min(path.Count, stepsRemain());
                 path.RemoveRange(steps, path.Count - steps);
             }
 
-            setDestination(path);
+
+            List<Node> defenitivePath = new List<Node>(path.ToArray());
+            for (int i = 0; i < path.Count; i++)
+            {
+
+                List<Turnable> alonso = getAllPlayers();
+
+                List<Turnable> personsInRange = playerInRange(alonso, Stage.StageBuilder.getGridPlane(path[i]).position);
+
+                if (personsInRange.Count != 0)
+                {
+                    for (int z = 0; z < path.Count - i - 1; z++)
+                    {
+                        defenitivePath.Reverse();
+                        defenitivePath.RemoveAt(0);
+                        defenitivePath.Reverse();
+                    }
+                    break;
+                }
+                //else
+                //{
+                //    path.Clear();
+                //}
+            }
+
+
+            setDestination(defenitivePath);
             startMove();
         } else {
             endMovement();

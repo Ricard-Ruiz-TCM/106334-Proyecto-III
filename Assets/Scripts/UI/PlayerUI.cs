@@ -201,22 +201,18 @@ public class PlayerUI : MonoBehaviour {
         foreach (KeyValuePair<skillID, SkillButtonUI> entry in _skillButtons) 
         {
             //if(entry.Value.)
-            if (_player.isDisarmed())
+            if (entry.Value.SkItem.skill.needWeapon && !_player.canActIfBuff())
             {
-                if (!entry.Value.SkItem.skill.needWeapon)
-                {
-                    entry.Value.gameObject.GetComponent<Button>().interactable = true;
-                }
-                else
-                {
-                    entry.Value.gameObject.GetComponent<Button>().interactable = false;
-                }
+                entry.Value.gameObject.GetComponent<Button>().interactable = false;
             }
             else
             {
                 entry.Value.gameObject.GetComponent<Button>().interactable = true;
             }
-            
+            if(entry.Value.SkItem.skill.cooldown > -1)
+            {
+                entry.Value.gameObject.GetComponent<Button>().interactable = false;
+            }
             
         }
     }

@@ -46,9 +46,9 @@ public class GridPlane : MonoBehaviour {
 
     /** Método para setear el material */
     public void setMaterial(Material mat) {
-        Actor actorOnMe = (Actor)Stage.StageManager.getActor(Stage.StageBuilder.getGridNode(transform.position));
-        if (actorOnMe != null) {
-            if (actorOnMe.buffs.isBuffActive(buffsID.Invisible)) {
+        BasicActor actorOnMe = Stage.StageManager.getActor(Stage.StageBuilder.getGridNode(transform.position));
+        if (actorOnMe != null && actorOnMe is Actor) {
+            if (((Actor)actorOnMe).buffs.isBuffActive(buffsID.Invisible)) {
                 mat = _baseMath;
             }
         }

@@ -42,16 +42,12 @@ public class newC : MonoBehaviour {
     void OnEnable() {
         TurnManager.onNewRound += startRound;
         TurnManager.onEndRound += endRound;
-
-        TurnManager.onStartSystem += activate;
     }
 
     // Unity OnDisabel
     void OnDisable() {
         TurnManager.onNewRound -= startRound;
         TurnManager.onEndRound -= endRound;
-
-        TurnManager.onStartSystem -= activate;
     }
 
     // Unity FixedUpdate
@@ -136,6 +132,9 @@ public class newC : MonoBehaviour {
 
     public void endRound(roundType round) {
         switch (round) {
+            case roundType.positioning:
+                activate();
+                break;
             case roundType.combat:
                 StartCoroutine(EndAnim());
                 break;

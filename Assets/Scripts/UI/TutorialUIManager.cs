@@ -43,9 +43,13 @@ public class TutorialUIManager : MonoBehaviour {
                 break;
             case roundType.combat:
                 if (firstTimeInCombat) {
-                    foreach (var positionRoundPanel in positioningRoundOfPanels) {
-                        positionRoundPanel.SetActive(false);
-                    }
+                    if(positioningRoundOfPanels != null)
+                    {
+                        foreach (var positionRoundPanel in positioningRoundOfPanels)
+                        {
+                            positionRoundPanel.SetActive(false);
+                        }
+                    }                    
                     firstTimeInCombat = false;
                     combatPanel.SetActive(true);
                     combatPanel.GetComponent<TutorialUI>().setRoundsHaveStarted();
@@ -60,7 +64,10 @@ public class TutorialUIManager : MonoBehaviour {
         foreach (var panel in firstRoundOfPanels) {
             panel.SetActive(false);
         }
-        positioningPanel.SetActive(true);
-        positioningPanel.GetComponent<TutorialUI>().setRoundsHaveStarted();
+        if(positioningPanel != null)
+        {
+            positioningPanel.SetActive(true);
+            positioningPanel.GetComponent<TutorialUI>().setRoundsHaveStarted();
+        }        
     }
 }

@@ -23,10 +23,17 @@ public class TutorialUI : MonoBehaviour {
     private TutorialUI nextPopUp;
     [SerializeField]
     private float timePerCharacter = 5f;
+    [SerializeField]
+    private bool lastTutorialPopUp = false;
 
+    private MovementStopper movementStopper;
     private bool roundsHaveStarted = false;
     private bool textSetted = false;
 
+    private void Start()
+    {
+        movementStopper = gameObject.GetComponent<MovementStopper>();
+    }
 
     private void Update() {
         if (roundsHaveStarted && myTurn && !textSetted) {
@@ -59,6 +66,10 @@ public class TutorialUI : MonoBehaviour {
             nextPopUp.gameObject.SetActive(true);
             nextPopUp.setMyTurn();
             nextPopUp.setText();
+        }
+        if (lastTutorialPopUp && movementStopper != null)
+        {
+            movementStopper.OnPointerExit(null);
         }
         gameObject.SetActive(false);
     }

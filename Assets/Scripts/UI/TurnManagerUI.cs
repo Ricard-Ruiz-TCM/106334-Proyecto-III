@@ -15,12 +15,16 @@ class TurnManagerUI : MonoBehaviour {
     void OnEnable() {
         TurnManager.onStartTurn += UpdateTurnList;
         TurnManager.onModifyAttenders += UpdateTurnList;
+
+        BasicActor.onChangeHealth += UpdateTurnList;
     }
 
     // Unity OnDisable
     void OnDisable() {
         TurnManager.onStartTurn -= UpdateTurnList;
         TurnManager.onModifyAttenders -= UpdateTurnList;
+
+        BasicActor.onChangeHealth -= UpdateTurnList;
     }
 
     /** Añade los elementos a los turnos */

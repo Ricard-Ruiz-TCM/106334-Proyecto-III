@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44989765, g: 0.66960996, b: 0.656212, a: 1}
+  m_IndirectSpecularColor: {r: 0.0060169566, g: 0.060250062, b: 0.19530022, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 112000000, guid: 24ff47b691ad84f48bf94767adb2712b,
+  m_LightingDataAsset: {fileID: 112000000, guid: a0273148a1c25d94ba3626a7ee0ef37a,
     type: 2}
   m_LightingSettings: {fileID: 4890085278179872738, guid: 1a6cbd2443bae2f4f8e0c71e16ac03d3,
     type: 2}
@@ -1000,7 +1000,7 @@ GameObject:
   m_IsActive: 1
 --- !u!114 &54483487
 MonoBehaviour:
-  m_ObjectHideFlags: 10
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -2637,6 +2637,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: pLANEpSICINA2 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 4fc0bee7c0a36f24eadc5f530875ea18,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 4fc0bee7c0a36f24eadc5f530875ea18,
         type: 3}
@@ -22352,6 +22357,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 4fc0bee7c0a36f24eadc5f530875ea18,
         type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 4fc0bee7c0a36f24eadc5f530875ea18,
+        type: 3}
       propertyPath: m_StaticEditorFlags
       value: 119
       objectReference: {fileID: 0}
@@ -32566,6 +32576,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Rain
+      objectReference: {fileID: 0}
+    - target: {fileID: 1156749657053803169, guid: 57ee74ff876ae104986e071577ed9c00,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1156749657053803171, guid: 57ee74ff876ae104986e071577ed9c00,
         type: 3}
@@ -42786,6 +42801,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Rain (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1156749657053803169, guid: 57ee74ff876ae104986e071577ed9c00,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1156749657053803171, guid: 57ee74ff876ae104986e071577ed9c00,
         type: 3}
       propertyPath: CollisionModule.radiusScale
@@ -47071,7 +47091,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3384231810829825827
 MonoBehaviour:
-  m_ObjectHideFlags: 10
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}

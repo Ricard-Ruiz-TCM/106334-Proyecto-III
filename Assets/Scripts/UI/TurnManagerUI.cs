@@ -50,6 +50,7 @@ class TurnManagerUI : MonoBehaviour {
 
     public void BTN_EndPositioning() {
         TurnManager.instance.completeRoundType(roundType.positioning);
+        Stage.StageBuilder.removePNodes();
     }
 
 }

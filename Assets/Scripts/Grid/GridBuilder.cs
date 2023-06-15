@@ -857,4 +857,13 @@ public class GridBuilder : MonoBehaviour {
         getGridPlane(x, y).clear(mat);
     }
 
+    public void removePNodes() {
+        for (int i = 0; i < 10; i++) {
+            GridPlane plane = Stage.StageManager.findPositionNode();
+            if (plane != null) {
+                Stage.Grid.changeNodeType(plane.transform.position, Array2DEditor.nodeType.__);
+            }
+        }
+    }
+
 }

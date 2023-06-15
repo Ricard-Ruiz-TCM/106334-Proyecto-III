@@ -8,8 +8,16 @@ public class Invisible : Buff {
     public Material material;
     Material[] invisibleMatList;
     Material weaponMat;
-    public override void onApply(BasicActor me) {
+
+    BoxCollider _collider;
+
+public override void onApply(BasicActor me) {
         Debug.Log("TODO: Apply Invisible Feedback + extras.");
+
+        if (_collider == null) {
+            _collider = me.gameObject.GetComponent<BoxCollider>();
+        }
+        _collider.enabled = false;
 
         invisibleMatList = new Material[me.skinnedMesh.materials.Length];
 
@@ -24,6 +32,7 @@ public class Invisible : Buff {
     }
 
     public override void onRemove(BasicActor me) {
+        _collider.enabled = true;
         Debug.Log("TODO: Remove Invisible Feedback");
         me.entitieUI.SetActive(true);
         me.skinnedMesh.materials = me.skinnedMaterials;

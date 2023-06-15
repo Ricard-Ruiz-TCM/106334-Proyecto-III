@@ -24,6 +24,8 @@ public class GridPlane : MonoBehaviour {
 
     public MeshRenderer _interior;
 
+    public Material _baseMath;
+
 
     public void setValid2Attack() {
         _canBeAttacked = true;
@@ -44,6 +46,12 @@ public class GridPlane : MonoBehaviour {
 
     /** Método para setear el material */
     public void setMaterial(Material mat) {
+        Actor actorOnMe = (Actor)Stage.StageManager.getActor(Stage.StageBuilder.getGridNode(transform.position));
+        if (actorOnMe != null) {
+            if (actorOnMe.buffs.isBuffActive(buffsID.Invisible)) {
+                mat = _baseMath;
+            }
+        }
         _interior.material = mat;
     }
 

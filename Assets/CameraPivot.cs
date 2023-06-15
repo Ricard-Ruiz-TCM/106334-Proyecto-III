@@ -20,13 +20,13 @@ public class CameraPivot : MonoBehaviour {
         if (TurnManager.instance.attenders.Count <= 0)
             return;
 
-            Vector3 centerPoint = TurnManager.instance.attenders[0].transform.position;
-            for (int i = 1; i < TurnManager.instance.attenders.Count; i++) {
-                    centerPoint += TurnManager.instance.attenders[i].transform.position;
-            }
+        Vector3 centerPoint = TurnManager.instance.attenders[0].transform.position;
+        for (int i = 1; i < TurnManager.instance.attenders.Count; i++) {
+            centerPoint += TurnManager.instance.attenders[i].transform.position;
+        }
 
-            centerPoint /= TurnManager.instance.attenders.Count;
-            transform.position = centerPoint;
+        centerPoint /= TurnManager.instance.attenders.Count;
+        transform.position = centerPoint;
     }
 
 }

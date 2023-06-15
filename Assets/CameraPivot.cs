@@ -24,13 +24,13 @@ public class CameraPivot : MonoBehaviour {
         for (int i = 1; i < TurnManager.instance.attenders.Count; i++) {
             centerPoint += TurnManager.instance.attenders[i].transform.position;
         }
-
         centerPoint /= TurnManager.instance.attenders.Count;
 
+        // Si soy el manual, me acerco un poco :3 
         if (TurnManager.instance.current is ManualActor) {
-            Vector3 playerPoint = TurnManager.instance.current.transform.position;
-
-
+            Vector3 startPoint = TurnManager.instance.current.transform.position;
+            Vector3 intermediatePoint = Vector3.Lerp(startPoint, centerPoint, 0.5f);
+            centerPoint = intermediatePoint;
         }
 
         transform.position = centerPoint;

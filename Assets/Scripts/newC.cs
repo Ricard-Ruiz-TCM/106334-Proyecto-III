@@ -21,6 +21,8 @@ public class newC : MonoBehaviour {
 
     [SerializeField, Header("Smooths:")]
     private float _rotSmoothTime;
+    [SerializeField]
+    private float _moveSmoothTime;
 
     [SerializeField, Header("Distancia:")]
     private float _distance;
@@ -67,7 +69,9 @@ public class newC : MonoBehaviour {
         _targetRot.x = Mathf.Clamp(_targetRot.x, _verticalRotLimit.min, _verticalRotLimit.max);
 
         // Update de la posición
-        transform.position = _pivot.position - transform.forward * _distance;
+        Vector3 targetPos = _pivot.position - transform.forward * _distance;
+        transform.position = Vector3.Lerp(transform.position, targetPos, _moveSmoothTime);
+
         //Update de la rotación
         transform.localEulerAngles = _targetRot;
     }

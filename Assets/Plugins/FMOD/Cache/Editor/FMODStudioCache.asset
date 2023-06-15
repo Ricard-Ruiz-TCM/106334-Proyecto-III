@@ -906,7 +906,7 @@ MonoBehaviour:
   Path: Assets/Resources/FMOD/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638224399370680444
+  lastModified: 638224477062659431
   FileSizes: []
   Exists: 1
 --- !u!114 &-408055724919491982
@@ -1101,12 +1101,13 @@ MonoBehaviour:
   - {fileID: 1436680536023416022}
   - {fileID: 8984027618156230288}
   - {fileID: 1355372210707816223}
+  - {fileID: 2221012799130008600}
   EditorParameters: []
   MasterBanks:
   - {fileID: -1078370541524522390}
   StringsBanks:
   - {fileID: 3625364978230341005}
-  cacheTime: 638224399370680444
+  cacheTime: 638224477062659431
   cacheVersion: 131603
 --- !u!114 &1194454863681488560
 MonoBehaviour:
@@ -1324,6 +1325,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 3592
+--- !u!114 &2221012799130008600
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Otros/MusicaNeron
+  m_EditorClassIdentifier: 
+  Path: event:/Otros/MusicaNeron
+  Guid:
+    Data1: 1292276816
+    Data2: 1169186635
+    Data3: -1583101771
+    Data4: 1528849210
+  Banks:
+  - {fileID: -1078370541524522390}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 16000
 --- !u!114 &3082293981400545831
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1393,10 +1421,10 @@ MonoBehaviour:
   Path: Assets/Resources/FMOD/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638224349496846581
+  lastModified: 638224464568888544
   FileSizes:
   - Name: 
-    Value: 4392
+    Value: 4428
   Exists: 1
 --- !u!114 &3817269143746993324
 MonoBehaviour:

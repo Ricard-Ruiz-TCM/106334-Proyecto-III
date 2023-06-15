@@ -26,6 +26,13 @@ public class CameraPivot : MonoBehaviour {
         }
 
         centerPoint /= TurnManager.instance.attenders.Count;
+
+        if (TurnManager.instance.current is ManualActor) {
+            Vector3 playerPoint = TurnManager.instance.current.transform.position;
+
+
+        }
+
         transform.position = centerPoint;
     }
 

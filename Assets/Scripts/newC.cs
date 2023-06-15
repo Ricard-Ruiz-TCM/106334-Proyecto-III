@@ -18,6 +18,7 @@ public class newC : MonoBehaviour {
     private float _zoomSpeed;
     [SerializeField]
     private float _rootSpeed;
+    [SerializeField] float breathFovSpeed;
 
     [SerializeField, Header("Smooths:")]
     private float _rotSmoothTime;
@@ -42,6 +43,10 @@ public class newC : MonoBehaviour {
     [SerializeField] float hasTouchedSpeed = 3;
     bool touchingWall = false;
 
+    public float breathSpeed = 1.0f; // Adjust the speed of the breathing animation
+    public float breathMagnitude = 0.1f; // Adjust the magnitude of the breathing animation
+    float initialFov;
+
     // Unity OnEnable
     void OnEnable() {
         TurnManager.onNewRound += startRound;
@@ -53,7 +58,11 @@ public class newC : MonoBehaviour {
         TurnManager.onNewRound -= startRound;
         TurnManager.onEndRound -= endRound;
     }
-
+    private void Start()
+    {
+        initialFov = _camera.fieldOfView;
+        StartCoroutine(AnimThinking());
+    }
     // Unity FixedUpdate
     void FixedUpdate() {
         if (!_active)
@@ -137,11 +146,8 @@ public class newC : MonoBehaviour {
                 StartCoroutine(StartAnim());
                 break;
             case roundType.combat:
-                Debug.Log(round);
+                
                 //StartCoroutine(AnimAttack());
-                break;
-            case roundType.thinking:
-                StartCoroutine(EndAnim());
                 break;
         }
     }
@@ -149,10 +155,16 @@ public class newC : MonoBehaviour {
     public void endRound(roundType round) {
         switch (round) {
             case roundType.positioning:
+                StopAllCoroutines();
+                transform.position = _positioningPosition.position;
+                transform.rotation = _positioningPosition.rotation;
                 activate();
                 break;
             case roundType.combat:
                 StartCoroutine(EndAnim());
+                break;
+            case roundType.thinking:
+                StopAllCoroutines();
                 break;
 
         }
@@ -175,21 +187,26 @@ public class newC : MonoBehaviour {
         transform.position = _positioningPosition.position;
         transform.rotation = _positioningPosition.rotation;
     }
-    //private IEnumerator AnimThinking()
-    //{
-    //    //float duration = 3f;
-    //    //while (timer < duration)
-    //    //{
-    //    //    timer += Time.deltaTime;
-    //    //    float percentageDuration = timer / duration;
-    //    //    transform.position = Vector3.Lerp(transform.position, _pivot.position - transform.forward * _distance, percentageDuration);
-    //    //    transform.rotation = Quaternion.Lerp(Quaternion.Euler(transform.eulerAngles), Quaternion.Euler(_targetRot), percentageDuration);
-    //    //    yield return new WaitForFixedUpdate();
-    //    //}
+    private IEnumerator AnimThinking()
+    {
+        int fovDir = -1;
+        bool nano33canada = true;
+        while (nano33canada)
+        {
+            Debug.Log("3QAAAAAAAAAAAAA");
+            float breath = Mathf.Sin(Time.time * breathSpeed) * breathMagnitude;
 
-    //    //transform.position = _pivot.position - transform.forward * _distance;
-    //    //transform.eulerAngles = _targetRot;
-    //}
+            // Apply the breathing animation to the local position of the object
+            Vector3 newPosition = transform.localPosition + new Vector3(0f, breath, 0f);
+            _camera.fieldOfView += breath * breathFovSpeed * fovDir;
+            transform.localPosition = newPosition;
+            if(Mathf.Abs(_camera.fieldOfView - initialFov) > 1)
+            {
+                fovDir *= -1;
+            }
+            yield return null;
+        }
+    }
     private IEnumerator AnimAttack()
     {
         yield return new WaitForSeconds(0.5f);

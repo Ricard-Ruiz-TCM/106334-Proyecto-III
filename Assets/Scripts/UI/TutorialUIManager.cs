@@ -20,8 +20,10 @@ public class TutorialUIManager : MonoBehaviour {
         //DialogManager.instance.onNextDialog += UpdateDialog;
 
         Stage.onCompleteStage += (stageResolution res) => {
-            firstPanel.SetActive(false);
-            combatPanel.SetActive(false);
+            if (firstPanel != null)
+                firstPanel.SetActive(false);
+            if (combatPanel != null)
+                combatPanel.SetActive(false);
         };
     }
 
@@ -30,8 +32,10 @@ public class TutorialUIManager : MonoBehaviour {
         TurnManager.onNewRound -= ActivatePanel;
 
         Stage.onCompleteStage -= (stageResolution res) => {
-            firstPanel.SetActive(false);
-            combatPanel.SetActive(false);
+            if (firstPanel != null)
+                firstPanel.SetActive(false);
+            if (combatPanel != null)
+                combatPanel.SetActive(false);
         };
     }
 

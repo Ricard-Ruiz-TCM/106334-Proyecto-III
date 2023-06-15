@@ -44,6 +44,7 @@ public class PlayerUI : MonoBehaviour {
 
         BasicActor.onStartAct += disableEndTurnButton;
         BasicActor.onEndAct += enableEndTurnButton;
+        BasicActor.onEndAct += disableSkills;
         BasicActor.onReAct += enableEndTurnButton;
 
         BasicActor.onChangeHealth += updateHealth;
@@ -70,6 +71,7 @@ public class PlayerUI : MonoBehaviour {
 
         BasicActor.onStartAct -= disableEndTurnButton;
         BasicActor.onEndAct -= enableEndTurnButton;
+        BasicActor.onEndAct -= disableSkills;
         BasicActor.onReAct -= enableEndTurnButton;
 
         BasicActor.onChangeHealth -= updateHealth;
@@ -97,7 +99,7 @@ public class PlayerUI : MonoBehaviour {
         _btnEndTurn.interactable = false;
 
         // Set del player
-        if (actor is ManualActor) {
+        if (actor.CompareTag("Player")) {
             _player = actor;
 
             // Update the full HUD

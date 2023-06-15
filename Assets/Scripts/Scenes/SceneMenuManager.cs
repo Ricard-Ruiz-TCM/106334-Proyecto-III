@@ -9,7 +9,8 @@ public class SceneMenuManager : MonoBehaviour {
     /** Buttons */
     public void BTN_NewGame() {
         FMODManager.instance.PlayOneShot(FMODEvents.instance.PressButtonUI);
-        FadeFX.instance.FadeIn(() => { uCore.Director.LoadSceneAsync(gameScenes.Stage0); });
+        uCore.Director.LoadSceneAsync(gameScenes.Stage0, false);
+        FadeFX.instance.FadeIn(() => { uCore.Director.AllowScene(); });
     }
 
     public void BTN_Credits() {

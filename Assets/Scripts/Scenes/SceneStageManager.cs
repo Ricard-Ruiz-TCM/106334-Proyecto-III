@@ -199,13 +199,15 @@ public class SceneStageManager : MonoBehaviour {
         uCore.GameManager.SaveGameData();
         uCore.GameManager.savePerks(_player.GetComponent<Actor>());
         uCore.GameManager.saveSkills(_player.GetComponent<Actor>());
-        FadeFX.instance.FadeIn(() => { uCore.Director.LoadScene(_nextScene); });
+        uCore.Director.LoadSceneAsync(_nextScene, false);
+        FadeFX.instance.FadeIn(() => { uCore.Director.AllowScene(); });
     }
 
     /** Método para determinar que se ha perdido el Stage */
     public void stageFailed() {
         uCore.GameManager.LoadGameData();
-        uCore.Director.LoadScene(_thisScene);
+        uCore.Director.LoadSceneAsync(_thisScene, false);
+        FadeFX.instance.FadeIn(() => { uCore.Director.AllowScene(); });
     }
 
     /** Botones */

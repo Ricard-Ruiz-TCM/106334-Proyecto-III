@@ -1,177 +1,96 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class newC : MonoBehaviour
-{
+public class newC : MonoBehaviour {
+
+    [SerializeField]
+    private Camera _camera;
+
     [SerializeField, Header("Active:")]
     private bool _active;
 
-    [SerializeField, Header("Target:")]
-    private Transform _target;
-    [SerializeField]
-    private float _cameraYTargetOffset = 3f;
-
     [SerializeField, Header("Limits:")]
     private limit _zoomLimit;
+    [SerializeField]
+    private limit _verticalRotLimit;
 
     [SerializeField, Header("Speeds:")]
-    private float _speed = 5f;
-    [SerializeField]
-    private float _zoomSpeed = 5f;
-    [SerializeField]
-    private float _rotSpeed = 5f;
-    [SerializeField]
-    private float _rotArountSpeed = 100f;
+    private float _zoomSpeed;
+
+    [SerializeField, Header("Smooths:")]
+    private float _rotSmoothTime;
 
     [SerializeField, Header("Distancia:")]
     private float _distance;
 
-    [SerializeField, Header("Timings:2")]
-    private float _focusTime = 1f;
+    [Header("Positions:")]
+    public Transform _startPosition;
+    public Transform _positioningPosition;
+    // LIBRE POSITION
+    public Transform _completedPosition;
 
-    /** Vectroes para pos y rot temporales */
-    private Quaternion _targetRot;
-    private Vector3 _targetLookAtPosition;
-    private Vector3 _targetPos;
+    [SerializeField, Header("Mouse Sens:")]
+    private float _mouseSensibility;
 
-    private Transform _temporalTarget;
+    [SerializeField, Header("Center Point:")]
+    private Transform _pivot;
 
-    public Transform _positioningPos;
-    public Transform _completedPos;
-
-    /** La última en zoom que teniamos antes de ataque */
-    private float _lastY;
-
-    [SerializeField] float mouseSens = 3f;
-
-    float rotX;
-    float rotY;
-
-    Vector3 currentRot;
-    Vector3 smoothVel = Vector3.zero;
-    [SerializeField] float smoothTime;
-
-    [SerializeField] float zoomMultiplier;
-    float zoom = 60;
-    [SerializeField] float velocityZoom;
-    [SerializeField] float smoothZoom;
-    [SerializeField] float maxFov;
-    [SerializeField] float minFov;
-    [SerializeField] Camera cam;
-
-
-    [SerializeField] Transform targetRotate;
-    float distanceFromTarget;
-
-    [SerializeField] Transform cameraPos;
-    bool animating = false;
-    [SerializeField]float cameraSpeed;
-
-    [SerializeField, Header("Canera Animator:")]
-    Animator _animator;
-
-    #region EndPosition (C# Animation)
-    [SerializeField]
-    Vector3 finalPos;
-    [SerializeField]
-    Vector3 finalRot;
-    #endregion
-
-    #region StartMovement (C# Animation) 
-    [SerializeField]
-    private float duration;
-    [SerializeField]
-    private Vector3 startAnimPos;
-    [SerializeField]
-    private Vector3 startAnimRot;
-    [SerializeField]
-    private Vector3 startAnimFinalPos;
-    [SerializeField]
-    private Vector3 startAnimFinalRot;
-    #endregion
-
-    [SerializeField]
-    private Vector3 playAnimFinalPos;
-    [SerializeField]
-    private Vector3 playAnimFinalRot;
-
-    bool canPlay;
-    bool magic = false;
+    // Working Rot & Post
+    private Vector3 _targetRot = Vector3.zero;
+    private Vector3 _rotSmoothSpeed = Vector3.zero;
 
     // Unity OnEnable
-    void OnEnable()
-    {
-        BasicActor.onReAct += restoreZoom;
-        BasicActor.onEndAct += restoreZoom;
-        BasicActor.onStartAct += zoomOut;
-
+    void OnEnable() {
         TurnManager.onNewRound += startRound;
         TurnManager.onEndRound += endRound;
 
         TurnManager.onStartSystem += activate;
-        TurnManager.onStartTurn += () => { setTarget(TurnManager.instance.current); };
+        //TurnManager.onStartTurn += () => { setTarget(TurnManager.instance.current); };
     }
 
     // Unity OnDisabel
-    void OnDisable()
-    {
-        BasicActor.onReAct -= restoreZoom;
-        BasicActor.onEndAct -= restoreZoom;
-        BasicActor.onStartAct -= zoomOut;
+    void OnDisable() {
+        TurnManager.onNewRound -= startRound;
+        TurnManager.onEndRound -= endRound;
 
         TurnManager.onStartSystem -= activate;
-        TurnManager.onStartTurn -= () => { setTarget(TurnManager.instance.current); };
+        //TurnManager.onStartTurn -= () => { setTarget(TurnManager.instance.current); };
     }
-    private void Start()
-    {
 
-    }
     // Unity FixedUpdate
-    void FixedUpdate()
-    {
+    void FixedUpdate() {
         if (!_active)
             return;
 
-        if (_target != null)
-        {
-            // Behaviours
-            if (!animating)
-            {
-                cameraRotation();
-                //cameraFollow();
-                cameraZoom();
-            }
+        cameraZoom();
+        cameraRotation();
 
-            //cameraLookAt();
-            // Clamp
-            //cameraClamp();
-        }
-        // Zoom
-        
+        // Clamps
+        _distance = Mathf.Clamp(_distance, _zoomLimit.min, _zoomLimit.max);
+        _targetRot.x = Mathf.Clamp(_targetRot.x, _verticalRotLimit.min, _verticalRotLimit.max);
 
-        // Suavizado del movimiento de la cámara
-        //transform.position = Vector3.Lerp(transform.position, _targetPos, _speed * Time.deltaTime);
-        //transform.rotation = Quaternion.Lerp(transform.rotation, _targetRot, _rotSpeed * Time.deltaTime);
+        // Update de la posición
+        transform.position = _pivot.position - transform.forward * _distance;
+        //Update de la rotación
+        transform.localEulerAngles = _targetRot;
     }
+
 
     /** Método para setear el target */
-    public void setTarget(Turnable target)
-    {
+    public void setTarget(Turnable target) {
         StartCoroutine(play(target));
     }
-    IEnumerator play(Turnable target)
-    {
-        if (!canPlay)
-        {
+
+    private IEnumerator play(Turnable target) {
+        yield return null;
+        /*if (!canPlay) {
             animating = true;
             yield return new WaitForSeconds(0.5f);
             float timer = 0;
             Vector3 startpos = transform.position;
             Quaternion startRot = transform.rotation;
 
-            while (timer < duration)
-            {
+            while (timer < duration) {
                 timer += Time.deltaTime;
                 float percentageDuration = timer / duration;
                 transform.position = Vector3.Lerp(startpos, playAnimFinalPos, percentageDuration);
@@ -187,150 +106,59 @@ public class newC : MonoBehaviour
             _targetPos.y = 8f;
             _target = target.transform;
 
-        }
-        else
-        {
+        } else {
             _targetPos.y = 8f;
             _target = target.transform;
-        }
+        }*/
     }
 
     /** Método para activar la cámara */
-    public void activate()
-    {
+    public void activate() {
         _active = true;
     }
 
-    /** Método que levanta la camara like "zoom"  DOOOONE*/ 
-    private void cameraZoom()
-    {
+    /** Método que levanta la camara like "zoom"  DOOOONE*/
+    private void cameraZoom() {
         float scroll = Input.GetAxis("Mouse ScrollWheel");
-        zoom -= scroll * zoomMultiplier;
-        zoom = Mathf.Clamp(zoom, minFov, maxFov);
-        cam.fieldOfView = Mathf.SmoothDamp(cam.fieldOfView, zoom, ref velocityZoom, smoothZoom);
+        _distance = Mathf.Lerp(_distance, _distance - scroll * _zoomSpeed, _rotSmoothTime);
     }
 
     /** Método para rotar la camara desde el eje central  DOOOONE*/
-    private void cameraRotation()
-    {
-        if (Input.GetMouseButton(1))
-        {
-            if (!magic)
-            {
-                rotX = transform.eulerAngles.x;
-                rotY = transform.eulerAngles.y;
-                magic = true;
-            }
-            distanceFromTarget = Vector3.Distance(targetRotate.position, transform.position);
-            float mouseX = Input.GetAxis("Mouse X") * mouseSens;
-            float mouseY = Input.GetAxis("Mouse Y") * mouseSens;
-
-            rotX -= mouseY;
-            rotY += mouseX;
-
-            rotX = Mathf.Clamp(rotX, 20, 75);
-
-            Vector3 nextRot = new Vector3(rotX, rotY);
-            currentRot = Vector3.SmoothDamp(currentRot, nextRot, ref smoothVel, smoothTime);
-            transform.localEulerAngles = currentRot;
-
-            transform.position = targetRotate.position - transform.forward * distanceFromTarget;
+    private void cameraRotation() {
+        float mouseX = 0f, mouseY = 0f;
+        if (Input.GetMouseButton(1)) {
+            mouseX = Input.GetAxis("Mouse X") * _mouseSensibility;
+            mouseY = Input.GetAxis("Mouse Y") * _mouseSensibility;
         }
+        Vector3 nextRot = new Vector3(transform.localEulerAngles.x + mouseY, transform.localEulerAngles.y - mouseX);
+        _targetRot = Vector3.SmoothDamp(transform.localEulerAngles, nextRot, ref _rotSmoothSpeed, _rotSmoothTime);
     }
 
-    /** Método para hacer lookAt de la camara */
-    //private void cameraLookAt()
-    //{
-    //    _targetLookAtPosition = _target.position + Vector3.up * _cameraYTargetOffset;
-    //    _targetRot = Quaternion.LookRotation(_targetLookAtPosition - transform.position);
-    //}
-
-    /** Método para la camara, que siempre siga al target */
-    private void cameraFollow()
-    {
-        //if (_actorTarget.canMove())
-        //{
-        //    if (xAnterior != _actorTarget.getLastRouteNode().x || yAnterior != _actorTarget.getLastRouteNode().y)
-        //    {
-        //        xAnterior = _actorTarget.getLastRouteNode().x;
-        //        yAnterior = _actorTarget.getLastRouteNode().y;
-        //        // = new Vector3((_actorTarget.getLastRouteNode().x - Stage.Grid.rows / 2.5f + cameraMoveSum) * cameraMoveMultiplier, 0, (_actorTarget.getLastRouteNode().y - Stage.Grid.columns / 2.5f + cameraMoveSum) * cameraMoveMultiplier);
-        //        cameraSpeed = cameraMoveMovementSpeed;
-        //    }
-
-        //}
-        //else
-        //{
-        //    if (uCore.Action.GetKeyDown(KeyCode.U))
-        //    {
-        //        targetPos = Vector3.zero;
-        //        cameraSpeed = cameraMoveChangeTargetSpeed;
-        //    }
-        //}
-
-        cameraPos.localPosition = Vector3.Lerp(cameraPos.localPosition, _target.transform.position, cameraSpeed * Time.deltaTime);
-        
-    }
-
-    /** Clamps para posicion y rotaicón */
-    //private void cameraClamp()
-    //{
-    //    _targetPos.y = Mathf.Clamp(_targetPos.y, _zoomLimit.min, _zoomLimit.max);
-    //}
-
-    /** Métodos para hacer zoom a la haora de realizar un ataque */
-    private void zoomOut()
-    {
-        _animator.SetBool("zoom", true);
-    }
-    private void restoreZoom()
-    {
-        _animator.SetBool("zoom", false);
-    }
-
-    /** Método para establecer el focus temporal */
-    private void focusNode(Node target)
-    {
-        //if (target == null)
-        //    return;
-        //_temporalTarget = _target;
-        //_target = Stage.StageBuilder.getGridPlane(target).transform;
-        //StartCoroutine(CRestoreTarget(_focusTime));
-    }
-
-    ///** Méotod ede coroutine para volver al foco normal */
-    //private IEnumerator CRestoreTarget(float delay)
-    //{
-    //    //yield return new WaitForSeconds(delay);
-    //    //_target = _temporalTarget;
-    //}
-
-    public void startRound(roundType round)
-    {
-        switch (round)
-        {
+    public void startRound(roundType round) {
+        switch (round) {
             case roundType.positioning:
-                //_targetPos = _positioningPos.position;
-                //_targetRot = _positioningPos.rotation;
                 StartCoroutine(StartAnim());
-
                 break;
         }
     }
-    public void endRound(roundType round)
-    {
-        Debug.Log("TODO MAYBE ANIM");
+
+    public void endRound(roundType round) {
+        switch (round) {
+            case roundType.combat:
+                StartCoroutine(EndAnim());
+                break;
+        }
     }
-    IEnumerator StartAnim()
-    {
-        animating = true;
+
+    private IEnumerator StartAnim() {
+        yield return null;
+        /*animating = true;
         transform.position = startAnimPos;
         transform.rotation = Quaternion.Euler(startAnimRot);
         yield return new WaitForSeconds(0.5f);
         float timer = 0;
 
-        while (timer < duration)
-        {
+        while (timer < duration) {
             timer += Time.deltaTime;
             float percentageDuration = timer / duration;
             transform.position = Vector3.Lerp(startAnimPos, startAnimFinalPos, percentageDuration);
@@ -341,18 +169,17 @@ public class newC : MonoBehaviour
         transform.position = startAnimFinalPos;
         transform.rotation = Quaternion.Euler(startAnimFinalRot);
         animating = false;
-        canPlay = false;
+        canPlay = false;*/
     }
 
-    IEnumerator EndAnim()
-    {
-        animating = true;
+    private IEnumerator EndAnim() {
+        yield return null;
+        /*animating = true;
         Vector3 startEndPos = transform.position;
         Vector3 startEndRot = transform.eulerAngles;
         float timer = 0;
 
-        while (timer < duration)
-        {
+        while (timer < duration) {
             timer += Time.deltaTime;
             float percentageDuration = timer / duration;
             transform.position = Vector3.Lerp(startEndPos, finalPos, percentageDuration);
@@ -362,6 +189,7 @@ public class newC : MonoBehaviour
 
         transform.position = finalPos;
         animating = false;
-        transform.rotation = Quaternion.Euler(finalRot);
+        transform.rotation = Quaternion.Euler(finalRot);*/
     }
+
 }

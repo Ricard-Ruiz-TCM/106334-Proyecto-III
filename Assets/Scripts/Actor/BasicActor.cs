@@ -165,7 +165,9 @@ public abstract class BasicActor : Turnable {
     }
 
     /** Override dle startMove para el observer */
-    public override void startMove() {
+    public override void startMove() 
+    {
+        Stage.StageBuilder.clearGrid();
         base.startMove();
         onStartMovement?.Invoke();
     }

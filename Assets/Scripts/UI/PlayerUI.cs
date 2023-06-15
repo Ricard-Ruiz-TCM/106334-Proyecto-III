@@ -18,6 +18,8 @@ public class PlayerUI : MonoBehaviour {
     private GameObject _skillButtonPfb;
     [SerializeField]
     private Transform _panelSkills;
+    [SerializeField]
+    private Transform _panelSkillInfo;
 
     [SerializeField, Header("EndTurn Button:")]
     private Button _btnEndTurn;
@@ -168,6 +170,7 @@ public class PlayerUI : MonoBehaviour {
             GameObject btn = GameObject.Instantiate(_skillButtonPfb, _panelSkills);
             _skillButtons.Add(skI.skill.ID, btn.GetComponent<SkillButtonUI>());
             btn.GetComponent<SkillButtonUI>().Set(_player, skI, (KeyCode)(((int)KeyCode.Alpha0) + i), i);
+            btn.GetComponent<SkillHoverActivator>()._object = _panelSkillInfo.gameObject;
             i++;
             if (skI.skill.needWeapon && !_player.canActIfBuff()) {
                 btn.GetComponent<Button>().interactable = false;

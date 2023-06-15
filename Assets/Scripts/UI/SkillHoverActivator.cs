@@ -3,7 +3,7 @@ using UnityEngine.EventSystems;
 public class SkillHoverActivator : HoverActivator {
 
     /** Skill Button */
-    private SkillButtonUI _skillButtonUI;
+    public SkillButtonUI _skillButtonUI;
 
     // Unity Awake
     void Awake() {

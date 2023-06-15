@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 public class HoverActivator : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler {
 
     [SerializeField, Header("GameObject")]
-    protected GameObject _object;
+    public GameObject _object;
 
     public virtual void OnPointerEnter(PointerEventData eventData) {
         if (_object != null)

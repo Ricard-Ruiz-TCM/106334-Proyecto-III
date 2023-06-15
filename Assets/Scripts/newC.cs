@@ -97,7 +97,7 @@ public class newC : MonoBehaviour
     private Vector3 playAnimFinalRot;
 
     bool canPlay;
-
+    bool magic = false;
 
     // Unity OnEnable
     void OnEnable()
@@ -129,7 +129,10 @@ public class newC : MonoBehaviour
         TurnManager.instance.onStartSystem -= activate;
         TurnManager.instance.onStartTurn -= () => { setTarget(TurnManager.instance.current); };
     }
+    private void Start()
+    {
 
+    }
     // Unity FixedUpdate
     void FixedUpdate()
     {
@@ -218,6 +221,12 @@ public class newC : MonoBehaviour
     {
         if (Input.GetMouseButton(1))
         {
+            if (!magic)
+            {
+                rotX = transform.eulerAngles.x;
+                rotY = transform.eulerAngles.y;
+                magic = true;
+            }
             distanceFromTarget = Vector3.Distance(targetRotate.position, transform.position);
             float mouseX = Input.GetAxis("Mouse X") * mouseSens;
             float mouseY = Input.GetAxis("Mouse Y") * mouseSens;

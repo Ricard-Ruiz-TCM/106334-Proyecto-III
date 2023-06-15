@@ -37,6 +37,8 @@ public class newC : MonoBehaviour {
     // Working Rot & Post
     private Vector3 _targetRot = Vector3.zero;
     private Vector3 _rotSmoothSpeed = Vector3.zero;
+    [SerializeField] float hasTouchedSpeed = 3;
+    bool touchingWall = false;
 
     // Unity OnEnable
     void OnEnable() {
@@ -54,8 +56,10 @@ public class newC : MonoBehaviour {
     void FixedUpdate() {
         if (!_active)
             return;
+        if (!touchingWall) {
+            cameraZoom();
+        }
 
-        cameraZoom();
         cameraRotation();
 
         // Clamps
@@ -115,17 +119,25 @@ public class newC : MonoBehaviour {
     private void cameraRotation() {
         float mouseX = 0f, mouseY = 0f;
         if (Input.GetMouseButton(1)) {
-            mouseX = Input.GetAxis("Mouse X") * _rootSpeed;
-            mouseY = Input.GetAxis("Mouse Y") * _rootSpeed;
+            mouseX = -Input.GetAxis("Mouse X") * _rootSpeed;
+            mouseY = -Input.GetAxis("Mouse Y") * _rootSpeed;
         }
         Vector3 nextRot = new Vector3(transform.localEulerAngles.x + mouseY, transform.localEulerAngles.y - mouseX);
         _targetRot = Vector3.SmoothDamp(transform.localEulerAngles, nextRot, ref _rotSmoothSpeed, _rotSmoothTime);
     }
 
     public void startRound(roundType round) {
+        
         switch (round) {
             case roundType.positioning:
                 StartCoroutine(StartAnim());
+                break;
+            case roundType.combat:
+                Debug.Log(round);
+                //StartCoroutine(AnimAttack());
+                break;
+            case roundType.thinking:
+                StartCoroutine(EndAnim());
                 break;
         }
     }
@@ -138,6 +150,7 @@ public class newC : MonoBehaviour {
             case roundType.combat:
                 StartCoroutine(EndAnim());
                 break;
+
         }
     }
 
@@ -157,6 +170,54 @@ public class newC : MonoBehaviour {
 
         transform.position = _positioningPosition.position;
         transform.rotation = _positioningPosition.rotation;
+    }
+    //private IEnumerator AnimThinking()
+    //{
+    //    //float duration = 3f;
+    //    //while (timer < duration)
+    //    //{
+    //    //    timer += Time.deltaTime;
+    //    //    float percentageDuration = timer / duration;
+    //    //    transform.position = Vector3.Lerp(transform.position, _pivot.position - transform.forward * _distance, percentageDuration);
+    //    //    transform.rotation = Quaternion.Lerp(Quaternion.Euler(transform.eulerAngles), Quaternion.Euler(_targetRot), percentageDuration);
+    //    //    yield return new WaitForFixedUpdate();
+    //    //}
+
+    //    //transform.position = _pivot.position - transform.forward * _distance;
+    //    //transform.eulerAngles = _targetRot;
+    //}
+    private IEnumerator AnimAttack()
+    {
+        yield return new WaitForSeconds(0.5f);
+        _targetRot = new Vector3(25, 180, 0);
+        float timer = 0;
+
+        float duration = 3f;
+        while (timer < duration)
+        {
+            timer += Time.deltaTime;
+            float percentageDuration = timer / duration;
+            transform.position = Vector3.Lerp(transform.position, _pivot.position - transform.forward * _distance, percentageDuration);
+            transform.rotation = Quaternion.Lerp(Quaternion.Euler(transform.eulerAngles), Quaternion.Euler(_targetRot), percentageDuration);
+            yield return new WaitForFixedUpdate();
+        }
+
+        transform.position = _pivot.position - transform.forward * _distance;
+        transform.eulerAngles = _targetRot;
+        //activate();
+    }
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("CameraWall"))
+        {
+            _distance -= hasTouchedSpeed * Time.deltaTime;
+            touchingWall = true;
+        }
+        
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        touchingWall = false;
     }
 
     private IEnumerator EndAnim() {

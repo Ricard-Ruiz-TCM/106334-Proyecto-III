@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 1057623971569293394}
   - component: {fileID: 1057623971569293405}
   - component: {fileID: 1057623971569293404}
-  - component: {fileID: 8503305011844565427}
   m_Layer: 0
   m_Name: MainCamera
   m_TagString: MainCamera
@@ -66,7 +65,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 1023
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -119,27 +118,6 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
---- !u!95 &8503305011844565427
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1057623971569293406}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: ad795118fbd537a44ad162fb6011842e, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &8355730198531669652
 GameObject:
   m_ObjectHideFlags: 0
@@ -151,6 +129,8 @@ GameObject:
   - component: {fileID: 8355730198531669651}
   - component: {fileID: 984297145340256003}
   - component: {fileID: 984297145340256001}
+  - component: {fileID: 9032227705486818237}
+  - component: {fileID: 9032227705486818236}
   m_Layer: 0
   m_Name: NewCam
   m_TagString: Untagged
@@ -186,41 +166,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2ffdda3777943349b615d03d9857b77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _camera: {fileID: 1057623971569293394}
   _active: 0
-  _target: {fileID: 0}
-  _cameraYTargetOffset: 3
   _zoomLimit:
-    min: 0
-    max: 0
-  _speed: 5
-  _zoomSpeed: 5
-  _rotSpeed: 5
-  _rotArountSpeed: 100
-  _distance: 0
-  _focusTime: 1
-  _positioningPos: {fileID: 0}
-  _completedPos: {fileID: 0}
-  mouseSens: 3
-  smoothTime: 0
-  zoomMultiplier: 20
-  velocityZoom: 0
-  smoothZoom: 0.3
-  maxFov: 60
-  minFov: 30
-  cam: {fileID: 1057623971569293394}
-  targetRotate: {fileID: 0}
-  cameraPos: {fileID: 0}
-  cameraSpeed: 5
-  _animator: {fileID: 8503305011844565427}
-  finalPos: {x: 0, y: 0, z: 0}
-  finalRot: {x: 0, y: 0, z: 0}
-  duration: 2
-  startAnimPos: {x: 11.29, y: 12.81, z: -0.46}
-  startAnimRot: {x: 47.612, y: 0, z: 0}
-  startAnimFinalPos: {x: 11.29, y: 32.71, z: 0}
-  startAnimFinalRot: {x: 67.886, y: 0, z: 0}
-  playAnimFinalPos: {x: 9.19, y: 12.06, z: -4.4}
-  playAnimFinalRot: {x: 26.043, y: 0, z: 0}
+    min: 2
+    max: 30
+  _verticalRotLimit:
+    min: 12
+    max: 68
+  _zoomSpeed: 14
+  _rootSpeed: 25
+  _rotSmoothTime: 0.3
+  _distance: 15
+  _positioningPosition: {fileID: 0}
+  _completedPosition: {fileID: 0}
+  _pivot: {fileID: 0}
+  hasTouchedSpeed: 8
 --- !u!114 &984297145340256001
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -233,3 +194,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30d736e0600282248a6db5ee6a409017, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!54 &9032227705486818237
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8355730198531669652}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!135 &9032227705486818236
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8355730198531669652}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}

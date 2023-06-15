@@ -195,11 +195,29 @@ public class PlayerUI : MonoBehaviour {
         if (!TurnManager.instance.current.Equals(_player))
             return;
 
-        if (!_player.canAct())
+        if (!_player.canAct() || !_player.canMoveIfBuff())
             return;
 
-        foreach (KeyValuePair<skillID, SkillButtonUI> entry in _skillButtons) {
-            entry.Value.gameObject.GetComponent<Button>().interactable = true;
+        foreach (KeyValuePair<skillID, SkillButtonUI> entry in _skillButtons) 
+        {
+            //if(entry.Value.)
+            if (_player.isDisarmed())
+            {
+                if (!entry.Value.SkItem.skill.needWeapon)
+                {
+                    entry.Value.gameObject.GetComponent<Button>().interactable = true;
+                }
+                else
+                {
+                    entry.Value.gameObject.GetComponent<Button>().interactable = false;
+                }
+            }
+            else
+            {
+                entry.Value.gameObject.GetComponent<Button>().interactable = true;
+            }
+            
+            
         }
     }
 

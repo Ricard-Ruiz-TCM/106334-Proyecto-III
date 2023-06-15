@@ -194,6 +194,13 @@ public abstract class Actor : BasicActor {
         }
         return true;
     }
+    public bool isDisarmed()
+    {
+        if (_buffs.isBuffActive(buffsID.Disarmed)){
+            return true;
+        }
+        return false;
+    }
 
     /** Buffs, Perks & Skill Managers */
     protected BuffManager _buffs;

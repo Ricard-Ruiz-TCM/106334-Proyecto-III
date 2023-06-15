@@ -23,6 +23,9 @@ public class GridBuilder : MonoBehaviour {
     [SerializeField, Header("Materials:"), Tooltip("Tiene que coincidir con el enum pathMaterial")]
     private Material[] _materials;
 
+    [SerializeField] LayerMask actorMask;
+    [SerializeField] LayerMask gridMask;
+
     // Unity OnEnable
     void OnEnable() {
         Actor.onDestinationReached += clearGrid;
@@ -84,14 +87,14 @@ public class GridBuilder : MonoBehaviour {
     }
     public Node getMouseGridNode() {
         RaycastHit raycastHit;
-        if (Physics.Raycast(Camera.main.ScreenPointToRay(uCore.Action.mousePosition), out raycastHit)) {
+        if (Physics.Raycast(Camera.main.ScreenPointToRay(uCore.Action.mousePosition), out raycastHit, 100, gridMask)) {
             return getGridNode(raycastHit.point);
         }
         return null;
     }
     public Actor getMouseEnemyOrNPC() {
         RaycastHit raycastHit;
-        if (Physics.Raycast(Camera.main.ScreenPointToRay(uCore.Action.mousePosition), out raycastHit)) {
+        if (Physics.Raycast(Camera.main.ScreenPointToRay(uCore.Action.mousePosition), out raycastHit, 100, actorMask)) {
             if (raycastHit.transform.GetComponent<Actor>()) {
                 return raycastHit.transform.GetComponent<Actor>();
             }

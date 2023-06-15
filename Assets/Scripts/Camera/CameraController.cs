@@ -75,8 +75,6 @@ public class CameraController : MonoBehaviour {
 
     [SerializeField] float smoothTime;
 
-    bool firstTimeRotate = true;
-
     [SerializeField] Camera cam;
 
     [SerializeField] float maxFov;
@@ -120,7 +118,7 @@ public class CameraController : MonoBehaviour {
         StartCoroutine(StartAnim());
         xAnterior = 111111;
         xAnterior = 111111;
-        TurnManager.instance.onStartTurn += () => { changeTarget = true; };
+        //TurnManager.onStartTurn += () => { changeTarget = true; };
     }
 
 

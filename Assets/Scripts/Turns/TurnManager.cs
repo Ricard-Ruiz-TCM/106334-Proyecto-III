@@ -9,26 +9,24 @@ public class TurnManager : MonoBehaviour {
     private static TurnManager _instance;
     public static TurnManager instance {
         get {
-            if (_instance == null)
-                _instance = GameObject.FindObjectOfType<TurnManager>();
             return _instance;
         }
     }
 
     /** Callbacks */
-    public Action onStartTurn;
-    public Action onEndTurn;
+    public static event Action onStartTurn;
+    public static event Action onEndTurn;
     /** --------- */
-    public Action<roundType> onNewRound;
+    public static event Action<roundType> onNewRound;
     /** --------- */
-    public Action<roundType> onEndRound;
+    public static event Action<roundType> onEndRound;
     /** --------- */
-    public Action<Turnable> onNewCurrentTurnable;
+    public static event Action<Turnable> onNewCurrentTurnable;
     /** --------- */
-    public Action onEndSystem;
-    public Action onStartSystem;
+    public static event Action onEndSystem;
+    public static event Action onStartSystem;
     /** --------- */
-    public Action onModifyAttenders;
+    public static event Action onModifyAttenders;
     /** --------- */
 
     //Check if it has been drawn already
@@ -58,10 +56,15 @@ public class TurnManager : MonoBehaviour {
     [SerializeField]
     private float _startTurnDelaySecs = 1f;
 
-    private void Awake() {
-        _instance = this;
+    void Awake() {
+        if (_instance == null) {
+            _instance = this;
+            DontDestroyOnLoad(gameObject);
+        } else {
+            _instance.clear();
+            Destroy(gameObject);
+        }
     }
-
 
     // Unity Update
     void Update() {
@@ -73,6 +76,24 @@ public class TurnManager : MonoBehaviour {
                 combatRounds();
                 break;
         }
+    }
+
+    /** Método para limpiar el turn manager */
+    public void clear() {
+        _rounds = 0;
+        _attenders.Clear();
+
+        _roundType = roundType.thinking;
+
+        onStartTurn = null;
+        onEndTurn = null;
+        onNewRound = null;
+        onEndRound = null;
+        onNewCurrentTurnable = null;
+        onEndSystem = null;
+        onStartSystem = null;
+        onModifyAttenders = null;
+
     }
 
     /** Método para el roundType.positioning */

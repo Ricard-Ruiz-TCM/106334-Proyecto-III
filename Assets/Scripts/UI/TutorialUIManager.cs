@@ -16,7 +16,7 @@ public class TutorialUIManager : MonoBehaviour {
     private bool firstTimeInCombat = true;
 
     void OnEnable() {
-        TurnManager.instance.onNewRound += ActivatePanel;
+        TurnManager.onNewRound += ActivatePanel;
         //DialogManager.instance.onNextDialog += UpdateDialog;
 
         Stage.onCompleteStage += (stageResolution res) => {
@@ -27,7 +27,7 @@ public class TutorialUIManager : MonoBehaviour {
 
     // Unity OnDisable
     void OnDisable() {
-        TurnManager.instance.onNewRound -= ActivatePanel;
+        TurnManager.onNewRound -= ActivatePanel;
 
         Stage.onCompleteStage -= (stageResolution res) => {
             firstPanel.SetActive(false);

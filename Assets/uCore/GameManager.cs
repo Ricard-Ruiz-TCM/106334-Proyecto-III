@@ -145,9 +145,6 @@ public class GameManager : MonoBehaviour {
 
 
     [SerializeField, Header("Player Data:")]
-    private bool _avaliable = false;
-
-    [SerializeField]
     private ArmorInventoryItem _armor;
     [SerializeField]
     private WeaponInventoryItem _weapon;

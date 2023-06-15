@@ -6,8 +6,6 @@ using UnityEngine;
 public class DoubleLungue : Skill {
     public List<AchilesSlash> slashes;
     [SerializeField] GameObject arrowPrefab;
-    [SerializeField]
-    private float _damageDelay = 0.25f;
     [SerializeField] GameObject bloodPrefab;
     [SerializeField] float duration;
     public override void action(BasicActor from, Node to) {

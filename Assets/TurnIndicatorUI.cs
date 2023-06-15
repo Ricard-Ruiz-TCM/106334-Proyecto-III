@@ -8,11 +8,11 @@ public class TurnIndicatorUI : MonoBehaviour {
     public Vector3 offset;
 
     private void OnEnable() {
-        TurnManager.instance.onStartSystem += () => { active = true; };
+        TurnManager.onStartSystem += () => { active = true; };
     }
 
     private void OnDisable() {
-        TurnManager.instance.onStartSystem -= () => { active = true; };
+        TurnManager.onStartSystem -= () => { active = true; };
     }
 
     void Update() {

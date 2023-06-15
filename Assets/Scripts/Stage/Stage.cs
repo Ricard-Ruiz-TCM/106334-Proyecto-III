@@ -19,22 +19,22 @@ public class Stage : MonoBehaviour {
 
     // Unity OnEnable
     void OnEnable() {
-        TurnManager.instance.onEndRound += (roundType r) => {
+        TurnManager.onEndRound += (roundType r) => {
             if (!r.Equals(roundType.positioning))
                 return;
 
-            TurnManager.instance.onModifyAttenders += checkGameResolution;
+            TurnManager.onModifyAttenders += checkGameResolution;
         };
     }
 
     // Unity OnDisable
     void OnDisable() {
-        /*TurnManager.instance.onEndRound -= (roundType r) => {
-            if (!r.Equals(roundType.posit mal.ioning))
+        TurnManager.onEndRound -= (roundType r) => {
+            if (!r.Equals(roundType.positioning))
                 return;
 
-            TurnManager.instance.onModifyAttenders += checkGameResolution;
-        };*/
+            TurnManager.onModifyAttenders += checkGameResolution;
+        };
     }
 
     // Unity Awake

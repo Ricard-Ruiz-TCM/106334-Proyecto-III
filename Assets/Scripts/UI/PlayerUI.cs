@@ -33,27 +33,25 @@ public class PlayerUI : MonoBehaviour {
         BuffManager.onApplyBuff += displayBuffs;
         BuffManager.onRemoveBuff += displayBuffs;
 
-        Actor.onSkillUsed += (Node n) => { disableSkills(); };
-
         Actor.onStepReached += (Node n) => { updateSteps(); };
-
-        BasicActor.onStartMovement += disableEndTurnButton;
-        BasicActor.onStartAct += disableEndTurnButton;
-        BasicActor.onReAct += enableEndTurnButton;
-
-        BasicActor.onEndMovement += enableSkills; 
-        BasicActor.onStartMovement += disableSkills;
         Actor.onStepsAdded += updateSteps;
 
+        BasicActor.onStartMovement += disableEndTurnButton;
+        BasicActor.onStartMovement += disableSkills;
+
+        BasicActor.onEndMovement += enableSkills; 
         BasicActor.onEndMovement += enableEndTurnButton;
+
+        BasicActor.onStartAct += disableEndTurnButton;
         BasicActor.onEndAct += enableEndTurnButton;
+        BasicActor.onReAct += enableEndTurnButton;
 
         BasicActor.onChangeHealth += updateHealth;
 
         SkillManager.onSkillUsed += updateSingleSkill;
 
-        TurnManager.instance.onStartTurn += getPlayer;
-        TurnManager.instance.onModifyAttenders += getPlayer;
+        TurnManager.onStartTurn += getPlayer;
+        TurnManager.onModifyAttenders += getPlayer;
     }
 
     // Unity OnDisable
@@ -61,28 +59,25 @@ public class PlayerUI : MonoBehaviour {
         BuffManager.onApplyBuff -= displayBuffs;
         BuffManager.onRemoveBuff -= displayBuffs;
 
-        Actor.onSkillUsed -= (Node n) => { disableSkills(); };
-
         Actor.onStepReached -= (Node n) => { updateSteps(); };
-
-        BasicActor.onStartMovement -= disableEndTurnButton;
-        BasicActor.onStartAct -= disableEndTurnButton;
-        BasicActor.onReAct -= enableEndTurnButton;
-
         Actor.onStepsAdded -= updateSteps;
 
-        BasicActor.onEndMovement -= enableEndTurnButton;
-        BasicActor.onEndAct -= enableEndTurnButton;
+        BasicActor.onStartMovement -= disableEndTurnButton;
+        BasicActor.onStartMovement -= disableSkills;
 
         BasicActor.onEndMovement -= enableSkills;
-        BasicActor.onStartMovement -= disableSkills;
+        BasicActor.onEndMovement -= enableEndTurnButton;
+
+        BasicActor.onStartAct -= disableEndTurnButton;
+        BasicActor.onEndAct -= enableEndTurnButton;
+        BasicActor.onReAct -= enableEndTurnButton;
 
         BasicActor.onChangeHealth -= updateHealth;
 
         SkillManager.onSkillUsed -= updateSingleSkill;
 
-        TurnManager.instance.onStartTurn -= getPlayer;
-        TurnManager.instance.onModifyAttenders -= getPlayer;
+        TurnManager.onStartTurn -= getPlayer;
+        TurnManager.onModifyAttenders -= getPlayer;
     }
 
     /** M�todo que asigna el player al sistema, para los posibles jugadores */
@@ -193,6 +188,9 @@ public class PlayerUI : MonoBehaviour {
     /** Método para habilitar los skills icons */
     private void enableSkills() {
         if (!TurnManager.instance.current.Equals(_player))
+            return;
+
+        if (!_player.canAct())
             return;
 
         foreach (KeyValuePair<skillID, SkillButtonUI> entry in _skillButtons) {

@@ -45,30 +45,28 @@ public class CameraGPT : MonoBehaviour {
 
     // Unity OnEnable
     void OnEnable() {
+
         BasicActor.onReAct += restoreZoom;
         BasicActor.onEndAct += restoreZoom;
         BasicActor.onStartAct += zoomOut;
 
-        TurnManager.instance.onNewRound += setPosition;
+        TurnManager.onNewRound += setPosition;
 
-        Actor.onSkillUsed += focusNode;
-
-        TurnManager.instance.onStartSystem += activate;
-        TurnManager.instance.onStartTurn += () => { setTarget(TurnManager.instance.current); };
+        TurnManager.onStartSystem += activate;
+        TurnManager.onStartTurn += () => { setTarget(TurnManager.instance.current); };
     }
 
     // Unity OnDisabel
     void OnDisable() {
+
         BasicActor.onReAct -= restoreZoom;
         BasicActor.onEndAct -= restoreZoom;
         BasicActor.onStartAct -= zoomOut;
 
-        Actor.onSkillUsed -= focusNode;
+        TurnManager.onNewRound -= setPosition;
 
-        TurnManager.instance.onNewRound -= setPosition;
-
-        TurnManager.instance.onStartSystem -= activate;
-        TurnManager.instance.onStartTurn -= () => { setTarget(TurnManager.instance.current); };
+        TurnManager.onStartSystem -= activate;
+        TurnManager.onStartTurn -= () => { setTarget(TurnManager.instance.current); };
     }
 
     // Unity FixedUpdate

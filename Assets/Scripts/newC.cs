@@ -106,13 +106,11 @@ public class newC : MonoBehaviour
         BasicActor.onEndAct += restoreZoom;
         BasicActor.onStartAct += zoomOut;
 
-        TurnManager.instance.onNewRound += startRound;
-        TurnManager.instance.onEndRound += endRound;
+        TurnManager.onNewRound += startRound;
+        TurnManager.onEndRound += endRound;
 
-        //Actor.onSkillUsed += focusNode;
-
-        TurnManager.instance.onStartSystem += activate;
-        TurnManager.instance.onStartTurn += () => { setTarget(TurnManager.instance.current); };
+        TurnManager.onStartSystem += activate;
+        TurnManager.onStartTurn += () => { setTarget(TurnManager.instance.current); };
     }
 
     // Unity OnDisabel
@@ -122,12 +120,8 @@ public class newC : MonoBehaviour
         BasicActor.onEndAct -= restoreZoom;
         BasicActor.onStartAct -= zoomOut;
 
-        //Actor.onSkillUsed -= focusNode;
-
-        //TurnManager.instance.onNewRound -= startRound;
-
-        TurnManager.instance.onStartSystem -= activate;
-        TurnManager.instance.onStartTurn -= () => { setTarget(TurnManager.instance.current); };
+        TurnManager.onStartSystem -= activate;
+        TurnManager.onStartTurn -= () => { setTarget(TurnManager.instance.current); };
     }
     private void Start()
     {

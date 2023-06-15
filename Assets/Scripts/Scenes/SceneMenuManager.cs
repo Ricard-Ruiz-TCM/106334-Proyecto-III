@@ -8,14 +8,17 @@ public class SceneMenuManager : MonoBehaviour {
 
     /** Buttons */
     public void BTN_NewGame() {
+        FMODManager.instance.PlayOneShot(FMODEvents.instance.PressButtonUI);
         FadeFX.instance.FadeIn(() => { uCore.Director.LoadSceneAsync(gameScenes.Stage0); });
     }
 
     public void BTN_Credits() {
+        FMODManager.instance.PlayOneShot(FMODEvents.instance.PressButtonUI);
         FadeFX.instance.FadeIn(() => { uCore.Director.LoadSceneAsync(gameScenes.Credits); });
     }
 
     public void BTN_Exit() {
+        FMODManager.instance.PlayOneShot(FMODEvents.instance.PressButtonUI);
         FadeFX.instance.FadeIn(() => { Application.Quit(0); });
     }
     /** ------- */

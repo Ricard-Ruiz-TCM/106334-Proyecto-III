@@ -32,8 +32,6 @@ public class newC : MonoBehaviour {
 
     [Header("Positions:")]
     public Transform _positioningPosition;
-    // LIBRE POSITION
-    public Transform _completedPosition;
 
 
     [SerializeField, Header("Center Point:")]
@@ -81,6 +79,7 @@ public class newC : MonoBehaviour {
     void FixedUpdate() {
         if (!_active)
             return;
+
         if (!touchingWall) {
             cameraZoom();
         }
@@ -139,9 +138,6 @@ public class newC : MonoBehaviour {
                 _camera.fieldOfView = _innitialFOV;
                 _camera.orthographic = false;
                 activate();
-                break;
-            case roundType.combat:
-                StartCoroutine(EndAnim());
                 break;
             case roundType.thinking:
                 break;
@@ -215,26 +211,6 @@ public class newC : MonoBehaviour {
     }
     private void OnTriggerExit(Collider other) {
         touchingWall = false;
-    }
-
-    private IEnumerator EndAnim() {
-        yield return null;
-        /*animating = true;
-        Vector3 startEndPos = transform.position;
-        Vector3 startEndRot = transform.eulerAngles;
-        float timer = 0;
-
-        while (timer < duration) {
-            timer += Time.deltaTime;
-            float percentageDuration = timer / duration;
-            transform.position = Vector3.Lerp(startEndPos, finalPos, percentageDuration);
-            transform.rotation = Quaternion.Lerp(Quaternion.Euler(startEndRot), Quaternion.Euler(finalRot), percentageDuration);
-            yield return new WaitForFixedUpdate();
-        }
-
-        transform.position = finalPos;
-        animating = false;
-        transform.rotation = Quaternion.Euler(finalRot);*/
     }
 
 }

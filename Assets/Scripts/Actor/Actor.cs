@@ -48,6 +48,7 @@ public abstract class Actor : BasicActor {
 
     protected List<Node> _route = new List<Node>();
     protected int _stepsDone;
+    bool startedStep = true;
 
     private void Update() {
         footsteps.set3DAttributes(RuntimeUtils.To3DAttributes(Camera.main.transform.position));
@@ -91,8 +92,16 @@ public abstract class Actor : BasicActor {
     }
 
     /** Override Move from Turnable */
-    public override void move() {
-        if (stepReached()) {
+    public override void move() 
+    {
+        //if (startedStep)
+        //{
+        //    Stage.StageBuilder.getGridPlane(transform.position).pathGameObject.SetActive(false);
+        //    Debug.Log("AAAAAAAAA");
+        //    startedStep = false;
+        //}
+        if (stepReached()) 
+        {
             //FMOD PLAY
             PLAYBACK_STATE playbackState;
             footsteps.getPlaybackState(out playbackState);
@@ -113,12 +122,14 @@ public abstract class Actor : BasicActor {
         //FMOD STOP
         footsteps.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         Stage.StageBuilder.clearGrid();
+        //startedStep = true;
         base.endMovement();
     }
 
     /** Método para ir al siguiente nodo */
     private void nextStep() {
-        if (_route == null) {
+        if (_route == null) 
+        {           
             endMovement();
             return;
         }
@@ -158,6 +169,7 @@ public abstract class Actor : BasicActor {
     public override void beginTurn() {
         _stepsDone = 0;
         _tempSteps = _steps;
+        startedStep = true;
         if (_route != null)
             _route.Clear();
         buffs.applyStartTurnEffect(this);

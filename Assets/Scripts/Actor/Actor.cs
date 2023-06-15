@@ -48,7 +48,6 @@ public abstract class Actor : BasicActor {
 
     protected List<Node> _route = new List<Node>();
     protected int _stepsDone;
-    bool startedStep = true;
 
     private void Update() {
         footsteps.set3DAttributes(RuntimeUtils.To3DAttributes(Camera.main.transform.position));
@@ -94,12 +93,7 @@ public abstract class Actor : BasicActor {
     /** Override Move from Turnable */
     public override void move() 
     {
-        //if (startedStep)
-        //{
-        //    Stage.StageBuilder.getGridPlane(transform.position).pathGameObject.SetActive(false);
-        //    Debug.Log("AAAAAAAAA");
-        //    startedStep = false;
-        //}
+
         if (stepReached()) 
         {
             //FMOD PLAY
@@ -157,7 +151,6 @@ public abstract class Actor : BasicActor {
     /** Comprueba si hemos llegado al punto */
     public bool stepReached() {
         if (!_agent.hasPath && !_agent.pathPending && _agent.pathStatus == NavMeshPathStatus.PathComplete) {
-            Stage.StageBuilder.getGridPlane(transform.position).pathGameObject.SetActive(false);
             return true;
         }
         return false;
@@ -169,7 +162,6 @@ public abstract class Actor : BasicActor {
     public override void beginTurn() {
         _stepsDone = 0;
         _tempSteps = _steps;
-        startedStep = true;
         if (_route != null)
             _route.Clear();
         buffs.applyStartTurnEffect(this);

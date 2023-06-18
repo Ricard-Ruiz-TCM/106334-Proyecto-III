@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class SceneMenuManager : MonoBehaviour {
 
-    private void Awake() {
+    private void Start() {
         FadeFX.instance.FadeOut();
     }
 
@@ -16,6 +16,12 @@ public class SceneMenuManager : MonoBehaviour {
     public void BTN_Credits() {
         FMODManager.instance.PlayOneShot(FMODEvents.instance.PressButtonUI);
         FadeFX.instance.FadeIn(() => { uCore.Director.LoadSceneAsync(gameScenes.Credits); });
+    }
+
+    public void BTN_Options()
+    {
+        FMODManager.instance.PlayOneShot(FMODEvents.instance.PressButtonUI);
+        FadeFX.instance.FadeIn(() => { uCore.Director.LoadSceneAsync(gameScenes.Options); });
     }
 
     public void BTN_Exit() {

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SceneOptionsManager : MonoBehaviour
@@ -14,4 +12,5 @@ public class SceneOptionsManager : MonoBehaviour
     {
         uCore.Director.LoadSceneAsync(gameScenes.Menu);
     }
+    /** ------- */
 }

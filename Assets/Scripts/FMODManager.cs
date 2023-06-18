@@ -2,6 +2,7 @@ using FMOD.Studio;
 using FMODUnity;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class FMODManager : MonoBehaviour {
     [Range(0, 1)]
@@ -60,6 +61,26 @@ public class FMODManager : MonoBehaviour {
         musicBus.setVolume(musicVolum);
         sfxBus.setVolume(sfxVolum);
         ambienceBus.setVolume(ambienceVolum);
+    }
+
+    public void ChangeMasterVolume(float volume)
+    {
+        masterVolume = volume;
+    }
+
+    public void ChangeMusicVolume(float volume)
+    {
+        musicVolum = volume;
+    }
+
+    public void ChangeAmbienceVolume(float volume)
+    {
+        ambienceVolum = volume;
+    }
+
+    public void ChangeSFXVolume(float volume)
+    {
+        sfxVolum = volume;
     }
 
     public void PlayWritingMusic()

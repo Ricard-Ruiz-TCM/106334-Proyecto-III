@@ -141,9 +141,11 @@ public class FMODEvents : MonoBehaviour {
 
     private void Awake() {
         if (instance != null)
-            Debug.LogError("More than one FMOD Events instance in the scene");
-
-        instance = this;
+        {
+            //MORE THAN ONE EVENT
+        }
+        else
+            instance = this;
     }
 
 

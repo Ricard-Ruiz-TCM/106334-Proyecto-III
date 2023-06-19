@@ -31,10 +31,12 @@ public class FMODManager : MonoBehaviour {
 
     private void Awake() {
         if (instance != null) {
-            Debug.LogError("Found more than one FMOD Manager in the scene");
-        }
-
-        instance = this;
+            Destroy(this.gameObject);
+        } else
+        {
+            instance = this;
+        }        
+        DontDestroyOnLoad(this.gameObject);
 
         eventInstances = new List<EventInstance>();
 
@@ -98,6 +100,16 @@ public class FMODManager : MonoBehaviour {
         foreach (var draw in drawReferences) {
             PlayOneShot(draw);
         }
+    }
+
+    public void ChangeBackgroundMusic(EventReference backgroundMusic)
+    {
+        var eventEmitter = gameObject.GetComponent<StudioEventEmitter>();
+        eventEmitter.Stop();
+        CleanUp();
+        //eventEmitter.EventReference = backgroundMusic;
+        var instance = CreateEventInstance(backgroundMusic);
+        instance.start();
     }
 
     public void PlayOneShot(EventReference eventReference) {

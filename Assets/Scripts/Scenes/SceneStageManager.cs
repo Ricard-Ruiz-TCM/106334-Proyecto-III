@@ -1,7 +1,11 @@
+using FMODUnity;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class SceneStageManager : MonoBehaviour {
+
+    [SerializeField, Header("Music:")]
+    private EventReference backgroundMusic;
 
     [SerializeField, Header("Dialog:")]
     private GameObject _dialogUI;
@@ -68,6 +72,8 @@ public class SceneStageManager : MonoBehaviour {
 
     // Unity Start
     void Start() {
+
+        FMODManager.instance.ChangeBackgroundMusic(backgroundMusic);
 
         // Check si tenemos que ir al combat directo
         if (_data.innitialDialog == null) {

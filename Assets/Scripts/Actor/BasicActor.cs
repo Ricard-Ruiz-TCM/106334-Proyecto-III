@@ -107,6 +107,8 @@ public abstract class BasicActor : Turnable {
 
         InstantPopUp(-_damageTaken);
 
+        Debug.Log((float)_damageTaken / (float)_maxHealth);
+
         if (entitieUI != null) 
         {
             entitieUI.GetComponent<EntitieUI>().SetDamage((float)_damageTaken / (float)_maxHealth);
@@ -126,12 +128,13 @@ public abstract class BasicActor : Turnable {
     }
     public void displayDamage(BasicActor from, int damage, itemID weapon = itemID.NONE)
     {
-        int displayDamage = Mathf.Clamp(damage - totalDefense(), 0, _maxHealth);
-        int displayHealth = _health - displayDamage;
+        _damageTaken = Mathf.Clamp(damage - totalDefense(), 0, _maxHealth);
+
+        Debug.Log((float)_damageTaken / (float)_maxHealth);
 
         if (entitieUI != null)
         {
-            entitieUI.GetComponent<EntitieUI>().displayDamage((float)displayHealth / (float)_maxHealth, damage);
+            entitieUI.GetComponent<EntitieUI>().displayDamage((float)_damageTaken / (float)_maxHealth, damage);
         }       
     }
 

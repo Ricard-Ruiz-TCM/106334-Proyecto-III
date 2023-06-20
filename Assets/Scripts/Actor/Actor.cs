@@ -221,6 +221,8 @@ public abstract class Actor : BasicActor {
     [SerializeField]
     protected int _baseDefense;
 
+    protected float _damagePercentVariation = 0.25f;
+
     /** Override para calcular el daño total que podemos hacer */
     public override int totalDamage() {
         int dmg = _baseDamage;
@@ -234,6 +236,9 @@ public abstract class Actor : BasicActor {
                 }
             }
         }
+
+        float randomDmg = dmg * _damagePercentVariation;
+        dmg += Mathf.RoundToInt(UnityEngine.Random.Range(-randomDmg, randomDmg));
 
         return dmg;
     }

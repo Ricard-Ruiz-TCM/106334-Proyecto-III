@@ -8,8 +8,7 @@ public class Bloodlust : Skill {
     [SerializeField] GameObject bloodPrefab;
     [SerializeField] GameObject arrowPrefab;
     [SerializeField] float duration;
-    public override void action(BasicActor from, Node to) 
-    {
+    public override void action(BasicActor from, Node to) {
         var lookPos = Stage.StageBuilder.getGridPlane(to).position - from.transform.position;
         lookPos.y = 0;
         from.transform.rotation = Quaternion.LookRotation(lookPos);
@@ -45,20 +44,18 @@ public class Bloodlust : Skill {
                 case itemID.Pugio:
                     FMODManager.instance.PlayOneShot(FMODEvents.instance.PugioContraCarne);
                     ((Actor)from).Anim.Play("Attack" + rValue.ToString());
-                    from.StartCoroutine(StartSlash(from, rValue,target));
+                    from.StartCoroutine(StartSlash(from, rValue, target));
                     break;
                 default:
                     break;
-            }        
-            
-        } else 
-        {
+            }
+
+        } else {
             WeaponItem weapon = ((Actor)from).equip.weapon;
-            if (weapon.ID == itemID.Bow)            {
+            if (weapon.ID == itemID.Bow) {
                 ((Actor)from).Anim.Play("Bow");
                 from.StartCoroutine(ShootArrow(from, Stage.StageBuilder.getGridPlane(to).position, null));
-            }else
-            {
+            } else {
                 ((Actor)from).Anim.Play("Attack" + rValue.ToString());
                 from.StartCoroutine(StartSlash(from, rValue, null));
             }
@@ -67,13 +64,11 @@ public class Bloodlust : Skill {
 
         from.endAction();
     }
-    IEnumerator ShootArrow(BasicActor from, Vector3 target, BasicActor targetActor)
-    {
+    IEnumerator ShootArrow(BasicActor from, Vector3 target, BasicActor targetActor) {
         yield return new WaitForSeconds(1f);
         GameObject arrow = Instantiate(arrowPrefab, new Vector3(from.transform.position.x, from.transform.position.y + 1.7f, from.transform.position.z), Quaternion.identity);
         float timer = 0;
-        while (timer < duration)
-        {
+        while (timer < duration) {
             timer += Time.deltaTime;
             float percentageDuration = timer / duration;
             arrow.transform.position = Vector3.Slerp(new Vector3(from.transform.position.x, from.transform.position.y + 1.7f, from.transform.position.z), new Vector3(target.x, target.y + 1f, target.z), percentageDuration);
@@ -81,77 +76,47 @@ public class Bloodlust : Skill {
             yield return null;
         }
         Destroy(arrow);
-        if (targetActor != null)
-        {
+        if (targetActor != null) {
             targetActor.takeDamage((Actor)from, from.totalDamage(), ((Actor)from).equip.weapon.ID);
             from.heal(targetActor.damageTaken());
             from.entitieUI.GetComponent<EntitieUI>().SetHeal((float)targetActor.damageTaken() / (float)from.maxHealth());
             Vector3 relativePos = from.transform.position - targetActor.transform.position;
             Quaternion rotation = Quaternion.LookRotation(relativePos, Vector3.up);
-            if (!targetActor.GetComponent<StaticActor>())
-            {
+            if (!targetActor.GetComponent<StaticActor>()) {
                 GameObject blood = Instantiate(bloodPrefab, new Vector3(targetActor.transform.position.x, targetActor.transform.position.y + 0.8f, targetActor.transform.position.z), rotation);
                 Destroy(blood, 2f);
             }
         }
     }
 
-    IEnumerator StartSlash(BasicActor from, int num,BasicActor targetActor)
-    {
+    IEnumerator StartSlash(BasicActor from, int num, BasicActor targetActor) {
         GameObject go;
         yield return new WaitForSeconds(0.4f);
-        if (num == 1)
-        {
-            go = Instantiate(slashes[1].objSlash, Vector3.zero, Quaternion.identity);
-            go.transform.SetParent(from.transform);
-            go.transform.localPosition = slashes[1].pos;
-            go.transform.localRotation = Quaternion.identity;
-            go.SetActive(true);
-            if (targetActor != null)
-            {
-                targetActor.takeDamage((Actor)from, from.totalDamage(), ((Actor)from).equip.weapon.ID);
-                from.heal(targetActor.damageTaken());
+        go = Instantiate(slashes[num].objSlash, Vector3.zero, Quaternion.identity);
+        go.transform.SetParent(from.transform);
+        go.transform.localPosition = slashes[num].pos;
+        go.transform.localRotation = Quaternion.identity;
+        go.SetActive(true);
+        if (targetActor != null) {
+            targetActor.takeDamage((Actor)from, from.totalDamage(), ((Actor)from).equip.weapon.ID);
+            ((Actor)targetActor).buffs.applyBuffs((Actor)targetActor, buffsID.Bleeding);
+            from.heal(targetActor.damageTaken());
+            if (targetActor.isAlive())
                 from.entitieUI.GetComponent<EntitieUI>().SetHeal((float)targetActor.damageTaken() / (float)from.maxHealth());
-                Vector3 relativePos = from.transform.position - targetActor.transform.position;
-                Quaternion rotation = Quaternion.LookRotation(relativePos, Vector3.up);
-                if (!targetActor.GetComponent<StaticActor>())
-                {
-                    GameObject blood = Instantiate(bloodPrefab, new Vector3(targetActor.transform.position.x, targetActor.transform.position.y + 0.8f, targetActor.transform.position.z), rotation);
-                    Destroy(blood, 2f);
-                }
+            Vector3 relativePos = from.transform.position - targetActor.transform.position;
+            Quaternion rotation = Quaternion.LookRotation(relativePos, Vector3.up);
+            if (!targetActor.GetComponent<StaticActor>()) {
+                GameObject blood = Instantiate(bloodPrefab, new Vector3(targetActor.transform.position.x, targetActor.transform.position.y + 0.8f, targetActor.transform.position.z), rotation);
+                Destroy(blood, 2f);
             }
-            yield return new WaitForSeconds(slashes[1].delay);        
-            Destroy(go);
         }
-        else if (num == 0)
-        {
-            go = Instantiate(slashes[0].objSlash, Vector3.zero, Quaternion.identity);
-            go.transform.SetParent(from.transform);
-            go.transform.localPosition = slashes[0].pos;
-            go.transform.localRotation = Quaternion.identity;
-            go.SetActive(true);
-            if (targetActor != null)
-            {
-                targetActor.takeDamage((Actor)from, from.totalDamage(), ((Actor)from).equip.weapon.ID);
-                from.heal(targetActor.damageTaken());
-                from.entitieUI.GetComponent<EntitieUI>().SetHeal((float)targetActor.damageTaken() / (float)from.maxHealth());
-                Vector3 relativePos = from.transform.position - targetActor.transform.position;
-                Quaternion rotation = Quaternion.LookRotation(relativePos, Vector3.up);
-                if (!targetActor.GetComponent<StaticActor>())
-                {
-                    GameObject blood = Instantiate(bloodPrefab, new Vector3(targetActor.transform.position.x, targetActor.transform.position.y + 0.8f, targetActor.transform.position.z), rotation);
-                    Destroy(blood, 2f);
-                }
-            }
-            yield return new WaitForSeconds(slashes[0].delay);         
-            Destroy(go);
-        }
+        yield return new WaitForSeconds(slashes[num].delay);
+        Destroy(go);
         DissableSlashes();
     }
-    void DissableSlashes()
-    {
-        for (int i = 0; i < slashes.Count; i++)
-        {
+
+    void DissableSlashes() {
+        for (int i = 0; i < slashes.Count; i++) {
             slashes[i].objSlash.SetActive(false);
         }
     }

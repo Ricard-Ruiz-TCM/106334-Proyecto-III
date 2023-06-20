@@ -1,4 +1,5 @@
 using FMODUnity;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -51,6 +52,8 @@ public class SceneStageManager : MonoBehaviour {
     private GameObject _player;
     [SerializeField]
     private List<GameObject> _actors;
+
+    public static event Action onPlayerActive;
 
     // Unity OnEnable
     void OnEnable() {
@@ -162,6 +165,7 @@ public class SceneStageManager : MonoBehaviour {
 
         // Activate the actors
         _player.SetActive(true);
+        onPlayerActive?.Invoke();
         uCore.GameManager.getPlayer().build();
         foreach (GameObject actors in _actors) {
             actors.SetActive(true);

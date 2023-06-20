@@ -46,8 +46,9 @@ public class WeaponSelectorUI : MonoBehaviour {
 
     public void BTN_IsSelected() {
         if (_selected) {
-            //uCore.GameManager.getPlayer().equip.setWeaponInvItem(_weaponItem);
-            //TODO: add Weapon (uCore.GameManager.getPlayer().perks.addPerk(_perk.ID))
+            WeaponInventoryItem wp = new WeaponInventoryItem();
+            wp.weapon = _weaponItem;
+            GameObject.FindGameObjectWithTag("EquipmentManager").GetComponent<EquipmentManager>().SetInventoryWeapon(wp);
         }
     }
 

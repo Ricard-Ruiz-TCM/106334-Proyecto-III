@@ -28,7 +28,7 @@ public class newC : MonoBehaviour {
     private float _moveSlowTime;
 
     [SerializeField, Header("Distancia:")]
-    private float _distance;
+    public float _distance;
 
     [Header("Positions:")]
     public Transform _positioningPosition;

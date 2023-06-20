@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class EntitieUI : MonoBehaviour 
 {
@@ -12,32 +13,35 @@ public class EntitieUI : MonoBehaviour
     public List<GameObject> activeBuffs;
     public List<Vector3> positionBuffs;
     private List<GameObject> activeBuffsGO;
-
+    [SerializeField] TextMeshProUGUI textDamage;
+    newC cam;
     private void Awake() {
         activeBuffs = new List<GameObject>();
         activeBuffsGO = new List<GameObject>();
         healthbarSprite.fillAmount = 1;
+        displayHealthbarSprite.fillAmount = 1;
         target = 1;
     }
 
     public void SetDamage(float damage) 
     {
-        healthbarSprite.gameObject.SetActive(true);
-        displayHealthbarSprite.gameObject.SetActive(false);
+        Debug.Log(damage);
+        textDamage.gameObject.SetActive(false);
         target -= damage;
+        displayHealthbarSprite.fillAmount = target;
     }
-    public void displayDamage(float damage)
+    public void displayDamage(float damage,int damageInt)
     {
-        displayHealthbarSprite.fillAmount = healthbarSprite.fillAmount;
-        healthbarSprite.gameObject.SetActive(false);
-        displayHealthbarSprite.fillAmount = damage;
-        displayHealthbarSprite.gameObject.SetActive(true);
+        Debug.Log(damage);
+        textDamage.gameObject.SetActive(true);
+        textDamage.text = "-" + damageInt.ToString();
+        displayHealthbarSprite.fillAmount -= damage;
 
     }
     public void hideSelectDamage()
     {
-        healthbarSprite.gameObject.SetActive(true);
-        displayHealthbarSprite.gameObject.SetActive(false);
+        displayHealthbarSprite.fillAmount = healthbarSprite.fillAmount;
+        textDamage.gameObject.SetActive(false);
     }
     public void AddBuff(GameObject buff) {
         activeBuffs.Add(buff);
@@ -72,13 +76,17 @@ public class EntitieUI : MonoBehaviour
     {
         if (transform.parent.GetComponent<AutomaticActor>())
         {
-            healthbarSprite.color = Color.red;
+            displayHealthbarSprite.color = Color.red;
         }
+        cam = FindObjectOfType<Camera>().transform.parent.GetComponent<newC>();
     }
 
     // Update is called once per frame
-    void Update() {
-        transform.rotation = Quaternion.LookRotation(transform.position - Camera.main.transform.position);
+    void Update() 
+    {
+        //transform.localScale = new Vector3(cam._distance, cam._distance, cam._distance) * 0.0001f;
+        //transform.rotation = Quaternion.LookRotation(transform.position - Camera.main.transform.position);
+        transform.rotation = Camera.main.transform.rotation;
         healthbarSprite.fillAmount = Mathf.MoveTowards(healthbarSprite.fillAmount, target, speed * Time.deltaTime);
     }
 }

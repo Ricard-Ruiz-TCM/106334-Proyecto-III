@@ -24,6 +24,11 @@ public class EquipmentManager : MonoBehaviour {
         _shield = sh;
     }
 
+    public void SetInventoryWeapon(WeaponInventoryItem wp)
+    {
+        _weapon = wp;
+    }
+
     public ArmorInventoryItem getArmorInvItem() {
         return _armor;
     }

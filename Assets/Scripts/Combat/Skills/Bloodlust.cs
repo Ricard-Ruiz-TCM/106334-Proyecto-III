@@ -101,8 +101,7 @@ public class Bloodlust : Skill {
             targetActor.takeDamage((Actor)from, from.totalDamage(), ((Actor)from).equip.weapon.ID);
             ((Actor)targetActor).buffs.applyBuffs((Actor)targetActor, buffsID.Bleeding);
             from.heal(targetActor.damageTaken());
-            if (targetActor.isAlive())
-                from.entitieUI.GetComponent<EntitieUI>().SetHeal((float)targetActor.damageTaken() / (float)from.maxHealth());
+            from.entitieUI.GetComponent<EntitieUI>().SetHeal((float)targetActor.damageTaken() / (float)from.maxHealth());
             Vector3 relativePos = from.transform.position - targetActor.transform.position;
             Quaternion rotation = Quaternion.LookRotation(relativePos, Vector3.up);
             if (!targetActor.GetComponent<StaticActor>()) {

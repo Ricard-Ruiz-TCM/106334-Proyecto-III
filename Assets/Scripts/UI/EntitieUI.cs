@@ -25,14 +25,12 @@ public class EntitieUI : MonoBehaviour
 
     public void SetDamage(float damage) 
     {
-        Debug.Log(damage);
         textDamage.gameObject.SetActive(false);
         target -= damage;
         displayHealthbarSprite.fillAmount = target;
     }
     public void displayDamage(float damage,int damageInt)
     {
-        Debug.Log(damage);
         textDamage.gameObject.SetActive(true);
         textDamage.text = "-" + damageInt.ToString();
         displayHealthbarSprite.fillAmount -= damage;
@@ -70,6 +68,7 @@ public class EntitieUI : MonoBehaviour
     }
     public void SetHeal(float heal) {
         target += heal;
+        displayHealthbarSprite.fillAmount = target;
     }
     // Start is called before the first frame update
     void Start() 

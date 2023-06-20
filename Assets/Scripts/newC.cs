@@ -112,7 +112,7 @@ public class newC : MonoBehaviour {
     /** Método para rotar la camara desde el eje central  DOOOONE*/
     private void cameraRotation() {
         float mouseX = 0f, mouseY = 0f;
-        if ((Input.GetMouseButton(1)) && (_moveSmoothTime > _moveSlowTime)) {
+        if ((Input.GetMouseButton(2)) && (_moveSmoothTime > _moveSlowTime)) {
             mouseX = -Input.GetAxis("Mouse X") * _rootSpeed;
             mouseY = -Input.GetAxis("Mouse Y") * _rootSpeed;
         }

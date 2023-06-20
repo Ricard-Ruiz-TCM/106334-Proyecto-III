@@ -180,7 +180,7 @@ public class CameraController : MonoBehaviour {
     }
 
     private void CameraMouseMove() {
-        if (Input.GetMouseButton(1)) {
+        if (Input.GetMouseButton(2)) {
             distanceFromTarget = Vector3.Distance(targetRotate.position, transform.position);
             float mouseX = Input.GetAxis("Mouse X") * mouseSens;
             float mouseY = Input.GetAxis("Mouse Y") * mouseSens;

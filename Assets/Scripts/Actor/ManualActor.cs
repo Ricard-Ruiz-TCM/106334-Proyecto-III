@@ -59,7 +59,7 @@ public class ManualActor : Actor {
                     return;
 
                 // Input
-                if ((Input.GetMouseButtonDown(0)) && (canMove() && canMoveIfBuff())) //POSSIBLE BUG
+                if ((Input.GetMouseButtonDown(1)) && (canMove() && canMoveIfBuff())) //POSSIBLE BUG
                 {
                     if (_canMove) {
                         setDestination(_walkablePath);

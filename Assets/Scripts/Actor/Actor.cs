@@ -162,6 +162,7 @@ public abstract class Actor : BasicActor {
     public override void beginTurn() {
         _stepsDone = 0;
         _tempSteps = _steps;
+        _damageVariation = 0;
         if (_route != null)
             _route.Clear();
         buffs.applyStartTurnEffect(this);
@@ -222,6 +223,7 @@ public abstract class Actor : BasicActor {
     protected int _baseDefense;
 
     protected float _damagePercentVariation = 0.25f;
+    protected int _damageVariation = 0;
 
     /** Override para calcular el daño total que podemos hacer */
     public override int totalDamage() {
@@ -237,10 +239,24 @@ public abstract class Actor : BasicActor {
             }
         }
 
-        float randomDmg = dmg * _damagePercentVariation;
-        dmg += Mathf.RoundToInt(UnityEngine.Random.Range(-randomDmg, randomDmg));
+        if (_damageVariation == 0) {
+            float randomDmg = dmg * _damagePercentVariation;
+            _damageVariation = Mathf.RoundToInt(UnityEngine.Random.Range(-randomDmg, randomDmg));
+        }
+
+        dmg += _damageVariation;
 
         return dmg;
+    }
+
+    /** Método que pregunta sobre el daño */
+    public string askForDamage() {
+
+        string result = "";
+
+        result = _baseDamage.ToString();
+
+        return result;
     }
 
     /** Override para calcular la defensa total que podemos hacer */

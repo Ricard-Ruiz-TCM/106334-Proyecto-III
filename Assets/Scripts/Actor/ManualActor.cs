@@ -96,7 +96,7 @@ public class ManualActor : Actor {
 
         _tempSkillID = id;
     }
-
+    BasicActor anteriorTarget;
     /** Override del act */
     public override void act() {
 
@@ -109,12 +109,48 @@ public class ManualActor : Actor {
         transform.Rotate(new Vector3(10f, 0f, 0f));
 
         // Solo Updateamos el attack si hemos movido el ratón
-        if (nodePositionChanged()) {
+        if (nodePositionChanged()) 
+        {
             Stage.StageBuilder.clearGrid();
             Stage.StageBuilder.displaySkillRange(equip.weapon.range, _myNode);
             // Check si estamos dentro de la distancia
-            if (Stage.StageBuilder.getDistance(_mouseNode, _myNode) <= equip.weapon.range && Stage.StageBuilder.getGridPlane(_mouseNode).CanBeAttacked) {
+            if (Stage.StageBuilder.getDistance(_mouseNode, _myNode) <= equip.weapon.range && Stage.StageBuilder.getGridPlane(_mouseNode).CanBeAttacked) 
+            {
+                BasicActor target = Stage.StageManager.getActor(_mouseNode);
+
                 Stage.StageBuilder.displaySkill(_tempSkillID, _mouseNode, pathMaterial.skill, this);
+
+                if (target != null)
+                {
+                    if(target != anteriorTarget && anteriorTarget != null)
+                    {
+                        if(anteriorTarget.entitieUI != null)
+                        {
+                            anteriorTarget.entitieUI.GetComponent<EntitieUI>().hideSelectDamage();
+                        }                     
+                    }
+                    anteriorTarget = target;
+                    switch (_tempSkillID)
+                    {
+                        default:
+                            target.displayDamage(this, totalDamage(),equip.weapon.ID);
+                            break;
+                        case skillID.AchillesHeel:
+                            target.displayDamage(this, (int)(totalDamage() * 1.4f), equip.weapon.ID);
+                            break;
+                        case skillID.DoubleLunge:
+                            target.displayDamage(this, (totalDamage() * 2), equip.weapon.ID);
+                            break;
+                    }
+                    
+                }
+                else
+                {
+                    if(anteriorTarget != null)
+                    {
+                        anteriorTarget.entitieUI.GetComponent<EntitieUI>().hideSelectDamage();
+                    }
+                }
             }
         }
 

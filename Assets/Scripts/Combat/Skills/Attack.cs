@@ -8,7 +8,8 @@ public class Attack : Skill {
     [SerializeField] GameObject bloodPrefab;
     [SerializeField] GameObject arrowPrefab;
     [SerializeField] float duration;
-    public override void action(BasicActor from, Node to) {
+    public override void action(BasicActor from, Node to) 
+    {
         BasicActor target = Stage.StageManager.getActor(to);
 
         var lookPos = Stage.StageBuilder.getGridPlane(to).position - from.transform.position;

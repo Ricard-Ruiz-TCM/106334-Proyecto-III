@@ -2,8 +2,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EntitieUI : MonoBehaviour {
+public class EntitieUI : MonoBehaviour 
+{
     [SerializeField] Image healthbarSprite;
+    [SerializeField] Image displayHealthbarSprite;
     float target;
     [SerializeField] float speed = 2;
 
@@ -18,8 +20,24 @@ public class EntitieUI : MonoBehaviour {
         target = 1;
     }
 
-    public void SetDamage(float damage) {
+    public void SetDamage(float damage) 
+    {
+        healthbarSprite.gameObject.SetActive(true);
+        displayHealthbarSprite.gameObject.SetActive(false);
         target -= damage;
+    }
+    public void displayDamage(float damage)
+    {
+        displayHealthbarSprite.fillAmount = healthbarSprite.fillAmount;
+        healthbarSprite.gameObject.SetActive(false);
+        displayHealthbarSprite.fillAmount = damage;
+        displayHealthbarSprite.gameObject.SetActive(true);
+
+    }
+    public void hideSelectDamage()
+    {
+        healthbarSprite.gameObject.SetActive(true);
+        displayHealthbarSprite.gameObject.SetActive(false);
     }
     public void AddBuff(GameObject buff) {
         activeBuffs.Add(buff);

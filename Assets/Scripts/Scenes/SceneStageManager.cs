@@ -14,9 +14,13 @@ public class SceneStageManager : MonoBehaviour {
     [SerializeField]
     private GameObject _upgradeUI;
     [SerializeField]
-    private GameObject _perksUI;
+    private GameObject _perksUI;    
     [SerializeField]
     private PerkSelectorUI _leftPerkPanel, _rightPerkPanel;
+    [SerializeField]
+    private GameObject _weaponsUI;
+    [SerializeField]
+    private WeaponSelectorUI _leftWeaponPanel, _midWeaponPanel, _rightWeaponPanel;
 
 
     [SerializeField, Header("Combat:")]
@@ -53,6 +57,7 @@ public class SceneStageManager : MonoBehaviour {
         // DialogTriggers
         OnEndDialog.onTrigger += nextStageState;
         OnOpenPerkPanel.onTrigger += openPerkPanel;
+        OnOpenWeaponPanel.onTrigger += openWeaponPanel;
         OnOpenUpgradePanel.onTrigger += openUpgradePanel;
         OnNextStageDialog.onTrigger += stageSuccess;
 
@@ -64,6 +69,7 @@ public class SceneStageManager : MonoBehaviour {
         // DialogTriggers
         OnEndDialog.onTrigger -= nextStageState;
         OnOpenPerkPanel.onTrigger -= openPerkPanel;
+        OnOpenWeaponPanel.onTrigger -= openWeaponPanel;
         OnOpenUpgradePanel.onTrigger -= openUpgradePanel;
         OnNextStageDialog.onTrigger -= stageSuccess;
 
@@ -99,6 +105,7 @@ public class SceneStageManager : MonoBehaviour {
         _dialogUI.SetActive(false);
         _upgradeUI.SetActive(false);
         _perksUI.SetActive(false);
+        _weaponsUI.SetActive(false);
         _turnUI.SetActive(false);
         _playerUI.SetActive(false);
         _objetiveUI.gameObject.SetActive(false);
@@ -184,6 +191,16 @@ public class SceneStageManager : MonoBehaviour {
 
         _leftPerkPanel.setPerk(_data.perks[0]);
         _rightPerkPanel.setPerk(_data.perks[1]);
+    }
+
+    public void openWeaponPanel()
+    {
+        _dialogUI.SetActive(false);
+        _weaponsUI.SetActive(true);
+
+        _leftWeaponPanel.SetWeapon(_data.weapons[0]);
+        _midWeaponPanel.SetWeapon(_data.weapons[1]);
+        _rightWeaponPanel.SetWeapon(_data.weapons[2]);
     }
 
     /** Método para indicar en que estado del stage estamos y pasar al siguiente con el EndNode */

@@ -24,6 +24,9 @@ public struct StageData {
     [Header("Perks for PerkDialog?:")]
     public Perk[] perks;
 
+    [Header("Weapons for WeaponDialog?:")]
+    public WeaponItem[] weapons;
+
     //[Header("Entrance & Exit:")]
     [HideInInspector]
     public stageEntrance exit;

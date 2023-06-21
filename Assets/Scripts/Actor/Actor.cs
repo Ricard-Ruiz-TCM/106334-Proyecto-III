@@ -34,7 +34,16 @@ public abstract class Actor : BasicActor {
         base.Start();
 
         attackRange = _equip.weapon.range;
+
+
+        Invoke("eventoSteps", 1f);
     }
+
+    private void eventoSteps() {
+        //FMOD
+        footsteps = FMODManager.instance.CreateEventInstance(FMODEvents.instance.Steps);
+    }
+
 
     #region Movement: 
 
@@ -310,9 +319,6 @@ public abstract class Actor : BasicActor {
         _equip = GetComponent<EquipmentManager>();
 
         _animator = GetComponentInChildren<Animator>();
-
-        //FMOD
-        footsteps = FMODManager.instance.CreateEventInstance(FMODEvents.instance.Steps);
     }
 
     /** Método para construir las skills según las perks y equipamiento */

@@ -108,7 +108,8 @@ public class SceneStageManager : MonoBehaviour {
         _dialogUI.SetActive(false);
         _upgradeUI.SetActive(false);
         _perksUI.SetActive(false);
-        _weaponsUI.SetActive(false);
+        if (_weaponsUI != null)
+            _weaponsUI.SetActive(false);
         _turnUI.SetActive(false);
         _playerUI.SetActive(false);
         _objetiveUI.gameObject.SetActive(false);
@@ -167,13 +168,29 @@ public class SceneStageManager : MonoBehaviour {
         _player.SetActive(true);
         onPlayerActive?.Invoke();
 
+        int upgrade = 0;
+        WeaponInventoryItem wp = new WeaponInventoryItem() { weapon = _player.GetComponent<EquipmentManager>().weapon, upgrade = upgrade };
         // RestoreWeapon
         if (uCore.GameManager.haveWeaponSaved()) {
             WeaponInventoryItem wip = uCore.GameManager.getWeaponInv();
-            uCore.GameManager.getPlayer().equip.SetWeapon(wip.weapon, wip.upgrade);
+            wp.weapon = wip.weapon;
         }
+        if (_thisScene.Equals(gameScenes.Stage7) || _thisScene.Equals(gameScenes.Stage14)) {
+            upgrade = 1;
+        }
+        if (_thisScene.Equals(gameScenes.Stage18)) {
+            upgrade = 2;
+        }
+        upgrade = Mathf.Clamp(upgrade, 0, 3);
 
+        // saver :3 
+        if (wp.weapon == null)
+            wp.weapon = (WeaponItem)uCore.GameManager.GetItem(itemID.Gladius);
+
+        uCore.GameManager.getPlayer().equip.SetWeapon(wp.weapon, upgrade);
+        
         uCore.GameManager.getPlayer().build();
+
         foreach (GameObject actors in _actors) {
             actors.SetActive(true);
             if (actors.GetComponent<Actor>() != null)
@@ -207,7 +224,8 @@ public class SceneStageManager : MonoBehaviour {
     public void openWeaponPanel()
     {
         _dialogUI.SetActive(false);
-        _weaponsUI.SetActive(true);
+        if (_weaponsUI != null)
+            _weaponsUI.SetActive(true);
 
         _leftWeaponPanel.SetWeapon(_data.weapons[0]);
         _midWeaponPanel.SetWeapon(_data.weapons[1]);

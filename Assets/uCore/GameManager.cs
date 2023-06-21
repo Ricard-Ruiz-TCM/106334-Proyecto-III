@@ -147,8 +147,6 @@ public class GameManager : MonoBehaviour {
     [SerializeField, Header("Player Data:")]
     private ArmorInventoryItem _armor;
     [SerializeField]
-    private WeaponInventoryItem _weapon;
-    [SerializeField]
     private ShieldInventoryItem _shield;
 
     [SerializeField]
@@ -185,6 +183,25 @@ public class GameManager : MonoBehaviour {
         foreach (SkillItem skI in player.skills.skills) {
             _playerSkills.Add(skI.skill.ID);
         }
+    }
+
+    public bool haveWeaponSaved() {
+        return weaponAvaliable;
+    }
+
+    public WeaponInventoryItem getWeaponInv() {
+        return new WeaponInventoryItem() { upgrade = upgradeWeaponLvl, weapon = _weapon };
+    }
+
+
+    bool weaponAvaliable = false;
+    public int upgradeWeaponLvl;
+    public WeaponItem _weapon;
+
+    public void saveWeapon(WeaponInventoryItem wp) {
+        weaponAvaliable = true;
+        _weapon = wp.weapon;
+        upgradeWeaponLvl = wp.upgrade;
     }
 
     #endregion

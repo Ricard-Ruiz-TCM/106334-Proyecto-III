@@ -15,6 +15,6 @@ public class WeaponSelectorManager : MonoBehaviour
     private void setEquipmentToPlayer()
     {
         var equip = gameObject.GetComponent<EquipmentManager>();
-        uCore.GameManager.getPlayer().equip.SetEquipment(equip.getArmorInvItem(), equip.getWeaponInvItem(), equip.getShieldInvItem());
+        //uCore.GameManager.getPlayer().equip.SetEquipment(equip.getArmorInvItem(), equip.getWeaponInvItem(), equip.getShieldInvItem());
     }
 }

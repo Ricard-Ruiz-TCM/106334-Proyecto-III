@@ -212,6 +212,7 @@ public abstract class Actor : BasicActor {
     [SerializeField]
     protected SkillManager _skills;
     public SkillManager skills => _skills;
+    [SerializeField]
     protected EquipmentManager _equip;
     public EquipmentManager equip => _equip;
 
@@ -257,6 +258,10 @@ public abstract class Actor : BasicActor {
         result = _baseDamage.ToString();
 
         return result;
+    }
+
+    public void setWeapon(WeaponItem weapon) {
+        equip.SetWeapon(weapon);
     }
 
     /** Override para calcular la defensa total que podemos hacer */

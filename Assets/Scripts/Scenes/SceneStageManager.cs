@@ -166,6 +166,13 @@ public class SceneStageManager : MonoBehaviour {
         // Activate the actors
         _player.SetActive(true);
         onPlayerActive?.Invoke();
+
+        // RestoreWeapon
+        if (uCore.GameManager.haveWeaponSaved()) {
+            WeaponInventoryItem wip = uCore.GameManager.getWeaponInv();
+            uCore.GameManager.getPlayer().equip.SetWeapon(wip.weapon, wip.upgrade);
+        }
+
         uCore.GameManager.getPlayer().build();
         foreach (GameObject actors in _actors) {
             actors.SetActive(true);
@@ -226,6 +233,7 @@ public class SceneStageManager : MonoBehaviour {
         uCore.GameManager.SaveGameData();
         uCore.GameManager.savePerks(_player.GetComponent<Actor>());
         uCore.GameManager.saveSkills(_player.GetComponent<Actor>());
+        uCore.GameManager.saveWeapon(_player.GetComponent<Actor>().equip.getWeaponInvItem());
         uCore.Director.LoadSceneAsync(_nextScene, false);
         FadeFX.instance.FadeIn(() => { uCore.Director.AllowScene(); });
     }

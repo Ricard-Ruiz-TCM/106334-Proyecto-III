@@ -76,7 +76,7 @@ public class newC : MonoBehaviour {
     }
 
     // Unity FixedUpdate
-    void FixedUpdate() {
+    void LateUpdate() {
         if (!_active)
             return;
 
@@ -96,7 +96,9 @@ public class newC : MonoBehaviour {
 
         //Update de la rotación
         transform.localEulerAngles = _targetRot;
+
     }
+
 
     /** Método para activar la cámara */
     public void activate() {

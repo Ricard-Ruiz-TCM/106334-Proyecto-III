@@ -859,7 +859,6 @@ public class GridBuilder : MonoBehaviour {
                 mat = _materials[(int)pathMaterial.walkable];
                 break;
         }
-
         getGridPlane(x, y).clear(mat);
     }
 

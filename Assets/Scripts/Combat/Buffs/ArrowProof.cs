@@ -9,9 +9,10 @@ public class ArrowProof : Buff
     public override void onApply(BasicActor me) 
     {
         Debug.Log("TODO: Apply ArrowProof Feedback");
-        shieldVFX = Instantiate(shieldPrefab, Vector3.zero, Quaternion.Euler(0, 90f, 0));
+        shieldVFX = Instantiate(shieldPrefab, Vector3.zero, Quaternion.identity);
         shieldVFX.transform.parent = me.transform;
         shieldVFX.transform.localPosition = new Vector3(0, 0, 0.734f);
+        shieldVFX.transform.localRotation = Quaternion.Euler(0, 90, 0);
     }
 
     public override void onRemove(BasicActor me) {

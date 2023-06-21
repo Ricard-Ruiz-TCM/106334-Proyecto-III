@@ -128,15 +128,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20f9af947c5c61c43871b5b71b2c30dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  headIcon: {fileID: 0}
   state: 0
   acting: 0
   moving: 0
   _health: 1
   _canAttack: 0
+  entitieUIPrefab: {fileID: 0}
+  entitieUI: {fileID: 0}
+  height: 0
+  skinnedMesh: {fileID: 0}
+  skinnedMaterials: []
+  isDead: 0
   _resistance: 1
   pilarHeight: 4
   pilar: {fileID: 335643710076527912}
   damageFromPilar: 1
+  duration: 0.5
 --- !u!1 &2438249893432310979
 GameObject:
   m_ObjectHideFlags: 0

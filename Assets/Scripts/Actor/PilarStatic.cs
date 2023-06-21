@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using System.Collections;
 
 public class PilarStatic : StaticActor {
 
@@ -9,6 +10,8 @@ public class PilarStatic : StaticActor {
 
     private BasicActor damageFrom;
     private Node pilarNode;
+
+    [SerializeField] float duration;
 
     protected override void Start() {
         base.Start();
@@ -23,7 +26,34 @@ public class PilarStatic : StaticActor {
 
         GameObject objToSpawn = new GameObject("Cool GameObject made from Code");
         objToSpawn.transform.position = Stage.StageBuilder.getGridPlane(endPoint).transform.position;
-        theCollumnGoesDown(objToSpawn);
+        theCollumnGoesDown(objToSpawn,endPoint);
+
+        
+    }
+
+    public override void takeDamage(BasicActor from, int damage, itemID weapon = itemID.NONE) {
+        damageFrom = from;
+        base.takeDamage(from, damage, weapon);
+    }
+
+    private void theCollumnGoesDown(GameObject lookAt,Node endPoint) {
+        pilar.transform.LookAt(lookAt.transform);
+        StartCoroutine(GoDownColumn(endPoint));
+        Destroy(lookAt);
+    }
+    IEnumerator GoDownColumn(Node endPoint)
+    {
+        float timer = 0;
+        Vector3 initialRot = pilar.transform.eulerAngles;
+        Vector3 finalRot = new Vector3(pilar.transform.eulerAngles.x, pilar.transform.eulerAngles.y + 90, pilar.transform.eulerAngles.z + 90);
+        while (timer < duration)
+        {
+            timer += Time.deltaTime;
+            float percentageDuration = timer / duration;
+            pilar.transform.rotation = Quaternion.Euler(Vector3.Lerp(initialRot, finalRot, percentageDuration));
+            yield return null;
+        }
+        pilar.transform.eulerAngles = finalRot;
 
         List<Node> nodesToSetNotWalkable = Stage.Pathfinder.FindPath(pilarNode, endPoint, false);
 
@@ -33,7 +63,8 @@ public class PilarStatic : StaticActor {
         if (endPointActor != null && endPointActor != this)
             endPointActor.takeDamage(this, damageFromPilar);
 
-        foreach (var node in nodesToSetNotWalkable) {
+        foreach (var node in nodesToSetNotWalkable)
+        {
             BasicActor nodeActor = Stage.StageManager.getActor(node);
             if (nodeActor != null && nodeActor != this)
                 nodeActor.takeDamage(this, damageFromPilar);
@@ -46,17 +77,6 @@ public class PilarStatic : StaticActor {
         Stage.StageBuilder.clearGrid();
         TurnManager.instance.unsubscribe(this);
         this.enabled = false;
-    }
 
-    public override void takeDamage(BasicActor from, int damage, itemID weapon = itemID.NONE) {
-        damageFrom = from;
-        base.takeDamage(from, damage, weapon);
-    }
-
-    private void theCollumnGoesDown(GameObject lookAt) {
-        pilar.transform.LookAt(lookAt.transform);
-        pilar.transform.Rotate(0, 90, 90);
-
-        Destroy(lookAt);
     }
 }

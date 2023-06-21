@@ -298,6 +298,8 @@ public class AutomaticActor : Actor {
 
 
             List<Node> defenitivePath = new List<Node>(path.ToArray());
+            defenitivePath.Insert(0,Stage.StageBuilder.getGridNode(transform.position));
+            path.Insert(0, Stage.StageBuilder.getGridNode(transform.position));
             for (int i = 0; i < path.Count; i++)
             {
 
@@ -320,7 +322,8 @@ public class AutomaticActor : Actor {
                 //    path.Clear();
                 //}
             }
-
+            defenitivePath.RemoveAt(0);
+            path.RemoveAt(0);
 
             setDestination(defenitivePath);
             startMove();

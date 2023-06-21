@@ -28,6 +28,7 @@ public class ManualActor : Actor {
     }
 
     Actor anteriorEnemy;
+    List<Node> anteriorArrowRain;
 
     /** Override del onTurn */
     //done, falta que no es vegi la grid quan no es pot moure
@@ -135,9 +136,21 @@ public class ManualActor : Actor {
                         case skillID.DoubleLunge:
                             target.displayDamage(this, (totalDamage() * 2), equip.weapon.ID);
                             break;
+                        case skillID.Cleave:
+                            break;
+                        case skillID.Disarm:
+                            break;
+                        case skillID.ArrowRain:
+                            ArrowRainSkill(target);
+                            break;
                     }
 
-                } else {
+                } else 
+                {
+                    if(_tempSkillID == skillID.ArrowRain)
+                    {                        
+                        ArrowRainSkill(target);
+                    }
                     if (anteriorTarget != null) {
                         if (anteriorTarget.entitieUI != null) {
                             if (anteriorTarget.entitieUI.GetComponent<EntitieUI>() != null) {
@@ -149,9 +162,33 @@ public class ManualActor : Actor {
                 }
             }
         }
-
+        if (!Stage.StageBuilder.getGridPlane(_mouseNode).CanBeAttacked)
+        {
+            if (anteriorTarget != null)
+            {
+                if (anteriorTarget.entitieUI != null)
+                {
+                    anteriorTarget.entitieUI.GetComponent<EntitieUI>().hideSelectDamage();
+                }
+            }
+            if (anteriorArrowRain != null)
+            {
+                foreach (var item in anteriorArrowRain)
+                {
+                    BasicActor targetArrow = Stage.StageManager.getActor(item);
+                    if (targetArrow != null)
+                    {
+                        if (targetArrow.entitieUI != null)
+                        {
+                            ((Actor)targetArrow).entitieUI.GetComponent<EntitieUI>().hideSelectDamage();
+                        }
+                    }
+                }
+            }
+        }
         // Chck si estamos en rango
-        if (Stage.StageBuilder.getDistance(_mouseNode, _myNode) <= equip.weapon.range) {
+        if (Stage.StageBuilder.getDistance(_mouseNode, _myNode) <= equip.weapon.range) 
+        {
             // Input
             if (Input.GetMouseButtonDown(0) && Stage.StageBuilder.getGridPlane(_mouseNode).CanBeAttacked && _myNode != _mouseNode) {
                 Stage.StageBuilder.clearGrid();
@@ -160,9 +197,47 @@ public class ManualActor : Actor {
                 UseSkill(_mouseNode);
             }
         }
+        
+        
 
     }
+    private void ArrowRainSkill(BasicActor target)
+    {
+        if (anteriorArrowRain != null)
+        {
+            foreach (var item in anteriorArrowRain)
+            {
+                BasicActor targetArrow = Stage.StageManager.getActor(item);
+                if (targetArrow != null)
+                {
+                    if (targetArrow.entitieUI != null)
+                    {
+                        ((Actor)targetArrow).entitieUI.GetComponent<EntitieUI>().hideSelectDamage();
+                    }
+                }
+            }
+        }
 
+        List<Node> neight = Stage.Grid.getNeighbours(_mouseNode);
+        anteriorArrowRain = neight;
+        if (target != null)
+        {
+            target.displayDamage(this, (totalDamage()), equip.weapon.ID);
+        }
+
+        foreach (var item in neight)
+        {
+
+            BasicActor targetArrow = Stage.StageManager.getActor(item);
+            if (targetArrow != null)
+            {
+                if (targetArrow.entitieUI != null)
+                {
+                    targetArrow.displayDamage(targetArrow, (totalDamage()), equip.weapon.ID);
+                }
+            }
+        }
+    }
     public override void beginTurn() {
         base.beginTurn();
         _canMove = true;

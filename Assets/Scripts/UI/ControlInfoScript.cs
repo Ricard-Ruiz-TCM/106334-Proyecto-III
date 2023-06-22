@@ -4,16 +4,13 @@ using UnityEngine;
 
 public class ControlInfoScript : MonoBehaviour
 {
-    private bool panelIsVisible;
-
-    private void Start()
+    public void ShowControlPanel()
     {
-        panelIsVisible = false;
+        gameObject.SetActive(true);
     }
 
-    public void changeVisibilityControlsPanel()
+    public void HideControlPanel()
     {
-        panelIsVisible = !panelIsVisible;
-        gameObject.SetActive(panelIsVisible);
+        gameObject.SetActive(false);
     }
 }
